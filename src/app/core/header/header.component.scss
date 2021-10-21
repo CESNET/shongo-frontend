@@ -1,0 +1,39 @@
+$item-margin: 10px;
+
+/* Layout */
+.spacer {
+  flex: 1;
+}
+
+/* Navigation bar */
+nav {
+  margin-left: $item-margin;
+}
+nav ul,
+header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+a {
+  cursor: pointer;
+}
+.user-btn {
+  margin-right: $item-margin;
+}
+#dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  li a {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    background: rgb(226, 226, 226);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

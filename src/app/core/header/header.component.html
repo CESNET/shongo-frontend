@@ -1,0 +1,43 @@
+<header>
+  <mat-toolbar>
+    <div class="res-container fx-center-vert">
+      <a>
+        <img src="assets/img/meetings_RGB.png" alt="Cesnet Meetings" />
+      </a>
+
+      <nav class="fx-center-vert">
+        <ul>
+          <li *ngFor="let item of menuItems">
+            <a mat-button fxHide.lt-md>{{ item.label }}</a>
+          </li>
+        </ul>
+
+        <button mat-icon-button fxHide fxShow.lt-md (click)="toggleDropdown()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </nav>
+
+      <div class="spacer"></div>
+
+      <button mat-button class="user-btn" fxHide.lt-sm>
+        <span class="fx-center-vert">
+          <mat-icon class="icon-xs">settings</mat-icon>
+          &nbsp;Username&nbsp;
+          <mat-icon>arrow_drop_down</mat-icon>
+        </span>
+      </button>
+
+      <button mat-icon-button fxHide fxShow.lt-sm class="user-btn">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+
+      <span class="mat-body">+02:00</span>
+    </div>
+  </mat-toolbar>
+
+  <ul id="dropdown-menu" fxHide fxShow.lt-md [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
+    <li *ngFor="let item of menuItems">
+      <a matRipple [matRippleCentered]="true">{{ item.label }}</a>
+    </li>
+  </ul>
+</header>
