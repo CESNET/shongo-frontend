@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 interface MenuItem {
   label: string;
@@ -59,9 +60,13 @@ export class HeaderComponent {
   ];
 
   isDropdownClosed = true;
-  userLoggedIn = true;
+  userLoggedIn = false;
 
-  constructor() {}
+  constructor(private _auth: AuthenticationService) {}
+
+  login(): void {
+    this._auth.login();
+  }
 
   toggleDropdown(): void {
     this.isDropdownClosed = !this.isDropdownClosed;
