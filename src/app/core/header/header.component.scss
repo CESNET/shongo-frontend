@@ -19,21 +19,39 @@ header ul {
 a {
   cursor: pointer;
 }
-.user-btn {
-  margin-right: $item-margin;
-}
+
 #dropdown-menu {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
-  li a {
-    width: 100%;
-    display: block;
-    text-align: center;
-    padding: 10px 0;
+  li {
     background: rgb(226, 226, 226);
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
+
+    a,
+    button {
+      width: 100%;
+      display: block;
+      text-align: center;
+      padding: 10px 0;
+      user-select: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+    }
+
+    &.subItem {
+      background: rgb(211, 211, 211);
+    }
+    :hover {
+      background: rgb(195, 195, 195);
+    }
   }
 }

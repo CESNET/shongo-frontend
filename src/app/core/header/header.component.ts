@@ -10,6 +10,15 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 interface MenuItem {
   label: string;
   route: string;
+  showItem: ShowItem;
+  subItems?: MenuItem[];
+  subMenuOpen?: boolean;
+}
+
+enum ShowItem {
+  LOGGED_IN,
+  LOGGED_OUT,
+  BOTH,
 }
 
 @Component({
@@ -27,17 +36,46 @@ interface MenuItem {
 })
 export class HeaderComponent {
   menuItems: MenuItem[] = [
-    { label: 'Nastavení', route: '' },
-    { label: 'Nápověda', route: '' },
-    { label: 'Dokumentace', route: '' },
-    { label: 'Správa zdrojů', route: '' },
+    { label: 'Nápověda', route: '/', showItem: ShowItem.BOTH },
+    { label: 'Dokumentace', route: '/', showItem: ShowItem.BOTH },
+    {
+      label: 'Správa zdrojů',
+      route: '/',
+      showItem: ShowItem.LOGGED_IN,
+      subItems: [
+        {
+          label: 'Využití kapacity zdrojů',
+          route: '/',
+          showItem: ShowItem.LOGGED_IN,
+        },
+        { label: 'Rezervace zdrojů', route: '/', showItem: ShowItem.LOGGED_IN },
+      ],
+    },
+  ];
+
+  accountItems: MenuItem[] = [
+    { label: 'Nastavení', route: '', showItem: ShowItem.LOGGED_IN },
+    { label: 'Odhlásit se', route: '', showItem: ShowItem.LOGGED_IN },
   ];
 
   isDropdownClosed = true;
+  userLoggedIn = true;
 
   constructor() {}
 
   toggleDropdown(): void {
     this.isDropdownClosed = !this.isDropdownClosed;
+  }
+
+  filterAuthorizedItems(items: MenuItem[]): MenuItem[] {
+    return items.filter((item) => {
+      switch (item.showItem) {
+        case ShowItem.LOGGED_IN:
+          return this.userLoggedIn;
+        case ShowItem.LOGGED_OUT:
+          return !this.userLoggedIn;
+      }
+      return true;
+    });
   }
 }
