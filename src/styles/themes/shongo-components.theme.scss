@@ -1,0 +1,5 @@
+@use "src/app/core/footer/footer.theme.scss" as footer;
+
+@mixin shongo-components-theme($config) {
+  @include footer.color($config);
+}

@@ -103,7 +103,7 @@ export class HeaderComponent {
 
   defaultLocale = this.locales[0];
   isDropdownClosed = true;
-  userLoggedIn = false;
+  userLoggedIn = true;
 
   constructor(private _auth: AuthenticationService) {}
 
