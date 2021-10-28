@@ -16,7 +16,7 @@
               <button mat-button [matMenuTriggerFor]="popupSubMenu">{{ item.label }}<mat-icon>arrow_drop_down</mat-icon></button>
 
               <mat-menu #popupSubMenu="matMenu">
-                <button mat-menu-item *ngFor="let subItem of item.subItems">{{ subItem.label }}</button>
+                <button mat-menu-item *ngFor="let subItem of filterAuthorizedItems(item.subItems)">{{ subItem.label }}</button>
               </mat-menu>
             </ng-template>
           </li>
@@ -29,6 +29,17 @@
 
       <div class="spacer"></div>
 
+      <!-- i18n language changer -->
+      <button mat-icon-button [matMenuTriggerFor]="languageMenu">
+        <img [src]="defaultLocale.icon" [alt]="defaultLocale.name" width="20px">
+      </button>
+      <mat-menu #languageMenu="matMenu">
+        <button mat-menu-item *ngFor="let locale of locales">
+          <img [src]="locale.icon" [alt]="locale.name" width="20px" class="locale-menu-icon">
+          <span>{{ locale.name }}</span>
+        </button>
+      </mat-menu>
+
       <!-- Account menu -->
       <ng-container *ngIf="userLoggedIn; else loggedOutFallback">
         <button mat-button [matMenuTriggerFor]="accountSubMenu" fxHide.lt-sm>
@@ -39,7 +50,7 @@
           </span>
         </button>
   
-        <button mat-icon-button [matMenuTriggerFor]="accountSubMenu" fxHide fxShow.lt-sm class="user-btn">
+        <button mat-icon-button [matMenuTriggerFor]="accountSubMenu" fxHide fxShow.lt-sm>
           <mat-icon>account_circle</mat-icon>
         </button>
   
@@ -49,7 +60,7 @@
       </ng-container>
 
       <ng-template #loggedOutFallback>
-        <button mat-button (click)="login()">Přihlásit se</button>
+        <button mat-button (click)="login()" i18n="navbar button|Log in button">Přihlásit se</button>
       </ng-template>
 
     </div>
@@ -57,7 +68,7 @@
 
   <!-- Small layout menu -->
   <ul id="dropdown-menu" fxHide fxShow.lt-md [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
-    <ng-container *ngFor="let item of menuItems">
+    <ng-container *ngFor="let item of filterAuthorizedItems(menuItems)">
       <li>
         <a matRipple [matRippleCentered]="true" *ngIf="!item.subItems; else compactItemWithSubMenu">{{ item.label }}</a>
   
@@ -67,7 +78,7 @@
       </li>
       <div [@dropdown]="item.subMenuOpen ? 'open' : 'closed'" >
         <li class="subItem">
-          <a matRipple [matRippleCentered]="true" *ngFor="let subItem of item.subItems">{{ subItem.label }}</a>
+          <a matRipple [matRippleCentered]="true" *ngFor="let subItem of filterAuthorizedItems(item.subItems)">{{ subItem.label }}</a>
         </li>
       </div>
     </ng-container>
