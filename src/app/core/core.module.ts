@@ -6,6 +6,8 @@ import { MaterialModule } from '../modules/material.module';
 import { EnsureModuleLoadedOnceGuard } from './ensure-module-loaded-once.guard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent],
@@ -15,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MaterialModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    OAuthModule.forRoot(),
   ],
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {
