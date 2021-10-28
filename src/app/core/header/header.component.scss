@@ -1,0 +1,62 @@
+$item-margin: 10px;
+
+/* Layout */
+.spacer {
+  flex: 1;
+}
+
+/* Navigation bar */
+nav {
+  margin-left: $item-margin;
+}
+nav ul,
+header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+a {
+  cursor: pointer;
+}
+
+#dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  li {
+    background: rgb(226, 226, 226);
+
+    a,
+    button {
+      width: 100%;
+      display: block;
+      text-align: center;
+      padding: 10px 0;
+      user-select: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+    }
+
+    &.subItem {
+      background: rgb(211, 211, 211);
+    }
+    :hover {
+      background: rgb(195, 195, 195);
+    }
+  }
+}
+
+/* Locale picker */
+.locale-menu-icon {
+  margin-right: 15px;
+}
