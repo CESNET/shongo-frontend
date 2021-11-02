@@ -70,7 +70,7 @@
         <note priority="1" from="meaning">Telephone number</note>
       </trans-unit>
       <trans-unit id="5952930220334544618" datatype="html">
-        <source>Využit systém <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://shongo.cesnet.cz/&quot; target=&quot;_blank&quot;&gt;"/>Shongo<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> verze <x id="START_LINK_1" equiv-text="&lt;a href=&quot;&quot;&gt;"/>0.9.2<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
+        <source>Využit systém <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;https://shongo.cesnet.cz/&quot; target=&quot;_blank&quot; class=&quot;mat-theme--footer-link&quot;&gt;"/>Shongo<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> verze <x id="START_LINK_1" equiv-text="&lt;a href=&quot;&quot; class=&quot;mat-theme--footer-link&quot;&gt;"/>0.9.2<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/footer/footer.component.html</context>
           <context context-type="linenumber">70</context>
@@ -166,6 +166,42 @@
         </context-group>
         <note priority="1" from="description">EN language in locale picker</note>
         <note priority="1" from="meaning">en language</note>
+      </trans-unit>
+      <trans-unit id="1103752876425310854" datatype="html">
+        <source>Vaše místnosti</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Label for your rooms table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="3889419247428082390" datatype="html">
+        <source>Vaše účast v místnostech</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Label for your participation table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="5639192707032751807" datatype="html">
+        <source>Vaše rezervace fyz. zdrojů</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">Label for your resource reservations table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="2719262184927374525" datatype="html">
+        <source>Kalendář rezervací</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Label for reservation calendar component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
       </trans-unit>
     </body>
   </file>
