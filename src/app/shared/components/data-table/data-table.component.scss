@@ -1,6 +1,14 @@
+.table-container {
+  padding: 10px;
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+}
 .full-width-table {
   width: 100%;
   background: none;
+}
+.mat-column-select {
+  overflow: initial;
 }
 mat-paginator {
   background: none;

@@ -5,10 +5,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
 import { DataTableComponent } from './data-table.component';
+import { HasID } from './models/has-id.interface';
+import { DataTableDatasourceStub } from 'src/app/test/stubs/data-table-datasource.stub';
+import { MaterialModule } from 'src/app/modules/material.module';
 
 describe('DataTableComponent', () => {
-  let component: DataTableComponent;
-  let fixture: ComponentFixture<DataTableComponent>;
+  let component: DataTableComponent<HasID>;
+  let fixture: ComponentFixture<DataTableComponent<HasID>>;
 
   beforeEach(
     waitForAsync(() => {
@@ -19,6 +22,7 @@ describe('DataTableComponent', () => {
           MatPaginatorModule,
           MatSortModule,
           MatTableModule,
+          MaterialModule,
         ],
       }).compileComponents();
     })
@@ -27,6 +31,7 @@ describe('DataTableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DataTableComponent);
     component = fixture.componentInstance;
+    component.dataSource = new DataTableDatasourceStub();
     fixture.detectChanges();
   });
 

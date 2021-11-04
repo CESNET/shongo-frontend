@@ -6,6 +6,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   exports: [
@@ -16,6 +17,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatMenuModule,
     MatDividerModule,
     MatTabsModule,
+    MatCheckboxModule,
   ],
 })
 export class MaterialModule {}

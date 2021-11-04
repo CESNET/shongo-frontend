@@ -5,6 +5,7 @@ import { DataTableComponent } from './components/data-table/data-table.component
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [DataTableComponent],
@@ -15,6 +16,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatSortModule,
   ],
+  providers: [DatePipe],
   exports: [DataTableComponent],
 })
 export class SharedModule {}
