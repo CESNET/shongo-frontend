@@ -7,7 +7,17 @@
       <td mat-cell *matCellDef="let row">{{ dataSource.pipeData(row[column.name], column.pipeFunc) }}</td>
     </ng-container>
 
-    <!-- Selection header -->
+    <!-- Action buttons -->
+    <ng-container *ngFor="let btn of dataSource.buttons" [matColumnDef]="btn.name">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="btn.executeAction(row)">
+          <mat-icon>{{ btn.icon }}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Selection checkboxes -->
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox color="primary"

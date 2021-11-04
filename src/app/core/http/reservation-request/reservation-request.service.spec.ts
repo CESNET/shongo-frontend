@@ -1,19 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { ApiService } from '../api.service';
-
 import { ReservationRequestService } from './reservation-request.service';
+import { httpClientStub } from 'src/app/test/stubs/http-client.stub';
+import { HttpClient } from '@angular/common/http';
 
 describe('ReservationRequestService', () => {
   let service: ReservationRequestService;
 
-  const apiServiceStub = jasmine.createSpyObj('ApiService', [
-    'listData',
-    'buildEndpointURL',
-  ]);
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: ApiService, useValue: apiServiceStub }],
+      providers: [{ provide: HttpClient, useValue: httpClientStub }],
     });
     service = TestBed.inject(ReservationRequestService);
   });

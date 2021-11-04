@@ -31,7 +31,13 @@ export class DataTableComponent<T extends HasID> implements AfterViewInit {
 
   get displayedColNames(): string[] {
     const displayedColNames = [...this.dataSource.getColumnNames()];
+
+    // Add action button columns
+    displayedColNames.push(...this.dataSource.buttons.map((btn) => btn.name));
+
+    // Add selection checkboxes column
     displayedColNames.push('select');
+
     return displayedColNames;
   }
 

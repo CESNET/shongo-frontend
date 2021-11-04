@@ -5,7 +5,8 @@ import { map, switchMapTo, tap } from 'rxjs/operators';
 import { Observable, merge } from 'rxjs';
 import { HasID } from 'src/app/shared/components/data-table/models/has-id.interface';
 import { PipeFunction, TableColumn } from '../models/table-column.interface';
-import { ApiResponse } from 'src/app/shared/models/api-responses/api-response.interface';
+import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { TableButton } from '../models/table-button.interface';
 
 /**
  * Data source for the DataTable view. This class should
@@ -16,6 +17,7 @@ export abstract class DataTableDataSource<
   T extends HasID
 > extends DataSource<T> {
   abstract displayedColumns: TableColumn[];
+  abstract buttons: TableButton<T>[];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   data: ApiResponse<T> = { count: 0, items: [] };

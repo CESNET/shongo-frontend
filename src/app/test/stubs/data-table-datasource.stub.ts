@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { DataTableDataSource } from 'src/app/shared/components/data-table/data-source/data-table-datasource';
-import { ApiResponse } from 'src/app/shared/models/api-responses/api-response.interface';
+import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 
 export interface DataTableDataStub {
   id: string;
@@ -13,6 +13,7 @@ const MOCK_RESPONSE: ApiResponse<DataTableDataStub> = {
 
 export class DataTableDatasourceStub extends DataTableDataSource<DataTableDataStub> {
   displayedColumns = [{ name: 'id', displayName: 'ID' }];
+  buttons = [];
 
   constructor() {
     super();

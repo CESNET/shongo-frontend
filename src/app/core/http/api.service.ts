@@ -1,21 +1,29 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse } from 'src/app/shared/models/api-responses/api-response.interface';
+import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ApiService {
-  constructor(private _http: HttpClient) {}
+export abstract class ApiService {
+  endpointURL: string;
 
-  buildEndpointURL(endpoint: Endpoint, version: string) {
+  constructor(
+    protected _http: HttpClient,
+    endpoint: Endpoint,
+    version: string
+  ) {
+    this.endpointURL = this._buildEndpointURL(endpoint, version);
+  }
+
+  private _buildEndpointURL(endpoint: Endpoint, version: string) {
     return `http://${environment.shongoRESTApiHost}:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
   }
 
-  listData<T>(endpointURL: string): Observable<ApiResponse<T>> {
-    return this._http.get<ApiResponse<T>>(endpointURL);
+  fetchItems<T>(): Observable<ApiResponse<T>> {
+    return this._http.get<ApiResponse<T>>(this.endpointURL);
+  }
+
+  deleteItem(id: string): Observable<{}> {
+    return this._http.delete<{}>(this.endpointURL, { body: { id } });
   }
 }
