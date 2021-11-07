@@ -1,4 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   Component,
@@ -6,6 +7,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
+import { MediaObserver } from '@angular/flex-layout';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -26,17 +28,22 @@ export class DataTableComponent<T extends HasID> implements AfterViewInit {
   @Input() showCheckboxes!: boolean;
 
   selection = new SelectionModel<T>(true, []);
+  maxCellTextLength = 21;
 
-  constructor() {}
+  constructor(private _breakpointObserver: BreakpointObserver) {}
 
   get displayedColNames(): string[] {
     const displayedColNames = [...this.dataSource.getColumnNames()];
 
-    // Add action button columns
-    displayedColNames.push(...this.dataSource.buttons.map((btn) => btn.name));
+    const smallScreen =
+      this._breakpointObserver.isMatched('(max-width: 768px)');
+    if (!smallScreen) {
+      displayedColNames.push('select');
+    }
 
-    // Add selection checkboxes column
-    displayedColNames.push('select');
+    if (this.dataSource.buttons && this.dataSource.buttons.length > 0) {
+      displayedColNames.push('actions');
+    }
 
     return displayedColNames;
   }
@@ -59,5 +66,18 @@ export class DataTableComponent<T extends HasID> implements AfterViewInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.items.forEach((row) => this.selection.select(row));
+  }
+
+  /**
+   * Returns text for a cell tooltip. Returns empty string if text isn't longer than max text length to disable tooltip.
+   *
+   * @param text Text inside a table cell.
+   * @returns Tooltip text.
+   */
+  getTooltipText(text: string): string {
+    if (text.length > this.maxCellTextLength) {
+      return text;
+    }
+    return '';
   }
 }

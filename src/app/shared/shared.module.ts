@@ -6,9 +6,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
+import { MatTableResponsiveDirective } from './directives/mat-table-responsive/mat-table-responsive.directive';
+import { ShortStringPipe } from './pipes/short-string.pipe';
 
 @NgModule({
-  declarations: [DataTableComponent],
+  declarations: [
+    DataTableComponent,
+    MatTableResponsiveDirective,
+    ShortStringPipe,
+  ],
   imports: [
     CommonModule,
     MaterialModule,
@@ -17,6 +23,6 @@ import { DatePipe } from '@angular/common';
     MatSortModule,
   ],
   providers: [DatePipe],
-  exports: [DataTableComponent],
+  exports: [DataTableComponent, ShortStringPipe],
 })
 export class SharedModule {}

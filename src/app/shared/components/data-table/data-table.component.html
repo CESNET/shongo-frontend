@@ -1,22 +1,24 @@
 <div class="table-container">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-
+  <table mat-table matSort appMatTableResponsive class="full-width-table" aria-label="Elements">
+  
     <!-- Columns -->
     <ng-container *ngFor="let column of dataSource.displayedColumns" [matColumnDef]="column.name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.displayName }}</th>
-      <td mat-cell *matCellDef="let row">{{ dataSource.pipeData(row[column.name], column.pipeFunc) }}</td>
+      <td mat-cell *matCellDef="let row" [matTooltip]="getTooltipText(dataSource.pipeData(row[column.name], column.pipeFunc))">{{ dataSource.pipeData(row[column.name], column.pipeFunc) | appShortString: maxCellTextLength }}</td>
     </ng-container>
-
+  
     <!-- Action buttons -->
-    <ng-container *ngFor="let btn of dataSource.buttons" [matColumnDef]="btn.name">
+    <ng-container *ngIf="dataSource.buttons && dataSource.buttons.length > 0" matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="btn.executeAction(row)">
-          <mat-icon>{{ btn.icon }}</mat-icon>
-        </button>
+        <div class="no-wrap-action-buttons">
+          <button *ngFor="let btn of dataSource.buttons" mat-icon-button (click)="btn.executeAction(row)">
+            <mat-icon>{{ btn.icon }}</mat-icon>
+          </button>
+        </div>
       </td>
     </ng-container>
-
+  
     <!-- Selection checkboxes -->
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
@@ -34,15 +36,15 @@
         </mat-checkbox>
       </td>
     </ng-container>
-
+  
     <!-- Rows -->
     <ng-container *ngIf="displayedColNames as colNames">
       <tr mat-header-row *matHeaderRowDef="colNames"></tr>
       <tr mat-row *matRowDef="let row; columns: colNames;"></tr>
     </ng-container>
-
+  
   </table>
-
+  
   <mat-paginator #paginator
       [length]="dataSource?.data?.count"
       [pageIndex]="0"
@@ -50,5 +52,4 @@
       [pageSizeOptions]="[5, 10, 20]"
       aria-label="Select page">
   </mat-paginator>
-
 </div>
