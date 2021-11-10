@@ -6,11 +6,14 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
   Input,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DataTableDataSource } from './data-source/data-table-datasource';
 import { HasID } from './models/has-id.interface';
 
@@ -18,9 +21,11 @@ import { HasID } from './models/has-id.interface';
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataTableComponent<T extends HasID> implements AfterViewInit {
+export class DataTableComponent<T extends HasID>
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<T>;
@@ -29,29 +34,34 @@ export class DataTableComponent<T extends HasID> implements AfterViewInit {
 
   selection = new SelectionModel<T>(true, []);
   maxCellTextLength = 21;
+  displayedColumns: Observable<string[]>;
 
-  constructor(private _breakpointObserver: BreakpointObserver) {}
+  private _displayedColumns = new BehaviorSubject<string[]>([]);
+  private _destroy$ = new Subject<void>();
 
-  get displayedColNames(): string[] {
-    const displayedColNames = [...this.dataSource.getColumnNames()];
+  constructor(private _breakpointObserver: BreakpointObserver) {
+    this.displayedColumns = this._displayedColumns.asObservable();
+  }
 
-    const smallScreen =
+  ngOnInit(): void {
+    const isSmallScreen =
       this._breakpointObserver.isMatched('(max-width: 768px)');
-    if (!smallScreen) {
-      displayedColNames.push('select');
-    }
+    this._displayedColumns.next(
+      this._buildDisplayedColumnsArray(!isSmallScreen)
+    );
 
-    if (this.dataSource.buttons && this.dataSource.buttons.length > 0) {
-      displayedColNames.push('actions');
-    }
-
-    return displayedColNames;
+    this._watchForSmallScreen();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -79,5 +89,32 @@ export class DataTableComponent<T extends HasID> implements AfterViewInit {
       return text;
     }
     return '';
+  }
+
+  private _buildDisplayedColumnsArray(addSelect: boolean): string[] {
+    const displayedColumns = [...this.dataSource.getColumnNames()];
+
+    if (this.dataSource.buttons && this.dataSource.buttons.length > 0) {
+      displayedColumns.push('actions');
+    }
+
+    if (addSelect) {
+      displayedColumns.push('select');
+    }
+
+    return displayedColumns;
+  }
+
+  private _watchForSmallScreen(): void {
+    this._breakpointObserver
+      .observe('(max-width: 768px)')
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((breakpoint) => {
+        if (breakpoint.matches) {
+          this._displayedColumns.next(this._buildDisplayedColumnsArray(false));
+        } else {
+          this._displayedColumns.next(this._buildDisplayedColumnsArray(true));
+        }
+      });
   }
 }
