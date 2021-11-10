@@ -188,6 +188,48 @@
         </context-group>
         <note priority="1" from="description">Shongo credit</note>
       </trans-unit>
+
+      <!-- Home page -->
+      <trans-unit id="1103752876425310854" datatype="html">
+        <source>Vaše místnosti</source>
+        <target>Your rooms</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Label for your rooms table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="3889419247428082390" datatype="html">
+        <source>Vaše účast v místnostech</source>
+        <target>Your participation in rooms</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Label for your participation table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="5639192707032751807" datatype="html">
+        <source>Vaše rezervace fyz. zdrojů</source>
+        <target>Your phys. resources reservations</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">Label for your resource reservations table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="2719262184927374525" datatype="html">
+        <source>Kalendář rezervací</source>
+        <target>Reservations calendar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Label for reservation calendar component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

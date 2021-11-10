@@ -1,0 +1,28 @@
+@import "../../directives/mat-table-responsive/mobile-table-row.scss";
+
+/* Responsive style is defined in mat-table-responive directive folder. */
+
+.full-width-table {
+  width: 100%;
+}
+.mat-column-select {
+  overflow: initial;
+}
+.no-wrap-action-buttons {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  mat-paginator {
+    @include styled-row;
+  }
+}
+@media (min-width: 769px) {
+  .table-container {
+    padding: 20px;
+    background: white;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}

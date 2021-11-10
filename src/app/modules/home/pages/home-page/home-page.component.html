@@ -1,10 +1,14 @@
 <main>
   <div class="res-container">
-    <mat-tab-group>
-      <mat-tab label="Vaše místnosti"></mat-tab>
-      <mat-tab label="Vaše účast v místnostech"> </mat-tab>
-      <mat-tab label="Vaše rezervace fyz. zdrojů"></mat-tab>
-      <mat-tab label="Kalendář rezervací"></mat-tab>
+    <mat-tab-group [animationDuration]="0">
+      <mat-tab label="Vaše místnosti" i18n-label="Home page tab label|Label for your rooms table component">
+        <div class="tab-content">
+          <app-data-table [dataSource]="resReqDataSource"></app-data-table>
+        </div>
+      </mat-tab>
+      <mat-tab label="Vaše účast v místnostech" i18n-label="Home page tab label|Label for your participation table component"> </mat-tab>
+      <mat-tab label="Vaše rezervace fyz. zdrojů" i18n-label="Home page tab label|Label for your resource reservations table component"></mat-tab>
+      <mat-tab label="Kalendář rezervací" i18n-label="Home page tab label|Label for reservation calendar component"></mat-tab>
     </mat-tab-group>
   </div>
 </main>

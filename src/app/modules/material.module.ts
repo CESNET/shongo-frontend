@@ -6,6 +6,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   exports: [
@@ -16,6 +18,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatMenuModule,
     MatDividerModule,
     MatTabsModule,
+    MatCheckboxModule,
+    MatTooltipModule,
   ],
 })
 export class MaterialModule {}
