@@ -6,6 +6,9 @@ $item-margin: 10px;
 }
 
 /* Navigation bar */
+header {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
 nav {
   margin-left: $item-margin;
 }

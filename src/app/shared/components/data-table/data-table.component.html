@@ -1,0 +1,55 @@
+<div class="table-container">
+  <table mat-table matSort appMatTableResponsive class="full-width-table" aria-label="Elements">
+  
+    <!-- Columns -->
+    <ng-container *ngFor="let column of dataSource.displayedColumns" [matColumnDef]="column.name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.displayName }}</th>
+      <td mat-cell *matCellDef="let row" [matTooltip]="getTooltipText(dataSource.pipeData(row[column.name], column.pipeFunc))">{{ dataSource.pipeData(row[column.name], column.pipeFunc) | appShortString: maxCellTextLength }}</td>
+    </ng-container>
+  
+    <!-- Action buttons -->
+    <ng-container *ngIf="dataSource.buttons && dataSource.buttons.length > 0" matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <div class="no-wrap-action-buttons">
+          <button *ngFor="let btn of dataSource.buttons" mat-icon-button (click)="btn.executeAction(row)">
+            <mat-icon>{{ btn.icon }}</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+  
+    <!-- Selection checkboxes -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox color="primary"
+                      (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox color="primary"
+                      (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+  
+    <!-- Rows -->
+    <ng-container *ngIf="displayedColumns | async as columns">
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </ng-container>
+  
+  </table>
+  
+  <mat-paginator #paginator
+      [length]="dataSource?.data?.count"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page">
+  </mat-paginator>
+</div>

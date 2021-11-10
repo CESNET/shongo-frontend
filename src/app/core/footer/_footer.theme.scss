@@ -3,8 +3,12 @@
 @mixin color($config) {
   $config: mat-get-color-config($config);
   $background: map-get($config, background);
+  $foreground: map-get($config, foreground);
 
   .mat-theme--footer {
     background: map-get($background, app-bar);
+  }
+  .mat-theme--footer-link {
+    color: map-get($foreground, text);
   }
 }
