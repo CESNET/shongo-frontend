@@ -5,8 +5,12 @@ import { HomePageComponent } from './modules/home/pages/home-page/home-page.comp
 const routes: Routes = [
   {
     path: '',
-    component: HomePageComponent,
+    component: HomePageComponent
   },
+  {
+    path: '**',
+    component: HomePageComponent
+  }
 ];
 
 @NgModule({

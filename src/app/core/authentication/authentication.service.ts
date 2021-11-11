@@ -1,27 +1,52 @@
 import { Injectable } from '@angular/core';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-
-const AUTH_CONFIG: AuthConfig = {
-  issuer: 'https://login.cesnet.cz/oidc/',
-  redirectUri: window.location.origin + '/oauth2callback',
-  clientId: '49ae627d-7b2e-4052-8421-bcc16ee0c3d6',
-  responseType: 'code',
-  scope:
-    'openid email profile address organization offline_access eduperson_entitlement voperson_external_id isCesnetEligibleLastSeen',
-  showDebugInformation: true,
-};
+import { OAuthService } from 'angular-oauth2-oidc';
+import { BehaviorSubject } from 'rxjs';
+import { authConfig } from './auth-config';
+import { IdentityClaims } from './identity-claims';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
+  private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
+
   constructor(private _oauthService: OAuthService) {
-    this._oauthService.initCodeFlow();
-    this._oauthService.configure(AUTH_CONFIG);
+    this.initializeOauthService();
+
+    this._oauthService.events.subscribe((_) => {
+      this.isAuthenticatedSubject$.next(
+        this._oauthService.hasValidAccessToken()
+      );
+    });
   }
 
-  async login(): Promise<void> {
+  login(): void {
+    this._oauthService.initCodeFlow();
+  }
+  logout() {
+    this._oauthService.logOut();
+  }
+
+  async initializeOauthService(): Promise<void> {
+    this._oauthService.configure(authConfig);
     await this._oauthService.loadDiscoveryDocumentAndTryLogin();
-    console.log(this._oauthService.getIdToken());
+  }
+
+  hasValidToken() {
+    return this._oauthService.hasValidAccessToken();
+  }
+
+  get idToken(): string {
+    return this._oauthService.getIdToken();
+  }
+  get accessToken(): string {
+    return this._oauthService.getAccessToken();
+  }
+  get refreshToken(): string {
+    return this._oauthService.getRefreshToken();
+  }
+  get identityClaims(): IdentityClaims | null {
+    return this._oauthService.getIdentityClaims() as IdentityClaims;
   }
 }

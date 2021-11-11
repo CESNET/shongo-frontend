@@ -21,18 +21,18 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
     super();
 
     this.displayedColumns = [
-      { name: 'author', displayName: 'Author' },
+      { name: 'author', displayName: 'Autor' },
       {
         name: 'creationTime',
-        displayName: 'Created at',
+        displayName: 'Vytvořeno',
         pipeFunc: this.datePipe,
       },
-      { name: 'type', displayName: 'Type', pipeFunc: this.roomTypePipe },
-      { name: 'name', displayName: 'Name' },
-      { name: 'technology', displayName: 'Technology' },
-      { name: 'slotStart', displayName: 'Slot start', pipeFunc: this.datePipe },
-      { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
-      { name: 'state', displayName: 'State' },
+      { name: 'type', displayName: 'Typ', pipeFunc: this.roomTypePipe },
+      { name: 'name', displayName: 'Jméno' },
+      { name: 'technology', displayName: 'Technologie' },
+      { name: 'slotStart', displayName: 'Začátek slotu', pipeFunc: this.datePipe },
+      { name: 'slotEnd', displayName: 'Konec slotu', pipeFunc: this.datePipe },
+      { name: 'state', displayName: 'Stav' },
     ];
 
     this.buttons = [new EditButton(), new DeleteButton(this._resReqService)];

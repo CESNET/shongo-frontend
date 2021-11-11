@@ -5,13 +5,22 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnDestroy,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication/authentication.service';
 
 interface MenuItem {
   label: string;
-  route: string;
   showItem: ShowItem;
+  route?: string;
+  func?: () => void;
   subItems?: MenuItem[];
   subMenuOpen?: boolean;
 }
@@ -42,7 +51,7 @@ enum ShowItem {
     ]),
   ],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   menuItems: MenuItem[] = [
     {
       label: $localize`:navbar link|Link to help page:Nápověda`,
@@ -76,12 +85,11 @@ export class HeaderComponent {
   accountItems: MenuItem[] = [
     {
       label: $localize`:navbar link|Sublink in account:Nastavení`,
-      route: '',
+      route: '/',
       showItem: ShowItem.LOGGED_IN,
     },
     {
       label: $localize`:navbar link|Sublink in account:Odhlásit se`,
-      route: '',
       showItem: ShowItem.LOGGED_IN,
     },
   ];
@@ -103,12 +111,40 @@ export class HeaderComponent {
 
   defaultLocale = this.locales[0];
   isDropdownClosed = true;
-  userLoggedIn = false;
+  isAuthenticated = false;
 
-  constructor(private _auth: AuthenticationService) {}
+  private _destroy$ = new Subject<void>();
 
-  login(): void {
+  constructor(private _auth: AuthenticationService, private _cd: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this._auth.isAuthenticated$
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((isAuthenticated) => {
+        if (this.isAuthenticated !== isAuthenticated) {
+          this.isAuthenticated = isAuthenticated;
+          this._cd.detectChanges();
+        }
+      });
+    
+    this.accountItems[1].func = () => this.logOut();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
+  logIn(): void {
     this._auth.login();
+  }
+
+  logOut(): void {
+    this._auth.logout();
+  }
+
+  getUsername(): string {
+    return this._auth.identityClaims?.name ?? 'Unknown user';
   }
 
   toggleDropdown(): void {
@@ -122,9 +158,9 @@ export class HeaderComponent {
     return items.filter((item) => {
       switch (item.showItem) {
         case ShowItem.LOGGED_IN:
-          return this.userLoggedIn;
+          return this.isAuthenticated;
         case ShowItem.LOGGED_OUT:
-          return !this.userLoggedIn;
+          return !this.isAuthenticated;
       }
       return true;
     });
