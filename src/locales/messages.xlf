@@ -81,7 +81,7 @@
         <source>Přihlásit se</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="description">Log in button</note>
         <note priority="1" from="meaning">navbar button</note>
@@ -90,7 +90,7 @@
         <source>Nápověda</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <note priority="1" from="description">Link to help page</note>
         <note priority="1" from="meaning">navbar link</note>
@@ -99,7 +99,7 @@
         <source>Dokumentace</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <note priority="1" from="description">Link to documentation page</note>
         <note priority="1" from="meaning">navbar link</note>
@@ -108,7 +108,7 @@
         <source>Správa zdrojů</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <note priority="1" from="description">Link to resource management</note>
         <note priority="1" from="meaning">navbar link</note>
@@ -117,7 +117,7 @@
         <source>Využití kapacity zdrojů</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">72</context>
         </context-group>
         <note priority="1" from="description">Sublink in resource management</note>
         <note priority="1" from="meaning">navbar link</note>
@@ -126,7 +126,7 @@
         <source>Rezervace zdrojů</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">77</context>
         </context-group>
         <note priority="1" from="description">Sublink in resource management</note>
         <note priority="1" from="meaning">navbar link</note>
@@ -135,7 +135,7 @@
         <source>Nastavení</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="description">Sublink in account</note>
         <note priority="1" from="meaning">navbar link</note>
@@ -144,7 +144,7 @@
         <source>Odhlásit se</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="description">Sublink in account</note>
         <note priority="1" from="meaning">navbar link</note>
@@ -153,7 +153,7 @@
         <source>Český jazyk</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="description">CZ language in locale picker</note>
         <note priority="1" from="meaning">cz language</note>
@@ -162,10 +162,46 @@
         <source>Anglický jazyk</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/header/header.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="description">EN language in locale picker</note>
         <note priority="1" from="meaning">en language</note>
+      </trans-unit>
+      <trans-unit id="3140357065249295422" datatype="html">
+        <source>z</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Used in paginator for saying x items &quot;out of&quot; n</note>
+        <note priority="1" from="meaning">out of</note>
+      </trans-unit>
+      <trans-unit id="3350076740797360224" datatype="html">
+        <source>Položek na stránku:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">Items per page label in paginator</note>
+        <note priority="1" from="meaning">items per page</note>
+      </trans-unit>
+      <trans-unit id="7437072274623570270" datatype="html">
+        <source>Další stránka</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Next page label in paginator</note>
+        <note priority="1" from="meaning">next page</note>
+      </trans-unit>
+      <trans-unit id="6583696988562171461" datatype="html">
+        <source>Předchozí stránka</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">Previous page label in paginator</note>
+        <note priority="1" from="meaning">previous page</note>
       </trans-unit>
       <trans-unit id="1103752876425310854" datatype="html">
         <source>Vaše místnosti</source>

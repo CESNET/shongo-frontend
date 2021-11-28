@@ -4,12 +4,15 @@ import { HeaderComponent } from './header.component';
 import { MaterialModule } from 'src/app/modules/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { of } from 'rxjs';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
-  const authStub = jasmine.createSpyObj('AuthenticationService', ['login']);
+  const authStub = jasmine.createSpyObj('AuthenticationService', ['login'], {
+    isAuthenticated$: of(true),
+  });
   authStub.login.and.returnValue(Promise.resolve());
 
   beforeEach(async () => {

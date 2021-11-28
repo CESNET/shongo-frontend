@@ -230,6 +230,48 @@
         <note priority="1" from="description">Label for reservation calendar component</note>
         <note priority="1" from="meaning">Home page tab label</note>
       </trans-unit>
+
+      <!-- Mat paginator -->
+      <trans-unit id="3140357065249295422" datatype="html">
+        <source>z</source>
+        <target>out of</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Used in paginator for saying x items &quot;out of&quot; n</note>
+        <note priority="1" from="meaning">out of</note>
+      </trans-unit>
+      <trans-unit id="3350076740797360224" datatype="html">
+        <source>Položek na stránku:</source>
+        <source>Items per page:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">Items per page label in paginator</note>
+        <note priority="1" from="meaning">items per page</note>
+      </trans-unit>
+      <trans-unit id="7437072274623570270" datatype="html">
+        <source>Další stránka</source>
+        <source>Next page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Next page label in paginator</note>
+        <note priority="1" from="meaning">next page</note>
+      </trans-unit>
+      <trans-unit id="6583696988562171461" datatype="html">
+        <source>Předchozí stránka</source>
+        <source>Previous page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">Previous page label in paginator</note>
+        <note priority="1" from="meaning">previous page</note>
+      </trans-unit>
     </body>
   </file>
 </xliff>

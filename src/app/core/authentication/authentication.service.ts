@@ -14,7 +14,7 @@ export class AuthenticationService {
   constructor(private _oauthService: OAuthService) {
     this.initializeOauthService();
 
-    this._oauthService.events.subscribe((_) => {
+    this._oauthService.events.subscribe(() => {
       this.isAuthenticatedSubject$.next(
         this._oauthService.hasValidAccessToken()
       );
