@@ -1,7 +1,6 @@
 @import "../../directives/mat-table-responsive/mobile-table-row.scss";
 
 /* Responsive style is defined in mat-table-responive directive folder. */
-
 .full-width-table {
   width: 100%;
 }
@@ -10,6 +9,19 @@
 }
 .no-wrap-action-buttons {
   display: flex;
+}
+.top-header-section {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+  }
+}
+.buttons {
+  text-align: right;
 }
 
 @media (max-width: 768px) {

@@ -3,7 +3,9 @@
     <mat-tab-group [animationDuration]="0">
       <mat-tab label="Vaše místnosti" i18n-label="Home page tab label|Label for your rooms table component">
         <div class="tab-content">
-          <app-data-table [dataSource]="resReqDataSource"></app-data-table>
+          <app-data-table [dataSource]="resReqDataSource" header="Seznam místností, které vlastníte nebo které Vám byly zpřístupněny ostatními uživateli.">
+            <app-reservation-request-filter #tableFilter></app-reservation-request-filter>
+          </app-data-table>
         </div>
       </mat-tab>
       <mat-tab label="Vaše účast v místnostech" i18n-label="Home page tab label|Label for your participation table component"> </mat-tab>

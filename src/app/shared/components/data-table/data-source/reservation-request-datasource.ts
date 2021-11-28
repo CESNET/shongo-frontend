@@ -27,10 +27,13 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
         displayName: 'Vytvořeno',
         pipeFunc: this.datePipe,
       },
-      { name: 'type', displayName: 'Typ', pipeFunc: this.roomTypePipe },
       { name: 'name', displayName: 'Jméno' },
       { name: 'technology', displayName: 'Technologie' },
-      { name: 'slotStart', displayName: 'Začátek slotu', pipeFunc: this.datePipe },
+      {
+        name: 'slotStart',
+        displayName: 'Začátek slotu',
+        pipeFunc: this.datePipe,
+      },
       { name: 'slotEnd', displayName: 'Konec slotu', pipeFunc: this.datePipe },
       { name: 'state', displayName: 'Stav' },
     ];
@@ -52,21 +55,6 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
       return this._datePipe.transform(value, 'medium') ?? 'Not a date';
     } else {
       throw new Error('Invalid column data type for date pipe.');
-    }
-  };
-
-  roomTypePipe = (value: unknown): string => {
-    if (typeof value === 'string') {
-      switch (value) {
-        case 'ADHOC_ROOM':
-          return 'One-time room';
-        case 'PERMANENT_ROOM':
-          return 'Permanent room';
-        default:
-          return 'Unknown room type';
-      }
-    } else {
-      throw new Error('Invalid column data type for room type pipe.');
     }
   };
 }

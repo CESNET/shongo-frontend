@@ -8,6 +8,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  ContentChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,6 +16,7 @@ import { MatTable } from '@angular/material/table';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataTableDataSource } from './data-source/data-table-datasource';
+import { DataTableFilter } from './filter/data-table-filter';
 import { HasID } from './models/has-id.interface';
 
 @Component({
@@ -26,11 +28,13 @@ import { HasID } from './models/has-id.interface';
 export class DataTableComponent<T extends HasID>
   implements OnInit, AfterViewInit, OnDestroy
 {
+  @ContentChild('tableFilter') filter: DataTableFilter | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<T>;
   @Input() dataSource!: DataTableDataSource<T>;
   @Input() showCheckboxes!: boolean;
+  @Input() header: string = '';
 
   selection = new SelectionModel<T>(true, []);
   maxCellTextLength = 21;
@@ -54,6 +58,8 @@ export class DataTableComponent<T extends HasID>
   }
 
   ngAfterViewInit(): void {
+    this.filter?.httpQuery$.subscribe((value) => console.log(value.toString()));
+
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
