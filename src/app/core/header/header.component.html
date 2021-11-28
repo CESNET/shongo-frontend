@@ -41,11 +41,11 @@
       </mat-menu>
 
       <!-- Account menu -->
-      <ng-container *ngIf="userLoggedIn; else loggedOutFallback">
+      <ng-container *ngIf="isAuthenticated; else loggedOutFallback">
         <button mat-button [matMenuTriggerFor]="accountSubMenu" fxHide.lt-sm>
           <span class="fx-center-vert">
             <mat-icon class="icon-xs">account_circle</mat-icon>
-            &nbsp;Username&nbsp;
+            {{ "&nbsp;" + getUsername() + "&nbsp;" }}
             <mat-icon>arrow_drop_down</mat-icon>
           </span>
         </button>
@@ -55,12 +55,25 @@
         </button>
   
         <mat-menu #accountSubMenu="matMenu">
-          <button mat-menu-item *ngFor="let item of accountItems">{{ item.label }}</button>
+          <ng-container *ngFor="let item of accountItems">
+            <ng-container 
+             [ngTemplateOutlet]="item.route ? linkItem : buttonItem" 
+             [ngTemplateOutletContext]="{item:item}">
+            </ng-container>
+          </ng-container>
+
+          <ng-template #linkItem let-item="item">
+            <a mat-menu-item [href]="item.route">{{ item.label }}</a>
+          </ng-template>
+
+          <ng-template #buttonItem let-item="item">
+            <button mat-menu-item (click)="item.func()">{{ item.label }}</button>
+          </ng-template>
         </mat-menu>
       </ng-container>
 
       <ng-template #loggedOutFallback>
-        <button mat-button (click)="login()" i18n="navbar button|Log in button">Přihlásit se</button>
+        <button mat-button (click)="logIn()" i18n="navbar button|Log in button">Přihlásit se</button>
       </ng-template>
 
     </div>
