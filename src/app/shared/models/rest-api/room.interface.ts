@@ -1,10 +1,9 @@
-export interface ReservationRequest {
+export interface Room {
   id: string;
   creationTime: string;
   slotStart: string;
   slotEnd: string;
   description: string;
-  author: string;
   name: string;
   participants: number;
   technology: string;

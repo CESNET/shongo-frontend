@@ -7,18 +7,21 @@
         <button mat-icon-button matTooltip="Obnovit" (click)="dataSource.refreshData()">
           <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Smazat vybrané">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-icon-button matTooltip="Smazat vše">
-          <mat-icon>delete_forever</mat-icon>
-        </button>
+        
+        <ng-container *ngIf="showDeleteButtons">
+          <button mat-icon-button matTooltip="Smazat vybrané">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Smazat vše">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </ng-container>
       </div>
 
     </section>
     <mat-divider></mat-divider>
     <ng-content></ng-content>
-    <mat-divider></mat-divider>
+    <mat-divider *ngIf="filter"></mat-divider>
   </header>
 
   <table [hidden]="dataSource.loading$ | async" mat-table matSort appMatTableResponsive class="full-width-table" aria-label="Elements">
@@ -30,27 +33,27 @@
     </ng-container>
   
     <!-- Action buttons -->
-    <ng-container *ngIf="dataSource.buttons && dataSource.buttons.length > 0" matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let row">
-        <div class="no-wrap-action-buttons">
-          <button *ngFor="let btn of dataSource.buttons" mat-icon-button (click)="btn.executeAction(row)">
-            <mat-icon>{{ btn.icon }}</mat-icon>
+    <ng-container *ngIf="dataSource.buttons">
+      <ng-container *ngFor="let button of dataSource.buttons" [matColumnDef]="button.name">
+        <th mat-header-cell *matHeaderCellDef class="button-header"></th>
+        <td mat-cell *matCellDef="let row" class="justify-right">
+          <button mat-icon-button (click)="button.executeAction(row)">
+            <mat-icon>{{ button.icon }}</mat-icon>
           </button>
-        </div>
-      </td>
+        </td>
+      </ng-container>
     </ng-container>
   
     <!-- Selection checkboxes -->
     <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
+      <th mat-header-cell *matHeaderCellDef class="justify-right button-header">
         <mat-checkbox color="primary"
                       (change)="$event ? masterToggle() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
                       [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
       </th>
-      <td mat-cell *matCellDef="let row">
+      <td mat-cell *matCellDef="let row" class="justify-right">
         <mat-checkbox color="primary"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(row) : null"

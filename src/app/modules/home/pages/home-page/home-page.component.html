@@ -1,6 +1,8 @@
 <main>
   <div class="res-container">
     <mat-tab-group [animationDuration]="0">
+
+      <!-- Reservation requests -->
       <mat-tab label="Vaše místnosti" i18n-label="Home page tab label|Label for your rooms table component">
         <div class="tab-content">
           <app-data-table [dataSource]="resReqDataSource" header="Seznam místností, které vlastníte nebo které Vám byly zpřístupněny ostatními uživateli.">
@@ -8,9 +10,18 @@
           </app-data-table>
         </div>
       </mat-tab>
-      <mat-tab label="Vaše účast v místnostech" i18n-label="Home page tab label|Label for your participation table component"> </mat-tab>
+
+      <!-- Room participations -->
+      <mat-tab label="Vaše účast v místnostech" i18n-label="Home page tab label|Label for your participation table component">
+        <div class="tab-content">
+          <app-data-table [dataSource]="roomDataSource" [showDeleteButtons]="false" header="Seznam místností, v kterých jste nastaven jako účastník."></app-data-table>
+        </div>
+      </mat-tab>
+
       <mat-tab label="Vaše rezervace fyz. zdrojů" i18n-label="Home page tab label|Label for your resource reservations table component"></mat-tab>
+
       <mat-tab label="Kalendář rezervací" i18n-label="Home page tab label|Label for reservation calendar component"></mat-tab>
+
     </mat-tab-group>
   </div>
 </main>
