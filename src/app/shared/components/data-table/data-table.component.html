@@ -1,5 +1,27 @@
 <div class="table-container">
-  <table mat-table matSort appMatTableResponsive class="full-width-table" aria-label="Elements">
+  <header>
+    <section class="top-header-section">
+      <h3>{{ header }}</h3>
+      
+      <div class="buttons">
+        <button mat-icon-button matTooltip="Obnovit" (click)="dataSource.refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Smazat vybrané">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Smazat vše">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+
+    </section>
+    <mat-divider></mat-divider>
+    <ng-content></ng-content>
+    <mat-divider></mat-divider>
+  </header>
+
+  <table [hidden]="dataSource.loading$ | async" mat-table matSort appMatTableResponsive class="full-width-table" aria-label="Elements">
   
     <!-- Columns -->
     <ng-container *ngFor="let column of dataSource.displayedColumns" [matColumnDef]="column.name">
@@ -44,6 +66,10 @@
     </ng-container>
   
   </table>
+
+  <div class="loading" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
   
   <mat-paginator #paginator
       [length]="dataSource?.data?.count"
