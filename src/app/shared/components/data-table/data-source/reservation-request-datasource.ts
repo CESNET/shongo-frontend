@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
@@ -45,9 +46,24 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
     pageSize: number,
     pageIndex: number,
     sortedColumn: string,
-    sortDirection: SortDirection
+    sortDirection: SortDirection,
+    filter: HttpParams
   ): Observable<ApiResponse<ReservationRequest>> {
-    return this._resReqService.fetchItems();
+    console.log(
+      pageSize,
+      pageIndex,
+      sortedColumn,
+      sortDirection,
+      filter.toString()
+    );
+
+    return this._resReqService.fetchTableItems(
+      pageSize,
+      pageIndex,
+      sortedColumn,
+      sortDirection,
+      filter
+    );
   }
 
   datePipe = (value: unknown): string => {

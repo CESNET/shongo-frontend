@@ -58,8 +58,7 @@ export class DataTableComponent<T extends HasID>
   }
 
   ngAfterViewInit(): void {
-    this.filter?.httpQuery$.subscribe((value) => console.log(value.toString()));
-
+    this.dataSource.filter$ = this.filter?.httpQuery$;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;

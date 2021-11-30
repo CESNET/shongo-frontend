@@ -1,12 +1,15 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
-import { map, switchMapTo, tap } from 'rxjs/operators';
-import { Observable, merge } from 'rxjs';
+import { map, switchMap, switchMapTo, tap } from 'rxjs/operators';
+import { Observable, merge, Subject, of } from 'rxjs';
 import { HasID } from 'src/app/shared/components/data-table/models/has-id.interface';
 import { PipeFunction, TableColumn } from '../models/table-column.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { TableButton } from '../models/table-button.interface';
+import { HttpParams } from '@angular/common/http';
+
+export const REFRESH_TIMEOUT = 200;
 
 /**
  * Data source for the DataTable view. This class should
@@ -20,10 +23,17 @@ export abstract class DataTableDataSource<
   abstract buttons: TableButton<T>[];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
+  filter$: Observable<HttpParams> | undefined;
+
   data: ApiResponse<T> = { count: 0, items: [] };
+  loading$: Observable<boolean>;
+
+  private _loading$ = new Subject<boolean>();
+  private _refresh$ = new Subject<void>();
 
   constructor() {
     super();
+    this.loading$ = this._loading$.asObservable();
   }
 
   pipeData(data: unknown, pipeFunc?: PipeFunction): string {
@@ -43,20 +53,33 @@ export abstract class DataTableDataSource<
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
-      return merge(
+      let updateStream$: Observable<unknown> = merge(
         this.paginator.initialized,
         this.paginator.page,
-        this.sort.sortChange
-      ).pipe(
-        switchMapTo(
+        this.sort.sortChange,
+        this._refresh$
+      );
+
+      if (this.filter$) {
+        updateStream$ = merge(updateStream$, this.filter$);
+      }
+
+      return updateStream$.pipe(
+        tap(() => this._loading$.next(true)),
+        switchMapTo(this.filter$ ?? of(undefined)),
+        switchMap((filter) =>
           this.getData(
-            this.paginator!.pageIndex,
             this.paginator!.pageSize,
+            this.paginator!.pageIndex,
             this.sort!.active,
-            this.sort!.direction
+            this.sort!.direction,
+            filter ?? new HttpParams()
           )
         ),
-        tap((res: ApiResponse<T>) => (this.data = res)),
+        tap((res: ApiResponse<T>) => {
+          this.data = res;
+          this._loading$.next(false);
+        }),
         map((res) => res.items)
       );
     } else {
@@ -72,10 +95,21 @@ export abstract class DataTableDataSource<
    */
   disconnect(): void {}
 
+  /**
+   * Refreshes table data.
+   */
+  refreshData(): void {
+    this._loading$.next(true);
+
+    // Add a tiny timeout to simulate loading.
+    setTimeout(() => this._refresh$.next(), REFRESH_TIMEOUT);
+  }
+
   abstract getData(
     pageSize: number,
     pageIndex: number,
     sortedColumn: string,
-    sortDirection: SortDirection
+    sortDirection: SortDirection,
+    filter: HttpParams
   ): Observable<ApiResponse<T>>;
 }

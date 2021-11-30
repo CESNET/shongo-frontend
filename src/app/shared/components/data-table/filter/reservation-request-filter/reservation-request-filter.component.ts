@@ -52,6 +52,7 @@ export class ReservationRequestFilterComponent
   }
 
   ngOnInit(): void {
+    this.emitHttpQuery();
     this.filterForm.valueChanges
       .pipe(takeUntil(this._destroy$))
       .subscribe(() => this.emitHttpQuery());
