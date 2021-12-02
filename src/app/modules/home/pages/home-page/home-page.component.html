@@ -18,7 +18,11 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="Vaše rezervace fyz. zdrojů" i18n-label="Home page tab label|Label for your resource reservations table component"></mat-tab>
+      <mat-tab label="Vaše rezervace fyz. zdrojů" i18n-label="Home page tab label|Label for your resource reservations table component">
+        <div class="tab-content">
+          <app-data-table [dataSource]="meetingRoomDataSource" header="Všechny rezervace zdroje."></app-data-table>
+        </div>
+      </mat-tab>
 
       <mat-tab label="Kalendář rezervací" i18n-label="Home page tab label|Label for reservation calendar component"></mat-tab>
 

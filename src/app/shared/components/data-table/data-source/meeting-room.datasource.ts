@@ -2,35 +2,41 @@ import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
-import { RoomService } from 'src/app/core/http/room/room.service';
+import { MeetingRoomService } from 'src/app/core/http/meeting-room/meeting-room.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
+import { DeleteButton } from '../buttons/delete-button';
 import { EditButton } from '../buttons/edit-button';
 import { TableButton } from '../models/table-button.interface';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
-export class RoomDataSource extends DataTableDataSource<Room> {
+export class MeetingRoomDataSource extends DataTableDataSource<Room> {
   displayedColumns: TableColumn[];
   buttons: TableButton<Room>[];
 
-  constructor(private _roomService: RoomService, private _datePipe: DatePipe) {
+  constructor(
+    private _meetingRoomServie: MeetingRoomService,
+    private _datePipe: DatePipe
+  ) {
     super();
 
     this.displayedColumns = [
-      { name: 'name', displayName: 'Jméno' },
-      { name: 'technology', displayName: 'Technologie' },
+      { name: 'meetingRoom', displayName: 'Zasedací místnost' },
       {
         name: 'slotStart',
         displayName: 'Začátek slotu',
         pipeFunc: this.datePipe,
       },
       { name: 'slotEnd', displayName: 'Konec slotu', pipeFunc: this.datePipe },
-      { name: 'state', displayName: 'Stav' },
+      { name: 'state', displayName: 'Stav rezervace' },
       { name: 'description', displayName: 'Popis' },
     ];
 
-    this.buttons = [new EditButton()];
+    this.buttons = [
+      new EditButton(),
+      new DeleteButton(this._meetingRoomServie),
+    ];
   }
 
   getData(
@@ -40,7 +46,7 @@ export class RoomDataSource extends DataTableDataSource<Room> {
     sortDirection: SortDirection,
     filter: HttpParams
   ): Observable<ApiResponse<Room>> {
-    return this._roomService.fetchTableItems(
+    return this._meetingRoomServie.fetchTableItems(
       pageSize,
       pageIndex,
       sortedColumn,
