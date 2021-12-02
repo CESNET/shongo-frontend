@@ -7,9 +7,6 @@
 .mat-column-select {
   overflow: initial;
 }
-.no-wrap-action-buttons {
-  display: flex;
-}
 .top-header-section {
   display: flex;
   justify-content: space-between;
@@ -20,8 +17,17 @@
     margin: 0;
   }
 }
+
+/* Buttons */
 .buttons {
   text-align: right;
+}
+.button-header {
+  box-sizing: content-box; // To keep the padding-right of the last cell.
+  width: 40px;
+}
+.justify-right {
+  text-align: center;
 }
 
 /* Loading display */

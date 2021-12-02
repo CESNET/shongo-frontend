@@ -35,6 +35,7 @@ export class DataTableComponent<T extends HasID>
   @Input() dataSource!: DataTableDataSource<T>;
   @Input() showCheckboxes!: boolean;
   @Input() header: string = '';
+  @Input() showDeleteButtons: boolean = true;
 
   selection = new SelectionModel<T>(true, []);
   maxCellTextLength = 21;
@@ -99,8 +100,8 @@ export class DataTableComponent<T extends HasID>
   private _buildDisplayedColumnsArray(addSelect: boolean): string[] {
     const displayedColumns = [...this.dataSource.getColumnNames()];
 
-    if (this.dataSource.buttons && this.dataSource.buttons.length > 0) {
-      displayedColumns.push('actions');
+    if (this.dataSource.buttons) {
+      displayedColumns.push(...this.dataSource.buttons.map((btn) => btn.name));
     }
 
     if (addSelect) {
