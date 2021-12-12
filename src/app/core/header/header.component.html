@@ -45,7 +45,7 @@
         <button mat-button [matMenuTriggerFor]="accountSubMenu" fxHide.lt-sm>
           <span class="fx-center-vert">
             <mat-icon class="icon-xs">account_circle</mat-icon>
-            {{ "&nbsp;" + getUsername() + "&nbsp;" }}
+            {{ "&nbsp;" + (getUsername() | appShortString: 15) + "&nbsp;" }}
             <mat-icon>arrow_drop_down</mat-icon>
           </span>
         </button>

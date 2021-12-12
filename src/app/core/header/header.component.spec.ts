@@ -5,6 +5,7 @@ import { MaterialModule } from 'src/app/modules/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { of } from 'rxjs';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -17,7 +18,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaterialModule, BrowserAnimationsModule],
+      imports: [MaterialModule, BrowserAnimationsModule, SharedModule],
       declarations: [HeaderComponent],
       providers: [
         {

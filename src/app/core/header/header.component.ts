@@ -15,28 +15,13 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication/authentication.service';
-
-interface MenuItem {
-  label: string;
-  showItem: ShowItem;
-  route?: string;
-  func?: () => void;
-  subItems?: MenuItem[];
-  subMenuOpen?: boolean;
-}
-
-interface Locale {
-  shortcut: string;
-  icon: string;
-  route: string;
-  name: string;
-}
-
-enum ShowItem {
-  LOGGED_IN,
-  LOGGED_OUT,
-  BOTH,
-}
+import {
+  accountItems,
+  locales,
+  MenuItem,
+  menuItems,
+  ShowItem,
+} from './header-items';
 
 @Component({
   selector: 'app-header',
@@ -52,70 +37,19 @@ enum ShowItem {
   ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  menuItems: MenuItem[] = [
-    {
-      label: $localize`:navbar link|Link to help page:Nápověda`,
-      route: '/',
-      showItem: ShowItem.BOTH,
-    },
-    {
-      label: $localize`:navbar link|Link to documentation page:Dokumentace`,
-      route: '/',
-      showItem: ShowItem.BOTH,
-    },
-    {
-      label: $localize`:navbar link|Link to resource management:Správa zdrojů`,
-      route: '/',
-      showItem: ShowItem.LOGGED_IN,
-      subItems: [
-        {
-          label: $localize`:navbar link|Sublink in resource management:Využití kapacity zdrojů`,
-          route: '/',
-          showItem: ShowItem.LOGGED_IN,
-        },
-        {
-          label: $localize`:navbar link|Sublink in resource management:Rezervace zdrojů`,
-          route: '/',
-          showItem: ShowItem.LOGGED_IN,
-        },
-      ],
-    },
-  ];
-
-  accountItems: MenuItem[] = [
-    {
-      label: $localize`:navbar link|Sublink in account:Nastavení`,
-      route: '/',
-      showItem: ShowItem.LOGGED_IN,
-    },
-    {
-      label: $localize`:navbar link|Sublink in account:Odhlásit se`,
-      showItem: ShowItem.LOGGED_IN,
-    },
-  ];
-
-  locales: Locale[] = [
-    {
-      shortcut: 'cz',
-      icon: 'assets/img/i18n/CZ.svg',
-      route: '/cz',
-      name: $localize`:cz language|CZ language in locale picker:Český jazyk`,
-    },
-    {
-      shortcut: 'en',
-      icon: 'assets/img/i18n/GB.svg',
-      route: '/en',
-      name: $localize`:en language|EN language in locale picker:Anglický jazyk`,
-    },
-  ];
-
+  menuItems = menuItems;
+  accountItems = accountItems;
+  locales = locales;
   defaultLocale = this.locales[0];
   isDropdownClosed = true;
   isAuthenticated = false;
 
   private _destroy$ = new Subject<void>();
 
-  constructor(private _auth: AuthenticationService, private _cd: ChangeDetectorRef) {}
+  constructor(
+    private _auth: AuthenticationService,
+    private _cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this._auth.isAuthenticated$
@@ -126,7 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this._cd.detectChanges();
         }
       });
-    
+
     this.accountItems[1].func = () => this.logOut();
   }
 
