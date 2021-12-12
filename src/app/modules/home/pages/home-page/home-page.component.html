@@ -4,28 +4,41 @@
 
       <!-- Reservation requests -->
       <mat-tab label="Vaše místnosti" i18n-label="Home page tab label|Label for your rooms table component">
-        <div class="tab-content">
-          <app-data-table [dataSource]="resReqDataSource" header="Seznam místností, které vlastníte nebo které Vám byly zpřístupněny ostatními uživateli.">
-            <app-reservation-request-filter #tableFilter></app-reservation-request-filter>
-          </app-data-table>
-        </div>
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-data-table [dataSource]="resReqDataSource" header="Seznam místností, které vlastníte nebo které Vám byly zpřístupněny ostatními uživateli.">
+              <app-reservation-request-filter #tableFilter></app-reservation-request-filter>
+            </app-data-table>
+          </div>
+        </ng-template>
       </mat-tab>
 
       <!-- Room participations -->
       <mat-tab label="Vaše účast v místnostech" i18n-label="Home page tab label|Label for your participation table component">
-        <div class="tab-content">
-          <app-data-table [dataSource]="roomDataSource" [showDeleteButtons]="false" header="Seznam místností, v kterých jste nastaven jako účastník."></app-data-table>
-        </div>
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-data-table [dataSource]="roomDataSource" [showDeleteButtons]="false" header="Seznam místností, v kterých jste nastaven jako účastník."></app-data-table>
+          </div>
+        </ng-template>
       </mat-tab>
 
+      <!-- Meeting room reservations -->
       <mat-tab label="Vaše rezervace fyz. zdrojů" i18n-label="Home page tab label|Label for your resource reservations table component">
-        <div class="tab-content">
-          <app-data-table [dataSource]="meetingRoomDataSource" header="Všechny rezervace zdroje."></app-data-table>
-        </div>
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-data-table [dataSource]="meetingRoomDataSource" header="Všechny rezervace zdroje."></app-data-table>
+          </div>
+        </ng-template>
       </mat-tab>
 
-      <mat-tab label="Kalendář rezervací" i18n-label="Home page tab label|Label for reservation calendar component"></mat-tab>
-
+      <!-- Reservation calendar -->
+      <mat-tab label="Kalendář rezervací" i18n-label="Home page tab label|Label for reservation calendar component">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-reservation-calendar></app-reservation-calendar>
+          </div>
+        </ng-template>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </main>

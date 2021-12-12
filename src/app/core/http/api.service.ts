@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { environment } from 'src/environments/environment';
 import { SortDirection } from '@angular/material/sort';
+import { catchError, first } from 'rxjs/operators';
 
 export abstract class ApiService {
   endpointURL: string;
@@ -20,8 +21,16 @@ export abstract class ApiService {
     return `http://${environment.shongoRESTApiHost}:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
   }
 
-  fetchItems<T>(): Observable<ApiResponse<T>> {
-    return this._http.get<ApiResponse<T>>(this.endpointURL);
+  fetchItems<T>(httpParams?: HttpParams): Observable<ApiResponse<T>> {
+    return this._http
+      .get<ApiResponse<T>>(this.endpointURL, { params: httpParams })
+      .pipe(
+        first(),
+        catchError((err) => {
+          console.error(err);
+          return throwError(err);
+        })
+      );
   }
 
   fetchTableItems<T>(
@@ -40,7 +49,6 @@ export abstract class ApiService {
         httpParams = httpParams.set('offset', pageSize * pageIndex);
       }
     }
-
     if (sortedColumn) {
       httpParams = httpParams.set('sort_by', sortedColumn);
     }
@@ -48,9 +56,7 @@ export abstract class ApiService {
       httpParams = httpParams.set('sort_dir', sortDirection);
     }
 
-    return this._http.get<ApiResponse<T>>(this.endpointURL, {
-      params: httpParams,
-    });
+    return this.fetchItems<T>(httpParams);
   }
 
   deleteItem(id: string): Observable<{}> {

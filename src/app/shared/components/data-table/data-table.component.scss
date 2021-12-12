@@ -51,7 +51,7 @@
 
   header {
     background: white;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: $table-card-shadow;
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
@@ -59,10 +59,10 @@
 }
 @media (min-width: 769px) {
   .table-container {
-    padding: 20px;
+    padding: 10px;
     background: white;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    box-shadow: $table-card-shadow;
+    border-radius: 4px;
     overflow: hidden;
   }
 }
