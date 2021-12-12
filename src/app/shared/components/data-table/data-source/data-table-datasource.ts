@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
-import { map, switchMap, switchMapTo, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, switchMapTo, tap } from 'rxjs/operators';
 import { Observable, merge, Subject, of } from 'rxjs';
 import { HasID } from 'src/app/shared/components/data-table/models/has-id.interface';
 import { PipeFunction, TableColumn } from '../models/table-column.interface';
@@ -65,7 +65,9 @@ export abstract class DataTableDataSource<
       }
 
       return updateStream$.pipe(
-        tap(() => this._loading$.next(true)),
+        tap(() => {
+          this._loading$.next(true);
+        }),
         switchMapTo(this.filter$ ?? of(undefined)),
         switchMap((filter) =>
           this.getData(
@@ -74,7 +76,7 @@ export abstract class DataTableDataSource<
             this.sort!.active,
             this.sort!.direction,
             filter ?? new HttpParams()
-          )
+          ).pipe(catchError(() => of({ count: 0, items: [] })))
         ),
         tap((res: ApiResponse<T>) => {
           this.data = res;

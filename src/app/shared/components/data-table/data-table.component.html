@@ -24,7 +24,7 @@
     <mat-divider *ngIf="filter"></mat-divider>
   </header>
 
-  <table [hidden]="dataSource.loading$ | async" mat-table matSort appMatTableResponsive class="full-width-table" aria-label="Elements">
+  <table [hidden]="(dataSource.loading$ | async) || dataSource.data.count === 0" mat-table matSort appMatTableResponsive class="full-width-table" aria-label="Elements">
   
     <!-- Columns -->
     <ng-container *ngFor="let column of dataSource.displayedColumns" [matColumnDef]="column.name">
@@ -72,6 +72,10 @@
 
   <div class="loading" *ngIf="dataSource.loading$ | async">
     <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="no-data" *ngIf="(dataSource.loading$ | async) === false && dataSource.data.count === 0">
+    <h2>Žádné výsledky</h2>
   </div>
   
   <mat-paginator #paginator
