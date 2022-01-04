@@ -18,16 +18,16 @@ export class RoomDataSource extends DataTableDataSource<Room> {
     super();
 
     this.displayedColumns = [
-      { name: 'name', displayName: 'Jméno' },
-      { name: 'technology', displayName: 'Technologie' },
+      { name: 'name', displayName: 'Name' },
+      { name: 'technology', displayName: 'Technology' },
       {
         name: 'slotStart',
-        displayName: 'Začátek slotu',
+        displayName: 'Slot start',
         pipeFunc: this.datePipe,
       },
-      { name: 'slotEnd', displayName: 'Konec slotu', pipeFunc: this.datePipe },
-      { name: 'state', displayName: 'Stav' },
-      { name: 'description', displayName: 'Popis' },
+      { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
+      { name: 'state', displayName: 'State' },
+      { name: 'description', displayName: 'Description' },
     ];
 
     this.buttons = [new EditButton()];

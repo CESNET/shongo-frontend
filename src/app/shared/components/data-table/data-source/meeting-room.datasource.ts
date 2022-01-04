@@ -22,15 +22,15 @@ export class MeetingRoomDataSource extends DataTableDataSource<Room> {
     super();
 
     this.displayedColumns = [
-      { name: 'meetingRoom', displayName: 'Zasedací místnost' },
+      { name: 'meetingRoom', displayName: 'Meeting room' },
       {
         name: 'slotStart',
-        displayName: 'Začátek slotu',
+        displayName: 'Slot start',
         pipeFunc: this.datePipe,
       },
-      { name: 'slotEnd', displayName: 'Konec slotu', pipeFunc: this.datePipe },
-      { name: 'state', displayName: 'Stav rezervace' },
-      { name: 'description', displayName: 'Popis' },
+      { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
+      { name: 'state', displayName: 'Reservation state' },
+      { name: 'description', displayName: 'Description' },
     ];
 
     this.buttons = [

@@ -1,13 +1,13 @@
 <mat-card>
   <header>
     <form class="room-options" [formGroup]="filterGroup">
-      <button mat-button (click)="refresh()" type="button"><mat-icon>refresh</mat-icon> Obnovit</button>
-      <mat-checkbox color="primary" formControlName="highlightMine">Zvýraznit vaše rezervace</mat-checkbox>
+      <button mat-button (click)="refresh()" type="button"><mat-icon>refresh</mat-icon> Refresh</button>
+      <mat-checkbox color="primary" formControlName="highlightMine">Highlight your reservations</mat-checkbox>
       <mat-form-field>
-        <mat-label>Fyzický zdroj</mat-label>
+        <mat-label>Physical resource</mat-label>
         <mat-select formControlName="resource" (valueChange)="refresh()">
           <mat-option>
-            <ngx-mat-select-search formControlName="resourceFilter" placeholderLabel="Vyhledat..." noEntriesFoundLabel="Žádne položky se nenašli"></ngx-mat-select-search>
+            <ngx-mat-select-search formControlName="resourceFilter" placeholderLabel="Search..." noEntriesFoundLabel="No resources found"></ngx-mat-select-search>
           </mat-option>
           <mat-option *ngFor="let resource of filteredResources" [value]="resource.value">
             {{resource.display}}
@@ -20,9 +20,9 @@
       <!-- Calendar view selection -->
       <div class="btn-group">
         <mat-button-toggle-group name="calendarView" aria-label="Calendar view selection" [value]="view" (valueChange)="view = $event">
-          <mat-button-toggle [value]="CalendarView.Day">Den</mat-button-toggle>
-          <mat-button-toggle [value]="CalendarView.Week">Týden</mat-button-toggle>
-          <mat-button-toggle [value]="CalendarView.Month">Měsíc</mat-button-toggle>
+          <mat-button-toggle [value]="CalendarView.Day">Day</mat-button-toggle>
+          <mat-button-toggle [value]="CalendarView.Week">Week</mat-button-toggle>
+          <mat-button-toggle [value]="CalendarView.Month">Month</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 
@@ -31,7 +31,7 @@
       <div class="btn-group">
         <mat-button-toggle-group name="viewPagination" aria-label="Calendar pagination">
           <mat-button-toggle value="day" mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view"><mat-icon>chevron_left</mat-icon></mat-button-toggle>
-          <mat-button-toggle value="week" mwlCalendarToday [(viewDate)]="viewDate">Nyní</mat-button-toggle>
+          <mat-button-toggle value="week" mwlCalendarToday [(viewDate)]="viewDate">Now</mat-button-toggle>
           <mat-button-toggle value="month" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view"><mat-icon>chevron_right</mat-icon></mat-button-toggle>
         </mat-button-toggle-group>
       </div>
@@ -60,9 +60,9 @@
   <div class="cal-tooltip" [ngClass]="'cal-tooltip-' + placement">
     <div class="cal-tooltip-arrow"></div>
     <div class="cal-tooltip-inner">
-      <b>Popis: </b>
+      <b>Description: </b>
       <span [innerHtml]="contents"></span>
-      <b>Zarezervoval: </b>
+      <b>Reserved by: </b>
       <span [innerHtml]="event.meta.owner"></span> <a [href]="'mailto:' + event.meta.ownerEmail">{{ event.meta.ownerEmail }}</a>
     </div>
   </div>

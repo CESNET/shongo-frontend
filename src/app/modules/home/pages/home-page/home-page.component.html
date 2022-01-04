@@ -1,8 +1,8 @@
 <header>
-  <h1>Hlavní stránka</h1>
-  <p>Vítejte v rezervačním systému pro H.323/SIP a Adobe Connect virtuální místnosti.</p>
-  <p>Připomínky a nápady na vylepšení můžete posílat na emailovou adresu <a href="mailto:vidcon@cesnet.cz">vidcon@cesnet.cz</a>.</p>
-  <p>Zásady zpracování a ochrany osobních údajů, které evidujeme v souvislosti se zajišťováním služeb e-infrastruktury CESNET naleznete <a href="https://www.cesnet.cz/sdruzeni/dokumenty/oou/" target="_blank">zde</a>.</p>
+  <h1>Main page</h1>
+  <p>Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms.</p>
+  <p>You can send your suggestions to <a href="mailto:vidcon@cesnet.cz">vidcon@cesnet.cz</a>.</p>
+  <p>Terms and conditions under which personal data collated in providing the CESNET e-infrastructure services are processed you can find <a href="https://www.cesnet.cz/cesnet/documents/privacy/?lang=en" target="_blank">here</a>.</p>
 </header>
 
 <main>
@@ -10,10 +10,10 @@
     <mat-tab-group [animationDuration]="0">
 
       <!-- Reservation requests -->
-      <mat-tab label="Vaše místnosti" i18n-label="Home page tab label|Label for your rooms table component">
+      <mat-tab label="Your rooms" i18n-label="Home page tab label|Label for your rooms table component">
         <ng-template matTabContent>
           <div class="tab-content">
-            <app-data-table [dataSource]="resReqDataSource" header="Seznam místností, které vlastníte nebo které Vám byly zpřístupněny ostatními uživateli.">
+            <app-data-table [dataSource]="resReqDataSource" header="List of rooms which you own or which have been made accessible to you by other users.">
               <app-reservation-request-filter #tableFilter></app-reservation-request-filter>
             </app-data-table>
           </div>
@@ -21,25 +21,25 @@
       </mat-tab>
 
       <!-- Room participations -->
-      <mat-tab label="Vaše účast v místnostech" i18n-label="Home page tab label|Label for your participation table component">
+      <mat-tab label="Your participation in rooms" i18n-label="Home page tab label|Label for your participation table component">
         <ng-template matTabContent>
           <div class="tab-content">
-            <app-data-table [dataSource]="roomDataSource" [showDeleteButtons]="false" header="Seznam místností, v kterých jste nastaven jako účastník."></app-data-table>
+            <app-data-table [dataSource]="roomDataSource" [showDeleteButtons]="false" header="List of rooms in which you are configured as participant and which you can join."></app-data-table>
           </div>
         </ng-template>
       </mat-tab>
 
       <!-- Meeting room reservations -->
-      <mat-tab label="Vaše rezervace fyz. zdrojů" i18n-label="Home page tab label|Label for your resource reservations table component">
+      <mat-tab label="Your phys. resources reservations" i18n-label="Home page tab label|Label for your resource reservations table component">
         <ng-template matTabContent>
           <div class="tab-content">
-            <app-data-table [dataSource]="meetingRoomDataSource" header="Všechny rezervace zdroje."></app-data-table>
+            <app-data-table [dataSource]="meetingRoomDataSource" header="All reservations of resource."></app-data-table>
           </div>
         </ng-template>
       </mat-tab>
 
       <!-- Reservation calendar -->
-      <mat-tab label="Kalendář rezervací" i18n-label="Home page tab label|Label for reservation calendar component">
+      <mat-tab label="Reservations calendar" i18n-label="Home page tab label|Label for reservation calendar component">
         <ng-template matTabContent>
           <div class="tab-content">
             <app-reservation-calendar></app-reservation-calendar>

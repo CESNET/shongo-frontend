@@ -35,14 +35,14 @@ export class ReservationRequestFilterComponent
   });
 
   technologyOptions = [
-    { name: 'Všechny', value: -1 },
-    { name: 'Videokonference (PEXIP)', value: RoomTechnology.PEXIP },
+    { name: 'All', value: -1 },
+    { name: 'Videoconference (PEXIP)', value: RoomTechnology.PEXIP },
     {
-      name: 'Webkonference (Adobe Connect)',
+      name: 'Webconference (Adobe Connect)',
       value: RoomTechnology.ADOBE_CONNECT,
     },
-    { name: 'Telekonference', value: RoomTechnology.TELECONFERENCE },
-    { name: 'Videokonference (MCU)', value: RoomTechnology.MCU },
+    { name: 'Teleconference', value: RoomTechnology.TELECONFERENCE },
+    { name: 'Videoconference (MCU)', value: RoomTechnology.MCU },
   ];
 
   private _destroy$ = new Subject<void>();

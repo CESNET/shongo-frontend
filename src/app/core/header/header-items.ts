@@ -22,56 +22,56 @@ export enum ShowItem {
 
 export const menuItems: MenuItem[] = [
   {
-    label: $localize`:navbar link|Link to help page:Nápověda`,
+    label: $localize`:navbar link|Link to help page:Help`,
     route: '/',
     showItem: ShowItem.BOTH,
   },
   {
-    label: $localize`:navbar link|Link to documentation page:Dokumentace`,
+    label: $localize`:navbar link|Link to documentation page:Documentation`,
     route: '/',
     showItem: ShowItem.BOTH,
   },
   {
-    label: $localize`:navbar link|Link to resource management:Správa zdrojů`,
+    label: $localize`:navbar link|Link to resource management:Resource management`,
     route: '/',
     showItem: ShowItem.LOGGED_IN,
     subItems: [
       {
-        label: $localize`:navbar link|Sublink in resource management:Využití kapacity zdrojů`,
+        label: $localize`:navbar link|Sublink in resource management:Resource capacity utilization`,
         route: '/',
         showItem: ShowItem.LOGGED_IN,
       },
       {
-        label: $localize`:navbar link|Sublink in resource management:Rezervace zdrojů`,
+        label: $localize`:navbar link|Sublink in resource management:Resource reservations`,
         route: '/',
         showItem: ShowItem.LOGGED_IN,
       },
     ],
   },
   {
-    label: $localize`:navbar link|Link to reservations:Rezervovat`,
+    label: $localize`:navbar link|Link to reservations:Reserve`,
     route: '/',
     showItem: ShowItem.LOGGED_IN,
     subItems: [
       {
-        label: $localize`:navbar link|Sublink in reservations:Zasedací místnost`,
+        label: $localize`:navbar link|Sublink in reservations:Meeting room`,
         route: '/',
         showItem: ShowItem.LOGGED_IN,
       },
       {
-        label: $localize`:navbar link|Sublink in reservations:Parkovací místo`,
+        label: $localize`:navbar link|Sublink in reservations:Parking place`,
         route: '/',
         showItem: ShowItem.LOGGED_IN,
       },
     ],
   },
   {
-    label: $localize`:navbar link|Link to resource creation:Vytvořit`,
+    label: $localize`:navbar link|Link to resource creation:Create`,
     route: '/',
     showItem: ShowItem.LOGGED_IN,
     subItems: [
       {
-        label: $localize`:navbar link|Sublink in resource creation:Virtuální místnost`,
+        label: $localize`:navbar link|Sublink in resource creation:Virtual room`,
         route: '/',
         showItem: ShowItem.LOGGED_IN,
       },
@@ -81,12 +81,12 @@ export const menuItems: MenuItem[] = [
 
 export const accountItems: MenuItem[] = [
   {
-    label: $localize`:navbar link|Sublink in account:Nastavení`,
+    label: $localize`:navbar link|Sublink in account:Settings`,
     route: '/',
     showItem: ShowItem.LOGGED_IN,
   },
   {
-    label: $localize`:navbar link|Sublink in account:Odhlásit se`,
+    label: $localize`:navbar link|Sublink in account:Log out`,
     showItem: ShowItem.LOGGED_IN,
   },
 ];
@@ -96,12 +96,12 @@ export const locales: Locale[] = [
     shortcut: 'cz',
     icon: 'assets/img/i18n/CZ.svg',
     route: '/cz',
-    name: $localize`:cz language|CZ language in locale picker:Český jazyk`,
+    name: $localize`:cz language|CZ language in locale picker:Czech language`,
   },
   {
     shortcut: 'en',
     icon: 'assets/img/i18n/GB.svg',
     route: '/en',
-    name: $localize`:en language|EN language in locale picker:Anglický jazyk`,
+    name: $localize`:en language|EN language in locale picker:English language`,
   },
 ];

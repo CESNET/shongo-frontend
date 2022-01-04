@@ -4,7 +4,7 @@
   <div class="field-group">
     <!-- Technology -->
     <mat-form-field appearance="outline">
-      <mat-label>Technologie</mat-label>
+      <mat-label>Technology</mat-label>
       <mat-select formControlName="technology">
         <mat-option *ngFor="let option of technologyOptions" [value]="option.value">{{ option.name }}</mat-option>
       </mat-select>
@@ -12,7 +12,7 @@
 
     <!-- Search -->
     <mat-form-field appearance="outline" *ngIf="showAdvancedFilter">
-      <mat-label>Vyhledat</mat-label>
+      <mat-label>Search</mat-label>
       <input type="text" matInput formControlName="search">
     </mat-form-field>
   </div>
@@ -20,7 +20,7 @@
   <div class="field-group">
     <!-- Date from -->
     <mat-form-field appearance="outline" *ngIf="showAdvancedFilter">
-      <mat-label>Od</mat-label>
+      <mat-label>From</mat-label>
       <input matInput [matDatepicker]="dateFromPicker" formControlName="dateFrom">
       <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
       <mat-datepicker #dateFromPicker></mat-datepicker>
@@ -28,7 +28,7 @@
 
     <!-- Date to -->
     <mat-form-field appearance="outline" *ngIf="showAdvancedFilter">
-      <mat-label>Do</mat-label>
+      <mat-label>To</mat-label>
       <input matInput [matDatepicker]="dateToPicker" formControlName="dateTo">
       <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
       <mat-datepicker #dateToPicker></mat-datepicker>
@@ -37,15 +37,15 @@
 
   <div class="field-group">
     <!-- Show failed rooms -->
-    <mat-checkbox formControlName="showFailedRooms" color="primary">Zobrazit selhané místnosti</mat-checkbox>
+    <mat-checkbox formControlName="showFailedRooms" color="primary">Show failed rooms</mat-checkbox>
   
     <!-- Show capacities -->
-    <mat-checkbox formControlName="showCapacity" color="primary">Zobrazit kapacity</mat-checkbox>
+    <mat-checkbox formControlName="showCapacity" color="primary">Show capacities</mat-checkbox>
   </div>
 </form>
 
 <div class="buttons">
-  <button mat-stroked-button color="primary" (click)="toggleAdvancedFilter()">{{ showAdvancedFilter ? 'Skrýt rozšířený filtr' : 'Zobrazit rozšířený filtr' }}</button>
+  <button mat-stroked-button color="primary" (click)="toggleAdvancedFilter()">{{ showAdvancedFilter ? 'Hide advanced filter' : 'Show advanced filter' }}</button>
 </div>
 
 </div>

@@ -75,7 +75,7 @@
   </div>
 
   <div class="no-data" *ngIf="(dataSource.loading$ | async) === false && dataSource.data.count === 0">
-    <h2>Žádné výsledky</h2>
+    <h2>No entries found</h2>
   </div>
   
   <mat-paginator #paginator

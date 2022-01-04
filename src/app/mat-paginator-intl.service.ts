@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 
-const OUT_OF = $localize`:out of|Used in paginator for saying x items "out of" n:z`;
+const OUT_OF = $localize`:out of|Used in paginator for saying x items "out of" n:out of`;
 
 @Injectable()
 export class MatPaginatorI18nService extends MatPaginatorIntl {
-  itemsPerPageLabel = $localize`:items per page|Items per page label in paginator:Položek na stránku:`;
-  nextPageLabel = $localize`:next page|Next page label in paginator:Další stránka`;
-  previousPageLabel = $localize`:previous page|Previous page label in paginator:Předchozí stránka`;
+  itemsPerPageLabel = $localize`:items per page|Items per page label in paginator:Items per page:`;
+  nextPageLabel = $localize`:next page|Next page label in paginator:Next page`;
+  previousPageLabel = $localize`:previous page|Previous page label in paginator:Previous page`;
 
   getRangeLabel = function (page: number, pageSize: number, length: number) {
     if (length === 0 || pageSize === 0) {
