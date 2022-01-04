@@ -1,23 +1,30 @@
 import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { RoomStateColumnComponent } from 'src/app/modules/home/components/room-state-column/room-state-column.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { DeleteButton } from '../buttons/delete-button';
-import { EditButton } from '../buttons/edit-button';
-import { TableButton } from '../models/table-button.interface';
+import { LinkButton } from '../buttons/link-button';
+import { TableButton } from '../buttons/table-button';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
 export class ReservationRequestDataSource extends DataTableDataSource<ReservationRequest> {
   displayedColumns: TableColumn[];
-  buttons: TableButton<ReservationRequest>[];
+  buttons: TableButton[];
+  columnComponents = {
+    state: RoomStateColumnComponent,
+  };
 
   constructor(
     private _resReqService: ReservationRequestService,
-    private _datePipe: DatePipe
+    private _datePipe: DatePipe,
+    private _dialog: MatDialog
   ) {
     super();
 
@@ -39,7 +46,14 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
       { name: 'state', displayName: 'State' },
     ];
 
-    this.buttons = [new EditButton(), new DeleteButton(this._resReqService)];
+    this.buttons = [
+      new LinkButton(
+        'Edit reservation request',
+        'settings',
+        '/reservation_request/:id'
+      ),
+      new DeleteButton(this._resReqService, this._dialog),
+    ];
   }
 
   getData(

@@ -5,10 +5,10 @@
   $primary: map-get($config, primary);
 
   h1,
-  a {
+  a:not(.mat-icon-button, .mat-button) {
     color: map-get($primary, default);
   }
-  a:hover {
+  a:hover:not(.mat-icon-button, .mat-button) {
     color: map-get($primary, darker);
   }
 }

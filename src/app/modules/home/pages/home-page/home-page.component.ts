@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MeetingRoomService } from 'src/app/core/http/meeting-room/meeting-room.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RoomService } from 'src/app/core/http/room/room.service';
@@ -22,16 +23,19 @@ export class HomePageComponent {
     private _resReqService: ReservationRequestService,
     private _roomService: RoomService,
     private _meetingRoomService: MeetingRoomService,
-    private _datePipe: DatePipe
+    private _datePipe: DatePipe,
+    private _dialog: MatDialog
   ) {
     this.resReqDataSource = new ReservationRequestDataSource(
       this._resReqService,
-      this._datePipe
+      this._datePipe,
+      this._dialog
     );
     this.roomDataSource = new RoomDataSource(this._roomService, this._datePipe);
     this.meetingRoomDataSource = new MeetingRoomDataSource(
       this._meetingRoomService,
-      this._datePipe
+      this._datePipe,
+      this._dialog
     );
   }
 }

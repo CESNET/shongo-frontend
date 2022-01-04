@@ -1,0 +1,13 @@
+.state {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: black;
+
+  &.failed {
+    background: rgba(255, 0, 0, 0.3);
+    color: red;
+  }
+}

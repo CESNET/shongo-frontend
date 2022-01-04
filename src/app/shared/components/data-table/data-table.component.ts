@@ -9,15 +9,22 @@ import {
   OnDestroy,
   OnInit,
   ContentChild,
+  Injector,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { DataTableDataSource } from './data-source/data-table-datasource';
 import { DataTableFilter } from './filter/data-table-filter';
-import { HasID } from './models/has-id.interface';
+import { HasID } from 'src/app/models/has-id.interface';
+import { TableButton } from './buttons/table-button';
+import { ApiActionButton } from './buttons/api-action-button';
+import { LinkButton } from './buttons/link-button';
+import { TableButtonType } from '../../models/enums/table-button-type.enum';
+import { ActionButton } from './buttons/action-button';
+import { VALUE_PROVIDER } from './column-components/column.component';
 
 @Component({
   selector: 'app-data-table',
@@ -37,6 +44,8 @@ export class DataTableComponent<T extends HasID>
   @Input() header: string = '';
   @Input() showDeleteButtons: boolean = true;
 
+  TableButtonType = TableButtonType;
+
   selection = new SelectionModel<T>(true, []);
   maxCellTextLength = 21;
   displayedColumns: Observable<string[]>;
@@ -44,7 +53,10 @@ export class DataTableComponent<T extends HasID>
   private _displayedColumns = new BehaviorSubject<string[]>([]);
   private _destroy$ = new Subject<void>();
 
-  constructor(private _breakpointObserver: BreakpointObserver) {
+  constructor(
+    private _breakpointObserver: BreakpointObserver,
+    private _injector: Injector
+  ) {
     this.displayedColumns = this._displayedColumns.asObservable();
   }
 
@@ -68,6 +80,14 @@ export class DataTableComponent<T extends HasID>
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
+  }
+
+  asApiActionButton(button: TableButton): ApiActionButton<T> {
+    return button as ApiActionButton<T>;
+  }
+
+  asLinkButton(button: TableButton): LinkButton {
+    return button as LinkButton;
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -95,6 +115,28 @@ export class DataTableComponent<T extends HasID>
       return text;
     }
     return '';
+  }
+
+  getButtonType(button: TableButton): TableButtonType {
+    if (button instanceof ApiActionButton) {
+      return TableButtonType.API_ACTION;
+    } else if (button instanceof LinkButton) {
+      return TableButtonType.LINK;
+    }
+    return TableButtonType.ACTION;
+  }
+
+  handleButtonClick(button: TableButton, row: T): void {
+    if (button instanceof ActionButton) {
+      button.executeAction(row).pipe(first()).subscribe();
+    }
+  }
+
+  createColComponentValueInjector(value: string): Injector {
+    return Injector.create({
+      providers: [{ provide: VALUE_PROVIDER, useValue: value }],
+      parent: this._injector,
+    });
   }
 
   private _buildDisplayedColumnsArray(addSelect: boolean): string[] {

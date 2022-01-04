@@ -3,11 +3,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { catchError, map, switchMap, switchMapTo, tap } from 'rxjs/operators';
 import { Observable, merge, Subject, of } from 'rxjs';
-import { HasID } from 'src/app/shared/components/data-table/models/has-id.interface';
+import { HasID } from 'src/app/models/has-id.interface';
 import { PipeFunction, TableColumn } from '../models/table-column.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { TableButton } from '../models/table-button.interface';
+import { TableButton } from '../buttons/table-button';
 import { HttpParams } from '@angular/common/http';
+import { ColumnComponent } from '../column-components/column.component';
 
 export const REFRESH_TIMEOUT = 200;
 
@@ -20,7 +21,8 @@ export abstract class DataTableDataSource<
   T extends HasID
 > extends DataSource<T> {
   abstract displayedColumns: TableColumn[];
-  abstract buttons: TableButton<T>[];
+  abstract buttons: TableButton[];
+  columnComponents: Record<string, typeof ColumnComponent> = {};
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   filter$: Observable<HttpParams> | undefined;

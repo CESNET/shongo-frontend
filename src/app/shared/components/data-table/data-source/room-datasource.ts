@@ -5,14 +5,14 @@ import { Observable } from 'rxjs';
 import { RoomService } from 'src/app/core/http/room/room.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
-import { EditButton } from '../buttons/edit-button';
-import { TableButton } from '../models/table-button.interface';
+import { LinkButton } from '../buttons/link-button';
+import { TableButton } from '../buttons/table-button';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
 export class RoomDataSource extends DataTableDataSource<Room> {
   displayedColumns: TableColumn[];
-  buttons: TableButton<Room>[];
+  buttons: TableButton[];
 
   constructor(private _roomService: RoomService, private _datePipe: DatePipe) {
     super();
@@ -30,7 +30,7 @@ export class RoomDataSource extends DataTableDataSource<Room> {
       { name: 'description', displayName: 'Description' },
     ];
 
-    this.buttons = [new EditButton()];
+    this.buttons = [new LinkButton('Edit room', 'settings', '/room/:id')];
   }
 
   getData(

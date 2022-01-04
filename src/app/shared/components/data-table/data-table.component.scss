@@ -22,12 +22,18 @@
 .buttons {
   text-align: right;
 }
-.button-header {
+.justify-right {
+  text-align: right;
+}
+.justify-center {
+  text-align: center;
+}
+.button-width {
   box-sizing: content-box; // To keep the padding-right of the last cell.
   width: 40px;
 }
-.justify-right {
-  text-align: center;
+mat-spinner.button-loading {
+  margin: 0 10px;
 }
 
 /* Loading display */

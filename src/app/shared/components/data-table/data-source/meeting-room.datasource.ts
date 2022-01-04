@@ -1,23 +1,25 @@
 import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { MeetingRoomService } from 'src/app/core/http/meeting-room/meeting-room.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
 import { DeleteButton } from '../buttons/delete-button';
-import { EditButton } from '../buttons/edit-button';
-import { TableButton } from '../models/table-button.interface';
+import { LinkButton } from '../buttons/link-button';
+import { TableButton } from '../buttons/table-button';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
 export class MeetingRoomDataSource extends DataTableDataSource<Room> {
   displayedColumns: TableColumn[];
-  buttons: TableButton<Room>[];
+  buttons: TableButton[];
 
   constructor(
     private _meetingRoomServie: MeetingRoomService,
-    private _datePipe: DatePipe
+    private _datePipe: DatePipe,
+    private _dialog: MatDialog
   ) {
     super();
 
@@ -34,8 +36,8 @@ export class MeetingRoomDataSource extends DataTableDataSource<Room> {
     ];
 
     this.buttons = [
-      new EditButton(),
-      new DeleteButton(this._meetingRoomServie),
+      new LinkButton('Edit meeting room', 'settings', '/meeting_room/:id'),
+      new DeleteButton(this._meetingRoomServie, this._dialog),
     ];
   }
 

@@ -7,6 +7,8 @@ import { MatTableResponsiveDirective } from './directives/mat-table-responsive/m
 import { ShortStringPipe } from './pipes/short-string.pipe';
 import { ReservationRequestFilterComponent } from './components/data-table/filter/reservation-request-filter/reservation-request-filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { CertainityCheckComponent } from './components/certainity-check/certainity-check.component';
 
 @NgModule({
   declarations: [
@@ -14,13 +16,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTableResponsiveDirective,
     ShortStringPipe,
     ReservationRequestFilterComponent,
+    CertainityCheckComponent,
   ],
-  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
   providers: [DatePipe],
   exports: [
     DataTableComponent,
     ShortStringPipe,
     ReservationRequestFilterComponent,
+    CertainityCheckComponent,
   ],
 })
 export class SharedModule {}
