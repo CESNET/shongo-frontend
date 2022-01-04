@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
@@ -17,9 +16,6 @@ import { DataTableDataSource } from './data-table-datasource';
 export class ReservationRequestDataSource extends DataTableDataSource<ReservationRequest> {
   displayedColumns: TableColumn[];
   buttons: TableButton[];
-  columnComponents = {
-    state: RoomStateColumnComponent,
-  };
 
   constructor(
     private _resReqService: ReservationRequestService,
@@ -43,7 +39,11 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
         pipeFunc: this.datePipe,
       },
       { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
-      { name: 'state', displayName: 'State' },
+      {
+        name: 'state',
+        displayName: 'State',
+        component: RoomStateColumnComponent,
+      },
     ];
 
     this.buttons = [

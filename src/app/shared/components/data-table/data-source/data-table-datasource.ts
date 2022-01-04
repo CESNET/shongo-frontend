@@ -8,7 +8,6 @@ import { PipeFunction, TableColumn } from '../models/table-column.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { TableButton } from '../buttons/table-button';
 import { HttpParams } from '@angular/common/http';
-import { ColumnComponent } from '../column-components/column.component';
 
 export const REFRESH_TIMEOUT = 200;
 
@@ -22,7 +21,6 @@ export abstract class DataTableDataSource<
 > extends DataSource<T> {
   abstract displayedColumns: TableColumn[];
   abstract buttons: TableButton[];
-  columnComponents: Record<string, typeof ColumnComponent> = {};
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   filter$: Observable<HttpParams> | undefined;
@@ -40,6 +38,19 @@ export abstract class DataTableDataSource<
 
   pipeData(data: unknown, pipeFunc?: PipeFunction): string {
     return pipeFunc ? pipeFunc(data) : String(data);
+  }
+
+  pipeRow(row: T): T {
+    const pipedRow: T & any = Object.assign({}, row);
+
+    Object.keys(row).forEach((key: string) => {
+      const pipeFunc = this.displayedColumns.find(
+        (column) => column.name === key
+      )?.pipeFunc;
+      pipedRow[key] = this.pipeData((row as any)[key], pipeFunc);
+    });
+
+    return pipedRow;
   }
 
   getColumnNames(): string[] {
@@ -80,6 +91,10 @@ export abstract class DataTableDataSource<
             filter ?? new HttpParams()
           ).pipe(catchError(() => of({ count: 0, items: [] })))
         ),
+        map((res) => {
+          const pipedItems = res.items.map((item) => this.pipeRow(item));
+          return { count: res.count, items: pipedItems };
+        }),
         tap((res: ApiResponse<T>) => {
           this.data = res;
           this._loading$.next(false);
