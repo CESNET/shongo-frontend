@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { catchError, map, switchMap, switchMapTo, tap } from 'rxjs/operators';
 import { Observable, merge, Subject, of } from 'rxjs';
-import { HasID } from 'src/app/models/has-id.interface';
+import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { PipeFunction, TableColumn } from '../models/table-column.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { TableButton } from '../buttons/table-button';

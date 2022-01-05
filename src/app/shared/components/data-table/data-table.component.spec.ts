@@ -7,7 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { DataTableComponent } from './data-table.component';
 import { DataTableDatasourceStub } from 'src/app/test/stubs/data-table-datasource.stub';
 import { MaterialModule } from 'src/app/modules/material.module';
-import { HasID } from 'src/app/models/has-id.interface';
+import { HasID } from 'src/app/models/interfaces/has-id.interface';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent<HasID>;

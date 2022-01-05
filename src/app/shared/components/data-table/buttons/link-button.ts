@@ -1,4 +1,4 @@
-import { HasID } from 'src/app/models/has-id.interface';
+import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { TableButton } from './table-button';
 
 export class LinkButton extends TableButton {

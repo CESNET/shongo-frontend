@@ -18,7 +18,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { DataTableDataSource } from './data-source/data-table-datasource';
 import { DataTableFilter } from './filter/data-table-filter';
-import { HasID } from 'src/app/models/has-id.interface';
+import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { TableButton } from './buttons/table-button';
 import { ApiActionButton } from './buttons/api-action-button';
 import { LinkButton } from './buttons/link-button';

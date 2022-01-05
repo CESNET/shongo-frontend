@@ -32,7 +32,7 @@
 
       <!-- Default row -->
       <ng-container *ngIf="!column.component; else customColumn">
-        <td mat-cell *matCellDef="let row" [matTooltip]="row[column.name]">{{ row[column.name] | appShortString: maxCellTextLength }}</td>
+        <td mat-cell *matCellDef="let row" [matTooltip]="row[column.name].length > maxCellTextLength ? row[column.name] : null">{{ row[column.name] | appShortString: maxCellTextLength }}</td>
       </ng-container>
 
       <!-- Custom component row -->

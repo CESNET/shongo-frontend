@@ -2,7 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api.service';
-import { HasID } from 'src/app/models/has-id.interface';
+import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { CertainityCheckComponent } from '../../certainity-check/certainity-check.component';
 import { ApiActionButton } from './api-action-button';
 
