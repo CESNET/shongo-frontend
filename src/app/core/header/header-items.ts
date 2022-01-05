@@ -23,7 +23,7 @@ export enum ShowItem {
 export const menuItems: MenuItem[] = [
   {
     label: $localize`:navbar link|Link to help page:Help`,
-    route: '/',
+    route: '/help',
     showItem: ShowItem.BOTH,
   },
   {

@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent],
@@ -20,6 +21,7 @@ import { SharedModule } from '../shared/shared.module';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
+    RouterModule,
     OAuthModule.forRoot(),
   ],
 })

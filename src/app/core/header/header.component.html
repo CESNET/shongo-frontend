@@ -10,7 +10,7 @@
         <!-- Big layout menu -->
         <ul>
           <li *ngFor="let item of filterAuthorizedItems(menuItems)" fxHide.lt-md>
-            <a mat-button *ngIf="!item.subItems; else itemWithSubMenu">{{ item.label }}</a>
+            <a mat-button [routerLink]="item.route" *ngIf="!item.subItems; else itemWithSubMenu">{{ item.label }}</a>
 
             <ng-template #itemWithSubMenu>
               <button mat-button [matMenuTriggerFor]="popupSubMenu">{{ item.label }}<mat-icon>arrow_drop_down</mat-icon></button>

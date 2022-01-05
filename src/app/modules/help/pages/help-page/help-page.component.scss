@@ -1,0 +1,43 @@
+/* Layout */
+.help {
+  display: flex;
+
+  aside {
+    width: 20%;
+  }
+  main {
+    flex: 1;
+  }
+}
+main {
+  line-height: 200%;
+}
+header {
+  margin-bottom: 15px;
+}
+
+/* Text */
+h2 {
+  margin-bottom: 0px;
+}
+
+/* Navigation */
+aside {
+  position: relative;
+}
+nav {
+  position: fixed;
+  margin-right: 15px;
+  width: fit-content;
+}
+.selected {
+  color: rgb(16, 197, 16);
+}
+
+/* Images */
+.labeled-img {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

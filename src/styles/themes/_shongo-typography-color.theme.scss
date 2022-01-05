@@ -7,6 +7,7 @@
   h1,
   a:not(.mat-icon-button, .mat-button) {
     color: map-get($primary, default);
+    text-decoration: none;
   }
   a:hover:not(.mat-icon-button, .mat-button) {
     color: map-get($primary, darker);

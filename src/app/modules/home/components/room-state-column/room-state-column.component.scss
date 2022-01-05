@@ -4,6 +4,9 @@
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.2);
   color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &.failed,
   &.denied,
