@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { of } from 'rxjs';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DummyComponent } from 'src/app/test/components/dummy.component';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -18,7 +20,17 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaterialModule, BrowserAnimationsModule, SharedModule],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        RouterTestingModule.withRoutes([
+          {
+            path: '**',
+            component: DummyComponent,
+          },
+        ]),
+      ],
       declarations: [HeaderComponent],
       providers: [
         {

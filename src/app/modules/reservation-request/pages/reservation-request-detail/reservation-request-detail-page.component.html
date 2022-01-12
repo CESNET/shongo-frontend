@@ -1,0 +1,54 @@
+<header>
+  <h1>Room detail</h1>
+</header>
+
+<main>
+  <mat-tab-group
+    [animationDuration]="0"
+    *ngIf="
+      reservationRequest$ | async as reservationRequest;
+      else loadingOrError
+    "
+  >
+    <mat-tab label="Reservation">
+      <ng-template matTabContent>
+        <div class="tab-content">
+          <app-reservation-detail
+            [reservationRequest]="reservationRequest"
+          ></app-reservation-detail>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="User roles"> </mat-tab>
+    <mat-tab label="Participants"> </mat-tab>
+    <mat-tab label="Runtime management"> </mat-tab>
+    <mat-tab label="Recordings"> </mat-tab>
+  </mat-tab-group>
+
+  <ng-template #loadingOrError>
+    <ng-container *ngIf="loading$ | async; else error">
+      <ng-container *ngTemplateOutlet="loading"></ng-container>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #loading>
+    <ngx-skeleton-loader
+      count="5"
+      [theme]="{
+        'border-radius': '5px',
+        height: '50px',
+        width: '150px',
+        'margin-right': '15px',
+        border: '1px solid white'
+      }"
+    ></ngx-skeleton-loader>
+    <ngx-skeleton-loader
+      count="4"
+      [theme]="{ height: '50px' }"
+    ></ngx-skeleton-loader>
+  </ng-template>
+
+  <ng-template #error>
+    <h2>Error</h2>
+  </ng-template>
+</main>

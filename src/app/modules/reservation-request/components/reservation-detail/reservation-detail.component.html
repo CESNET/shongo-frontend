@@ -1,0 +1,42 @@
+<div class="reservation-detail">
+  <main>
+    <header>
+      <h2 class="mat-primary-color">Detail</h2>
+    </header>
+    <dl>
+      <dt>Technology:</dt>
+      <dd>{{ reservationRequest.technology }}</dd>
+      <dt>Description:</dt>
+      <dd>{{ reservationRequest.description }}</dd>
+      <dt>Created at:</dt>
+      <dd>{{ reservationRequest.creationTime | date }}</dd>
+      <dt>Participants:</dt>
+      <dd>{{ reservationRequest.participants.length }}</dd>
+      <dt>Allocated time slot:</dt>
+      <dd>
+        {{
+          (reservationRequest.slotStart | date) +
+            " - " +
+            (reservationRequest.slotEnd | date)
+        }}
+      </dd>
+      <dt>Admin pin:</dt>
+      <dd>{{ reservationRequest.adminPin }}</dd>
+      <dt>State:</dt>
+      <dd>{{ reservationRequest.state }}</dd>
+      <dt>Record:</dt>
+      <dd>{{ reservationRequest.record ? "Yes" : "No" }}</dd>
+      <dt>Notify participants:</dt>
+      <dd>{{ reservationRequest.notifyParticipants ? "Yes" : "No" }}</dd>
+      <dt>Participants:</dt>
+      <dd *ngFor="let participant of reservationRequest.participants">
+        {{ participant.name }}
+      </dd>
+    </dl>
+  </main>
+  <aside>
+    <header>
+      <h2 class="mat-primary-color">History of modifications</h2>
+    </header>
+  </aside>
+</div>

@@ -59,6 +59,10 @@ export abstract class ApiService {
     return this.fetchItems<T>(httpParams);
   }
 
+  fetchItem<T>(id: string): Observable<T> {
+    return this._http.get<T>(`${this.endpointURL}/${id}`);
+  }
+
   deleteItem(id: string): Observable<{}> {
     return this._http.delete<{}>(this.endpointURL, { body: { id } });
   }

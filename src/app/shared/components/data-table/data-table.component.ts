@@ -143,7 +143,7 @@ export class DataTableComponent<T extends HasID>
     const displayedColumns = [...this.dataSource.getColumnNames()];
 
     if (this.dataSource.buttons) {
-      displayedColumns.push(...this.dataSource.buttons.map((btn) => btn.name));
+      displayedColumns.push('actions');
     }
 
     if (addSelect) {

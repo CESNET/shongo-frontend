@@ -56,6 +56,8 @@
 
         &:before {
           content: attr(data-column-name);
+          display: flex;
+          align-items: center;
           text-align: left;
           font-weight: 600;
           color: rgb(70, 70, 70);
@@ -75,10 +77,6 @@
       &:last-of-type td:last-of-type {
         border: none;
       }
-
-      // &:not(:last-of-type) td:last-of-type {
-      //   border-bottom: 1rem solid #fafafa;
-      // }
     }
   }
 

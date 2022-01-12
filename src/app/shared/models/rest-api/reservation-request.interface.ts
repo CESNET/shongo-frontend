@@ -1,3 +1,5 @@
+import { RoomParticipant } from './room-participant.interface';
+
 export interface ReservationRequest {
   id: string;
   creationTime: string;
@@ -6,7 +8,10 @@ export interface ReservationRequest {
   description: string;
   author: string;
   name: string;
-  participants: number;
+  participants: RoomParticipant[];
   technology: string;
   state: string;
+  record: boolean;
+  notifyParticipants: boolean;
+  adminPin?: string;
 }

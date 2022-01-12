@@ -20,10 +20,8 @@
 
 /* Buttons */
 .buttons {
-  text-align: right;
-}
-.justify-right {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
 .justify-center {
   text-align: center;
@@ -76,6 +74,11 @@ mat-spinner.button-loading {
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+  }
+
+  .custom-column {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 @media (min-width: 769px) {

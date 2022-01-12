@@ -47,10 +47,11 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
     ];
 
     this.buttons = [
+      new LinkButton('Show detail', 'visibility', '/reservation_request/:id'),
       new LinkButton(
         'Edit reservation request',
         'settings',
-        '/reservation_request/:id'
+        '/reservation_request/edit/:id'
       ),
       new DeleteButton(this._resReqService, this._dialog),
     ];
