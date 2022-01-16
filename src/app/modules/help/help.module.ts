@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HelpPageComponent } from './pages/help-page/help-page.component';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
 
 @NgModule({
-  declarations: [HelpPageComponent],
+  declarations: [HelpPageComponent, ReportPageComponent],
   imports: [CommonModule, MaterialModule, RouterModule],
 })
 export class HelpModule {}

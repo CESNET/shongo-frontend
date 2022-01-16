@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MeetingRoomService } from 'src/app/core/http/meeting-room/meeting-room.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RoomService } from 'src/app/core/http/room/room.service';
-import { MeetingRoomDataSource } from 'src/app/shared/components/data-table/data-source/meeting-room.datasource';
-import { ReservationRequestDataSource } from 'src/app/shared/components/data-table/data-source/reservation-request-datasource';
-import { RoomDataSource } from 'src/app/shared/components/data-table/data-source/room-datasource';
+import { MeetingRoomDataSource } from 'src/app/shared/components/data-table/data-sources/meeting-room.datasource';
+import { ReservationRequestDataSource } from 'src/app/shared/components/data-table/data-sources/reservation-request-datasource';
+import { RoomDataSource } from 'src/app/shared/components/data-table/data-sources/room-datasource';
 
 @Component({
   selector: 'app-home-page',

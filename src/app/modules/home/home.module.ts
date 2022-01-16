@@ -10,14 +10,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { RoomStateColumnComponent } from './components/room-state-column/room-state-column.component';
 
 @NgModule({
-  declarations: [
-    HomePageComponent,
-    ReservationCalendarComponent,
-    RoomStateColumnComponent,
-  ],
+  declarations: [HomePageComponent, ReservationCalendarComponent],
   imports: [
     CommonModule,
     MaterialModule,

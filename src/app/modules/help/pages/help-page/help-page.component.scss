@@ -1,6 +1,7 @@
 /* Layout */
 .help {
   display: flex;
+  flex-wrap: wrap;
 
   aside {
     width: 20%;
@@ -40,4 +41,22 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media only screen and (max-width: 1150px) {
+  .help {
+    main,
+    aside {
+      width: 100%;
+    }
+
+    aside,
+    nav {
+      position: initial;
+    }
+
+    aside {
+      margin-bottom: 40px;
+    }
+  }
 }

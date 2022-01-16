@@ -1,36 +1,24 @@
 import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
-import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { RoomStateColumnComponent } from 'src/app/modules/home/components/room-state-column/room-state-column.component';
+import { RoomService } from 'src/app/core/http/room/room.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
-import { DeleteButton } from '../buttons/delete-button';
+import { Room } from 'src/app/shared/models/rest-api/room.interface';
 import { LinkButton } from '../buttons/link-button';
 import { TableButton } from '../buttons/table-button';
+import { RoomStateColumnComponent } from '../column-components/state-chip-column/components/room-state-column.component';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
-export class ReservationRequestDataSource extends DataTableDataSource<ReservationRequest> {
+export class RoomDataSource extends DataTableDataSource<Room> {
   displayedColumns: TableColumn[];
   buttons: TableButton[];
 
-  constructor(
-    private _resReqService: ReservationRequestService,
-    private _datePipe: DatePipe,
-    private _dialog: MatDialog
-  ) {
+  constructor(private _roomService: RoomService, private _datePipe: DatePipe) {
     super();
 
     this.displayedColumns = [
-      { name: 'author', displayName: 'Author' },
-      {
-        name: 'creationTime',
-        displayName: 'Created at',
-        pipeFunc: this.datePipe,
-      },
       { name: 'name', displayName: 'Name' },
       { name: 'technology', displayName: 'Technology' },
       {
@@ -44,17 +32,10 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
         displayName: 'State',
         component: RoomStateColumnComponent,
       },
+      { name: 'description', displayName: 'Description' },
     ];
 
-    this.buttons = [
-      new LinkButton('Show detail', 'visibility', '/reservation_request/:id'),
-      new LinkButton(
-        'Edit reservation request',
-        'settings',
-        '/reservation_request/edit/:id'
-      ),
-      new DeleteButton(this._resReqService, this._dialog),
-    ];
+    this.buttons = [new LinkButton('Edit room', 'settings', '/room/:id')];
   }
 
   getData(
@@ -63,8 +44,8 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
     sortedColumn: string,
     sortDirection: SortDirection,
     filter: HttpParams
-  ): Observable<ApiResponse<ReservationRequest>> {
-    return this._resReqService.fetchTableItems(
+  ): Observable<ApiResponse<Room>> {
+    return this._roomService.fetchTableItems(
       pageSize,
       pageIndex,
       sortedColumn,

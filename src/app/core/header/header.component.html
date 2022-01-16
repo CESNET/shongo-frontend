@@ -2,21 +2,35 @@
   <mat-toolbar class="header-toolbar">
     <div class="res-container fx-center-vert">
       <!-- Logo -->
-      <a href="/">
+      <a routerLink="/">
         <img src="assets/img/meetings_RGB.png" alt="Cesnet Meetings" />
       </a>
 
       <nav class="fx-center-vert">
         <!-- Big layout menu -->
         <ul>
-          <li *ngFor="let item of filterAuthorizedItems(menuItems)" fxHide.lt-md>
-            <a mat-button [routerLink]="item.route" *ngIf="!item.subItems; else itemWithSubMenu">{{ item.label }}</a>
+          <li
+            *ngFor="let item of filterAuthorizedItems(menuItems)"
+            fxHide.lt-md
+          >
+            <ng-container *ngIf="!item.subItems; else itemWithSubMenu">
+              <ng-container
+                *ngTemplateOutlet="linkButton; context: { item: item }"
+              ></ng-container>
+            </ng-container>
 
             <ng-template #itemWithSubMenu>
-              <button mat-button [matMenuTriggerFor]="popupSubMenu">{{ item.label }}<mat-icon>arrow_drop_down</mat-icon></button>
+              <button mat-button [matMenuTriggerFor]="popupSubMenu">
+                {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
+              </button>
 
               <mat-menu #popupSubMenu="matMenu">
-                <button mat-menu-item *ngFor="let subItem of filterAuthorizedItems(item.subItems)">{{ subItem.label }}</button>
+                <button
+                  mat-menu-item
+                  *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
+                >
+                  {{ subItem.label }}
+                </button>
               </mat-menu>
             </ng-template>
           </li>
@@ -31,11 +45,20 @@
 
       <!-- i18n language changer -->
       <button mat-icon-button [matMenuTriggerFor]="languageMenu">
-        <img [src]="defaultLocale.icon" [alt]="defaultLocale.name" width="20px">
+        <img
+          [src]="defaultLocale.icon"
+          [alt]="defaultLocale.name"
+          width="20px"
+        />
       </button>
       <mat-menu #languageMenu="matMenu">
         <button mat-menu-item *ngFor="let locale of locales">
-          <img [src]="locale.icon" [alt]="locale.name" width="20px" class="locale-menu-icon">
+          <img
+            [src]="locale.icon"
+            [alt]="locale.name"
+            width="20px"
+            class="locale-menu-icon"
+          />
           <span>{{ locale.name }}</span>
         </button>
       </mat-menu>
@@ -49,16 +72,22 @@
             <mat-icon>arrow_drop_down</mat-icon>
           </span>
         </button>
-  
-        <button mat-icon-button [matMenuTriggerFor]="accountSubMenu" fxHide fxShow.lt-sm>
+
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="accountSubMenu"
+          fxHide
+          fxShow.lt-sm
+        >
           <mat-icon>account_circle</mat-icon>
         </button>
-  
+
         <mat-menu #accountSubMenu="matMenu">
           <ng-container *ngFor="let item of accountItems">
-            <ng-container 
-             [ngTemplateOutlet]="item.route ? linkItem : buttonItem" 
-             [ngTemplateOutletContext]="{item:item}">
+            <ng-container
+              [ngTemplateOutlet]="item.route ? linkItem : buttonItem"
+              [ngTemplateOutletContext]="{ item: item }"
+            >
             </ng-container>
           </ng-container>
 
@@ -67,33 +96,67 @@
           </ng-template>
 
           <ng-template #buttonItem let-item="item">
-            <button mat-menu-item (click)="item.func()">{{ item.label }}</button>
+            <button mat-menu-item (click)="item.func()">
+              {{ item.label }}
+            </button>
           </ng-template>
         </mat-menu>
       </ng-container>
 
       <ng-template #loggedOutFallback>
-        <button mat-button (click)="logIn()" i18n="navbar button|Log in button">Log in</button>
+        <button mat-button (click)="logIn()" i18n="navbar button|Log in button">
+          Log in
+        </button>
       </ng-template>
-
     </div>
   </mat-toolbar>
 
   <!-- Small layout menu -->
-  <ul id="dropdown-menu" fxHide fxShow.lt-md [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
+  <ul
+    id="dropdown-menu"
+    fxHide
+    fxShow.lt-md
+    [@dropdown]="isDropdownClosed ? 'closed' : 'open'"
+  >
     <ng-container *ngFor="let item of filterAuthorizedItems(menuItems)">
       <li>
-        <a matRipple [matRippleCentered]="true" *ngIf="!item.subItems; else compactItemWithSubMenu">{{ item.label }}</a>
-  
+        <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
+          <div matRipple [matRippleCentered]="true">
+            <ng-container
+              *ngTemplateOutlet="linkButton; context: { item: item }"
+            ></ng-container>
+          </div>
+        </ng-container>
+
         <ng-template #compactItemWithSubMenu>
-          <button mat-ripple (click)="item.subMenuOpen = !item.subMenuOpen" class="mat-body">{{ item.label }}<mat-icon>arrow_drop_down</mat-icon></button>
+          <button
+            mat-ripple
+            (click)="item.subMenuOpen = !item.subMenuOpen"
+            class="mat-body"
+          >
+            {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
+          </button>
         </ng-template>
       </li>
-      <div [@dropdown]="item.subMenuOpen ? 'open' : 'closed'" >
+      <div [@dropdown]="item.subMenuOpen ? 'open' : 'closed'">
         <li class="subItem">
-          <a matRipple [matRippleCentered]="true" *ngFor="let subItem of filterAuthorizedItems(item.subItems)">{{ subItem.label }}</a>
+          <a
+            matRipple
+            [matRippleCentered]="true"
+            *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
+            >{{ subItem.label }}</a
+          >
         </li>
       </div>
     </ng-container>
   </ul>
 </header>
+
+<ng-template #linkButton let-item="item">
+  <a mat-button [href]="item.route" *ngIf="item.externalRoute">{{
+    item.label
+  }}</a>
+  <a mat-button [routerLink]="item.route" *ngIf="!item.externalRoute">{{
+    item.label
+  }}</a>
+</ng-template>

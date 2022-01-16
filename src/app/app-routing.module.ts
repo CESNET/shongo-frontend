@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HelpPageComponent } from './modules/help/pages/help-page/help-page.component';
+import { ReportPageComponent } from './modules/help/pages/report-page/report-page.component';
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
 import { ReservationRequestDetailPageComponent } from './modules/reservation-request/pages/reservation-request-detail/reservation-request-detail-page.component';
 
@@ -14,6 +15,7 @@ const routes: Routes = [
     component: ReservationRequestDetailPageComponent,
   },
   { path: 'help', component: HelpPageComponent },
+  { path: 'report', component: ReportPageComponent },
   {
     path: '**',
     component: HomePageComponent,

@@ -7,25 +7,19 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 
-  &.failed,
-  &.denied,
-  &.modification_failed {
+  &.error {
     background: rgba(255, 0, 0, 0.3);
     color: red;
   }
-  &.not_allocated,
-  &.confirm_awaiting,
-  &.allocated_started,
-  &.allocated,
-  &.allocated_started_available {
+  &.success {
     background: rgba(20, 200, 80, 0.3);
     color: rgb(0, 187, 56);
   }
-  &.allocated_started_not_available {
+  &.info {
     background: rgba(255, 242, 54, 0.3);
     color: rgb(187, 159, 0);
   }
-  &.allocated_finished {
+  &.ready {
     background: rgba(0, 119, 255, 0.3);
     color: rgb(0, 60, 255);
   }

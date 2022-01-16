@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
-import { DataTableDataSource } from './data-source/data-table-datasource';
+import { DataTableDataSource } from './data-sources/data-table-datasource';
 import { DataTableFilter } from './filter/data-table-filter';
 import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { TableButton } from './buttons/table-button';

@@ -9,6 +9,9 @@ import { ReservationRequestFilterComponent } from './components/data-table/filte
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CertainityCheckComponent } from './components/certainity-check/certainity-check.component';
+import { StateChipComponent } from './components/state-chip/state-chip.component';
+import { ReservationRequestStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/reservation-request-state-column.component';
+import { RoomStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/room-state-column.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { CertainityCheckComponent } from './components/certainity-check/certaini
     ShortStringPipe,
     ReservationRequestFilterComponent,
     CertainityCheckComponent,
+    StateChipComponent,
+    ReservationRequestStateColumnComponent,
+    RoomStateColumnComponent,
   ],
   imports: [
     CommonModule,

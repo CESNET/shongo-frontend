@@ -2,6 +2,7 @@ export interface MenuItem {
   label: string;
   showItem: ShowItem;
   route?: string;
+  externalRoute?: boolean;
   func?: () => void;
   subItems?: MenuItem[];
   subMenuOpen?: boolean;
@@ -28,7 +29,13 @@ export const menuItems: MenuItem[] = [
   },
   {
     label: $localize`:navbar link|Link to documentation page:Documentation`,
-    route: '/',
+    route: 'https://vidcon.cesnet.cz/?back-url=/',
+    externalRoute: true,
+    showItem: ShowItem.BOTH,
+  },
+  {
+    label: $localize`:navbar link|Link to report page:Report a problem`,
+    route: '/report',
     showItem: ShowItem.BOTH,
   },
   {
