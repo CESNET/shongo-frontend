@@ -1,6 +1,7 @@
 export interface MenuItem {
   label: string;
-  showItem: ShowItem;
+  itemAuth: ItemAuthorization;
+  hideOnTablet?: boolean;
   route?: string;
   externalRoute?: boolean;
   func?: () => void;
@@ -15,7 +16,7 @@ export interface Locale {
   name: string;
 }
 
-export enum ShowItem {
+export enum ItemAuthorization {
   LOGGED_IN,
   LOGGED_OUT,
   BOTH,
@@ -25,62 +26,65 @@ export const menuItems: MenuItem[] = [
   {
     label: $localize`:navbar link|Link to help page:Help`,
     route: '/help',
-    showItem: ShowItem.BOTH,
+    itemAuth: ItemAuthorization.BOTH,
+    hideOnTablet: true,
   },
   {
     label: $localize`:navbar link|Link to documentation page:Documentation`,
     route: 'https://vidcon.cesnet.cz/?back-url=/',
     externalRoute: true,
-    showItem: ShowItem.BOTH,
+    itemAuth: ItemAuthorization.BOTH,
+    hideOnTablet: true,
   },
   {
     label: $localize`:navbar link|Link to report page:Report a problem`,
     route: '/report',
-    showItem: ShowItem.BOTH,
+    itemAuth: ItemAuthorization.BOTH,
+    hideOnTablet: true,
   },
   {
     label: $localize`:navbar link|Link to resource management:Resource management`,
     route: '/',
-    showItem: ShowItem.LOGGED_IN,
+    itemAuth: ItemAuthorization.LOGGED_IN,
     subItems: [
       {
         label: $localize`:navbar link|Sublink in resource management:Resource capacity utilization`,
         route: '/',
-        showItem: ShowItem.LOGGED_IN,
+        itemAuth: ItemAuthorization.LOGGED_IN,
       },
       {
         label: $localize`:navbar link|Sublink in resource management:Resource reservations`,
         route: '/',
-        showItem: ShowItem.LOGGED_IN,
+        itemAuth: ItemAuthorization.LOGGED_IN,
       },
     ],
   },
   {
     label: $localize`:navbar link|Link to reservations:Reserve`,
     route: '/',
-    showItem: ShowItem.LOGGED_IN,
+    itemAuth: ItemAuthorization.LOGGED_IN,
     subItems: [
       {
         label: $localize`:navbar link|Sublink in reservations:Meeting room`,
         route: '/',
-        showItem: ShowItem.LOGGED_IN,
+        itemAuth: ItemAuthorization.LOGGED_IN,
       },
       {
         label: $localize`:navbar link|Sublink in reservations:Parking place`,
         route: '/',
-        showItem: ShowItem.LOGGED_IN,
+        itemAuth: ItemAuthorization.LOGGED_IN,
       },
     ],
   },
   {
     label: $localize`:navbar link|Link to resource creation:Create`,
     route: '/',
-    showItem: ShowItem.LOGGED_IN,
+    itemAuth: ItemAuthorization.LOGGED_IN,
     subItems: [
       {
         label: $localize`:navbar link|Sublink in resource creation:Virtual room`,
         route: '/',
-        showItem: ShowItem.LOGGED_IN,
+        itemAuth: ItemAuthorization.LOGGED_IN,
       },
     ],
   },
@@ -90,11 +94,11 @@ export const accountItems: MenuItem[] = [
   {
     label: $localize`:navbar link|Sublink in account:Settings`,
     route: '/',
-    showItem: ShowItem.LOGGED_IN,
+    itemAuth: ItemAuthorization.LOGGED_IN,
   },
   {
     label: $localize`:navbar link|Sublink in account:Log out`,
-    showItem: ShowItem.LOGGED_IN,
+    itemAuth: ItemAuthorization.LOGGED_IN,
   },
 ];
 

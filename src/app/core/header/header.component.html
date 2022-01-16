@@ -11,6 +11,7 @@
         <ul>
           <li
             *ngFor="let item of filterAuthorizedItems(menuItems)"
+            [fxHide.lt-lg]="item.hideOnTablet"
             fxHide.lt-md
           >
             <ng-container *ngIf="!item.subItems; else itemWithSubMenu">
@@ -36,7 +37,7 @@
           </li>
         </ul>
 
-        <button mat-icon-button fxHide fxShow.lt-md (click)="toggleDropdown()">
+        <button mat-icon-button fxHide fxShow.lt-lg (click)="toggleDropdown()">
           <mat-icon>menu</mat-icon>
         </button>
       </nav>
@@ -112,14 +113,9 @@
   </mat-toolbar>
 
   <!-- Small layout menu -->
-  <ul
-    id="dropdown-menu"
-    fxHide
-    fxShow.lt-md
-    [@dropdown]="isDropdownClosed ? 'closed' : 'open'"
-  >
+  <ul id="dropdown-menu" [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
     <ng-container *ngFor="let item of filterAuthorizedItems(menuItems)">
-      <li>
+      <li fxHide fxShow.lt-md [fxShow.lt-lg]="item.hideOnTablet">
         <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
           <div matRipple [matRippleCentered]="true">
             <ng-container

@@ -20,7 +20,7 @@ import {
   locales,
   MenuItem,
   menuItems,
-  ShowItem,
+  ItemAuthorization,
 } from './header-items';
 
 @Component({
@@ -90,10 +90,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       return [];
     }
     return items.filter((item) => {
-      switch (item.showItem) {
-        case ShowItem.LOGGED_IN:
+      switch (item.itemAuth) {
+        case ItemAuthorization.LOGGED_IN:
           return this.isAuthenticated;
-        case ShowItem.LOGGED_OUT:
+        case ItemAuthorization.LOGGED_OUT:
           return !this.isAuthenticated;
       }
       return true;
