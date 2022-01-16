@@ -138,16 +138,13 @@
           </button>
         </ng-template>
       </li>
-      <div [@dropdown]="item.subMenuOpen ? 'open' : 'closed'">
-        <li class="subItem">
-          <a
-            matRipple
-            [matRippleCentered]="true"
-            *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
-            >{{ subItem.label }}</a
-          >
-        </li>
-      </div>
+      <li
+        class="subItem"
+        [@dropdown]="item.subMenuOpen ? 'open' : 'closed'"
+        *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
+      >
+        <a matRipple [matRippleCentered]="true">{{ subItem.label }}</a>
+      </li>
     </ng-container>
   </ul>
 </header>

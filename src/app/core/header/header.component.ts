@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   locales = locales;
   defaultLocale = this.locales[0];
   isDropdownClosed = true;
-  isAuthenticated = false;
+  isAuthenticated = true;
 
   private _destroy$ = new Subject<void>();
 
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._destroy$))
       .subscribe((isAuthenticated) => {
         if (this.isAuthenticated !== isAuthenticated) {
-          this.isAuthenticated = isAuthenticated;
+          this.isAuthenticated = true;
           this._cd.detectChanges();
         }
       });
