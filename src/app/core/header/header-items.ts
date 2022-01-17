@@ -93,7 +93,7 @@ export const menuItems: MenuItem[] = [
 export const accountItems: MenuItem[] = [
   {
     label: $localize`:navbar link|Sublink in account:Settings`,
-    route: '/',
+    route: '/user/settings',
     itemAuth: ItemAuthorization.LOGGED_IN,
   },
   {

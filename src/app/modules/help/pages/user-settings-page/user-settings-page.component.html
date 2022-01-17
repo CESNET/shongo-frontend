@@ -1,0 +1,83 @@
+<header>
+  <h1>User settings</h1>
+</header>
+
+<main>
+  <form [formGroup]="settingsForm">
+    <mat-form-field appearance="outline">
+      <mat-label>User</mat-label>
+      <input matInput type="text" formControlName="user" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Preferred language</mat-label>
+      <mat-select formControlName="language">
+        <mat-option *ngFor="let opt of languageOptions" [value]="opt.value">
+          {{ opt.display }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Home time zone</mat-label>
+      <mat-select formControlName="homeTimeZone">
+        <mat-option>
+          <ngx-mat-select-search
+            formControlName="homeTimeZoneFilter"
+            placeholderLabel="Search..."
+            noEntriesFoundLabel="No resources found"
+          ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option
+          *ngFor="let opt of filteredHomeTimezones"
+          [value]="opt.timezone"
+        >
+          {{ opt.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="selectable-form-field">
+      <mat-checkbox color="primary" #currentTimeZoneCheckbox></mat-checkbox>
+      <mat-form-field appearance="outline">
+        <mat-label>Current time zone</mat-label>
+        <mat-select
+          formControlName="currentTimeZone"
+          [disabled]="!currentTimeZoneCheckbox.checked"
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              formControlName="currentTimeZoneFilter"
+              placeholderLabel="Search..."
+              noEntriesFoundLabel="No resources found"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option
+            *ngFor="let opt of filteredHomeTimezones"
+            [value]="opt.timezone"
+          >
+            {{ opt.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row space-between">
+      <mat-checkbox color="primary" formControlName="usePerunSettings"
+        >Use perun settings</mat-checkbox
+      >
+      <a
+        href="https://einfra.cesnet.cz/a/user-profile/fed/"
+        target="_blank"
+        mat-flat-button
+        color="primary"
+        >Edit perun settings</a
+      >
+    </div>
+
+    <div class="row flex-end" id="submit-row">
+      <a mat-button type="button" routerLink="/">Cancel</a>
+      <button mat-flat-button type="submit" color="primary">Submit</button>
+    </div>
+  </form>
+</main>

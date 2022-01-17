@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HelpPageComponent } from './modules/help/pages/help-page/help-page.component';
 import { ReportPageComponent } from './modules/help/pages/report-page/report-page.component';
+import { UserSettingsPageComponent } from './modules/help/pages/user-settings-page/user-settings-page.component';
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
 import { ReservationRequestDetailPageComponent } from './modules/reservation-request/pages/reservation-request-detail/reservation-request-detail-page.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   },
   { path: 'help', component: HelpPageComponent },
   { path: 'report', component: ReportPageComponent },
+  { path: 'user/settings', component: UserSettingsPageComponent },
   {
     path: '**',
     component: HomePageComponent,
