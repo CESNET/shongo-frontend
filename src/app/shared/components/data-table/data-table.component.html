@@ -1,4 +1,4 @@
-<div class="table-container">
+<div class="table-container" appMatTableResponsive>
   <header>
     <section class="top-header-section">
       <h3>{{ header }}</h3>
@@ -27,11 +27,36 @@
     <mat-divider *ngIf="filter"></mat-divider>
   </header>
 
+  <div class="mobile-table-sort">
+    <h3>Table sort options</h3>
+
+    <form class="sort-form" [formGroup]="sortForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Field</mat-label>
+        <mat-select formControlName="field">
+          <mat-option
+            *ngFor="let column of dataSource.displayedColumns"
+            [value]="column.name"
+          >
+            {{ column.displayName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Order</mat-label>
+        <mat-select formControlName="order">
+          <mat-option value="desc">Descending</mat-option>
+          <mat-option value="asc">Ascending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+
   <table
     [hidden]="(dataSource.loading$ | async) || dataSource.data.count === 0"
     mat-table
     matSort
-    appMatTableResponsive
     class="full-width-table"
     aria-label="Elements"
   >

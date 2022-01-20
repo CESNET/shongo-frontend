@@ -15,7 +15,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
+import { filter, first, takeUntil } from 'rxjs/operators';
 import { DataTableDataSource } from './data-sources/data-table-datasource';
 import { DataTableFilter } from './filter/data-table-filter';
 import { HasID } from 'src/app/models/interfaces/has-id.interface';
@@ -25,6 +25,7 @@ import { LinkButton } from './buttons/link-button';
 import { TableButtonType } from '../../models/enums/table-button-type.enum';
 import { ActionButton } from './buttons/action-button';
 import { VALUE_PROVIDER } from './column-components/column.component';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-data-table',
@@ -45,13 +46,20 @@ export class DataTableComponent<T extends HasID>
   @Input() showDeleteButtons: boolean = true;
 
   TableButtonType = TableButtonType;
-
   selection = new SelectionModel<T>(true, []);
   maxCellTextLength = 21;
   displayedColumns: Observable<string[]>;
 
+  sortForm = new FormGroup({
+    field: new FormControl(''),
+    order: new FormControl('asc'),
+  });
+
   private _displayedColumns = new BehaviorSubject<string[]>([]);
   private _destroy$ = new Subject<void>();
+
+  // Prevents infinite loops of changing sort in the form and the header.
+  private _sortChangeMutex = true;
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
@@ -67,6 +75,27 @@ export class DataTableComponent<T extends HasID>
       this._buildDisplayedColumnsArray(!isSmallScreen)
     );
 
+    this.sortForm.valueChanges
+      .pipe(
+        takeUntil(this._destroy$),
+        filter(() => this._sortChangeMutex)
+      )
+      .subscribe(({ field, order }) => {
+        if (field) {
+          this._sortChangeMutex = false;
+          const sortable = this.sort.sortables.get(field)!;
+          sortable.start = order;
+          const dir = this.sort.getNextSortDirection(sortable);
+          this.sort.sort(sortable);
+
+          // Skip the no direction option
+          if (dir === '') {
+            this.sort.sort(sortable);
+          }
+          this._sortChangeMutex = true;
+        }
+      });
+
     this._watchForSmallScreen();
   }
 
@@ -75,6 +104,24 @@ export class DataTableComponent<T extends HasID>
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
+
+    this.sort.sortChange
+      .pipe(
+        takeUntil(this._destroy$),
+        filter(() => this._sortChangeMutex)
+      )
+      .subscribe(({ active, direction }) => {
+        this._sortChangeMutex = false;
+        const { field, order } = this.sortForm.value as Record<string, string>;
+
+        if (field !== active) {
+          this.sortForm.get('field')!.setValue(active);
+        }
+        if (order !== direction) {
+          this.sortForm.get('order')!.setValue(direction);
+        }
+        this._sortChangeMutex = true;
+      });
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,13 @@
 @import "../../directives/mat-table-responsive/mobile-table-row.scss";
 
 /* Responsive style is defined in mat-table-responive directive folder. */
+.table-container {
+  padding: 10px 20px;
+  background: white;
+  box-shadow: $table-card-shadow;
+  border-radius: 4px;
+  overflow: hidden;
+}
 .full-width-table {
   width: 100%;
 }
@@ -56,37 +63,15 @@ mat-spinner.button-loading {
   }
 }
 
-/* Media queries */
-@media (max-width: 768px) {
-  mat-paginator {
-    @include styled-row;
-
-    &.extra-gap {
-      margin-top: 20px;
-    }
-  }
-
-  header,
-  .no-data,
-  .loading {
-    background: white;
-    box-shadow: $table-card-shadow;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .custom-column {
+/* Mobile table sort */
+.mobile-table-sort {
+  .sort-form {
     display: flex;
-    justify-content: flex-end;
-  }
-}
-@media (min-width: 769px) {
-  .table-container {
-    padding: 10px 20px;
-    background: white;
-    box-shadow: $table-card-shadow;
-    border-radius: 4px;
-    overflow: hidden;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    mat-form-field {
+      flex: 1;
+    }
   }
 }

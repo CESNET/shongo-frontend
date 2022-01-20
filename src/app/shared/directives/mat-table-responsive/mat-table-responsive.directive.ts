@@ -12,9 +12,7 @@ import { map, mapTo, takeUntil } from 'rxjs/operators';
 @Directive({
   selector: '[appMatTableResponsive]',
 })
-export class MatTableResponsiveDirective
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class MatTableResponsiveDirective implements AfterViewInit, OnDestroy {
   private onDestroy$ = new Subject<boolean>();
 
   private thead!: HTMLTableSectionElement;
@@ -30,20 +28,19 @@ export class MatTableResponsiveDirective
     this.tbodyChanged$.next(true)
   );
 
-  constructor(private table: ElementRef, private renderer: Renderer2) {}
+  constructor(private container: ElementRef, private renderer: Renderer2) {}
 
-  ngOnInit() {
-    this.thead = this.table.nativeElement.querySelector('thead');
-    this.tbody = this.table.nativeElement.querySelector('tbody');
+  ngAfterViewInit() {
+    const tableElement = this.container.nativeElement.querySelector('table');
+    this.thead = tableElement.querySelector('thead');
+    this.tbody = tableElement.querySelector('tbody');
 
     this.theadObserver.observe(this.thead, {
       characterData: true,
       subtree: true,
     });
     this.tbodyObserver.observe(this.tbody, { childList: true });
-  }
 
-  ngAfterViewInit() {
     /**
      * Set the "data-column-name" attribute for every body row cell, either on
      * thead row changes (e.g. language changes) or tbody rows changes (add, delete).

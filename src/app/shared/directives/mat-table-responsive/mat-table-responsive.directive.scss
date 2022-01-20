@@ -1,35 +1,27 @@
 @import "./mobile-table-row.scss";
 
+.mobile-table-sort {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .mat-table[appMatTableResponsive] {
-    background: none;
+  .mobile-table-sort {
+    @include styled-row;
+    display: block;
+  }
+
+  [appMatTableResponsive] {
+    &.table-container {
+      padding: 0 !important;
+      background: none !important;
+      box-shadow: none !important;
+    }
+    .mat-table {
+      background: none;
+    }
 
     .mat-header-row {
-      display: flex;
-      flex-wrap: wrap;
-      height: auto;
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      @include styled-row;
-
-      th.mat-header-cell {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        padding: 1rem 0.5rem;
-        justify-content: space-around;
-
-        & > .mat-sort-header-container {
-          padding-left: 15px; // padding is used to center the header table cells, due to the width of the sort icon
-        }
-
-        &:not([mat-sort-header]),
-        &.mat-sort-header-disabled,
-        &.mat-column-actions {
-          display: none;
-        }
-      }
+      display: none;
     }
 
     .mat-row {
@@ -78,12 +70,35 @@
         border: none;
       }
     }
-  }
 
-  .mat-card,
-  .mat-expansion-panel {
-    .mat-table[matTableResponsive] {
-      border: 0.5rem solid #fafafa;
+    .mat-card,
+    .mat-expansion-panel {
+      .mat-table[matTableResponsive] {
+        border: 0.5rem solid #fafafa;
+      }
+    }
+
+    mat-paginator {
+      @include styled-row;
+
+      &.extra-gap {
+        margin-top: 20px;
+      }
+    }
+
+    header,
+    .no-data,
+    .loading {
+      background: white;
+      box-shadow: $table-card-shadow;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .custom-column {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }

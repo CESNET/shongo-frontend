@@ -32,9 +32,9 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     language: new FormControl(''),
     homeTimeZone: new FormControl(''),
     homeTimeZoneFilter: new FormControl(''),
-    currentTimeZone: new FormControl(''),
+    currentTimeZone: new FormControl({ value: '', disabled: true }),
     currentTimeZoneFilter: new FormControl(''),
-    usePreunSettings: new FormControl(false),
+    usePerunSettings: new FormControl(false),
   });
 
   private _destroy$ = new Subject<void>();
