@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { RoomState } from 'src/app/models/enums/room-state.enum';
-import { VALUE_PROVIDER } from '../../column.component';
+import { TableSettings } from '../../../filter/data-table-filter';
+import { SETTINGS_PROVIDER, VALUE_PROVIDER } from '../../column.component';
 import {
   StateChipColumnComponent,
   StateProps,
@@ -26,7 +28,10 @@ export class RoomStateColumnComponent extends StateChipColumnComponent {
     },
   };
 
-  constructor(@Inject(VALUE_PROVIDER) value: string) {
-    super(value);
+  constructor(
+    @Inject(VALUE_PROVIDER) value: string,
+    @Inject(SETTINGS_PROVIDER) settings: Observable<TableSettings>
+  ) {
+    super(value, settings);
   }
 }

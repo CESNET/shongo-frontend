@@ -2,15 +2,24 @@ import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ResourceCapacityUtilizationService } from 'src/app/core/http/resource-capacity-utilization/resource-capacity-utilization.service';
-import { PercentageColumnComponent } from 'src/app/modules/resource-management/components/percentage-column/percentage-column.component';
+import { ResourceUtilizationColumnComponent } from 'src/app/modules/resource-management/components/resource-utilization-column/resource-utilization-column.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
+import {
+  ResourceCapacityUtilization,
+  ResourceCapacityUtilizationTableData,
+} from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { TableButton } from '../buttons/table-button';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
-export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<ResourceCapacityUtilization> {
+type Utilization = Omit<
+  ResourceCapacityUtilizationTableData,
+  'id' | 'interval'
+>;
+
+export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<ResourceCapacityUtilizationTableData> {
   displayedColumns: TableColumn[];
   buttons: TableButton[] = [];
 
@@ -21,41 +30,41 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
     super();
 
     this.displayedColumns = [
-      { name: 'date', displayName: 'Date', pipeFunc: this.datePipe },
+      { name: 'interval', displayName: 'Interval' },
       {
-        name: 'pexip',
+        name: 'Pexip',
         displayName: 'Pexip',
-        component: PercentageColumnComponent,
+        component: ResourceUtilizationColumnComponent,
       },
       {
         name: 'tcs2',
         displayName: 'tcs2',
-        component: PercentageColumnComponent,
+        component: ResourceUtilizationColumnComponent,
       },
       {
         name: 'connect-cesnet-new',
         displayName: 'connect-cesnet-new',
-        component: PercentageColumnComponent,
+        component: ResourceUtilizationColumnComponent,
       },
       {
         name: 'mcu-cesnet',
         displayName: 'mcu-cesnet',
-        component: PercentageColumnComponent,
+        component: ResourceUtilizationColumnComponent,
       },
       {
         name: 'mcu-muni',
         displayName: 'mcu-muni',
-        component: PercentageColumnComponent,
+        component: ResourceUtilizationColumnComponent,
       },
       {
         name: 'connect-cesnet-old',
         displayName: 'connect-cesnet-old',
-        component: PercentageColumnComponent,
+        component: ResourceUtilizationColumnComponent,
       },
       {
-        name: 'freepbx-uvt',
+        name: 'FreePBX-UVT',
         displayName: 'FreePBX-UVT',
-        component: PercentageColumnComponent,
+        component: ResourceUtilizationColumnComponent,
       },
     ];
   }
@@ -66,14 +75,47 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
     sortedColumn: string,
     sortDirection: SortDirection,
     filter: HttpParams
-  ): Observable<ApiResponse<ResourceCapacityUtilization>> {
-    return this._resUtilService.fetchTableItems(
-      pageSize,
-      pageIndex,
-      sortedColumn,
-      sortDirection,
-      filter
-    );
+  ): Observable<ApiResponse<ResourceCapacityUtilizationTableData>> {
+    return this._resUtilService
+      .fetchTableItems<ResourceCapacityUtilization>(
+        pageSize,
+        pageIndex,
+        sortedColumn,
+        sortDirection,
+        filter
+      )
+      .pipe(
+        map((data) => {
+          const items = data.items.map((item: ResourceCapacityUtilization) => {
+            const interval = this.getInterval(item);
+            return { id: interval, interval, ...this.getUtilization(item) };
+          });
+          return { count: data.count, items };
+        })
+      );
+  }
+
+  getUtilization(item: ResourceCapacityUtilization): Utilization {
+    const utilization: Record<string, string> = {};
+
+    item.resources.forEach((resource) => {
+      const { totalCapacity, usedCapacity } = resource;
+      utilization[resource.name] = JSON.stringify({
+        totalCapacity,
+        usedCapacity,
+      });
+    });
+
+    return utilization as Utilization;
+  }
+
+  getInterval(item: ResourceCapacityUtilization): string {
+    if (item.intervalFrom === item.intervalTo) {
+      return this.datePipe(item.intervalFrom);
+    }
+    return `${this.datePipe(item.intervalFrom)} - ${this.datePipe(
+      item.intervalTo
+    )}`;
   }
 
   datePipe = (value: unknown): string => {

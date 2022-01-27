@@ -9,7 +9,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Option } from 'src/app/models/interfaces/option.interface';
-import { DataTableFilter } from 'src/app/shared/components/data-table/filter/data-table-filter';
+import {
+  DataTableFilter,
+  TableSettings,
+} from 'src/app/shared/components/data-table/filter/data-table-filter';
 import { add } from 'date-fns';
 
 const DEFAULT_UNIT_DIST = 5;
@@ -28,8 +31,8 @@ export class ResourceCapacityUtilizationFilterComponent
     unit: new FormControl('day'),
     dateFrom: new FormControl(),
     dateTo: new FormControl(),
-    useAbsoluteValues: new FormControl(false),
   });
+  useAbsoluteValues = new FormControl(false);
 
   units: Option[] = [
     { value: 'day', displayName: 'Days' },
@@ -54,7 +57,15 @@ export class ResourceCapacityUtilizationFilterComponent
     this.emitHttpQuery();
     this.filterForm.valueChanges
       .pipe(takeUntil(this._destroy$))
-      .subscribe(() => this.emitHttpQuery());
+      .subscribe(() => {
+        this.emitHttpQuery();
+      });
+
+    this.useAbsoluteValues.valueChanges
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(() => {
+        this.emitSettings();
+      });
 
     this.filterForm
       .get('unit')!
@@ -84,5 +95,10 @@ export class ResourceCapacityUtilizationFilterComponent
       .set('from', dateFrom)
       .set('to', dateTo);
     return params;
+  }
+
+  getTableSettings(): TableSettings {
+    const useAbsoluteValues = this.useAbsoluteValues.value;
+    return { useAbsoluteValues };
   }
 }

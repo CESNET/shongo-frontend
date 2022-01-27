@@ -9,6 +9,7 @@ import {
   OnInit,
   ContentChild,
   Injector,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,7 +24,10 @@ import { ApiActionButton } from './buttons/api-action-button';
 import { LinkButton } from './buttons/link-button';
 import { TableButtonType } from '../../models/enums/table-button-type.enum';
 import { ActionButton } from './buttons/action-button';
-import { VALUE_PROVIDER } from './column-components/column.component';
+import {
+  SETTINGS_PROVIDER,
+  VALUE_PROVIDER,
+} from './column-components/column.component';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -43,6 +47,7 @@ export class DataTableComponent<T extends HasID>
   @Input() showCheckboxes = true;
   @Input() header: string = '';
   @Input() showDeleteButtons = true;
+  @Input() fixedLayout = false;
 
   TableButtonType = TableButtonType;
   selection = new SelectionModel<T>(true, []);
@@ -60,7 +65,7 @@ export class DataTableComponent<T extends HasID>
   // Prevents infinite loops of changing sort in the form and the header.
   private _sortChangeMutex = true;
 
-  constructor(private _injector: Injector) {
+  constructor(private _injector: Injector, private _cd: ChangeDetectorRef) {
     this.displayedColumns = this._displayedColumns.asObservable();
   }
 
@@ -111,6 +116,11 @@ export class DataTableComponent<T extends HasID>
         }
         this._sortChangeMutex = true;
       });
+
+    // Needed to detect changes in custom components.
+    this.filter?.settings$
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(() => this._cd.detectChanges());
   }
 
   ngOnDestroy(): void {
@@ -169,8 +179,12 @@ export class DataTableComponent<T extends HasID>
   }
 
   createColComponentValueInjector(value: string): Injector {
+    const tableSettings = this.filter?.settings$;
     return Injector.create({
-      providers: [{ provide: VALUE_PROVIDER, useValue: value }],
+      providers: [
+        { provide: VALUE_PROVIDER, useValue: value },
+        { provide: SETTINGS_PROVIDER, useValue: tableSettings },
+      ],
       parent: this._injector,
     });
   }
@@ -178,7 +192,7 @@ export class DataTableComponent<T extends HasID>
   private _buildDisplayedColumnsArray(): string[] {
     const displayedColumns = [...this.dataSource.getColumnNames()];
 
-    if (this.dataSource.buttons) {
+    if (this.dataSource.buttons && this.dataSource.buttons.length !== 0) {
       displayedColumns.push('actions');
     }
 

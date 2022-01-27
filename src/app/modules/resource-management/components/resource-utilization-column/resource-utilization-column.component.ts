@@ -1,0 +1,74 @@
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Inject,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import {
+  ColumnComponent,
+  SETTINGS_PROVIDER,
+  VALUE_PROVIDER,
+} from 'src/app/shared/components/data-table/column-components/column.component';
+import { TableSettings } from 'src/app/shared/components/data-table/filter/data-table-filter';
+
+interface ResourceCapacity {
+  totalCapacity: number;
+  usedCapacity: number;
+}
+
+@Component({
+  selector: 'app-resource-utilization-column',
+  templateUrl: './resource-utilization-column.component.html',
+  styleUrls: ['./resource-utilization-column.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ResourceUtilizationColumnComponent
+  extends ColumnComponent
+  implements OnInit, OnDestroy
+{
+  resourceCapacity: ResourceCapacity;
+  percentage: number;
+  useAbsoluteValue = false;
+
+  private _destroy$ = new Subject<void>();
+
+  constructor(
+    @Inject(VALUE_PROVIDER) value: string,
+    @Inject(SETTINGS_PROVIDER) settings: Observable<TableSettings>
+  ) {
+    super(value, settings);
+    this.resourceCapacity = JSON.parse(value);
+    this.percentage = this._getPercentage();
+  }
+
+  ngOnInit(): void {
+    this.settings.pipe(takeUntil(this._destroy$)).subscribe((settings) => {
+      this.useAbsoluteValue = settings.useAbsoluteValues as boolean;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
+  getBgColor(): string {
+    if (this.percentage < 0.1) {
+      const all = 255 - 30 * this.percentage * 10;
+      return `rgb(${all}, ${all}, ${all})`;
+    } else {
+      const green = 220 - 170 * this.percentage;
+      return `rgb(255, ${green}, 50)`;
+    }
+  }
+
+  private _getPercentage(): number {
+    return (
+      this.resourceCapacity.usedCapacity / this.resourceCapacity.totalCapacity
+    );
+  }
+}

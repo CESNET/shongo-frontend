@@ -24,8 +24,8 @@
       <mat-datepicker #toPicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-slide-toggle color="primary" formControlName="useAbsoluteValues"
-      >Use absolute values</mat-slide-toggle
+    <mat-slide-toggle color="primary" [formControl]="useAbsoluteValues"
+      >Show absolute values</mat-slide-toggle
     >
   </form>
 </div>

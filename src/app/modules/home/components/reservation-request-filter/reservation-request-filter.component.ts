@@ -9,7 +9,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { RoomTechnology } from '../../../../shared/components/data-table/models/enums/room-technology';
-import { DataTableFilter } from '../../../../shared/components/data-table/filter/data-table-filter';
+import {
+  DataTableFilter,
+  TableSettings,
+} from '../../../../shared/components/data-table/filter/data-table-filter';
 
 @Component({
   selector: 'app-reservation-request-filter',
@@ -109,6 +112,10 @@ export class ReservationRequestFilterComponent
     }
 
     return httpParams;
+  }
+
+  getTableSettings(): TableSettings {
+    return {};
   }
 
   private _getTechnologyQuery(technology: RoomTechnology): string | null {

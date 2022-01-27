@@ -1,4 +1,6 @@
+import { Observable } from 'rxjs';
 import { StateColor } from '../../../state-chip/state-chip.component';
+import { TableSettings } from '../../filter/data-table-filter';
 import { ColumnComponent } from '../column.component';
 
 export interface StateProps {
@@ -9,8 +11,8 @@ export interface StateProps {
 export abstract class StateChipColumnComponent extends ColumnComponent {
   abstract statePropsMap: Record<string, StateProps>;
 
-  constructor(value: string) {
-    super(value);
+  constructor(value: string, settings: Observable<TableSettings>) {
+    super(value, settings);
   }
 
   getStateColor(state: string): StateColor {

@@ -1,11 +1,24 @@
-export interface ResourceCapacityUtilization {
+export interface ResourceCapacityUtilizationTableData {
   id: string;
-  date: string;
-  pexip: number;
-  tcs2: number;
-  'connect-cesnet-new': number;
-  'mcu-cesnet': number;
-  'mcu-muni': number;
-  'connect-cesnet-old': number;
-  'freepbx-uvt': number;
+  interval: string;
+  pexip: string;
+  tcs2: string;
+  'connect-cesnet-new': string;
+  'mcu-cesnet': string;
+  'mcu-muni': string;
+  'connect-cesnet-old': string;
+  'freepbx-uvt': string;
+}
+
+export interface ResourceCapacityUtilization {
+  intervalFrom: string;
+  intervalTo: string;
+  resources: Resource[];
+}
+
+export interface Resource {
+  id: string;
+  name: string;
+  totalCapacity: number;
+  usedCapacity: number;
 }

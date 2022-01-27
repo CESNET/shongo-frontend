@@ -1,0 +1,8 @@
+<div class="resource-utilization" [style.background]="getBgColor()">
+  <span *ngIf="useAbsoluteValue; else relativeValue">
+    {{ resourceCapacity.usedCapacity + "/" + resourceCapacity.totalCapacity }}
+  </span>
+  <ng-template #relativeValue>
+    <span>{{ percentage | percentage }}</span>
+  </ng-template>
+</div>

@@ -55,6 +55,7 @@
 
   <table
     [hidden]="(dataSource.loading$ | async) || dataSource.data.count === 0"
+    [fixedLayout]="fixedLayout"
     mat-table
     matSort
     class="full-width-table"
