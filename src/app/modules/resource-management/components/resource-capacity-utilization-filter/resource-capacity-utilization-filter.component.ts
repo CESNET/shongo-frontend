@@ -10,6 +10,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Option } from 'src/app/models/interfaces/option.interface';
 import { DataTableFilter } from 'src/app/shared/components/data-table/filter/data-table-filter';
+import { add } from 'date-fns';
+
+const DEFAULT_UNIT_DIST = 5;
 
 @Component({
   selector: 'app-resource-capacity-utilization-filter',
@@ -23,8 +26,8 @@ export class ResourceCapacityUtilizationFilterComponent
 {
   filterForm = new FormGroup({
     unit: new FormControl('day'),
-    dateFrom: new FormControl(new Date(Date.now())),
-    dateTo: new FormControl(new Date(Date.now())),
+    dateFrom: new FormControl(),
+    dateTo: new FormControl(),
     useAbsoluteValues: new FormControl(false),
   });
 
@@ -39,6 +42,12 @@ export class ResourceCapacityUtilizationFilterComponent
 
   constructor() {
     super();
+
+    const currentDate = new Date(Date.now());
+    this.filterForm.get('dateFrom')!.setValue(currentDate);
+    this.filterForm
+      .get('dateTo')!
+      .setValue(add(currentDate, { days: DEFAULT_UNIT_DIST }));
   }
 
   ngOnInit(): void {
@@ -46,6 +55,18 @@ export class ResourceCapacityUtilizationFilterComponent
     this.filterForm.valueChanges
       .pipe(takeUntil(this._destroy$))
       .subscribe(() => this.emitHttpQuery());
+
+    this.filterForm
+      .get('unit')!
+      .valueChanges.pipe(takeUntil(this._destroy$))
+      .subscribe((unit) => {
+        const dateFnsUnit = unit + 's';
+        const { dateFrom } = this.filterForm.value;
+
+        const duration: Record<string, number> = {};
+        duration[dateFnsUnit] = DEFAULT_UNIT_DIST;
+        this.filterForm.get('dateTo')!.setValue(add(dateFrom, duration));
+      });
   }
 
   ngOnDestroy(): void {
