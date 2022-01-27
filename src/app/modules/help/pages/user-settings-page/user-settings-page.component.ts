@@ -8,8 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IANA_TIMEZONES } from 'src/app/utils/timezones';
-
-type Option = { display: string; value: string | number };
+import { Option } from 'src/app/models/interfaces/option.interface';
 
 @Component({
   selector: 'app-user-settings-page',
@@ -19,9 +18,9 @@ type Option = { display: string; value: string | number };
 })
 export class UserSettingsPageComponent implements OnInit, OnDestroy {
   languageOptions: Option[] = [
-    { display: `Use your operating system's configuration`, value: 'os' },
-    { display: `Czech`, value: 'cz' },
-    { display: `English`, value: 'en' },
+    { displayName: `Use your operating system's configuration`, value: 'os' },
+    { displayName: `Czech`, value: 'cz' },
+    { displayName: `English`, value: 'en' },
   ];
   timezoneOptions = IANA_TIMEZONES;
   filteredHomeTimezones = this.timezoneOptions;

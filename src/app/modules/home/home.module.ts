@@ -10,9 +10,14 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { ReservationRequestFilterComponent } from './components/reservation-request-filter/reservation-request-filter.component';
 
 @NgModule({
-  declarations: [HomePageComponent, ReservationCalendarComponent],
+  declarations: [
+    HomePageComponent,
+    ReservationCalendarComponent,
+    ReservationRequestFilterComponent,
+  ],
   imports: [
     CommonModule,
     MaterialModule,

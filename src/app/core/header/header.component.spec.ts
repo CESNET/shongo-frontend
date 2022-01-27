@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DummyComponent } from 'src/app/test/components/dummy.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -23,6 +24,7 @@ describe('HeaderComponent', () => {
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
+        FlexLayoutModule,
         SharedModule,
         RouterTestingModule.withRoutes([
           {

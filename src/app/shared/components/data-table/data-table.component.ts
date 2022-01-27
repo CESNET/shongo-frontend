@@ -1,5 +1,4 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   Component,
@@ -41,9 +40,9 @@ export class DataTableComponent<T extends HasID>
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<T>;
   @Input() dataSource!: DataTableDataSource<T>;
-  @Input() showCheckboxes!: boolean;
+  @Input() showCheckboxes = true;
   @Input() header: string = '';
-  @Input() showDeleteButtons: boolean = true;
+  @Input() showDeleteButtons = true;
 
   TableButtonType = TableButtonType;
   selection = new SelectionModel<T>(true, []);
@@ -61,20 +60,12 @@ export class DataTableComponent<T extends HasID>
   // Prevents infinite loops of changing sort in the form and the header.
   private _sortChangeMutex = true;
 
-  constructor(
-    private _breakpointObserver: BreakpointObserver,
-    private _injector: Injector
-  ) {
+  constructor(private _injector: Injector) {
     this.displayedColumns = this._displayedColumns.asObservable();
   }
 
   ngOnInit(): void {
-    const isSmallScreen =
-      this._breakpointObserver.isMatched('(max-width: 768px)');
-    this._displayedColumns.next(
-      this._buildDisplayedColumnsArray(!isSmallScreen)
-    );
-
+    this._displayedColumns.next(this._buildDisplayedColumnsArray());
     this.sortForm.valueChanges
       .pipe(
         takeUntil(this._destroy$),
@@ -95,8 +86,6 @@ export class DataTableComponent<T extends HasID>
           this._sortChangeMutex = true;
         }
       });
-
-    this._watchForSmallScreen();
   }
 
   ngAfterViewInit(): void {
@@ -186,30 +175,17 @@ export class DataTableComponent<T extends HasID>
     });
   }
 
-  private _buildDisplayedColumnsArray(addSelect: boolean): string[] {
+  private _buildDisplayedColumnsArray(): string[] {
     const displayedColumns = [...this.dataSource.getColumnNames()];
 
     if (this.dataSource.buttons) {
       displayedColumns.push('actions');
     }
 
-    if (addSelect) {
+    if (this.showCheckboxes) {
       displayedColumns.push('select');
     }
 
     return displayedColumns;
-  }
-
-  private _watchForSmallScreen(): void {
-    this._breakpointObserver
-      .observe('(max-width: 768px)')
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((breakpoint) => {
-        if (breakpoint.matches) {
-          this._displayedColumns.next(this._buildDisplayedColumnsArray(false));
-        } else {
-          this._displayedColumns.next(this._buildDisplayedColumnsArray(true));
-        }
-      });
   }
 }

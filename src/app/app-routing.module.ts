@@ -5,6 +5,7 @@ import { ReportPageComponent } from './modules/help/pages/report-page/report-pag
 import { UserSettingsPageComponent } from './modules/help/pages/user-settings-page/user-settings-page.component';
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
 import { ReservationRequestDetailPageComponent } from './modules/reservation-request/pages/reservation-request-detail/reservation-request-detail-page.component';
+import { ResourceCapacityUtilizationPageComponent } from './modules/resource-management/pages/resource-capacity-utilization-page/resource-capacity-utilization-page.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   { path: 'help', component: HelpPageComponent },
   { path: 'report', component: ReportPageComponent },
   { path: 'user/settings', component: UserSettingsPageComponent },
+  {
+    path: 'resource-management/capacity-utilization',
+    component: ResourceCapacityUtilizationPageComponent,
+  },
   {
     path: '**',
     component: HomePageComponent,

@@ -8,8 +8,8 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { RoomTechnology } from '../../models/enums/room-technology';
-import { DataTableFilter } from '../data-table-filter';
+import { RoomTechnology } from '../../../../shared/components/data-table/models/enums/room-technology';
+import { DataTableFilter } from '../../../../shared/components/data-table/filter/data-table-filter';
 
 @Component({
   selector: 'app-reservation-request-filter',

@@ -9,6 +9,7 @@ import { HomeModule } from './modules/home/home.module';
 import { HelpModule } from './modules/help/help.module';
 import { MatPaginatorI18nService } from './mat-paginator-intl.service';
 import { ReservationRequestModule } from './modules/reservation-request/reservation-request.module';
+import { ResourceManagementModule } from './modules/resource-management/resource-management.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { ReservationRequestModule } from './modules/reservation-request/reservat
     HomeModule,
     HelpModule,
     ReservationRequestModule,
+    ResourceManagementModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }],
   bootstrap: [AppComponent],

@@ -8,6 +8,7 @@ import { DataTableComponent } from './data-table.component';
 import { DataTableDatasourceStub } from 'src/app/test/stubs/data-table-datasource.stub';
 import { MaterialModule } from 'src/app/modules/material.module';
 import { HasID } from 'src/app/models/interfaces/has-id.interface';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent<HasID>;
@@ -18,6 +19,7 @@ describe('DataTableComponent', () => {
       TestBed.configureTestingModule({
         declarations: [DataTableComponent],
         imports: [
+          ReactiveFormsModule,
           NoopAnimationsModule,
           MatPaginatorModule,
           MatSortModule,

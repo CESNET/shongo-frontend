@@ -49,7 +49,7 @@ export const menuItems: MenuItem[] = [
     subItems: [
       {
         label: $localize`:navbar link|Sublink in resource management:Resource capacity utilization`,
-        route: '/',
+        route: '/resource-management/capacity-utilization',
         itemAuth: ItemAuthorization.LOGGED_IN,
       },
       {

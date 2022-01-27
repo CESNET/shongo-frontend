@@ -26,12 +26,13 @@
               </button>
 
               <mat-menu #popupSubMenu="matMenu">
-                <button
-                  mat-menu-item
+                <ng-container
                   *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
                 >
-                  {{ subItem.label }}
-                </button>
+                  <a mat-menu-item [routerLink]="subItem.route">{{
+                    subItem.label
+                  }}</a>
+                </ng-container>
               </mat-menu>
             </ng-template>
           </li>
@@ -139,7 +140,9 @@
         [@dropdown]="item.subMenuOpen ? 'open' : 'closed'"
         *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
       >
-        <a matRipple [matRippleCentered]="true">{{ subItem.label }}</a>
+        <ng-container
+          *ngTemplateOutlet="linkButton; context: { item: subItem }"
+        ></ng-container>
       </li>
     </ng-container>
   </ul>

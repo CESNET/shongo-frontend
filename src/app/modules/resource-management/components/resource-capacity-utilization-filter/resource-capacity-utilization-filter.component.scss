@@ -1,0 +1,17 @@
+$form-field-padding-bottom: 1.34375em;
+$form-field-margin: 0.25em 0;
+
+.table-filter {
+  padding-top: $form-field-padding-bottom;
+}
+
+form {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+mat-slide-toggle {
+  margin-bottom: $form-field-padding-bottom;
+}

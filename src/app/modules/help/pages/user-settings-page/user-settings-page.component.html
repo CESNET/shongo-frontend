@@ -13,7 +13,7 @@
       <mat-label>Preferred language</mat-label>
       <mat-select formControlName="language">
         <mat-option *ngFor="let opt of languageOptions" [value]="opt.value">
-          {{ opt.display }}
+          {{ opt.displayName }}
         </mat-option>
       </mat-select>
     </mat-form-field>

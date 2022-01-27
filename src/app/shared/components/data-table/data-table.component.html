@@ -6,17 +6,17 @@
       <div class="buttons">
         <button
           mat-icon-button
-          matTooltip="Obnovit"
+          matTooltip="Refresh"
           (click)="dataSource.refreshData()"
         >
           <mat-icon>refresh</mat-icon>
         </button>
 
         <ng-container *ngIf="showDeleteButtons">
-          <button mat-icon-button matTooltip="Smazat vybrané">
+          <button mat-icon-button matTooltip="Delete selected">
             <mat-icon>delete</mat-icon>
           </button>
-          <button mat-icon-button matTooltip="Smazat vše">
+          <button mat-icon-button matTooltip="Delete all">
             <mat-icon>delete_forever</mat-icon>
           </button>
         </ng-container>
