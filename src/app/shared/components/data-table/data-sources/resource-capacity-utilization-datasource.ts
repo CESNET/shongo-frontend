@@ -99,10 +99,10 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
     const utilization: Record<string, string> = {};
 
     item.resources.forEach((resource) => {
-      const { totalCapacity, usedCapacity } = resource;
       utilization[resource.name] = JSON.stringify({
-        totalCapacity,
-        usedCapacity,
+        intervalFrom: item.intervalFrom,
+        intervalTo: item.intervalTo,
+        ...resource,
       });
     });
 

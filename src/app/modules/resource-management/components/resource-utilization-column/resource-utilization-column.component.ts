@@ -4,7 +4,6 @@ import {
   Inject,
   OnInit,
   OnDestroy,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,7 +14,11 @@ import {
 } from 'src/app/shared/components/data-table/column-components/column.component';
 import { TableSettings } from 'src/app/shared/components/data-table/filter/data-table-filter';
 
-interface ResourceCapacity {
+interface ColumnData {
+  id: string;
+  name: string;
+  intervalFrom: string;
+  intervalTo: string;
   totalCapacity: number;
   usedCapacity: number;
 }
@@ -30,7 +33,7 @@ export class ResourceUtilizationColumnComponent
   extends ColumnComponent
   implements OnInit, OnDestroy
 {
-  resourceCapacity: ResourceCapacity;
+  columnData: ColumnData;
   percentage: number;
   useAbsoluteValue = false;
 
@@ -41,7 +44,7 @@ export class ResourceUtilizationColumnComponent
     @Inject(SETTINGS_PROVIDER) settings: Observable<TableSettings>
   ) {
     super(value, settings);
-    this.resourceCapacity = JSON.parse(value);
+    this.columnData = JSON.parse(value);
     this.percentage = this._getPercentage();
   }
 
@@ -66,9 +69,15 @@ export class ResourceUtilizationColumnComponent
     }
   }
 
+  getQueryParams(): Record<string, string> {
+    return {
+      resourceId: this.columnData.id,
+      intervalFrom: this.columnData.intervalFrom,
+      intervalTo: this.columnData.intervalTo,
+    };
+  }
+
   private _getPercentage(): number {
-    return (
-      this.resourceCapacity.usedCapacity / this.resourceCapacity.totalCapacity
-    );
+    return this.columnData.usedCapacity / this.columnData.totalCapacity;
   }
 }

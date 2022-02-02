@@ -6,6 +6,7 @@ import { UserSettingsPageComponent } from './modules/help/pages/user-settings-pa
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
 import { ReservationRequestDetailPageComponent } from './modules/reservation-request/pages/reservation-request-detail/reservation-request-detail-page.component';
 import { ResourceCapacityUtilizationPageComponent } from './modules/resource-management/pages/resource-capacity-utilization-page/resource-capacity-utilization-page.component';
+import { ResourceUtilizationDetailPageComponent } from './modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'resource-management/capacity-utilization',
     component: ResourceCapacityUtilizationPageComponent,
+  },
+  {
+    path: 'resource-management/capacity-utilization/detail',
+    component: ResourceUtilizationDetailPageComponent,
   },
   {
     path: '**',

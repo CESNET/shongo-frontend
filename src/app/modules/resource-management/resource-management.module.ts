@@ -7,14 +7,27 @@ import { ResourceCapacityUtilizationFilterComponent } from './components/resourc
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ResourceUtilizationColumnComponent } from './components/resource-utilization-column/resource-utilization-column.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { ResourceUtilizationDetailPageComponent } from './pages/resource-utilization-detail-page/resource-utilization-detail-page.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
-  imports: [SharedModule, MaterialModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    SharedModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    CommonModule,
+    AppRoutingModule,
+    FlexLayoutModule,
+    NgxSkeletonLoaderModule,
+  ],
   declarations: [
     ResourceCapacityUtilizationPageComponent,
     PercentagePipe,
     ResourceCapacityUtilizationFilterComponent,
     ResourceUtilizationColumnComponent,
+    ResourceUtilizationDetailPageComponent,
   ],
 })
 export class ResourceManagementModule {}

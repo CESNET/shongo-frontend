@@ -64,3 +64,24 @@ mat-toolbar.header-toolbar {
   $primary: map-get($shongo-frontend-theme, primary);
   color: map-get($primary, default);
 }
+
+/* List style */
+dl {
+  display: block;
+  margin: 0;
+
+  dt,
+  dd {
+    font-size: 14px;
+    padding-bottom: 10px;
+  }
+  dt {
+    font-weight: bold;
+    color: rgb(90, 90, 90);
+    float: left;
+    clear: left;
+  }
+  dd {
+    margin-left: 150px;
+  }
+}
