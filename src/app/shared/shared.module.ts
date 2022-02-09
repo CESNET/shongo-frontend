@@ -11,6 +11,10 @@ import { CertainityCheckComponent } from './components/certainity-check/certaini
 import { StateChipComponent } from './components/state-chip/state-chip.component';
 import { ReservationRequestStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/reservation-request-state-column.component';
 import { RoomStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/room-state-column.component';
+import { ReservationCalendarComponent } from './components/reservation-calendar/reservation-calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,7 @@ import { RoomStateColumnComponent } from './components/data-table/column-compone
     StateChipComponent,
     ReservationRequestStateColumnComponent,
     RoomStateColumnComponent,
+    ReservationCalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -28,8 +33,18 @@ import { RoomStateColumnComponent } from './components/data-table/column-compone
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    NgxMatSelectSearchModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [DatePipe],
-  exports: [DataTableComponent, ShortStringPipe, CertainityCheckComponent],
+  exports: [
+    DataTableComponent,
+    ShortStringPipe,
+    CertainityCheckComponent,
+    ReservationCalendarComponent,
+  ],
 })
 export class SharedModule {}

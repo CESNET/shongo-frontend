@@ -1,30 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { ReservationService } from 'src/app/core/http/reservation/reservation.service';
+import { MaterialModule } from 'src/app/modules/material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { Spied } from 'src/app/test/models/spied.type';
-import { HomeModule } from '../../home.module';
-import { ReservationCalendarComponent } from './reservation-calendar.component';
 
-describe('ReservationCalendarComponent', () => {
-  let component: ReservationCalendarComponent;
-  let fixture: ComponentFixture<ReservationCalendarComponent>;
+import { TimeSlotSelectionStepComponent } from './time-slot-selection-step.component';
+
+describe('TimeSlotSelectionStepComponent', () => {
+  let component: TimeSlotSelectionStepComponent;
+  let fixture: ComponentFixture<TimeSlotSelectionStepComponent>;
 
   const reservationServiceStub = jasmine.createSpyObj('ReservationService', [
     'fetchReservations',
   ]) as Spied<ReservationService>;
-
-  reservationServiceStub.fetchReservations.and.returnValue(
-    of({
-      count: 0,
-      items: [],
-    })
-  );
+  reservationServiceStub.fetchReservations.and.returnValue(of([]));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ReservationCalendarComponent],
-      imports: [HomeModule, BrowserAnimationsModule],
+      imports: [SharedModule, MaterialModule],
+      declarations: [TimeSlotSelectionStepComponent],
       providers: [
         { provide: ReservationService, useValue: reservationServiceStub },
       ],
@@ -32,7 +27,7 @@ describe('ReservationCalendarComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReservationCalendarComponent);
+    fixture = TestBed.createComponent(TimeSlotSelectionStepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
