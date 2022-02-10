@@ -167,7 +167,7 @@
       <mat-datepicker #repeatUntilDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <div>
+    <div *ngIf="shouldDisplayExcludedDays()">
       <h3>Except for days:</h3>
 
       <div class="excluded-days">

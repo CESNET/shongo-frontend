@@ -8,6 +8,7 @@ import { TimeSlotSelectionStepComponent } from './components/time-slot-selection
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { PeriodicitySelectionStepComponent } from './components/periodicity-selection-step/periodicity-selection-step.component';
+import { AdditionalInformationStepComponent } from './components/additional-information-step/additional-information-step.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { PeriodicitySelectionStepComponent } from './components/periodicity-sele
     ResourceSelectionStepComponent,
     TimeSlotSelectionStepComponent,
     PeriodicitySelectionStepComponent,
+    AdditionalInformationStepComponent,
   ],
 })
 export class ReservationModule {}

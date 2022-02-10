@@ -1,0 +1,57 @@
+<main>
+  <aside>
+    <h1>Additional information</h1>
+
+    <mat-form-field appearance="outline" id="description">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        name="Description"
+        [formControl]="descriptionControl"
+      ></textarea>
+    </mat-form-field>
+  </aside>
+  <aside>
+    <h1>Reservation overview</h1>
+
+    <dl>
+      <dt>Selected resource:</dt>
+      <dd *ngIf="getResourceNameById() as resourceName; else unselected">
+        {{ resourceName }}
+      </dd>
+      <dt>Selected time slot:</dt>
+      <dd
+        *ngIf="
+          selectedTimeSlot && selectedTimeSlot.start && selectedTimeSlot.end;
+          else unselected
+        "
+      >
+        {{
+          (selectedTimeSlot.start | date: "medium") +
+            " - " +
+            (selectedTimeSlot.end | date: "medium")
+        }}
+      </dd>
+      <dt>Selected periodicity:</dt>
+      <dd *ngIf="selectedPeriodicity; else unselected">
+        {{ selectedPeriodicity }}
+      </dd>
+    </dl>
+  </aside>
+</main>
+
+<mat-divider></mat-divider>
+
+<footer>
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="!descriptionControl.valid"
+  >
+    Create reservation
+  </button>
+</footer>
+
+<ng-template #unselected>
+  <dd style="color: gray">None</dd>
+</ng-template>

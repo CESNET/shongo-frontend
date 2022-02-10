@@ -1,7 +1,17 @@
-<div class="time-slot-selection">
+<header>
+  <button
+    mat-flat-button
+    matStepperNext
+    color="primary"
+    [disabled]="!isCompleted()"
+  >
+    Select periodicity
+  </button>
+</header>
+<main>
   <app-reservation-calendar
     [showResourceSelection]="false"
     [allowSlotSelection]="true"
     [selectedResourceId]="selectedResourceId$ | async"
   ></app-reservation-calendar>
-</div>
+</main>

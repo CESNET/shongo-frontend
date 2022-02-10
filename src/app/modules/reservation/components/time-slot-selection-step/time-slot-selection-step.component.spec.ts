@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
 import { of } from 'rxjs';
 import { ReservationService } from 'src/app/core/http/reservation/reservation.service';
 import { MaterialModule } from 'src/app/modules/material.module';
@@ -18,7 +19,7 @@ describe('TimeSlotSelectionStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule, MaterialModule],
+      imports: [SharedModule, MatButtonModule],
       declarations: [TimeSlotSelectionStepComponent],
       providers: [
         { provide: ReservationService, useValue: reservationServiceStub },
