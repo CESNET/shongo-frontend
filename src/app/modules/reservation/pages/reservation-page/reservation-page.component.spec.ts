@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationService } from 'src/app/core/http/reservation/reservation.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Spied } from 'src/app/test/models/spied.type';
+import { authServiceStub } from 'src/app/test/stubs/auth-service.stub';
 import { ReservationModule } from '../../reservation.module';
 
 import { ReservationPageComponent } from './reservation-page.component';
@@ -23,6 +25,7 @@ describe('ReservationPageComponent', () => {
       declarations: [ReservationPageComponent],
       providers: [
         { provide: ReservationService, useValue: reservationServiceStub },
+        { provide: AuthenticationService, useValue: authServiceStub },
       ],
     }).compileComponents();
   });

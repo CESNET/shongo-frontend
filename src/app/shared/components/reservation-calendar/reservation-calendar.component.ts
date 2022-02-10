@@ -17,6 +17,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { FormControl, FormGroup } from '@angular/forms';
 import { WeekViewHourSegment } from 'calendar-utils';
 import { physicalResources } from 'src/app/models/data/physical-resources';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 
 function floorToNearest(amount: number, precision: number) {
   return Math.floor(amount / precision) * precision;
@@ -25,6 +26,21 @@ function floorToNearest(amount: number, precision: number) {
 function ceilToNearest(amount: number, precision: number) {
   return Math.ceil(amount / precision) * precision;
 }
+
+const COLORS = {
+  owned: {
+    primary: '#f26161',
+    secondary: '#ffb0b0',
+  },
+  created: {
+    primary: '#84db87',
+    secondary: '#cfffd1',
+  },
+  default: {
+    primary: '#6daded',
+    secondary: '#c9e4ff',
+  },
+};
 
 @Component({
   selector: 'app-reservation-calendar',
@@ -81,13 +97,15 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
   constructor(
     private _reservationService: ReservationService,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _auth: AuthenticationService
   ) {
     this.loading$ = this._loading$.asObservable();
   }
 
   ngOnInit(): void {
     this.fetchReservations();
+    this._createHighlightSub();
 
     const resourceFilter = this.filterGroup.get(
       'resourceFilter'
@@ -136,14 +154,17 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     segmentElement: HTMLElement
   ) {
     const prevCreatedEvent = this.createdEvent;
+    const { name, email } = this._auth.identityClaims!;
+
     this.createdEvent = {
       id: this.events.length,
-      title: 'My reservation',
+      title: 'New reservation',
       start: segment.date,
+      color: COLORS.created,
       meta: {
         tmpEvent: true,
-        owner: 'Placeholder name',
-        ownerEmail: 'Placeholder email',
+        owner: name,
+        ownerEmail: email,
       },
     };
     this.events = this.events
@@ -228,5 +249,31 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   private _staticRefresh(): void {
     this.events = [...this.events];
     this._cd.detectChanges();
+  }
+
+  private _createHighlightSub(): void {
+    this.filterGroup
+      .get('highlightMine')!
+      .valueChanges.pipe(takeUntil(this._destroy$))
+      .subscribe((shouldHighlight) => {
+        if (shouldHighlight && this._auth.identityClaims) {
+          const { name, email } = this._auth.identityClaims;
+          this.events = this.events.map((event) => {
+            if (event.meta.ownerEmail === email && event.meta.owner === name) {
+              event.color = COLORS.owned;
+            }
+            return event;
+          });
+        } else if (!shouldHighlight) {
+          this.events = this.events.map((event) => {
+            if (event === this.createdEvent) {
+              event.color = COLORS.created;
+            } else {
+              event.color = COLORS.default;
+            }
+            return event;
+          });
+        }
+      });
   }
 }

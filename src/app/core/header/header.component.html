@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="{ isAuthenticated: auth.isAuthenticated$ | async } as authData">
   <mat-toolbar class="header-toolbar">
     <div class="res-container fx-center-vert">
       <!-- Logo -->
@@ -10,7 +10,12 @@
         <!-- Big layout menu -->
         <ul>
           <li
-            *ngFor="let item of filterAuthorizedItems(menuItems)"
+            *ngFor="
+              let item of filterAuthorizedItems(
+                menuItems,
+                authData.isAuthenticated!
+              )
+            "
             [fxHide.lt-lg]="item.hideOnTablet"
             fxHide.lt-md
           >
@@ -27,7 +32,12 @@
 
               <mat-menu #popupSubMenu="matMenu">
                 <ng-container
-                  *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
+                  *ngFor="
+                    let subItem of filterAuthorizedItems(
+                      item.subItems,
+                      authData.isAuthenticated!
+                    )
+                  "
                 >
                   <a mat-menu-item [routerLink]="subItem.route">{{
                     subItem.label
@@ -66,7 +76,9 @@
       </mat-menu>
 
       <!-- Account menu -->
-      <ng-container *ngIf="isAuthenticated; else loggedOutFallback">
+      <ng-container
+        *ngIf="auth.isAuthenticated$ | async; else loggedOutFallback"
+      >
         <button mat-button [matMenuTriggerFor]="accountSubMenu" fxHide.lt-sm>
           <span class="fx-center-vert">
             <mat-icon class="icon-xs">account_circle</mat-icon>
@@ -115,7 +127,11 @@
 
   <!-- Small layout menu -->
   <ul id="dropdown-menu" [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
-    <ng-container *ngFor="let item of filterAuthorizedItems(menuItems)">
+    <ng-container
+      *ngFor="
+        let item of filterAuthorizedItems(menuItems, authData.isAuthenticated!)
+      "
+    >
       <li fxHide fxShow.lt-md [fxShow.lt-lg]="item.hideOnTablet">
         <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
           <div matRipple [matRippleCentered]="true">
@@ -138,7 +154,12 @@
       <li
         class="subItem"
         [@dropdown]="item.subMenuOpen ? 'open' : 'closed'"
-        *ngFor="let subItem of filterAuthorizedItems(item.subItems)"
+        *ngFor="
+          let subItem of filterAuthorizedItems(
+            item.subItems,
+            authData.isAuthenticated!
+          )
+        "
       >
         <ng-container
           *ngTemplateOutlet="linkButton; context: { item: subItem }"

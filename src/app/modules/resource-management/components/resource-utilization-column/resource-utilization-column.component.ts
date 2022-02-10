@@ -23,6 +23,8 @@ interface ColumnData {
   usedCapacity: number;
 }
 
+const BG_OPACITY = 0.6;
+
 @Component({
   selector: 'app-resource-utilization-column',
   templateUrl: './resource-utilization-column.component.html',
@@ -62,10 +64,10 @@ export class ResourceUtilizationColumnComponent
   getBgColor(): string {
     if (this.percentage < 0.1) {
       const all = 255 - 30 * this.percentage * 10;
-      return `rgb(${all}, ${all}, ${all})`;
+      return `rgba(${all}, ${all}, ${all}, ${BG_OPACITY})`;
     } else {
       const green = 220 - 170 * this.percentage;
-      return `rgb(255, ${green}, 50)`;
+      return `rgba(255, ${green}, 50, ${BG_OPACITY})`;
     }
   }
 

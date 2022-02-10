@@ -3,6 +3,12 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject } from 'rxjs';
 import { authConfig } from './auth-config';
 import { IdentityClaims } from './identity-claims';
+import { environment } from 'src/environments/environment';
+import {
+  mockAccessToken,
+  mockIdentityClaims,
+  mockRefreshToken,
+} from './mock-auth-data';
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +20,21 @@ export class AuthenticationService {
   constructor(private _oauthService: OAuthService) {
     this.initializeOauthService();
 
-    this._oauthService.events.subscribe(() => {
-      this.isAuthenticatedSubject$.next(
-        this._oauthService.hasValidAccessToken()
-      );
-    });
+    if (environment.production) {
+      this._oauthService.events.subscribe(() => {
+        this.isAuthenticatedSubject$.next(
+          this._oauthService.hasValidAccessToken()
+        );
+      });
+    } else {
+      this.isAuthenticatedSubject$.next(true);
+    }
   }
 
   login(): void {
     this._oauthService.initCodeFlow();
   }
-  logout() {
+  logout(): void {
     this._oauthService.logOut();
   }
 
@@ -33,20 +43,35 @@ export class AuthenticationService {
     await this._oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
-  hasValidToken() {
-    return this._oauthService.hasValidAccessToken();
+  hasValidToken(): boolean {
+    if (environment.production) {
+      return this._oauthService.hasValidAccessToken();
+    }
+    return true;
   }
 
   get idToken(): string {
-    return this._oauthService.getIdToken();
+    if (environment.production) {
+      return this._oauthService.getIdToken();
+    }
+    return mockAccessToken;
   }
   get accessToken(): string {
-    return this._oauthService.getAccessToken();
+    if (environment.production) {
+      return this._oauthService.getAccessToken();
+    }
+    return mockAccessToken;
   }
   get refreshToken(): string {
-    return this._oauthService.getRefreshToken();
+    if (environment.production) {
+      return this._oauthService.getRefreshToken();
+    }
+    return mockRefreshToken;
   }
   get identityClaims(): IdentityClaims | null {
-    return this._oauthService.getIdentityClaims() as IdentityClaims;
+    if (environment.production) {
+      return this._oauthService.getIdentityClaims() as IdentityClaims;
+    }
+    return mockIdentityClaims;
   }
 }
