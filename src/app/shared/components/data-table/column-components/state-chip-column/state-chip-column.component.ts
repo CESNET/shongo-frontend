@@ -9,17 +9,17 @@ export interface StateProps {
 }
 
 export abstract class StateChipColumnComponent extends ColumnComponent {
-  abstract statePropsMap: Record<string, StateProps>;
+  abstract statePropsMap: Map<string, StateProps>;
 
   constructor(value: string, settings: Observable<TableSettings>) {
     super(value, settings);
   }
 
   getStateColor(state: string): StateColor {
-    return this.statePropsMap[state].color;
+    return this.statePropsMap.get(state)?.color ?? 'error';
   }
 
   getStateDisplayName(state: string): string {
-    return this.statePropsMap[state].displayName;
+    return this.statePropsMap.get(state)?.displayName ?? 'Unknown';
   }
 }

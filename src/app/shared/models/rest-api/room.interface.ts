@@ -1,11 +1,16 @@
+import { Slot } from './slot.interface';
+
 export interface Room {
   id: string;
-  creationTime: string;
-  slotStart: string;
-  slotEnd: string;
+  type: string;
+  slot: Slot;
+  earliestSlot: Slot;
   description: string;
   name: string;
-  participants: number;
   technology: string;
   state: string;
+  isAvailable: boolean;
+  isDeprecated: boolean;
+  licenceCount: number;
+  usageCount: number;
 }

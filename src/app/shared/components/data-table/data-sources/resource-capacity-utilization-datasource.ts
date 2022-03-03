@@ -3,13 +3,10 @@ import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ResourceCapacityUtilizationService } from 'src/app/core/http/resource-capacity-utilization/resource-capacity-utilization.service';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceUtilizationColumnComponent } from 'src/app/modules/resource-management/components/resource-utilization-column/resource-utilization-column.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import {
-  ResourceCapacityUtilization,
-  ResourceCapacityUtilizationTableData,
-} from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
+import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { TableButton } from '../buttons/table-button';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
@@ -19,12 +16,24 @@ type Utilization = Omit<
   'id' | 'interval'
 >;
 
+interface ResourceCapacityUtilizationTableData {
+  id: string;
+  interval: string;
+  pexip: string;
+  tcs2: string;
+  'connect-cesnet-new': string;
+  'mcu-cesnet': string;
+  'mcu-muni': string;
+  'connect-cesnet-old': string;
+  'freepbx-uvt': string;
+}
+
 export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<ResourceCapacityUtilizationTableData> {
   displayedColumns: TableColumn[];
   buttons: TableButton[] = [];
 
   constructor(
-    private _resUtilService: ResourceCapacityUtilizationService,
+    private _resourceService: ResourceService,
     private _datePipe: DatePipe
   ) {
     super();
@@ -76,8 +85,8 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
     sortDirection: SortDirection,
     filter: HttpParams
   ): Observable<ApiResponse<ResourceCapacityUtilizationTableData>> {
-    return this._resUtilService
-      .fetchTableItems<ResourceCapacityUtilization>(
+    return this._resourceService
+      .fetchCapacityUtilization(
         pageSize,
         pageIndex,
         sortedColumn,

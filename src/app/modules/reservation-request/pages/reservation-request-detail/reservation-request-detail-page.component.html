@@ -19,7 +19,23 @@
         </div>
       </ng-template>
     </mat-tab>
-    <mat-tab label="User roles"> </mat-tab>
+    <mat-tab
+      label="Capacity reservations"
+      *ngIf="reservationRequest.type === ReservationType.VIRTUAL_ROOM"
+    >
+      <ng-template matTabContent>
+        <div class="tab-content">
+          <app-capacity-reservations-tab></app-capacity-reservations-tab>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="User roles">
+      <ng-template matTabContent>
+        <div class="tab-content">
+          <app-user-roles-tab></app-user-roles-tab>
+        </div>
+      </ng-template>
+    </mat-tab>
     <mat-tab label="Participants"> </mat-tab>
     <mat-tab label="Runtime management"> </mat-tab>
     <mat-tab label="Recordings"> </mat-tab>

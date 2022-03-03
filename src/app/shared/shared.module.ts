@@ -45,6 +45,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     ShortStringPipe,
     CertainityCheckComponent,
     ReservationCalendarComponent,
+    StateChipComponent,
   ],
 })
 export class SharedModule {}

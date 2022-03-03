@@ -71,10 +71,10 @@ export class ReservationsDataSource extends StaticDataSource<
       (item: ResourceReservation) =>
         ({
           id: item.id,
-          owner: JSON.stringify(item.owner),
+          owner: JSON.stringify(item.user),
           requestId: item.requestId,
-          slotStart: item.slotStart,
-          slotEnd: item.slotEnd,
+          slotStart: item.slot.start,
+          slotEnd: item.slot.end,
           licenceCount: item.licenceCount,
         } as ResourceReservationTableData)
     );

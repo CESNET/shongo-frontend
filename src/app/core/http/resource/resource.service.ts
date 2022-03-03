@@ -1,24 +1,44 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
+import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { ApiService } from '../api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ResourceCapacityUtilizationService extends ApiService {
+export class ResourceService extends ApiService {
   constructor(protected _http: HttpClient) {
     super(_http, Endpoint.RESOURCE_CAPACITY_UTILIZATION, 'v1');
   }
 
-  fetchResourceUsage(
+  fetchCapacityUtilization(
+    pageSize: number,
+    pageIndex: number,
+    sortedColumn: string,
+    sortDirection: SortDirection,
+    filter: HttpParams
+  ): Observable<ApiResponse<ResourceCapacityUtilization>> {
+    return this.fetchTableItems(
+      pageSize,
+      pageIndex,
+      sortedColumn,
+      sortDirection,
+      filter,
+      this.buildEndpointURL('resource/capacity_utilization', 'v1')
+    );
+  }
+
+  fetchResourceUtilization(
     resourceId: string,
     intervalFrom: string,
     intervalTo: string
   ): Observable<ResourceUtilizationDetail> {
-    const detailUrl = this.endpointURL + '/detail';
+    const detailUrl = `${this.endpointURL}/${resourceId}/capacity_utilization`;
 
     const httpParams = new HttpParams()
       .set('resourceId', resourceId)

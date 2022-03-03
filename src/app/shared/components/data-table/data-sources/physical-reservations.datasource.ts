@@ -3,17 +3,28 @@ import { HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { Room } from 'src/app/shared/models/rest-api/room.interface';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { TableButton } from '../buttons/table-button';
-import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
-export class ReservationRequestDataSource extends DataTableDataSource<ReservationRequest> {
+interface PhysicalReservationsTableData {
+  id: string;
+  resourceName: string;
+  slotStart: string;
+  slotEnd: string;
+  state: string;
+  resourceDescription: string;
+}
+
+export class PhysicalReservationsDataSource extends DataTableDataSource<PhysicalReservationsTableData> {
   displayedColumns: TableColumn[];
   buttons: TableButton[];
 
@@ -25,34 +36,19 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
     super();
 
     this.displayedColumns = [
-      { name: 'author', displayName: 'Author' },
-      {
-        name: 'creationTime',
-        displayName: 'Created at',
-        pipeFunc: this.datePipe,
-      },
-      { name: 'name', displayName: 'Name' },
-      { name: 'technology', displayName: 'Technology' },
+      { name: 'resourceName', displayName: 'Meeting room' },
       {
         name: 'slotStart',
         displayName: 'Slot start',
         pipeFunc: this.datePipe,
       },
       { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
-      {
-        name: 'state',
-        displayName: 'State',
-        component: ReservationRequestStateColumnComponent,
-      },
+      { name: 'state', displayName: 'Reservation state' },
+      { name: 'resourceDescription', displayName: 'Description' },
     ];
 
     this.buttons = [
-      new LinkButton('Show detail', 'visibility', '/reservation_request/:id'),
-      new LinkButton(
-        'Edit reservation request',
-        'settings',
-        '/reservation_request/edit/:id'
-      ),
+      new LinkButton('Edit meeting room', 'settings', '/meeting_room/:id'),
       new DeleteButton(this._resReqService, this._dialog),
     ];
   }
@@ -63,14 +59,32 @@ export class ReservationRequestDataSource extends DataTableDataSource<Reservatio
     sortedColumn: string,
     sortDirection: SortDirection,
     filter: HttpParams
-  ): Observable<ApiResponse<ReservationRequest>> {
-    return this._resReqService.fetchTableItems(
-      pageSize,
-      pageIndex,
-      sortedColumn,
-      sortDirection,
-      filter
-    );
+  ): Observable<ApiResponse<PhysicalReservationsTableData>> {
+    filter = filter.set('type', ReservationType.PHYSICAL_RESOURCE);
+    return this._resReqService
+      .fetchTableItems<ReservationRequest>(
+        pageSize,
+        pageIndex,
+        sortedColumn,
+        sortDirection,
+        filter
+      )
+      .pipe(
+        map((tableData) => {
+          const { count, items } = tableData;
+          const mappedItems = items.map((item) => ({
+            id: item.id,
+            resourceName: item?.physicalResourceData?.resourceName ?? 'unknown',
+            slotStart: item.slot.start,
+            slotEnd: item.slot.end,
+            state: item.state,
+            resourceDescription:
+              item?.physicalResourceData?.resourceDescription ?? 'unknown',
+          }));
+
+          return { count, items: mappedItems };
+        })
+      );
   }
 
   datePipe = (value: unknown): string => {

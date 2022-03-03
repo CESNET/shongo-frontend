@@ -75,13 +75,14 @@
         <td
           mat-cell
           *matCellDef="let row"
-          [matTooltip]="
-            row[column.name].length > maxCellTextLength
-              ? row[column.name]
-              : null
-          "
+          [matTooltip]="getTooltip(row[column.name])"
         >
-          {{ row[column.name] | appShortString: maxCellTextLength }}
+          <ng-container *ngIf="row[column.name] as cellData; else noCellData">
+            {{ cellData | appShortString: maxCellTextLength }}
+          </ng-container>
+          <ng-template #noCellData>
+            <span style="color: gray">none</span>
+          </ng-template>
         </td>
       </ng-container>
 

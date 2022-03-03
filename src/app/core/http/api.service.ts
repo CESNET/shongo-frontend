@@ -14,23 +14,24 @@ export abstract class ApiService {
     endpoint: Endpoint,
     version: string
   ) {
-    this.endpointURL = this._buildEndpointURL(endpoint, version);
+    this.endpointURL = this.buildEndpointURL(endpoint, version);
   }
 
-  private _buildEndpointURL(endpoint: Endpoint, version: string) {
+  buildEndpointURL(endpoint: string, version: string) {
     return `http://${environment.shongoRESTApiHost}:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
   }
 
-  fetchItems<T>(httpParams?: HttpParams): Observable<ApiResponse<T>> {
-    return this._http
-      .get<ApiResponse<T>>(this.endpointURL, { params: httpParams })
-      .pipe(
-        first(),
-        catchError((err) => {
-          console.error(err);
-          return throwError(err);
-        })
-      );
+  fetchItems<T>(
+    httpParams?: HttpParams,
+    url = this.endpointURL
+  ): Observable<ApiResponse<T>> {
+    return this._http.get<ApiResponse<T>>(url, { params: httpParams }).pipe(
+      first(),
+      catchError((err) => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
   }
 
   fetchTableItems<T>(
@@ -38,7 +39,8 @@ export abstract class ApiService {
     pageIndex: number,
     sortedColumn: string,
     sortDirection: SortDirection,
-    filter: HttpParams
+    filter: HttpParams,
+    url = this.endpointURL
   ): Observable<ApiResponse<T>> {
     let httpParams = filter ?? new HttpParams();
 
@@ -56,14 +58,14 @@ export abstract class ApiService {
       httpParams = httpParams.set('sort_dir', sortDirection);
     }
 
-    return this.fetchItems<T>(httpParams);
+    return this.fetchItems<T>(httpParams, url);
   }
 
-  fetchItem<T>(id: string): Observable<T> {
-    return this._http.get<T>(`${this.endpointURL}/${id}`);
+  fetchItem<T>(id: string, url = this.endpointURL): Observable<T> {
+    return this._http.get<T>(`${url}/${id}`);
   }
 
-  deleteItem(id: string): Observable<{}> {
-    return this._http.delete<{}>(this.endpointURL, { body: { id } });
+  deleteItem(id: string, url = this.endpointURL): Observable<{}> {
+    return this._http.delete<{}>(`${url}/${id}`);
   }
 }

@@ -8,9 +8,20 @@ import {
 } from '@angular/core';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { finalize, first, takeUntil } from 'rxjs/operators';
-import { ReservationService } from 'src/app/core/http/reservation/reservation.service';
-import { Reservation } from 'src/app/shared/models/rest-api/reservation.interface';
-import { addDays, addMinutes, endOfWeek, format } from 'date-fns';
+import {
+  addDays,
+  addMinutes,
+  endOfDay,
+  endOfMonth,
+  endOfWeek,
+  isSaturday,
+  isSunday,
+  nextSaturday,
+  previousSunday,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+} from 'date-fns';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -18,6 +29,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { WeekViewHourSegment } from 'calendar-utils';
 import { physicalResources } from 'src/app/models/data/physical-resources';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
+import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { HttpParams } from '@angular/common/http';
+import { ReservationRequest } from '../../models/rest-api/reservation-request.interface';
 
 function floorToNearest(amount: number, precision: number) {
   return Math.floor(amount / precision) * precision;
@@ -96,7 +110,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   private _selectedResourceId?: string | null;
 
   constructor(
-    private _reservationService: ReservationService,
+    private _resReqService: ReservationRequestService,
     private _cd: ChangeDetectorRef,
     private _auth: AuthenticationService
   ) {
@@ -125,13 +139,20 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   fetchReservations(): void {
     this._loading$.next(true);
 
-    this._reservationService
-      .fetchReservations(this.filterGroup.get('resource')!.value)
+    const interval = this._getInterval(this.viewDate);
+    const resource = this.filterGroup.get('resource')!.value;
+    const filter = new HttpParams()
+      .set('resource', resource)
+      .set('intervalFrom', new Date(interval.start).toISOString())
+      .set('intervalTo', new Date(interval.end).toISOString());
+
+    this._resReqService
+      .fetchItems<ReservationRequest>(filter)
       .pipe(first())
       .subscribe({
         next: (reservations) => {
           this._loading$.next(false);
-          this._setEvents(reservations);
+          this.events = this._createEvents(reservations);
         },
         error: () => {
           this._loading$.next(false);
@@ -219,6 +240,31 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     return start;
   }
 
+  private _getInterval(viewDate: Date): Interval {
+    let intervalFrom: Date;
+    let intervalTo: Date;
+
+    if (this.view === CalendarView.Day) {
+      intervalFrom = startOfDay(viewDate);
+      intervalTo = endOfDay(viewDate);
+    } else if (this.view === CalendarView.Week) {
+      intervalFrom = startOfWeek(viewDate);
+      intervalTo = endOfWeek(viewDate);
+    } else {
+      const monthStart = startOfMonth(viewDate);
+      const monthEnd = endOfMonth(viewDate);
+
+      intervalFrom = isSunday(monthStart)
+        ? monthStart
+        : startOfDay(previousSunday(monthStart));
+      intervalTo = isSaturday(monthEnd)
+        ? endOfDay(monthEnd)
+        : endOfDay(nextSaturday(monthEnd));
+    }
+
+    return { start: intervalFrom, end: intervalTo };
+  }
+
   private _hasNoIntersection(start: Date, end: Date): boolean {
     return this.events.every(
       (event) =>
@@ -234,16 +280,21 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     );
   }
 
-  private _setEvents(reservations: ApiResponse<Reservation>) {
-    this.events = reservations.items.map((reservation) => ({
-      start: new Date(reservation.slotStart),
-      end: new Date(reservation.slotEnd),
+  private _createEvents(
+    reservations: ApiResponse<ReservationRequest>
+  ): CalendarEvent[] {
+    const events = reservations.items.map((reservation) => ({
+      start: new Date(reservation.slot.start),
+      end: new Date(reservation.slot.end),
       title: reservation.description,
       meta: {
-        owner: reservation.owner,
+        owner: reservation.ownerName,
         ownerEmail: reservation.ownerEmail,
       },
     }));
+
+    const highlightMine = this.filterGroup.get('highlightMine')?.value;
+    return this._highlightEvents(events, highlightMine ?? false);
   }
 
   private _staticRefresh(): void {
@@ -255,25 +306,37 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.filterGroup
       .get('highlightMine')!
       .valueChanges.pipe(takeUntil(this._destroy$))
-      .subscribe((shouldHighlight) => {
-        if (shouldHighlight && this._auth.identityClaims) {
-          const { name, email } = this._auth.identityClaims;
-          this.events = this.events.map((event) => {
-            if (event.meta.ownerEmail === email && event.meta.owner === name) {
-              event.color = COLORS.owned;
-            }
-            return event;
-          });
-        } else if (!shouldHighlight) {
-          this.events = this.events.map((event) => {
-            if (event === this.createdEvent) {
-              event.color = COLORS.created;
-            } else {
-              event.color = COLORS.default;
-            }
-            return event;
-          });
-        }
+      .subscribe((highlightMine) => {
+        this.events = this._highlightEvents(this.events, highlightMine);
       });
+  }
+
+  private _highlightEvents(
+    events: CalendarEvent[],
+    highlightMine: boolean
+  ): CalendarEvent[] {
+    let highlightedEvents: CalendarEvent[];
+
+    if (highlightMine && this._auth.identityClaims) {
+      const { name, email } = this._auth.identityClaims;
+
+      highlightedEvents = events.map((event) => {
+        if (event.meta.ownerEmail === email && event.meta.owner === name) {
+          event.color = COLORS.owned;
+        }
+        return event;
+      });
+    } else {
+      highlightedEvents = events.map((event) => {
+        if (event === this.createdEvent) {
+          event.color = COLORS.created;
+        } else {
+          event.color = COLORS.default;
+        }
+        return event;
+      });
+    }
+
+    return highlightedEvents;
   }
 }

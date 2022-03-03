@@ -1,8 +1,7 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { ActionButton } from './action-button';
 
-export abstract class ApiActionButton<T extends HasID> extends ActionButton<T> {
+export abstract class ApiActionButton<T> extends ActionButton<T> {
   loading$: Observable<T[]>;
   rowUpdate$: Observable<T>;
   deleted$: Observable<void>;

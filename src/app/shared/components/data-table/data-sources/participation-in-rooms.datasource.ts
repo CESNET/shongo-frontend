@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { RoomService } from 'src/app/core/http/room/room.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
@@ -11,7 +12,17 @@ import { RoomStateColumnComponent } from '../column-components/state-chip-column
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
-export class RoomDataSource extends DataTableDataSource<Room> {
+interface ParticipationInRoomsTableData {
+  id: string;
+  name: string;
+  technology: string;
+  slotStart: string;
+  slotEnd: string;
+  state: string;
+  description: string;
+}
+
+export class ParticipationInRoomsDataSource extends DataTableDataSource<ParticipationInRoomsTableData> {
   displayedColumns: TableColumn[];
   buttons: TableButton[];
 
@@ -44,14 +55,31 @@ export class RoomDataSource extends DataTableDataSource<Room> {
     sortedColumn: string,
     sortDirection: SortDirection,
     filter: HttpParams
-  ): Observable<ApiResponse<Room>> {
-    return this._roomService.fetchTableItems(
-      pageSize,
-      pageIndex,
-      sortedColumn,
-      sortDirection,
-      filter
-    );
+  ): Observable<ApiResponse<ParticipationInRoomsTableData>> {
+    return this._roomService
+      .fetchTableItems<Room>(
+        pageSize,
+        pageIndex,
+        sortedColumn,
+        sortDirection,
+        filter
+      )
+      .pipe(
+        map((tableData) => {
+          const { count, items } = tableData;
+          const mappedItems = items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            technology: item.technology,
+            slotStart: item.slot.start,
+            slotEnd: item.slot.end,
+            state: item.state,
+            description: item.description,
+          }));
+
+          return { count, items: mappedItems };
+        })
+      );
   }
 
   datePipe = (value: unknown): string => {

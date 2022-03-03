@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
-import { ResourceCapacityUtilizationService } from 'src/app/core/http/resource-capacity-utilization/resource-capacity-utilization.service';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ReservationsDataSource } from 'src/app/shared/components/data-table/data-sources/reservations.datasource';
 import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 
@@ -20,7 +20,7 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private _resUtilService: ResourceCapacityUtilizationService,
+    private _resourceService: ResourceService,
     private _datePipe: DatePipe
   ) {}
 
@@ -28,7 +28,7 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
     this.loading$.next(true);
     this.data$ = this._route.queryParams.pipe(
       switchMap((params) =>
-        this._resUtilService.fetchResourceUsage(
+        this._resourceService.fetchResourceUtilization(
           params.resourceId,
           params.intervalFrom,
           params.intervalTo

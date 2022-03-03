@@ -37,11 +37,19 @@
           [value]="view"
           (valueChange)="view = $event"
         >
-          <mat-button-toggle [value]="CalendarView.Day">Day</mat-button-toggle>
-          <mat-button-toggle [value]="CalendarView.Week"
+          <mat-button-toggle
+            [value]="CalendarView.Day"
+            (change)="fetchReservations()"
+            >Day</mat-button-toggle
+          >
+          <mat-button-toggle
+            [value]="CalendarView.Week"
+            (change)="fetchReservations()"
             >Week</mat-button-toggle
           >
-          <mat-button-toggle [value]="CalendarView.Month"
+          <mat-button-toggle
+            [value]="CalendarView.Month"
+            (change)="fetchReservations()"
             >Month</mat-button-toggle
           >
         </mat-button-toggle-group>
@@ -59,12 +67,14 @@
             mwlCalendarPreviousView
             [(viewDate)]="viewDate"
             [view]="view"
+            (viewDateChange)="fetchReservations()"
             ><mat-icon>chevron_left</mat-icon></mat-button-toggle
           >
           <mat-button-toggle
             value="week"
             mwlCalendarToday
             [(viewDate)]="viewDate"
+            (viewDateChange)="fetchReservations()"
             >Now</mat-button-toggle
           >
           <mat-button-toggle
@@ -72,6 +82,7 @@
             mwlCalendarNextView
             [(viewDate)]="viewDate"
             [view]="view"
+            (viewDateChange)="fetchReservations()"
             ><mat-icon>chevron_right</mat-icon></mat-button-toggle
           >
         </mat-button-toggle-group>
