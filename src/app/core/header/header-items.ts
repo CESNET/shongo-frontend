@@ -61,32 +61,8 @@ export const menuItems: MenuItem[] = [
   },
   {
     label: $localize`:navbar link|Link to reservations:Reserve`,
-    route: '/',
+    route: '/reserve',
     itemAuth: ItemAuthorization.LOGGED_IN,
-    subItems: [
-      {
-        label: $localize`:navbar link|Sublink in reservations:Meeting room`,
-        route: '/',
-        itemAuth: ItemAuthorization.LOGGED_IN,
-      },
-      {
-        label: $localize`:navbar link|Sublink in reservations:Parking place`,
-        route: '/',
-        itemAuth: ItemAuthorization.LOGGED_IN,
-      },
-    ],
-  },
-  {
-    label: $localize`:navbar link|Link to resource creation:Create`,
-    route: '/',
-    itemAuth: ItemAuthorization.LOGGED_IN,
-    subItems: [
-      {
-        label: $localize`:navbar link|Sublink in resource creation:Virtual room`,
-        route: '/',
-        itemAuth: ItemAuthorization.LOGGED_IN,
-      },
-    ],
   },
 ];
 

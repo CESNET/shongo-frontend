@@ -1,5 +1,15 @@
 export interface User {
-  id: string;
-  name: string;
+  userId: string;
+  principalNames: string[];
+  firstName: string;
+  lastName: string;
+  organization: string;
   email: string;
+  fullName: string;
+  locale: string;
+  zoneInfo: string;
+  eduPersonEntitlement: string[];
+  rootOrganization: string;
+  primaryEmail: string;
+  className: string;
 }

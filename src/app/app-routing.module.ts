@@ -4,7 +4,10 @@ import { HelpPageComponent } from './modules/help/pages/help-page/help-page.comp
 import { ReportPageComponent } from './modules/help/pages/report-page/report-page.component';
 import { UserSettingsPageComponent } from './modules/help/pages/user-settings-page/user-settings-page.component';
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
+import { CreateParticipantPageComponent } from './modules/reservation-request/pages/create-participant-page/create-participant-page.component';
+import { CreateUserRolePageComponent } from './modules/reservation-request/pages/create-user-role-page/create-user-role-page.component';
 import { ReservationRequestDetailPageComponent } from './modules/reservation-request/pages/reservation-request-detail/reservation-request-detail-page.component';
+import { ReservationPageComponent } from './modules/reservation/pages/reservation-page/reservation-page.component';
 import { ResourceCapacityUtilizationPageComponent } from './modules/resource-management/pages/resource-capacity-utilization-page/resource-capacity-utilization-page.component';
 import { ResourceUtilizationDetailPageComponent } from './modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component';
 
@@ -14,8 +17,16 @@ const routes: Routes = [
     component: HomePageComponent,
   },
   {
-    path: 'reservation_request/:id',
+    path: 'reservation-request/:id',
     component: ReservationRequestDetailPageComponent,
+  },
+  {
+    path: 'reservation-request/:id/user-role/create',
+    component: CreateUserRolePageComponent,
+  },
+  {
+    path: 'reservation-request/:id/participant/create',
+    component: CreateParticipantPageComponent,
   },
   { path: 'help', component: HelpPageComponent },
   { path: 'report', component: ReportPageComponent },
@@ -27,6 +38,10 @@ const routes: Routes = [
   {
     path: 'resource-management/capacity-utilization/detail',
     component: ResourceUtilizationDetailPageComponent,
+  },
+  {
+    path: 'reserve',
+    component: ReservationPageComponent,
   },
   {
     path: '**',

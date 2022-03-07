@@ -1,36 +1,81 @@
 <header>
-  <h1>Room detail</h1>
+  <h1>Reservation request detail</h1>
+
+  <div
+    class="buttons"
+    *ngIf="reservationRequest$ | async as reservationRequest"
+  >
+    <button mat-flat-button color="primary">
+      <mat-icon>content_copy</mat-icon>&nbsp;Create new as copy
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      *ngIf="reservationRequest.type === ReservationType.VIRTUAL_ROOM"
+    >
+      <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
+    </button>
+    <button mat-flat-button color="warn">
+      <mat-icon>delete_forever</mat-icon>&nbsp;Delete
+    </button>
+  </div>
 </header>
 
 <main>
-  <mat-tab-group
-    [animationDuration]="0"
+  <ng-container
     *ngIf="
       reservationRequest$ | async as reservationRequest;
       else loadingOrError
     "
   >
-    <mat-tab label="Reservation">
-      <ng-template matTabContent>
-        <div class="tab-content">
-          <app-reservation-detail
-            [reservationRequest]="reservationRequest"
-          ></app-reservation-detail>
-        </div>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="User roles"> </mat-tab>
-    <mat-tab label="Participants"> </mat-tab>
-    <mat-tab label="Runtime management"> </mat-tab>
-    <mat-tab label="Recordings"> </mat-tab>
-  </mat-tab-group>
+    <mat-divider></mat-divider>
+    <mat-tab-group [animationDuration]="0">
+      <mat-tab label="Reservation">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-reservation-detail
+              [reservationRequest]="reservationRequest"
+            ></app-reservation-detail>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab
+        label="Capacity reservations"
+        *ngIf="reservationRequest.type === ReservationType.VIRTUAL_ROOM"
+      >
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-capacity-reservations-tab></app-capacity-reservations-tab>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="User roles">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-user-roles-tab></app-user-roles-tab>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Participants">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-participants-tab></app-participants-tab>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Runtime management"> </mat-tab>
+      <mat-tab label="Recordings"> </mat-tab>
+    </mat-tab-group>
+  </ng-container>
 
+  <!-- Loading or error -->
   <ng-template #loadingOrError>
     <ng-container *ngIf="loading$ | async; else error">
       <ng-container *ngTemplateOutlet="loading"></ng-container>
     </ng-container>
   </ng-template>
 
+  <!-- Loading -->
   <ng-template #loading>
     <ngx-skeleton-loader
       count="5"
@@ -48,6 +93,7 @@
     ></ngx-skeleton-loader>
   </ng-template>
 
+  <!-- Error -->
   <ng-template #error>
     <h2>Error</h2>
   </ng-template>

@@ -54,9 +54,9 @@ mat-toolbar.header-toolbar {
 
 /* Mat tab content */
 .tab-content {
-  margin-top: 25px;
+  margin-top: 1.5rem;
   overflow-x: hidden;
-  padding: 10px 5px;
+  padding: 1rem 0.5rem;
 }
 
 /* Theme colors */
@@ -67,21 +67,32 @@ mat-toolbar.header-toolbar {
 
 /* List style */
 dl {
-  display: block;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  min-width: 21em;
+  max-width: 31em;
+  overflow: visible;
+  font-size: 1em;
   margin: 0;
 
   dt,
   dd {
-    font-size: 14px;
-    padding-bottom: 10px;
+    font-size: 1em;
+    padding-bottom: 0.7em;
   }
   dt {
+    flex: 0 0 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
     font-weight: bold;
     color: rgb(90, 90, 90);
-    float: left;
-    clear: left;
   }
   dd {
-    margin-left: 150px;
+    flex: 0 0 50%;
+    margin-left: auto;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }

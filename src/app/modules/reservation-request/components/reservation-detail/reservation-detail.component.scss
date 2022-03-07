@@ -2,10 +2,32 @@
 .reservation-detail {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 1.5rem;
+  font-size: 1rem;
 
   main,
   aside {
     flex: 1;
   }
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  button {
+    width: fit-content;
+  }
+}
+
+/* Other */
+.gray {
+  color: gray;
 }

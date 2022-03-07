@@ -13,20 +13,26 @@ import {
   templateUrl: '../state-chip-column.component.html',
 })
 export class RoomStateColumnComponent extends StateChipColumnComponent {
-  statePropsMap: Record<string, StateProps> = {
-    [RoomState.FAILED]: { color: 'error', displayName: 'Error' },
-    [RoomState.NOT_STARTED]: { color: 'info', displayName: 'Unprepared' },
-    [RoomState.STARTED]: { color: 'success', displayName: 'Opened' },
-    [RoomState.STARTED_AVAILABLE]: { color: 'success', displayName: 'Opened' },
-    [RoomState.STARTED_NOT_AVAILABLE]: {
-      color: 'success',
-      displayName: 'Prepared',
-    },
-    [RoomState.STOPPED]: {
-      color: 'success',
-      displayName: 'Stopped',
-    },
-  };
+  statePropsMap: Map<string, StateProps> = new Map([
+    [RoomState.FAILED, { color: 'error', displayName: 'Error' }],
+    [RoomState.NOT_STARTED, { color: 'info', displayName: 'Unprepared' }],
+    [RoomState.STARTED, { color: 'success', displayName: 'Opened' }],
+    [RoomState.STARTED_AVAILABLE, { color: 'success', displayName: 'Opened' }],
+    [
+      RoomState.STARTED_NOT_AVAILABLE,
+      {
+        color: 'success',
+        displayName: 'Prepared',
+      },
+    ],
+    [
+      RoomState.STOPPED,
+      {
+        color: 'success',
+        displayName: 'Stopped',
+      },
+    ],
+  ]);
 
   constructor(
     @Inject(VALUE_PROVIDER) value: string,

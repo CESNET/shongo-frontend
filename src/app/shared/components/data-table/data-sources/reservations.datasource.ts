@@ -11,12 +11,13 @@ import { SortDirection } from '@angular/material/sort';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 
 export class ReservationsDataSource extends StaticDataSource<
   ResourceReservationTableData,
   ResourceReservation
 > {
-  buttons: TableButton[] = [];
+  buttons: TableButton<ResourceReservationTableData>[] = [];
   displayedColumns: TableColumn[];
 
   constructor(data: ResourceReservation[], private _datePipe: DatePipe) {
@@ -34,12 +35,12 @@ export class ReservationsDataSource extends StaticDataSource<
       {
         name: 'slotStart',
         displayName: 'Slot start',
-        pipeFunc: this.datePipe,
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'slotEnd',
         displayName: 'Slot end',
-        pipeFunc: this.datePipe,
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'requestId',
@@ -71,22 +72,14 @@ export class ReservationsDataSource extends StaticDataSource<
       (item: ResourceReservation) =>
         ({
           id: item.id,
-          owner: JSON.stringify(item.owner),
+          owner: JSON.stringify(item.user),
           requestId: item.requestId,
-          slotStart: item.slotStart,
-          slotEnd: item.slotEnd,
+          slotStart: item.slot.start,
+          slotEnd: item.slot.end,
           licenceCount: item.licenceCount,
         } as ResourceReservationTableData)
     );
 
     return of({ count: data.count, items });
   }
-
-  datePipe = (value: unknown): string => {
-    if (typeof value === 'string') {
-      return this._datePipe.transform(value, 'medium') ?? 'Not a date';
-    } else {
-      throw new Error('Invalid column data type for date pipe.');
-    }
-  };
 }

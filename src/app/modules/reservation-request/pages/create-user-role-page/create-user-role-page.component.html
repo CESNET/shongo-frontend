@@ -1,0 +1,30 @@
+<header>
+  <h1>Add user role</h1>
+</header>
+
+<main>
+  <form *ngIf="form" [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Reservation request</mat-label>
+      <input type="text" matInput formControlName="reservationRequest" />
+    </mat-form-field>
+
+    <label>Identity type:</label>
+    <mat-radio-group
+      aria-label="Select identity type"
+      formControlName="identityType"
+      color="primary"
+    >
+      <mat-radio-button [value]="IdentityType.USER">User</mat-radio-button>
+      <mat-radio-button [value]="IdentityType.GROUP">Group</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline">
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let roleType of roleTypes" [value]="roleType">{{
+          roleType | titlecase
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</main>

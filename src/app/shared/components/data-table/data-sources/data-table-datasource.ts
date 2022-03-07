@@ -16,11 +16,9 @@ export const REFRESH_TIMEOUT = 200;
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export abstract class DataTableDataSource<
-  T extends HasID
-> extends DataSource<T> {
+export abstract class DataTableDataSource<T> extends DataSource<T> {
   abstract displayedColumns: TableColumn[];
-  abstract buttons: TableButton[];
+  abstract buttons: TableButton<T>[];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   filter$: Observable<HttpParams> | undefined;

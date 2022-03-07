@@ -1,0 +1,15 @@
+<header>
+  <h2 class="mat-primary-color">Modification of participants</h2>
+  <a mat-button routerLink="participant/create">
+    <mat-icon color="primary">add_circle</mat-icon>&nbsp;Add participant
+  </a>
+</header>
+
+<main>
+  <app-data-table
+    *ngIf="participantsDataSource"
+    header="Configure participants who will receive invitation and notifications."
+    [showDeleteButtons]="false"
+    [dataSource]="participantsDataSource"
+  ></app-data-table>
+</main>

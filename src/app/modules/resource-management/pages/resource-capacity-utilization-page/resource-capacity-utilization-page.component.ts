@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ResourceCapacityUtilizationService } from 'src/app/core/http/resource-capacity-utilization/resource-capacity-utilization.service';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceCapacityUtilizationDataSource } from 'src/app/shared/components/data-table/data-sources/resource-capacity-utilization-datasource';
 
 @Component({
@@ -13,11 +13,11 @@ export class ResourceCapacityUtilizationPageComponent {
   dataSource: ResourceCapacityUtilizationDataSource;
 
   constructor(
-    private _resouceCapacityUtilizationService: ResourceCapacityUtilizationService,
+    private _resourceService: ResourceService,
     private _datePipe: DatePipe
   ) {
     this.dataSource = new ResourceCapacityUtilizationDataSource(
-      this._resouceCapacityUtilizationService,
+      this._resourceService,
       this._datePipe
     );
   }

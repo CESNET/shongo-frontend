@@ -18,7 +18,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter, first, takeUntil } from 'rxjs/operators';
 import { DataTableDataSource } from './data-sources/data-table-datasource';
 import { DataTableFilter } from './filter/data-table-filter';
-import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { TableButton } from './buttons/table-button';
 import { ApiActionButton } from './buttons/api-action-button';
 import { LinkButton } from './buttons/link-button';
@@ -29,6 +28,7 @@ import {
   VALUE_PROVIDER,
 } from './column-components/column.component';
 import { FormControl, FormGroup } from '@angular/forms';
+import { StaticDataSource } from './data-sources/static-datasource';
 
 @Component({
   selector: 'app-data-table',
@@ -36,9 +36,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./data-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataTableComponent<T extends HasID>
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @ContentChild('tableFilter') filter: DataTableFilter | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -69,6 +67,10 @@ export class DataTableComponent<T extends HasID>
     this.displayedColumns = this._displayedColumns.asObservable();
   }
 
+  get showRefreshButton(): boolean {
+    return this.dataSource && !(this.dataSource instanceof StaticDataSource);
+  }
+
   ngOnInit(): void {
     this._displayedColumns.next(this._buildDisplayedColumnsArray());
     this.sortForm.valueChanges
@@ -91,6 +93,9 @@ export class DataTableComponent<T extends HasID>
           this._sortChangeMutex = true;
         }
       });
+    this.maxCellTextLength = Math.round(
+      150 / this._displayedColumns.value.length
+    );
   }
 
   ngAfterViewInit(): void {
@@ -128,12 +133,12 @@ export class DataTableComponent<T extends HasID>
     this._destroy$.complete();
   }
 
-  asApiActionButton(button: TableButton): ApiActionButton<T> {
+  asApiActionButton(button: TableButton<T>): ApiActionButton<T> {
     return button as ApiActionButton<T>;
   }
 
-  asLinkButton(button: TableButton): LinkButton {
-    return button as LinkButton;
+  asLinkButton(button: TableButton<T>): LinkButton<T> {
+    return button as LinkButton<T>;
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -163,7 +168,7 @@ export class DataTableComponent<T extends HasID>
     return '';
   }
 
-  getButtonType(button: TableButton): TableButtonType {
+  getButtonType(button: TableButton<T>): TableButtonType {
     if (button instanceof ApiActionButton) {
       return TableButtonType.API_ACTION;
     } else if (button instanceof LinkButton) {
@@ -172,7 +177,7 @@ export class DataTableComponent<T extends HasID>
     return TableButtonType.ACTION;
   }
 
-  handleButtonClick(button: TableButton, row: T): void {
+  handleButtonClick(button: TableButton<T>, row: T): void {
     if (button instanceof ActionButton) {
       button.executeAction(row).pipe(first()).subscribe();
     }
@@ -187,6 +192,12 @@ export class DataTableComponent<T extends HasID>
       ],
       parent: this._injector,
     });
+  }
+
+  getTooltip(cellData: string): string {
+    return (cellData && cellData.length) > this.maxCellTextLength
+      ? cellData
+      : '';
   }
 
   private _buildDisplayedColumnsArray(): string[] {

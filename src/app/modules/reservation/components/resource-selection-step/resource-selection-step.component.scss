@@ -1,0 +1,56 @@
+h1 {
+  margin-bottom: 50px;
+}
+.select-resource-step {
+  padding: 50px 0;
+  text-align: center;
+}
+.type-selection {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+.resource-selection {
+  display: flex;
+  margin: auto;
+  width: 300px;
+  flex-direction: column;
+  align-items: flex-start;
+
+  mat-form-field {
+    width: 100%;
+  }
+  button {
+    width: fit-content;
+    margin-top: 10px;
+  }
+}
+
+.type-item {
+  margin: 0 10px;
+  display: block;
+}
+
+.type-button {
+  $button-size: 150px;
+  height: $button-size;
+  width: $button-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  mat-icon {
+    $icon-size: 40px;
+    font-size: $icon-size;
+    width: $icon-size;
+    height: $icon-size;
+    margin-bottom: 10px;
+  }
+}

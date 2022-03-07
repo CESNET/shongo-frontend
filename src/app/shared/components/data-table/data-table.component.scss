@@ -2,12 +2,13 @@
 
 /* Responsive style is defined in mat-table-responive directive folder. */
 .table-container {
-  padding: 10px 20px;
+  overflow: hidden;
   background: white;
   box-shadow: $table-card-shadow;
   border-radius: 4px;
-  overflow: hidden;
+  padding: 10px 20px;
 }
+
 .full-width-table {
   width: 100%;
 }
@@ -20,7 +21,7 @@
   padding-bottom: 10px;
   align-items: center;
 
-  h3 {
+  h4 {
     margin: 0;
   }
 }

@@ -1,0 +1,27 @@
+<mat-stepper [linear]="true">
+  <mat-step label="Select resource" [completed]="resSelectStep.isCompleted()">
+    <app-resource-selection-step #resSelectStep></app-resource-selection-step>
+  </mat-step>
+  <mat-step label="Select time slot" [completed]="slotSelectStep.isCompleted()">
+    <app-time-slot-selection-step
+      #slotSelectStep
+      [selectedResourceId$]="resSelectStep.selectedResource$.asObservable()"
+    ></app-time-slot-selection-step>
+  </mat-step>
+  <mat-step
+    label="Select periodicity"
+    [completed]="periodicityStep.isCompleted()"
+  >
+    <app-periodicity-selection-step
+      #periodicityStep
+      [selectedSlot]="slotSelectStep.selectedSlot"
+    ></app-periodicity-selection-step>
+  </mat-step>
+  <mat-step label="Additional information">
+    <app-additional-information-step
+      [selectedResourceId]="resSelectStep.selectedResource$ | async"
+      [selectedTimeSlot]="slotSelectStep.selectedSlot"
+      [selectedPeriodicity]="periodicityStep.getPeriodicityString()"
+    ></app-additional-information-step>
+  </mat-step>
+</mat-stepper>

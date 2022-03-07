@@ -31,7 +31,7 @@
         <ng-template matTabContent>
           <div class="tab-content">
             <app-data-table
-              [dataSource]="resReqDataSource"
+              [dataSource]="yourRoomsDataSource"
               header="List of rooms which you own or which have been made accessible to you by other users."
             >
               <app-reservation-request-filter
@@ -52,7 +52,7 @@
         <ng-template matTabContent>
           <div class="tab-content">
             <app-data-table
-              [dataSource]="roomDataSource"
+              [dataSource]="participationInRoomsDataSource"
               [showDeleteButtons]="false"
               header="List of rooms in which you are configured as participant and which you can join."
             ></app-data-table>
@@ -71,7 +71,7 @@
         <ng-template matTabContent>
           <div class="tab-content">
             <app-data-table
-              [dataSource]="meetingRoomDataSource"
+              [dataSource]="physicalReservationsDataSource"
               header="All reservations of resource."
             ></app-data-table>
           </div>

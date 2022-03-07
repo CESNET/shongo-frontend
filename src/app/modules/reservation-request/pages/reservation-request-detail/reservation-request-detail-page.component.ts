@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
+import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 
 @Component({
   selector: 'app-reservation-request-detail-page',
@@ -12,8 +13,9 @@ import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-r
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationRequestDetailPageComponent {
-  reservationRequest$: Observable<ReservationRequest>;
+  reservationRequest$: Observable<ReservationRequestDetail>;
   loading$ = new BehaviorSubject(true);
+  ReservationType = ReservationType;
 
   constructor(
     private _resReqService: ReservationRequestService,
@@ -21,7 +23,7 @@ export class ReservationRequestDetailPageComponent {
   ) {
     this.reservationRequest$ = this._route.params.pipe(
       switchMap((params) =>
-        this._resReqService.fetchItem<ReservationRequest>(params.id)
+        this._resReqService.fetchItem<ReservationRequestDetail>(params.id)
       ),
       tap(() => this.loading$.next(false)),
       catchError((err) => {

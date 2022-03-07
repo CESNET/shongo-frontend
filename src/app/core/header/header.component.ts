@@ -42,25 +42,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   locales = locales;
   defaultLocale = this.locales[0];
   isDropdownClosed = true;
-  isAuthenticated = true;
 
   private _destroy$ = new Subject<void>();
 
-  constructor(
-    private _auth: AuthenticationService,
-    private _cd: ChangeDetectorRef
-  ) {}
+  constructor(public auth: AuthenticationService) {}
 
   ngOnInit(): void {
-    this._auth.isAuthenticated$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((isAuthenticated) => {
-        if (this.isAuthenticated !== isAuthenticated) {
-          this.isAuthenticated = true;
-          this._cd.detectChanges();
-        }
-      });
-
     this.accountItems[1].func = () => this.logOut();
   }
 
@@ -70,31 +57,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logIn(): void {
-    this._auth.login();
+    this.auth.login();
   }
 
   logOut(): void {
-    this._auth.logout();
+    this.auth.logout();
   }
 
   getUsername(): string {
-    return this._auth.identityClaims?.name ?? 'Unknown user';
+    return this.auth.identityClaims?.name ?? 'Unknown user';
   }
 
   toggleDropdown(): void {
     this.isDropdownClosed = !this.isDropdownClosed;
   }
 
-  filterAuthorizedItems(items: MenuItem[] | undefined): MenuItem[] {
+  filterAuthorizedItems(
+    items: MenuItem[] | undefined,
+    isAuthenticated: boolean
+  ): MenuItem[] {
     if (!items) {
       return [];
     }
     return items.filter((item) => {
       switch (item.itemAuth) {
         case ItemAuthorization.LOGGED_IN:
-          return this.isAuthenticated;
+          return isAuthenticated;
         case ItemAuthorization.LOGGED_OUT:
-          return !this.isAuthenticated;
+          return !isAuthenticated;
       }
       return true;
     });

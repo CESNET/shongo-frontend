@@ -1,0 +1,29 @@
+main {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  padding: 50px 0;
+  gap: 20px;
+
+  aside {
+    flex: 1;
+  }
+}
+
+footer {
+  padding: 15px 0;
+}
+
+mat-form-field#description {
+  width: 80%;
+}
+
+@media only screen and (max-width: 768px) {
+  main aside {
+    width: 100%;
+    flex: auto;
+    padding: 20px 0;
+  }
+  main {
+    padding-bottom: 0;
+  }
+}

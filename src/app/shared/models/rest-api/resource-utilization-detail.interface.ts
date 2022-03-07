@@ -1,3 +1,5 @@
+import { User } from './user.interface';
+
 export interface ResourceUtilizationDetail {
   id: string;
   name: string;
@@ -20,10 +22,12 @@ export interface ResourceReservationTableData {
 export interface ResourceReservation {
   id: string;
   requestId: string;
-  slotStart: string;
-  slotEnd: string;
+  slot: {
+    start: string;
+    end: string;
+  };
   licenceCount: number;
-  owner: ResourceOwner;
+  user: User;
 }
 
 export interface ResourceOwner {

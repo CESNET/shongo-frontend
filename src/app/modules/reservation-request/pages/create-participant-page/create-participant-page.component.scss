@@ -1,0 +1,44 @@
+// Bottom padding of mat form fields
+$form-field-padding: 1.34375em;
+
+header {
+  margin-bottom: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 30rem;
+  gap: 0.5rem;
+}
+
+mat-radio-group {
+  padding: 1em 0 $form-field-padding 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.posting-loader {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.alert {
+  margin-top: 1rem;
+}
+
+@media only screen and (max-width: 425px) {
+  form {
+    width: 100%;
+  }
+}
