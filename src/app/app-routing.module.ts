@@ -1,15 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HelpPageComponent } from './modules/help/pages/help-page/help-page.component';
-import { ReportPageComponent } from './modules/help/pages/report-page/report-page.component';
-import { UserSettingsPageComponent } from './modules/help/pages/user-settings-page/user-settings-page.component';
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
-import { CreateParticipantPageComponent } from './modules/reservation-request/pages/create-participant-page/create-participant-page.component';
-import { CreateUserRolePageComponent } from './modules/reservation-request/pages/create-user-role-page/create-user-role-page.component';
-import { ReservationRequestDetailPageComponent } from './modules/reservation-request/pages/reservation-request-detail/reservation-request-detail-page.component';
-import { ReservationPageComponent } from './modules/reservation/pages/reservation-page/reservation-page.component';
-import { ResourceCapacityUtilizationPageComponent } from './modules/resource-management/pages/resource-capacity-utilization-page/resource-capacity-utilization-page.component';
-import { ResourceUtilizationDetailPageComponent } from './modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component';
 
 const routes: Routes = [
   {
@@ -17,31 +8,35 @@ const routes: Routes = [
     component: HomePageComponent,
   },
   {
-    path: 'reservation-request/:id',
-    component: ReservationRequestDetailPageComponent,
+    path: 'reservation-request',
+    loadChildren: () =>
+      import('./modules/reservation-request/reservation-request.module').then(
+        (m) => m.ReservationRequestModule
+      ),
   },
   {
-    path: 'reservation-request/:id/user-role/create',
-    component: CreateUserRolePageComponent,
+    path: 'help',
+    loadChildren: () =>
+      import('./modules/help/help.module').then((m) => m.HelpModule),
   },
   {
-    path: 'reservation-request/:id/participant/create',
-    component: CreateParticipantPageComponent,
-  },
-  { path: 'help', component: HelpPageComponent },
-  { path: 'report', component: ReportPageComponent },
-  { path: 'user/settings', component: UserSettingsPageComponent },
-  {
-    path: 'resource-management/capacity-utilization',
-    component: ResourceCapacityUtilizationPageComponent,
-  },
-  {
-    path: 'resource-management/capacity-utilization/detail',
-    component: ResourceUtilizationDetailPageComponent,
+    path: 'resource-management',
+    loadChildren: () =>
+      import('./modules/resource-management/resource-management.module').then(
+        (m) => m.ResourceManagementModule
+      ),
   },
   {
     path: 'reserve',
-    component: ReservationPageComponent,
+    loadChildren: () =>
+      import('./modules/reservation/reservation.module').then(
+        (m) => m.ReservationModule
+      ),
+  },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./modules/user/user.module').then((m) => m.UserModule),
   },
   {
     path: '**',

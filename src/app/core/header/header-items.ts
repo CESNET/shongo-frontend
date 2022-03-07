@@ -38,7 +38,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     label: $localize`:navbar link|Link to report page:Report a problem`,
-    route: '/report',
+    route: '/help/report',
     itemAuth: ItemAuthorization.BOTH,
     hideOnTablet: true,
   },
@@ -54,7 +54,7 @@ export const menuItems: MenuItem[] = [
       },
       {
         label: $localize`:navbar link|Sublink in resource management:Resource reservations`,
-        route: '/',
+        route: '/resource-management/resource-reservations',
         itemAuth: ItemAuthorization.LOGGED_IN,
       },
     ],

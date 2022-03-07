@@ -1,26 +1,38 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MaterialModule } from '../material.module';
 import { ResourceCapacityUtilizationPageComponent } from './pages/resource-capacity-utilization-page/resource-capacity-utilization-page.component';
 import { PercentagePipe } from './pipes/percentage.pipe';
 import { ResourceCapacityUtilizationFilterComponent } from './components/resource-capacity-utilization-filter/resource-capacity-utilization-filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ResourceUtilizationColumnComponent } from './components/resource-utilization-column/resource-utilization-column.component';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ResourceUtilizationDetailPageComponent } from './pages/resource-utilization-detail-page/resource-utilization-detail-page.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { RouterModule } from '@angular/router';
+import { ResourceManagementRoutingModule } from './resource-management-routing.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
-    SharedModule,
-    MaterialModule,
-    ReactiveFormsModule,
     CommonModule,
-    AppRoutingModule,
+    SharedModule,
+    RouterModule,
+    ResourceManagementRoutingModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     NgxSkeletonLoaderModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     ResourceCapacityUtilizationPageComponent,
