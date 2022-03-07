@@ -1,7 +1,7 @@
 <div class="table-container" appMatTableResponsive>
-  <header *ngIf="showRefreshButton || showDeleteButtons || header">
+  <header *ngIf="showRefreshButton || showDeleteButtons || description">
     <section class="top-header-section">
-      <h4>{{ header }}</h4>
+      <span>{{ description }}</span>
 
       <div class="buttons">
         <button

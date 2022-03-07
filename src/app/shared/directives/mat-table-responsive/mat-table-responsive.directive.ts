@@ -3,7 +3,6 @@ import {
   Directive,
   ElementRef,
   OnDestroy,
-  OnInit,
   Renderer2,
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';

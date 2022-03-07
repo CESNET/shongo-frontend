@@ -8,6 +8,7 @@ import { Role } from 'src/app/shared/models/rest-api/role.interface';
 import {
   GuestParticipantPostBody,
   RequestParticipant,
+  RoleBody,
   UserParticipantPostBody,
 } from 'src/app/shared/models/rest-api/request-participant.interface';
 
@@ -63,5 +64,10 @@ export class ReservationRequestService extends ApiService {
       body,
       url
     ) as Observable<GuestParticipantPostBody>;
+  }
+
+  postRole(body: RoleBody, requestId: string): Observable<RoleBody> {
+    const url = `${this.endpointURL}/${requestId}/roles`;
+    return this.postItem<RoleBody>(body, url) as Observable<RoleBody>;
   }
 }

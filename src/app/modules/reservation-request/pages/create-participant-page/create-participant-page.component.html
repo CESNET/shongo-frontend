@@ -32,21 +32,15 @@
         <mat-select formControlName="userId">
           <mat-option>
             <ngx-mat-select-search
-              formControlName="userFilter"
-              placeholderLabel="Select user by name/e-mail..."
-              noEntriesFoundLabel="No users found"
-              [searching]="(searchingUsers$ | async) ?? false"
+              appUserSearch
+              #userSearch="userSearch"
             ></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let user of filteredUsers" [value]="user.userId">
-            {{
-              user.firstName +
-                " " +
-                user.lastName +
-                " (" +
-                user.organization +
-                ")"
-            }}
+          <mat-option
+            *ngFor="let opt of userSearch.filteredUsers | async"
+            [value]="opt.id"
+          >
+            {{ opt.user }}
           </mat-option>
         </mat-select>
         <mat-hint>Type at least 2 characters</mat-hint>
@@ -102,29 +96,29 @@
         </mat-form-field>
       </form>
     </ng-template>
+
+    <div class="buttons">
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!isValid()"
+        (click)="postParticipant()"
+      >
+        Add participant
+      </button>
+
+      <ng-container *ngIf="posting$ | async; else cancelButton">
+        <div class="posting-loader">
+          <mat-spinner diameter="20"></mat-spinner>
+          <span>Creating participant...</span>
+        </div>
+      </ng-container>
+
+      <ng-template #cancelButton>
+        <a mat-button [routerLink]="'../../'">Cancel</a>
+      </ng-template>
+    </div>
   </form>
-
-  <div class="buttons">
-    <button
-      mat-flat-button
-      color="primary"
-      [disabled]="!isValid()"
-      (click)="postParticipant()"
-    >
-      Add participant
-    </button>
-
-    <ng-container *ngIf="posting$ | async; else cancelButton">
-      <div class="posting-loader">
-        <mat-spinner diameter="20"></mat-spinner>
-        <span>Creating participant...</span>
-      </div>
-    </ng-container>
-
-    <ng-template #cancelButton>
-      <a mat-button [routerLink]="'../../'">Cancel</a>
-    </ng-template>
-  </div>
 
   <div class="alert">
     <app-alert message="An error occured" type="error"></app-alert>

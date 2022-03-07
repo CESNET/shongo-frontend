@@ -32,7 +32,7 @@
           <div class="tab-content">
             <app-data-table
               [dataSource]="yourRoomsDataSource"
-              header="List of rooms which you own or which have been made accessible to you by other users."
+              description="List of rooms which you own or which have been made accessible to you by other users."
             >
               <app-reservation-request-filter
                 #tableFilter
@@ -54,7 +54,7 @@
             <app-data-table
               [dataSource]="participationInRoomsDataSource"
               [showDeleteButtons]="false"
-              header="List of rooms in which you are configured as participant and which you can join."
+              description="List of rooms in which you are configured as participant and which you can join."
             ></app-data-table>
           </div>
         </ng-template>
@@ -72,7 +72,7 @@
           <div class="tab-content">
             <app-data-table
               [dataSource]="physicalReservationsDataSource"
-              header="All reservations of resource."
+              description="All reservations of resource."
             ></app-data-table>
           </div>
         </ng-template>

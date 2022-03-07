@@ -1,17 +1,9 @@
-import { HttpParams } from '@angular/common/http';
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime, first, switchMap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { first, switchMap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { UserService } from 'src/app/core/http/user/user.service';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { ParticipantRole } from 'src/app/shared/models/enums/participant-role.enum';
 import { ParticipantType } from 'src/app/shared/models/enums/participant-type.enum';
@@ -22,15 +14,13 @@ import {
 import { User } from 'src/app/shared/models/rest-api/user.interface';
 import { getFormError } from 'src/app/utils/getFormError';
 
-const SEARCH_DEBOUNCE_TIME = 300;
-
 @Component({
   selector: 'app-create-participant-page',
   templateUrl: './create-participant-page.component.html',
-  styleUrls: ['./create-participant-page.component.scss'],
+  styleUrls: ['../../styles/create-form.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateParticipantPageComponent implements OnInit, OnDestroy {
+export class CreateParticipantPageComponent {
   @ViewChild(AlertComponent) alert!: AlertComponent;
 
   form = new FormGroup({
@@ -56,23 +46,11 @@ export class CreateParticipantPageComponent implements OnInit, OnDestroy {
 
   getFormError = getFormError;
 
-  private _destroy$ = new Subject<void>();
-
   constructor(
-    private _userService: UserService,
     private _resReqService: ReservationRequestService,
     private _route: ActivatedRoute,
     private _router: Router
   ) {}
-
-  ngOnInit(): void {
-    this._createUserFilterSub();
-  }
-
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-  }
 
   isValid(): boolean {
     const { participantType, userForm, anonymousForm } = this.form.controls;
@@ -136,32 +114,5 @@ export class CreateParticipantPageComponent implements OnInit, OnDestroy {
       email,
       role: ParticipantRole.PARTICIPANT,
     };
-  }
-
-  private _createUserFilterSub(): void {
-    this.form
-      .get('userForm')!
-      .get('userFilter')!
-      .valueChanges.pipe(
-        takeUntil(this._destroy$),
-        debounceTime(SEARCH_DEBOUNCE_TIME)
-      )
-      .subscribe((filter) => {
-        if (filter.length > 1) {
-          this._fetchUsers(filter);
-        }
-      });
-  }
-
-  private _fetchUsers(filter: string): void {
-    const httpParams = new HttpParams().set('filter', filter);
-    this.searchingUsers$.next(true);
-    this._userService
-      .fetchItems<User>(httpParams)
-      .pipe(first())
-      .subscribe((data) => {
-        this.filteredUsers = data.items;
-        this.searchingUsers$.next(false);
-      });
   }
 }

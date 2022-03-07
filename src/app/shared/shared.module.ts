@@ -28,8 +28,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material/sort';
+import { UserSearchDirective } from './directives/user-search/user-search.directive';
+import { GroupSearchDirective } from './directives/group-search/group-search.directive';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,8 @@ import { MatSortModule } from '@angular/material/sort';
     RoomStateColumnComponent,
     ReservationCalendarComponent,
     AlertComponent,
+    UserSearchDirective,
+    GroupSearchDirective,
   ],
   imports: [
     CommonModule,
@@ -76,6 +79,8 @@ import { MatSortModule } from '@angular/material/sort';
     ReservationCalendarComponent,
     StateChipComponent,
     AlertComponent,
+    UserSearchDirective,
+    GroupSearchDirective,
   ],
 })
 export class SharedModule {}

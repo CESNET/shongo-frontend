@@ -4,4 +4,5 @@ export enum Endpoint {
   RESERVATION = 'reservations',
   RESOURCE = 'resources',
   USER = 'users',
+  GROUP = 'groups',
 }

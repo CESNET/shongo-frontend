@@ -43,7 +43,7 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatTable) table!: MatTable<T>;
   @Input() dataSource!: DataTableDataSource<T>;
   @Input() showCheckboxes = true;
-  @Input() header: string = '';
+  @Input() description: string = '';
   @Input() showDeleteButtons = true;
   @Input() fixedLayout = false;
 

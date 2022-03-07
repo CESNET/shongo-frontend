@@ -3,7 +3,7 @@ export interface User {
   principalNames: string[];
   firstName: string;
   lastName: string;
-  organization: string;
+  organization?: string;
   email: string;
   fullName: string;
   locale: string;
