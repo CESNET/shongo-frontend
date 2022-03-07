@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { RoomService } from 'src/app/core/http/room/room.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
+import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { LinkButton } from '../buttons/link-button';
 import { TableButton } from '../buttons/table-button';
 import { RoomStateColumnComponent } from '../column-components/state-chip-column/components/room-state-column.component';
@@ -24,7 +25,7 @@ interface ParticipationInRoomsTableData {
 
 export class ParticipationInRoomsDataSource extends DataTableDataSource<ParticipationInRoomsTableData> {
   displayedColumns: TableColumn[];
-  buttons: TableButton[];
+  buttons: TableButton<ParticipationInRoomsTableData>[];
 
   constructor(private _roomService: RoomService, private _datePipe: DatePipe) {
     super();
@@ -35,9 +36,13 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
       {
         name: 'slotStart',
         displayName: 'Slot start',
-        pipeFunc: this.datePipe,
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
+      {
+        name: 'slotEnd',
+        displayName: 'Slot end',
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+      },
       {
         name: 'state',
         displayName: 'State',
@@ -81,12 +86,4 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
         })
       );
   }
-
-  datePipe = (value: unknown): string => {
-    if (typeof value === 'string') {
-      return this._datePipe.transform(value, 'medium') ?? 'Not a date';
-    } else {
-      throw new Error('Invalid column data type for date pipe.');
-    }
-  };
 }

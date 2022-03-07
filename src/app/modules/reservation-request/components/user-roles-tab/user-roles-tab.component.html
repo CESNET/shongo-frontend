@@ -1,5 +1,11 @@
-<main>
+<header>
   <h2 class="mat-primary-color">Modification of user roles</h2>
+  <a mat-button routerLink="user-role/create">
+    <mat-icon color="primary">add_circle</mat-icon>&nbsp;Add user role
+  </a>
+</header>
+
+<main>
   <app-data-table
     *ngIf="userRolesDataSource"
     [dataSource]="userRolesDataSource"

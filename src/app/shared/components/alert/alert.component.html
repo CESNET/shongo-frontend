@@ -1,0 +1,6 @@
+<div *ngIf="isActive" class="alert" [class]="type">
+  <button mat-icon-button id="close-btn" (click)="deactivate()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <span>{{ message }}</span>
+</div>

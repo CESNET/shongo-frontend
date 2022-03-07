@@ -66,6 +66,14 @@ export abstract class ApiService {
   }
 
   deleteItem(id: string, url = this.endpointURL): Observable<{}> {
-    return this._http.delete<{}>(`${url}/${id}`);
+    return this.deleteByUrl(`${url}/${id}`);
+  }
+
+  deleteByUrl(url: string): Observable<{}> {
+    return this._http.delete<{}>(url);
+  }
+
+  postItem<T>(body: T, url = this.endpointURL): Observable<unknown> {
+    return this._http.post(url, body);
   }
 }

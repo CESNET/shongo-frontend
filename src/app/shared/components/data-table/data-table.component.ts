@@ -28,6 +28,7 @@ import {
   VALUE_PROVIDER,
 } from './column-components/column.component';
 import { FormControl, FormGroup } from '@angular/forms';
+import { StaticDataSource } from './data-sources/static-datasource';
 
 @Component({
   selector: 'app-data-table',
@@ -64,6 +65,10 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private _injector: Injector, private _cd: ChangeDetectorRef) {
     this.displayedColumns = this._displayedColumns.asObservable();
+  }
+
+  get showRefreshButton(): boolean {
+    return this.dataSource && !(this.dataSource instanceof StaticDataSource);
   }
 
   ngOnInit(): void {
@@ -128,11 +133,11 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  asApiActionButton(button: TableButton): ApiActionButton<T> {
+  asApiActionButton(button: TableButton<T>): ApiActionButton<T> {
     return button as ApiActionButton<T>;
   }
 
-  asLinkButton(button: TableButton): LinkButton<T> {
+  asLinkButton(button: TableButton<T>): LinkButton<T> {
     return button as LinkButton<T>;
   }
 
@@ -163,7 +168,7 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     return '';
   }
 
-  getButtonType(button: TableButton): TableButtonType {
+  getButtonType(button: TableButton<T>): TableButtonType {
     if (button instanceof ApiActionButton) {
       return TableButtonType.API_ACTION;
     } else if (button instanceof LinkButton) {
@@ -172,7 +177,7 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     return TableButtonType.ACTION;
   }
 
-  handleButtonClick(button: TableButton, row: T): void {
+  handleButtonClick(button: TableButton<T>, row: T): void {
     if (button instanceof ActionButton) {
       button.executeAction(row).pipe(first()).subscribe();
     }

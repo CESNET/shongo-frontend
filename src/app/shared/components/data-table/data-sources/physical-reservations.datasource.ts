@@ -9,6 +9,7 @@ import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
+import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { TableButton } from '../buttons/table-button';
@@ -26,7 +27,7 @@ interface PhysicalReservationsTableData {
 
 export class PhysicalReservationsDataSource extends DataTableDataSource<PhysicalReservationsTableData> {
   displayedColumns: TableColumn[];
-  buttons: TableButton[];
+  buttons: TableButton<PhysicalReservationsTableData>[];
 
   constructor(
     private _resReqService: ReservationRequestService,
@@ -40,16 +41,20 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
       {
         name: 'slotStart',
         displayName: 'Slot start',
-        pipeFunc: this.datePipe,
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
+      {
+        name: 'slotEnd',
+        displayName: 'Slot end',
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+      },
       { name: 'state', displayName: 'Reservation state' },
       { name: 'resourceDescription', displayName: 'Description' },
     ];
 
     this.buttons = [
       new LinkButton('Edit meeting room', 'settings', '/meeting_room/:id'),
-      new DeleteButton(this._resReqService, this._dialog),
+      new DeleteButton(this._resReqService, this._dialog, '/:id'),
     ];
   }
 
@@ -86,12 +91,4 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
         })
       );
   }
-
-  datePipe = (value: unknown): string => {
-    if (typeof value === 'string') {
-      return this._datePipe.transform(value, 'medium') ?? 'Not a date';
-    } else {
-      throw new Error('Invalid column data type for date pipe.');
-    }
-  };
 }

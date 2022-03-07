@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
-import { ReservationService } from 'src/app/core/http/reservation/reservation.service';
+import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { Spied } from 'src/app/test/models/spied.type';
 import { authServiceStub } from 'src/app/test/stubs/auth-service.stub';
 import { HomeModule } from '../../../modules/home/home.module';
@@ -12,11 +12,11 @@ describe('ReservationCalendarComponent', () => {
   let component: ReservationCalendarComponent;
   let fixture: ComponentFixture<ReservationCalendarComponent>;
 
-  const reservationServiceStub = jasmine.createSpyObj('ReservationService', [
-    'fetchReservations',
-  ]) as Spied<ReservationService>;
+  const resReqServiceStub = jasmine.createSpyObj('ReservationRequestService', [
+    'fetchItems',
+  ]) as Spied<ReservationRequestService>;
 
-  reservationServiceStub.fetchReservations.and.returnValue(
+  resReqServiceStub.fetchItems.and.returnValue(
     of({
       count: 0,
       items: [],
@@ -26,9 +26,9 @@ describe('ReservationCalendarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ReservationCalendarComponent],
-      imports: [HomeModule, BrowserAnimationsModule],
+      imports: [HomeModule, NoopAnimationsModule],
       providers: [
-        { provide: ReservationService, useValue: reservationServiceStub },
+        { provide: ReservationRequestService, useValue: resReqServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
       ],
     }).compileComponents();

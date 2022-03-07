@@ -18,7 +18,7 @@ export const REFRESH_TIMEOUT = 200;
  */
 export abstract class DataTableDataSource<T> extends DataSource<T> {
   abstract displayedColumns: TableColumn[];
-  abstract buttons: TableButton[];
+  abstract buttons: TableButton<T>[];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   filter$: Observable<HttpParams> | undefined;

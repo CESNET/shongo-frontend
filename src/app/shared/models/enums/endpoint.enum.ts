@@ -1,6 +1,7 @@
 export enum Endpoint {
-  RES_REQUEST = 'reservation_request',
-  ROOM = 'room',
-  RESERVATION = 'reservation',
-  RESOURCE_CAPACITY_UTILIZATION = 'resource',
+  RES_REQUEST = 'reservation_requests',
+  ROOM = 'rooms',
+  RESERVATION = 'reservations',
+  RESOURCE = 'resources',
+  USER = 'users',
 }

@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { resourceCapacityUtilizationMock } from 'src/app/test/mocks/resource-capacity-utilization.mock';
@@ -24,11 +24,7 @@ describe('ResourceCapacityUtilizationPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
-        BrowserAnimationsModule,
-        ResourceManagementModule,
-      ],
+      imports: [SharedModule, NoopAnimationsModule, ResourceManagementModule],
       providers: [
         {
           provide: ResourceService,

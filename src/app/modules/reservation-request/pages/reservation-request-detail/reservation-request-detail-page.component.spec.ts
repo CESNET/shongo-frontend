@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { Spied } from 'src/app/test/models/spied.type';
 import { ReservationRequestDetailPageComponent } from './reservation-request-detail-page.component';
 import { mockReservationRequest } from 'src/app/test/mocks/reservation-request.mock';
 import { ReservationRequestModule } from '../../reservation-request.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ReservationRequestDetailPageComponent', () => {
   let component: ReservationRequestDetailPageComponent;
@@ -20,7 +20,7 @@ describe('ReservationRequestDetailPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReservationRequestModule, BrowserAnimationsModule],
+      imports: [ReservationRequestModule, NoopAnimationsModule],
       declarations: [ReservationRequestDetailPageComponent],
       providers: [
         { provide: ActivatedRoute, useValue: mockRoute },

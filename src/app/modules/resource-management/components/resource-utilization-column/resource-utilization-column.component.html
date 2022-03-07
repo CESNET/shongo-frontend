@@ -1,14 +1,18 @@
 <div class="resource-utilization" [style.background]="getBgColor()">
   <a
     *ngIf="useAbsoluteValue; else relativeValue"
+    aria-label="Open resource utilization detail"
     [routerLink]="['./detail']"
     [queryParams]="getQueryParams()"
   >
     {{ columnData.usedCapacity + "/" + columnData.totalCapacity }}
   </a>
   <ng-template #relativeValue>
-    <a [routerLink]="['./detail']" [queryParams]="getQueryParams()">{{
-      percentage | percentage
-    }}</a>
+    <a
+      aria-label="Open resource utilization detail"
+      [routerLink]="['./detail']"
+      [queryParams]="getQueryParams()"
+      >{{ percentage | percentage }}</a
+    >
   </ng-template>
 </div>

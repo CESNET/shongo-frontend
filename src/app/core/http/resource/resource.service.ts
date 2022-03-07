@@ -13,7 +13,7 @@ import { ApiService } from '../api.service';
 })
 export class ResourceService extends ApiService {
   constructor(protected _http: HttpClient) {
-    super(_http, Endpoint.RESOURCE_CAPACITY_UTILIZATION, 'v1');
+    super(_http, Endpoint.RESOURCE, 'v1');
   }
 
   fetchCapacityUtilization(
@@ -29,7 +29,7 @@ export class ResourceService extends ApiService {
       sortedColumn,
       sortDirection,
       filter,
-      this.buildEndpointURL('resource/capacity_utilization', 'v1')
+      `${this.endpointURL}/capacity_utilizations`
     );
   }
 
@@ -38,7 +38,7 @@ export class ResourceService extends ApiService {
     intervalFrom: string,
     intervalTo: string
   ): Observable<ResourceUtilizationDetail> {
-    const detailUrl = `${this.endpointURL}/${resourceId}/capacity_utilization`;
+    const detailUrl = `${this.endpointURL}/${resourceId}/capacity_utilizations`;
 
     const httpParams = new HttpParams()
       .set('resourceId', resourceId)

@@ -7,10 +7,8 @@ import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import {
-  ReservationRequest,
-  VirtualRoomData,
-} from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { TableButton } from '../buttons/table-button';
@@ -31,7 +29,7 @@ export interface YourRoomsTableData {
 
 export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData> {
   displayedColumns: TableColumn[];
-  buttons: TableButton[];
+  buttons: TableButton<YourRoomsTableData>[];
 
   constructor(
     private _resReqService: ReservationRequestService,
@@ -45,16 +43,20 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
       {
         name: 'createdAt',
         displayName: 'Created at',
-        pipeFunc: this.datePipe,
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       { name: 'roomName', displayName: 'Name' },
       { name: 'technology', displayName: 'Technology' },
       {
         name: 'slotStart',
         displayName: 'Slot start',
-        pipeFunc: this.datePipe,
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
+      {
+        name: 'slotEnd',
+        displayName: 'Slot end',
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+      },
       {
         name: 'state',
         displayName: 'State',
@@ -63,13 +65,13 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
     ];
 
     this.buttons = [
-      new LinkButton('Show detail', 'visibility', '/reservation_request/:id'),
+      new LinkButton('Show detail', 'visibility', '/reservation-request/:id'),
       new LinkButton(
         'Edit reservation request',
         'settings',
-        '/reservation_request/edit/:id'
+        '/reservation-request/edit/:id'
       ),
-      new DeleteButton(this._resReqService, this._dialog),
+      new DeleteButton(this._resReqService, this._dialog, '/:id'),
     ];
   }
 
@@ -110,12 +112,4 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         })
       );
   }
-
-  datePipe = (value: unknown): string => {
-    if (typeof value === 'string') {
-      return this._datePipe.transform(value, 'medium') ?? 'Not a date';
-    } else {
-      throw new Error('Invalid column data type for date pipe.');
-    }
-  };
 }

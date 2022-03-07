@@ -2,16 +2,19 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-
 import { DataTableComponent } from './data-table.component';
 import { DataTableDatasourceStub } from 'src/app/test/stubs/data-table-datasource.stub';
-import { MaterialModule } from 'src/app/modules/material.module';
-import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('DataTableComponent', () => {
-  let component: DataTableComponent<HasID>;
-  let fixture: ComponentFixture<DataTableComponent<HasID>>;
+  let component: DataTableComponent<unknown>;
+  let fixture: ComponentFixture<DataTableComponent<unknown>>;
 
   beforeEach(
     waitForAsync(() => {
@@ -22,7 +25,12 @@ describe('DataTableComponent', () => {
           MatPaginatorModule,
           MatSortModule,
           MatTableModule,
-          MaterialModule,
+          NoopAnimationsModule,
+          MatDividerModule,
+          MatFormFieldModule,
+          MatSelectModule,
+          MatCheckboxModule,
+          MatIconModule,
         ],
       }).compileComponents();
     })

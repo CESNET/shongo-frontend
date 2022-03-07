@@ -30,7 +30,7 @@ interface ResourceCapacityUtilizationTableData {
 
 export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<ResourceCapacityUtilizationTableData> {
   displayedColumns: TableColumn[];
-  buttons: TableButton[] = [];
+  buttons: TableButton<ResourceCapacityUtilizationTableData>[] = [];
 
   constructor(
     private _resourceService: ResourceService,

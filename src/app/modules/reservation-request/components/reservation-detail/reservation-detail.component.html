@@ -5,29 +5,29 @@
     </header>
     <dl>
       <!-- Type -->
-      <ng-container *ngIf="reservationRequest.type as type">
+      <ng-container *ngIf="currentRequest.type as type">
         <dt>Type:</dt>
         <dd>{{ requestTypeMap.get(type) }}</dd>
       </ng-container>
 
       <!-- Parent request -->
-      <ng-container *ngIf="reservationRequest.parentRequestId">
+      <ng-container *ngIf="currentRequest.parentRequestId">
         <dt>Event from request:</dt>
         <dd>
           <a
             [routerLink]="
-              '/reservation_request/' + reservationRequest.parentRequestId
+              '/reservation_request/' + currentRequest.parentRequestId
             "
-            >{{ reservationRequest.parentRequestId }}</a
+            >{{ currentRequest.parentRequestId }}</a
           >
         </dd>
       </ng-container>
 
       <!-- Time slot -->
-      <ng-container *ngIf="reservationRequest.slot as slot">
+      <ng-container *ngIf="currentRequest.slot as slot">
         <dt>
           {{
-            (reservationRequest.allocationState === "ALLOCATED"
+            (currentRequest.allocationState === "ALLOCATED"
               ? "Allocated"
               : "Requested") + " time slot:"
           }}
@@ -38,13 +38,13 @@
       </ng-container>
 
       <!-- Description -->
-      <ng-container *ngIf="reservationRequest.description">
+      <ng-container *ngIf="currentRequest.description">
         <dt>Description:</dt>
-        <dd>{{ reservationRequest.description }}</dd>
+        <dd>{{ currentRequest.description }}</dd>
       </ng-container>
 
       <!-- State -->
-      <ng-container *ngIf="reservationRequest.state as state">
+      <ng-container *ngIf="currentRequest.state as state">
         <dt>State:</dt>
         <dd>
           <app-state-chip
@@ -56,28 +56,28 @@
       </ng-container>
 
       <!-- Created at -->
-      <ng-container *ngIf="reservationRequest.createdAt as createdAt">
+      <ng-container *ngIf="currentRequest.createdAt as createdAt">
         <dt>Created at:</dt>
         <dd>{{ createdAt | date }}</dd>
       </ng-container>
 
       <ng-container
         *ngIf="
-          reservationRequest.notifyParticipants !== null &&
-          reservationRequest.notifyParticipants !== undefined
+          currentRequest.notifyParticipants !== null &&
+          currentRequest.notifyParticipants !== undefined
         "
       >
         <dt>Notify participants:</dt>
-        <dd>{{ reservationRequest.notifyParticipants ? "yes" : "no" }}</dd>
+        <dd>{{ currentRequest.notifyParticipants ? "yes" : "no" }}</dd>
       </ng-container>
 
       <!-- Periodicity -->
       <ng-container
         *ngIf="
-          !reservationRequest.parentRequestId &&
-          (!reservationRequest.virtualRoomData ||
-            reservationRequest.virtualRoomData.technology !== 'FREEPBX') &&
-          reservationRequest.periodicity as periodicity
+          !currentRequest.parentRequestId &&
+          (!currentRequest.virtualRoomData ||
+            currentRequest.virtualRoomData.technology !== 'FREEPBX') &&
+          currentRequest.periodicity as periodicity
         "
       >
         <dt>Periodicity</dt>
@@ -120,8 +120,8 @@
       <!-- Physical resource -->
       <ng-container
         *ngIf="
-          reservationRequest.type === ReservationType.PHYSICAL_RESOURCE &&
-          reservationRequest.physicalResourceData as physicalResData
+          currentRequest.type === ReservationType.PHYSICAL_RESOURCE &&
+          currentRequest.physicalResourceData as physicalResData
         "
       >
         <!-- Resource name -->
@@ -144,8 +144,8 @@
       <!-- Virtual room -->
       <ng-container
         *ngIf="
-          reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
-          reservationRequest.virtualRoomData as virtualRoomData
+          currentRequest.type === ReservationType.VIRTUAL_ROOM &&
+          currentRequest.virtualRoomData as virtualRoomData
         "
       >
         <!-- Technology -->
@@ -186,8 +186,8 @@
       <!-- Room capacity -->
       <ng-container
         *ngIf="
-          reservationRequest.type === ReservationType.ROOM_CAPACITY &&
-          reservationRequest.roomCapacityData as capacityData
+          currentRequest.type === ReservationType.ROOM_CAPACITY &&
+          currentRequest.roomCapacityData as capacityData
         "
       >
         <!-- Reservation request ID -->
@@ -195,7 +195,7 @@
         <dd *ngIf="capacityData.roomReservationRequestId; else noResReqId">
           <a
             [routerLink]="
-              '/reservation_request/' + capacityData.roomReservationRequestId
+              '/reservation-request/' + capacityData.roomReservationRequestId
             "
             >{{ capacityData.roomName }}</a
           >
@@ -206,7 +206,7 @@
       </ng-container>
 
       <!-- Authorized data -->
-      <ng-container *ngIf="reservationRequest.authorizedData as authorizedData">
+      <ng-container *ngIf="currentRequest.authorizedData as authorizedData">
         <!-- PIN -->
         <ng-container *ngIf="authorizedData.pin as pin">
           <dt>PIN:</dt>
@@ -228,24 +228,33 @@
     </dl>
   </main>
   <aside>
-    <header>
-      <h2 class="mat-primary-color">Controls</h2>
-    </header>
-
-    <section class="buttons">
-      <button mat-flat-button color="primary">
-        <mat-icon>content_copy</mat-icon>&nbsp;Create new as copy
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        *ngIf="reservationRequest.type === ReservationType.VIRTUAL_ROOM"
-      >
-        <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
-      </button>
-      <button mat-flat-button color="warn">
-        <mat-icon>delete_forever</mat-icon>&nbsp;Delete
-      </button>
+    <section *ngIf="reservationRequest.history">
+      <h2 class="mat-primary-color">History of modifications</h2>
+      <app-data-table
+        *ngIf="modificationHistoryDataSource as dataSource"
+        [dataSource]="dataSource"
+        [showCheckboxes]="false"
+        [showDeleteButtons]="false"
+      ></app-data-table>
     </section>
+
+    <!-- <section>
+      <h2 class="mat-primary-color">Controls</h2>
+      <div class="buttons">
+        <button mat-flat-button color="primary">
+          <mat-icon>content_copy</mat-icon>&nbsp;Create new as copy
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          *ngIf="currentRequest.type === ReservationType.VIRTUAL_ROOM"
+        >
+          <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
+        </button>
+        <button mat-flat-button color="warn">
+          <mat-icon>delete_forever</mat-icon>&nbsp;Delete
+        </button>
+      </div>
+    </section> -->
   </aside>
 </div>

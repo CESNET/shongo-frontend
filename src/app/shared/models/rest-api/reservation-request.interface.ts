@@ -5,6 +5,7 @@ import {
   MonthlyPeriodicityType,
   PeriodicityType,
 } from '../enums/periodicity-type.enum';
+import { ReservationRequestType } from '../enums/reservation-request-type.enum';
 import { Slot } from './slot.interface';
 
 export interface ReservationRequest {
@@ -26,21 +27,20 @@ export interface ReservationRequest {
 }
 
 export interface ReservationRequestDetail extends ReservationRequest {
-  lastReservationId: string;
-  parentRequestId: string;
+  lastReservationId?: string;
+  parentRequestId?: string;
   allocationState: string;
   executableState: string;
   notifyParticipants: boolean;
   periodicity: Periodicity;
   authorizedData: AuthorizedData;
-  childRequests: ChildRequest[];
   history: RequestModification[];
 }
 
 export interface VirtualRoomData {
   technology: string;
   roomName: string;
-  roomParticipantCount: string;
+  roomParticipantCount: number;
   roomHasRecordingService: boolean;
   roomHasRecordings: boolean;
 }
@@ -88,9 +88,9 @@ export interface ChildRequest {
 
 export interface RequestModification {
   id: string;
-  changedAt: string;
-  changedBy: string;
-  type: string;
+  createdAt: string;
+  createdBy: string;
+  type: ReservationRequestType;
   allocationState: string;
   state: string;
   isActive: boolean;

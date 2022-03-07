@@ -15,6 +15,7 @@ import { ReservationCalendarComponent } from './components/reservation-calendar/
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { AlertComponent } from './components/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     ReservationRequestStateColumnComponent,
     RoomStateColumnComponent,
     ReservationCalendarComponent,
+    AlertComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +48,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     CertainityCheckComponent,
     ReservationCalendarComponent,
     StateChipComponent,
+    AlertComponent,
   ],
 })
 export class SharedModule {}

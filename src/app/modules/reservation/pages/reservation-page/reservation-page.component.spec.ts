@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
-import { ReservationService } from 'src/app/core/http/reservation/reservation.service';
+import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Spied } from 'src/app/test/models/spied.type';
 import { authServiceStub } from 'src/app/test/stubs/auth-service.stub';
@@ -14,17 +14,21 @@ describe('ReservationPageComponent', () => {
   let component: ReservationPageComponent;
   let fixture: ComponentFixture<ReservationPageComponent>;
 
-  const reservationServiceStub = jasmine.createSpyObj('ReservationService', [
-    'fetchReservations',
-  ]) as Spied<ReservationService>;
-  reservationServiceStub.fetchReservations.and.returnValue(of([]));
+  const reservationRequestServiceStub = jasmine.createSpyObj(
+    'ReservationRequestService',
+    ['fetchItems']
+  ) as Spied<ReservationRequestService>;
+  reservationRequestServiceStub.fetchItems.and.returnValue(of([]));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReservationModule, BrowserAnimationsModule, SharedModule],
+      imports: [ReservationModule, NoopAnimationsModule, SharedModule],
       declarations: [ReservationPageComponent],
       providers: [
-        { provide: ReservationService, useValue: reservationServiceStub },
+        {
+          provide: ReservationRequestService,
+          useValue: reservationRequestServiceStub,
+        },
         { provide: AuthenticationService, useValue: authServiceStub },
       ],
     }).compileComponents();

@@ -8,6 +8,7 @@ import { ReservationRequestService } from 'src/app/core/http/reservation-request
 import { ReservationRequestState } from 'src/app/models/enums/reservation-request-state.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { TableButton } from '../buttons/table-button';
@@ -26,7 +27,7 @@ interface CapacityRequestsTableData {
 
 export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequestsTableData> {
   displayedColumns: TableColumn[];
-  buttons: TableButton[];
+  buttons: TableButton<CapacityRequestsTableData>[];
 
   constructor(
     public roomReservationRequestId: string,
@@ -40,9 +41,13 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
       {
         name: 'slotStart',
         displayName: 'Slot start',
-        pipeFunc: this.datePipe,
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'slotEnd', displayName: 'Slot end', pipeFunc: this.datePipe },
+      {
+        name: 'slotEnd',
+        displayName: 'Slot end',
+        pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+      },
       { name: 'participantCount', displayName: 'Participant count' },
       {
         name: 'state',
@@ -55,9 +60,9 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
       new LinkButton(
         'View reservation request',
         'visibility',
-        '/reservation_request/:id'
+        '/reservation-request/:id'
       ),
-      new DeleteButton(this._resReqService, this._dialog),
+      new DeleteButton(this._resReqService, this._dialog, '/:id'),
     ];
   }
 
@@ -98,12 +103,4 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
         })
       );
   }
-
-  datePipe = (value: unknown): string => {
-    if (typeof value === 'string') {
-      return this._datePipe.transform(value, 'medium') ?? 'Not a date';
-    } else {
-      throw new Error('Invalid column data type for date pipe.');
-    }
-  };
 }
