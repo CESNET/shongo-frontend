@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActionButton } from './action-button';
-import { IsDisabledFunction } from './table-button';
+import { RowPredicate } from './table-button';
 
 export abstract class ApiActionButton<T> extends ActionButton<T> {
   loading$: Observable<T[]>;
@@ -11,8 +11,11 @@ export abstract class ApiActionButton<T> extends ActionButton<T> {
   protected _rowUpdate$ = new Subject<T>();
   protected _deleted$ = new Subject<void>();
 
-  constructor(public isDisabledFunc?: IsDisabledFunction<T>) {
-    super(isDisabledFunc);
+  constructor(
+    public isDisabledFunc?: RowPredicate<T>,
+    public displayButtonFunc?: RowPredicate<T>
+  ) {
+    super(isDisabledFunc, displayButtonFunc);
 
     this.loading$ = this._loading$.asObservable();
     this.rowUpdate$ = this._rowUpdate$.asObservable();

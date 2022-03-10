@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   shongoRESTApiHost: 'localhost',
   shongoRESTApiPort: 8001,
+  useHttps: false,
 };
 
 /*

@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/core/http/api.service';
 import { CertainityCheckComponent } from '../../certainity-check/certainity-check.component';
 import { WithPathTemplate } from '../models/interfaces/with-path-template.interface';
 import { ApiActionButton } from './api-action-button';
-import { IsDisabledFunction } from './table-button';
+import { RowPredicate } from './table-button';
 
 export class DeleteButton<T>
   extends ApiActionButton<T>
@@ -18,9 +18,10 @@ export class DeleteButton<T>
     public apiService: ApiService,
     public dialog: MatDialog,
     public pathTemplate: string,
-    public isDisabledFunc?: IsDisabledFunction<T>
+    public isDisabledFunc?: RowPredicate<T>,
+    public displayButtonFunc?: RowPredicate<T>
   ) {
-    super(isDisabledFunc);
+    super(isDisabledFunc, displayButtonFunc);
   }
 
   executeAction(row: T): Observable<string> {

@@ -5,15 +5,15 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
+import { Technology } from 'src/app/shared/models/enums/technology.enum';
+import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
-import { TableButton } from '../buttons/table-button';
 import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
-import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
 export interface YourRoomsTableData {
@@ -28,9 +28,6 @@ export interface YourRoomsTableData {
 }
 
 export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData> {
-  displayedColumns: TableColumn[];
-  buttons: TableButton<YourRoomsTableData>[];
-
   constructor(
     private _resReqService: ReservationRequestService,
     private _datePipe: DatePipe,
@@ -46,7 +43,12 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       { name: 'roomName', displayName: 'Name' },
-      { name: 'technology', displayName: 'Technology' },
+      {
+        name: 'technology',
+        displayName: 'Technology',
+        pipeFunc: (value) =>
+          technologyMap.get(value as Technology) ?? 'Unknown',
+      },
       {
         name: 'slotStart',
         displayName: 'Slot start',
@@ -65,7 +67,11 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
     ];
 
     this.buttons = [
-      new LinkButton('Show detail', 'visibility', '/reservation-request/:id'),
+      new LinkButton(
+        'View reservation request',
+        'visibility',
+        '/reservation-request/:id'
+      ),
       new LinkButton(
         'Edit reservation request',
         'settings',

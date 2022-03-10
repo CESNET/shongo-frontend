@@ -1,10 +1,13 @@
-export type IsDisabledFunction<T> = (row: T) => boolean;
+export type RowPredicate<T> = (row: T) => boolean;
 
 export abstract class TableButton<T> {
   abstract name: string;
   abstract icon: string;
 
-  constructor(public isDisabledFunc?: IsDisabledFunction<T>) {}
+  constructor(
+    public isDisabledFunc?: RowPredicate<T>,
+    public displayButtonFunc?: RowPredicate<T>
+  ) {}
 
   constructPath(row: T, pathTemplate: string): string {
     const segments = pathTemplate.split('/');

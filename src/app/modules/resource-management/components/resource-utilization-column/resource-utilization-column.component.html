@@ -5,7 +5,7 @@
     [routerLink]="['./detail']"
     [queryParams]="getQueryParams()"
   >
-    {{ columnData.usedCapacity + "/" + columnData.totalCapacity }}
+    {{ cellData.usedCapacity + "/" + cellData.totalCapacity }}
   </a>
   <ng-template #relativeValue>
     <a

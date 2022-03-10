@@ -4,7 +4,6 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
 import {
   MonthlyPeriodicityType,
   PeriodicityType,
@@ -12,16 +11,21 @@ import {
 import {
   Periodicity,
   RequestModification,
-  ReservationRequest,
   ReservationRequestDetail,
 } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import resReqPropsMap from 'src/app/shared/components/data-table/models/maps/reservation-request-state-props.map';
 import { StateProps } from 'src/app/shared/components/data-table/column-components/state-chip-column/state-chip-column.component';
-import { ReservationRequestState } from 'src/app/models/enums/reservation-request-state.enum';
 import { ModificationHistoryDataSource } from 'src/app/shared/components/data-table/data-sources/modification-history.datasource';
 import { DatePipe } from '@angular/common';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { first } from 'rxjs/operators';
+import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
+import { Technology } from 'src/app/shared/models/enums/technology.enum';
+import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
+import { AliasType } from 'src/app/shared/models/enums/alias-type.enum';
+import { aliasTypeMap } from 'src/app/shared/models/maps/alias-type.map';
+import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -35,6 +39,10 @@ export class ReservationDetailComponent implements OnInit {
   modificationHistoryDataSource?: ModificationHistoryDataSource;
   ReservationType = ReservationType;
   PeriodicityType = PeriodicityType;
+  Technology = Technology;
+  AllocationState = AllocationState;
+  technologyMap = technologyMap;
+
   requestTypeMap = new Map([
     [ReservationType.PHYSICAL_RESOURCE, 'Physical resource'],
     [ReservationType.VIRTUAL_ROOM, 'Virtual room'],
@@ -81,6 +89,24 @@ export class ReservationDetailComponent implements OnInit {
 
   getStateProps(state: ReservationRequestState): StateProps | undefined {
     return resReqPropsMap.get(state);
+  }
+
+  getAliasDisplayType(type: AliasType): string {
+    return aliasTypeMap.get(type) ?? 'Unknown';
+  }
+
+  isPeriodicityShown(): boolean {
+    if (this.reservationRequest.type === ReservationType.PHYSICAL_RESOURCE) {
+      return true;
+    } else if (this.reservationRequest.type === ReservationType.ROOM_CAPACITY) {
+      return (
+        !this.reservationRequest.parentRequestId &&
+        this.reservationRequest.virtualRoomData?.technology !==
+          Technology.FREEPBX
+      );
+    } else {
+      return false;
+    }
   }
 
   openModification = (id: string): void => {

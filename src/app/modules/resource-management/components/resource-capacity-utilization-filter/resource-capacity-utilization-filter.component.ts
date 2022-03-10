@@ -8,12 +8,12 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Option } from 'src/app/models/interfaces/option.interface';
 import {
   DataTableFilter,
   TableSettings,
 } from 'src/app/shared/components/data-table/filter/data-table-filter';
 import { add } from 'date-fns';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 
 const DEFAULT_UNIT_DIST = 5;
 
@@ -92,8 +92,8 @@ export class ResourceCapacityUtilizationFilterComponent
     >;
     const params = new HttpParams()
       .set('unit', unit)
-      .set('from', dateFrom)
-      .set('to', dateTo);
+      .set('intervalFrom', new Date(dateFrom).toISOString())
+      .set('intervalTo', new Date(dateTo).toISOString());
     return params;
   }
 

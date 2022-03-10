@@ -1,16 +1,17 @@
 import { Observable } from 'rxjs';
-import { HasID } from 'src/app/models/interfaces/has-id.interface';
+import { HasID } from 'src/app/shared/models/interfaces/has-id.interface';
 import { ActionButton } from './action-button';
-import { IsDisabledFunction } from './table-button';
+import { RowPredicate } from './table-button';
 
 export class CustomActionButton<T extends HasID> extends ActionButton<T> {
   constructor(
     public name: string,
     public icon: string,
     public customFunc: (row: T) => Observable<string>,
-    public isDisabledFunc?: IsDisabledFunction<T>
+    public isDisabledFunc?: RowPredicate<T>,
+    public displayButtonFunc?: RowPredicate<T>
   ) {
-    super(isDisabledFunc);
+    super(isDisabledFunc, displayButtonFunc);
   }
 
   executeAction(row: T): Observable<string> {

@@ -10,7 +10,7 @@ import {
   PhysicalResource,
   physicalResources,
 } from 'src/app/models/data/physical-resources';
-import { PhysicalResourceType } from 'src/app/models/enums/physical-resource-type.enum';
+import { PhysicalResourceType } from 'src/app/shared/models/enums/physical-resource-type.enum';
 
 type ResourceTypeButton = {
   type: PhysicalResourceType;
@@ -23,21 +23,6 @@ type ResourceTypeButton = {
   templateUrl: './resource-selection-step.component.html',
   styleUrls: ['./resource-selection-step.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // animations: [
-  //   trigger('buttonAnimation', [
-  //     transition(':enter', [
-  //       query('.type-button', [
-  //         style({ opacity: 0, transform: 'translateY(50px)' }),
-  //         stagger(30, [
-  //           animate(
-  //             '500ms cubic-bezier(0.35, 0, 0.25, 1)',
-  //             style({ opacity: 1, transform: 'none' })
-  //           ),
-  //         ]),
-  //       ]),
-  //     ]),
-  //   ]),
-  // ],
 })
 export class ResourceSelectionStepComponent implements OnInit, OnDestroy {
   selectedResource$ = new BehaviorSubject<string | null>(null);

@@ -5,8 +5,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TimeSlot } from 'src/app/models/interfaces/time-slot.interface';
 import { ReservationCalendarComponent } from 'src/app/shared/components/reservation-calendar/reservation-calendar.component';
+import { TimeSlot } from 'src/app/shared/models/rest-api/time-slot.interface';
 
 @Component({
   selector: 'app-time-slot-selection-step',

@@ -1,4 +1,4 @@
-import { PhysicalResourceType } from '../enums/physical-resource-type.enum';
+import { PhysicalResourceType } from 'src/app/shared/models/enums/physical-resource-type.enum';
 
 export interface PhysicalResource {
   id: string;

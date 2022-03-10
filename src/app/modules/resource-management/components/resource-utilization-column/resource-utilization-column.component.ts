@@ -9,21 +9,21 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
   ColumnComponent,
+  COL_DATA_PROVIDER,
   SETTINGS_PROVIDER,
-  VALUE_PROVIDER,
 } from 'src/app/shared/components/data-table/column-components/column.component';
+import { ResourceCapacityUtilizationTableData } from 'src/app/shared/components/data-table/data-sources/resource-capacity-utilization-datasource';
 import { TableSettings } from 'src/app/shared/components/data-table/filter/data-table-filter';
-
-interface ColumnData {
-  id: string;
-  name: string;
-  intervalFrom: string;
-  intervalTo: string;
-  totalCapacity: number;
-  usedCapacity: number;
-}
+import { ColumnData } from 'src/app/shared/components/data-table/models/interfaces/column-data.interface';
 
 const BG_OPACITY = 0.6;
+
+interface ResourceUtilization {
+  id: string;
+  name: string;
+  totalCapacity: string;
+  usedCapacity: string;
+}
 
 @Component({
   selector: 'app-resource-utilization-column',
@@ -32,22 +32,27 @@ const BG_OPACITY = 0.6;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResourceUtilizationColumnComponent
-  extends ColumnComponent
+  extends ColumnComponent<ResourceCapacityUtilizationTableData>
   implements OnInit, OnDestroy
 {
-  columnData: ColumnData;
   percentage: number;
   useAbsoluteValue = false;
 
   private _destroy$ = new Subject<void>();
 
   constructor(
-    @Inject(VALUE_PROVIDER) value: string,
+    @Inject(COL_DATA_PROVIDER)
+    public columnData: ColumnData<ResourceCapacityUtilizationTableData>,
     @Inject(SETTINGS_PROVIDER) settings: Observable<TableSettings>
   ) {
-    super(value, settings);
-    this.columnData = JSON.parse(value);
+    super(columnData, settings);
     this.percentage = this._getPercentage();
+  }
+
+  get cellData(): ResourceUtilization {
+    return JSON.parse(
+      this.columnData.row[this.columnData.columnName]
+    ) as ResourceUtilization;
   }
 
   ngOnInit(): void {
@@ -73,13 +78,15 @@ export class ResourceUtilizationColumnComponent
 
   getQueryParams(): Record<string, string> {
     return {
-      resourceId: this.columnData.id,
-      intervalFrom: this.columnData.intervalFrom,
-      intervalTo: this.columnData.intervalTo,
+      resourceId: this.cellData.id,
+      intervalFrom: this.columnData.row.intervalFrom,
+      intervalTo: this.columnData.row.intervalTo,
     };
   }
 
   private _getPercentage(): number {
-    return this.columnData.usedCapacity / this.columnData.totalCapacity;
+    return (
+      Number(this.cellData.usedCapacity) / Number(this.cellData.totalCapacity)
+    );
   }
 }

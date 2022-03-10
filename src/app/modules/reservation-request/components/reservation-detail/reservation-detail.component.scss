@@ -26,8 +26,25 @@ aside {
     width: fit-content;
   }
 }
+dl.wrapped-dl {
+  display: block;
+
+  dt,
+  dd {
+    flex: none;
+  }
+
+  dd {
+    padding-left: 1em;
+  }
+}
 
 /* Other */
 .gray {
   color: gray;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

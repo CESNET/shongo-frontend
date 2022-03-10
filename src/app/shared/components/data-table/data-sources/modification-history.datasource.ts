@@ -7,17 +7,13 @@ import { RequestModification } from 'src/app/shared/models/rest-api/reservation-
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { toTitleCase } from 'src/app/utils/toTitleCase';
 import { CustomActionButton } from '../buttons/custom-action-button';
-import { TableButton } from '../buttons/table-button';
-import { TableColumn } from '../models/table-column.interface';
+import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
 import { StaticDataSource } from './static-datasource';
 
 export class ModificationHistoryDataSource extends StaticDataSource<
   RequestModification,
   RequestModification
 > {
-  displayedColumns: TableColumn[];
-  buttons: TableButton<RequestModification>[];
-
   constructor(
     data: RequestModification[],
     private _datePipe: DatePipe,
@@ -38,7 +34,11 @@ export class ModificationHistoryDataSource extends StaticDataSource<
         displayName: 'Type',
         pipeFunc: (value: unknown) => toTitleCase(value as string),
       },
-      { name: 'state', displayName: 'State' },
+      {
+        name: 'state',
+        displayName: 'State',
+        component: ReservationRequestStateColumnComponent,
+      },
     ];
 
     this.buttons = [

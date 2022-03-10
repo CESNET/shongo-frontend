@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { catchError, map, switchMap, switchMapTo, tap } from 'rxjs/operators';
 import { Observable, merge, Subject, of } from 'rxjs';
-import { HasID } from 'src/app/models/interfaces/has-id.interface';
 import { PipeFunction, TableColumn } from '../models/table-column.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { TableButton } from '../buttons/table-button';
@@ -17,8 +16,8 @@ export const REFRESH_TIMEOUT = 200;
  * (including sorting, pagination, and filtering).
  */
 export abstract class DataTableDataSource<T> extends DataSource<T> {
-  abstract displayedColumns: TableColumn[];
-  abstract buttons: TableButton<T>[];
+  displayedColumns: TableColumn<T>[] = [];
+  buttons: TableButton<T>[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   filter$: Observable<HttpParams> | undefined;

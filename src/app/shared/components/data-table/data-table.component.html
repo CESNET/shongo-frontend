@@ -103,7 +103,7 @@
             <ng-container
               *ngComponentOutlet="
                 column.component!;
-                injector: createColComponentValueInjector(row[column.name])
+                injector: createColComponentValueInjector(row, column.name)
               "
             ></ng-container>
           </div>
@@ -116,8 +116,8 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
         <div class="buttons">
-          <ng-container *ngFor="let button of dataSource.buttons">
-            <div [ngSwitch]="getButtonType(button)">
+          <ng-container *ngFor="let button of filterDisplayedButtons(row)">
+            <div [ngSwitch]="getButtonType(button)" class="button-container">
               <div *ngSwitchCase="TableButtonType.ACTION">
                 <button
                   mat-icon-button

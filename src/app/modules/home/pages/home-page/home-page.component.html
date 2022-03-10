@@ -53,6 +53,7 @@
           <div class="tab-content">
             <app-data-table
               [dataSource]="participationInRoomsDataSource"
+              [showCheckboxes]="false"
               [showDeleteButtons]="false"
               description="List of rooms in which you are configured as participant and which you can join."
             ></app-data-table>
@@ -72,7 +73,7 @@
           <div class="tab-content">
             <app-data-table
               [dataSource]="physicalReservationsDataSource"
-              description="All reservations of resource."
+              description="All reservations of physical resources."
             ></app-data-table>
           </div>
         </ng-template>

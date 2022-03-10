@@ -1,0 +1,23 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.active-recording {
+  color: gray;
+  font-size: 0.7em;
+}
+.red-circle {
+  height: 1em;
+  width: 1em;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}

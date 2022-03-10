@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RoomState } from 'src/app/models/enums/room-state.enum';
+import { RoomState } from 'src/app/shared/models/enums/room-state.enum';
 import { TableSettings } from '../../../filter/data-table-filter';
-import { SETTINGS_PROVIDER, VALUE_PROVIDER } from '../../column.component';
+import { ColumnData } from '../../../models/interfaces/column-data.interface';
+import { SETTINGS_PROVIDER, COL_DATA_PROVIDER } from '../../column.component';
 import {
   StateChipColumnComponent,
   StateProps,
@@ -12,7 +13,7 @@ import {
   selector: 'app-room-state-column',
   templateUrl: '../state-chip-column.component.html',
 })
-export class RoomStateColumnComponent extends StateChipColumnComponent {
+export class RoomStateColumnComponent<T> extends StateChipColumnComponent<T> {
   statePropsMap: Map<string, StateProps> = new Map([
     [RoomState.FAILED, { color: 'error', displayName: 'Error' }],
     [RoomState.NOT_STARTED, { color: 'info', displayName: 'Unprepared' }],
@@ -35,9 +36,9 @@ export class RoomStateColumnComponent extends StateChipColumnComponent {
   ]);
 
   constructor(
-    @Inject(VALUE_PROVIDER) value: string,
+    @Inject(COL_DATA_PROVIDER) columnData: ColumnData<T>,
     @Inject(SETTINGS_PROVIDER) settings: Observable<TableSettings>
   ) {
-    super(value, settings);
+    super(columnData, settings);
   }
 }

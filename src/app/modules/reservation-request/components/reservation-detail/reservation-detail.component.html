@@ -16,7 +16,7 @@
         <dd>
           <a
             [routerLink]="
-              '/reservation_request/' + currentRequest.parentRequestId
+              '/reservation-request/' + currentRequest.parentRequestId
             "
             >{{ currentRequest.parentRequestId }}</a
           >
@@ -27,13 +27,15 @@
       <ng-container *ngIf="currentRequest.slot as slot">
         <dt>
           {{
-            (currentRequest.allocationState === "ALLOCATED"
+            (currentRequest.allocationState === AllocationState.ALLOCATED
               ? "Allocated"
               : "Requested") + " time slot:"
           }}
         </dt>
         <dd>
-          {{ (slot.start | date) + " - " + (slot.end | date) }}
+          {{
+            (slot.start | date: "medium") + " - " + (slot.end | date: "medium")
+          }}
         </dd>
       </ng-container>
 
@@ -74,10 +76,8 @@
       <!-- Periodicity -->
       <ng-container
         *ngIf="
-          !currentRequest.parentRequestId &&
-          (!currentRequest.virtualRoomData ||
-            currentRequest.virtualRoomData.technology !== 'FREEPBX') &&
-          currentRequest.periodicity as periodicity
+          isPeriodicityShown() &&
+          currentRequest.roomCapacityData?.periodicity as periodicity
         "
       >
         <dt>Periodicity</dt>
@@ -142,44 +142,24 @@
       </ng-container>
 
       <!-- Virtual room -->
-      <ng-container
-        *ngIf="
-          currentRequest.type === ReservationType.VIRTUAL_ROOM &&
-          currentRequest.virtualRoomData as virtualRoomData
-        "
-      >
+      <ng-container *ngIf="currentRequest.virtualRoomData">
         <!-- Technology -->
-        <ng-container *ngIf="virtualRoomData.technology as technology">
+        <ng-container
+          *ngIf="currentRequest.virtualRoomData.technology as technology"
+        >
           <dt>Technology</dt>
-          <dd>{{ technology }}</dd>
+          <dd>{{ technologyMap.get(technology) ?? "Unknown" }}</dd>
         </ng-container>
 
         <!-- Room name -->
-        <ng-container *ngIf="virtualRoomData.roomName">
+        <ng-container
+          *ngIf="
+            currentRequest?.virtualRoomData?.roomName &&
+            currentRequest.type !== ReservationType.ROOM_CAPACITY
+          "
+        >
           <dt>Room name:</dt>
-          <dd>{{ virtualRoomData.roomName }}</dd>
-        </ng-container>
-
-        <!-- Participant count -->
-        <ng-container
-          *ngIf="
-            virtualRoomData.technology !== 'FREEPBX' &&
-            virtualRoomData.roomParticipantCount as participantCount
-          "
-        >
-          <dt>Number of participants:</dt>
-          <dd>{{ participantCount }}</dd>
-        </ng-container>
-
-        <!-- Recourd -->
-        <ng-container
-          *ngIf="
-            virtualRoomData.technology !== 'ADOBE_CONNECT' &&
-            virtualRoomData.technology !== 'FREEPBX'
-          "
-        >
-          <dt>Record:</dt>
-          <dd>{{ virtualRoomData.roomHasRecordingService ? "yes" : "no" }}</dd>
+          <dd>{{ currentRequest.virtualRoomData.roomName }}</dd>
         </ng-container>
       </ng-container>
 
@@ -191,18 +171,43 @@
         "
       >
         <!-- Reservation request ID -->
-        <dt>For permanent room:</dt>
+        <dt>For virtual room:</dt>
         <dd *ngIf="capacityData.roomReservationRequestId; else noResReqId">
           <a
             [routerLink]="
               '/reservation-request/' + capacityData.roomReservationRequestId
             "
-            >{{ capacityData.roomName }}</a
+            >{{ reservationRequest?.virtualRoomData?.roomName ?? "Room" }}</a
           >
         </dd>
         <ng-template #noResReqId>
           <dd>{{ capacityData.roomName }}</dd>
         </ng-template>
+
+        <!-- Participant count -->
+        <ng-container
+          *ngIf="
+            currentRequest.virtualRoomData?.technology !== Technology.FREEPBX &&
+            capacityData.capacityParticipantCount as participantCount
+          "
+        >
+          <dt>Number of participants:</dt>
+          <dd>{{ participantCount }}</dd>
+        </ng-container>
+
+        <!-- Recourd -->
+        <ng-container
+          *ngIf="
+            currentRequest.virtualRoomData?.technology !==
+              Technology.ADOBE_CONNECT &&
+            currentRequest.virtualRoomData?.technology !== Technology.FREEPBX
+          "
+        >
+          <dt>Record:</dt>
+          <dd>
+            {{ capacityData.capacityHasRecordingService ? "yes" : "no" }}
+          </dd>
+        </ng-container>
       </ng-container>
 
       <!-- Authorized data -->
@@ -224,6 +229,18 @@
           <dt>Guest PIN:</dt>
           <dd>{{ guestPin }}</dd>
         </ng-container>
+
+        <ng-container *ngIf="authorizedData.aliases">
+          <dt>Connection methods:</dt>
+          <dd>
+            <dl class="wrapped-dl">
+              <ng-container *ngFor="let alias of authorizedData.aliases">
+                <dt>{{ getAliasDisplayType(alias.type) }}</dt>
+                <dd>{{ alias.value }}</dd>
+              </ng-container>
+            </dl>
+          </dd>
+        </ng-container>
       </ng-container>
     </dl>
   </main>
@@ -237,24 +254,5 @@
         [showDeleteButtons]="false"
       ></app-data-table>
     </section>
-
-    <!-- <section>
-      <h2 class="mat-primary-color">Controls</h2>
-      <div class="buttons">
-        <button mat-flat-button color="primary">
-          <mat-icon>content_copy</mat-icon>&nbsp;Create new as copy
-        </button>
-        <button
-          mat-flat-button
-          color="primary"
-          *ngIf="currentRequest.type === ReservationType.VIRTUAL_ROOM"
-        >
-          <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
-        </button>
-        <button mat-flat-button color="warn">
-          <mat-icon>delete_forever</mat-icon>&nbsp;Delete
-        </button>
-      </div>
-    </section> -->
   </aside>
 </div>

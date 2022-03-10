@@ -1,9 +1,12 @@
 import { Observable } from 'rxjs';
-import { IsDisabledFunction, TableButton } from './table-button';
+import { RowPredicate, TableButton } from './table-button';
 
 export abstract class ActionButton<T> extends TableButton<T> {
-  constructor(public isDisabledFunc?: IsDisabledFunction<T>) {
-    super(isDisabledFunc);
+  constructor(
+    public isDisabledFunc?: RowPredicate<T>,
+    public displayButtonFunc?: RowPredicate<T>
+  ) {
+    super(isDisabledFunc, displayButtonFunc);
   }
 
   abstract executeAction(row: T): Observable<string>;

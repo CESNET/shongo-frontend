@@ -1,0 +1,36 @@
+<header>
+  <h2 class="mat-primary-color">
+    Room recordings
+    <span
+      *ngIf="reservationRequest.roomCapacityData?.isRecordingActive"
+      class="active-recording"
+      >( <span class="red-circle"></span> Recording active )</span
+    >
+  </h2>
+
+  <button
+    mat-button
+    (click)="setRecording(false)"
+    *ngIf="
+      reservationRequest.roomCapacityData?.isRecordingActive;
+      else startRecord
+    "
+  >
+    <mat-icon color="primary">videocam_off</mat-icon>&nbsp;Stop recording
+  </button>
+
+  <ng-template #startRecord>
+    <button mat-button (click)="setRecording(true)">
+      <mat-icon color="primary">videocam</mat-icon>&nbsp;Start recording
+    </button>
+  </ng-template>
+</header>
+
+<main>
+  <app-data-table
+    [showCheckboxes]="false"
+    [showDeleteButtons]="false"
+    [dataSource]="roomRecordingDataSource"
+    description="List of recordings for this room."
+  ></app-data-table>
+</main>

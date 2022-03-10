@@ -4,13 +4,13 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RoomService } from 'src/app/core/http/room/room.service';
+import { Technology } from 'src/app/shared/models/enums/technology.enum';
+import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { LinkButton } from '../buttons/link-button';
-import { TableButton } from '../buttons/table-button';
 import { RoomStateColumnComponent } from '../column-components/state-chip-column/components/room-state-column.component';
-import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
 interface ParticipationInRoomsTableData {
@@ -19,20 +19,22 @@ interface ParticipationInRoomsTableData {
   technology: string;
   slotStart: string;
   slotEnd: string;
-  state: string;
   description: string;
+  state: string;
 }
 
 export class ParticipationInRoomsDataSource extends DataTableDataSource<ParticipationInRoomsTableData> {
-  displayedColumns: TableColumn[];
-  buttons: TableButton<ParticipationInRoomsTableData>[];
-
   constructor(private _roomService: RoomService, private _datePipe: DatePipe) {
     super();
 
     this.displayedColumns = [
       { name: 'name', displayName: 'Name' },
-      { name: 'technology', displayName: 'Technology' },
+      {
+        name: 'technology',
+        displayName: 'Technology',
+        pipeFunc: (value) =>
+          technologyMap.get(value as Technology) ?? 'Unknown',
+      },
       {
         name: 'slotStart',
         displayName: 'Slot start',
@@ -51,7 +53,7 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
       { name: 'description', displayName: 'Description' },
     ];
 
-    this.buttons = [new LinkButton('Edit room', 'settings', '/room/:id')];
+    this.buttons = [];
   }
 
   getData(

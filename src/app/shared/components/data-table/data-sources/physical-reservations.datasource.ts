@@ -5,15 +5,13 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
-import { Room } from 'src/app/shared/models/rest-api/room.interface';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
-import { TableButton } from '../buttons/table-button';
-import { TableColumn } from '../models/table-column.interface';
+import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
 import { DataTableDataSource } from './data-table-datasource';
 
 interface PhysicalReservationsTableData {
@@ -26,9 +24,6 @@ interface PhysicalReservationsTableData {
 }
 
 export class PhysicalReservationsDataSource extends DataTableDataSource<PhysicalReservationsTableData> {
-  displayedColumns: TableColumn[];
-  buttons: TableButton<PhysicalReservationsTableData>[];
-
   constructor(
     private _resReqService: ReservationRequestService,
     private _datePipe: DatePipe,
@@ -48,11 +43,20 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
         displayName: 'Slot end',
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'state', displayName: 'Reservation state' },
+      {
+        name: 'state',
+        displayName: 'Reservation state',
+        component: ReservationRequestStateColumnComponent,
+      },
       { name: 'resourceDescription', displayName: 'Description' },
     ];
 
     this.buttons = [
+      new LinkButton(
+        'View reservation request',
+        'visibility',
+        '/reservation-request/:id'
+      ),
       new LinkButton('Edit meeting room', 'settings', '/meeting_room/:id'),
       new DeleteButton(this._resReqService, this._dialog, '/:id'),
     ];

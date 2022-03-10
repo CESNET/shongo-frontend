@@ -8,7 +8,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { RoomTechnology } from '../../../../shared/components/data-table/models/enums/room-technology';
+import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import {
   DataTableFilter,
   TableSettings,
@@ -39,13 +39,13 @@ export class ReservationRequestFilterComponent
 
   technologyOptions = [
     { name: 'All', value: -1 },
-    { name: 'Videoconference (PEXIP)', value: RoomTechnology.PEXIP },
+    { name: 'Videoconference (PEXIP)', value: Technology.PEXIP },
     {
       name: 'Webconference (Adobe Connect)',
-      value: RoomTechnology.ADOBE_CONNECT,
+      value: Technology.ADOBE_CONNECT,
     },
-    { name: 'Teleconference', value: RoomTechnology.TELECONFERENCE },
-    { name: 'Videoconference (MCU)', value: RoomTechnology.MCU },
+    { name: 'Teleconference', value: Technology.FREEPBX },
+    { name: 'Videoconference (MCU)', value: Technology.H323_SIP },
   ];
 
   private _destroy$ = new Subject<void>();
@@ -83,9 +83,8 @@ export class ReservationRequestFilterComponent
       showCapacity,
     } = this.filterForm.value;
 
-    const technologyQuery = this._getTechnologyQuery(technology);
-    if (technologyQuery) {
-      httpParams = httpParams.append('technology', technologyQuery);
+    if (technology && technology !== -1) {
+      httpParams = httpParams.append('technology', technology);
     }
     if (dateFrom) {
       const date = new Date(dateFrom).toISOString();
@@ -116,20 +115,5 @@ export class ReservationRequestFilterComponent
 
   getTableSettings(): TableSettings {
     return {};
-  }
-
-  private _getTechnologyQuery(technology: RoomTechnology): string | null {
-    switch (technology) {
-      case RoomTechnology.ADOBE_CONNECT:
-        return 'adobe_connect';
-      case RoomTechnology.MCU:
-        return 'mcu';
-      case RoomTechnology.PEXIP:
-        return 'pexip';
-      case RoomTechnology.TELECONFERENCE:
-        return 'teleconference';
-      default:
-        return null;
-    }
   }
 }

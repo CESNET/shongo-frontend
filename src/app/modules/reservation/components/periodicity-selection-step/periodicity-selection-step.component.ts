@@ -15,7 +15,7 @@ import {
 } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatRadioChange } from '@angular/material/radio';
-import { TimeSlot } from 'src/app/models/interfaces/time-slot.interface';
+import { TimeSlot } from 'src/app/shared/models/rest-api/time-slot.interface';
 
 @Component({
   selector: 'app-periodicity-selection-step',

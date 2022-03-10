@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +17,6 @@ export class ParticipantsTabComponent implements OnInit {
   constructor(
     private _resReqService: ReservationRequestService,
     private _dialog: MatDialog,
-    private _datePipe: DatePipe,
     private _route: ActivatedRoute
   ) {}
 
@@ -26,7 +24,6 @@ export class ParticipantsTabComponent implements OnInit {
     this._route.params.pipe(first()).subscribe((params) => {
       this.participantsDataSource = new ParticipantsDataSource(
         this._resReqService,
-        this._datePipe,
         this._dialog,
         params.id
       );

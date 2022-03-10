@@ -8,7 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IANA_TIMEZONES } from 'src/app/shared/models/data/timezones';
-import { Option } from 'src/app/models/interfaces/option.interface';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 
 @Component({
   selector: 'app-user-settings-page',

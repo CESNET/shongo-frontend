@@ -1,0 +1,13 @@
+<header>
+  <h2 class="mat-primary-color">List of active participants</h2>
+</header>
+
+<main>
+  <app-data-table
+    *ngIf="runtimeManagementDataSource"
+    [showDeleteButtons]="false"
+    [showCheckboxes]="false"
+    [dataSource]="runtimeManagementDataSource"
+    description="Table shows participants which are currently connected to the room."
+  ></app-data-table>
+</main>

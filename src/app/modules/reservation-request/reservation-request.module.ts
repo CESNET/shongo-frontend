@@ -22,6 +22,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RuntimeManagementTabComponent } from './components/runtime-management-tab/runtime-management-tab.component';
+import { SetDisplayNameDialogComponent } from './components/set-display-name-dialog/set-display-name-dialog.component';
+import { SetMictophoneLevelDialogComponent } from './components/set-mictophone-level-dialog/set-mictophone-level-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
+import { UserSnapshotDialogComponent } from './components/user-snapshot-dialog/user-snapshot-dialog.component';
+import { RecordingsTabComponent } from './components/recordings-tab/recordings-tab.component';
+import { RecordingViewUrlColumnComponent } from './components/recording-view-url-column/recording-view-url-column.component';
 
 @NgModule({
   imports: [
@@ -41,6 +49,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatRadioModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatSliderModule,
   ],
   declarations: [
     ReservationRequestDetailPageComponent,
@@ -50,6 +60,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CreateUserRolePageComponent,
     ParticipantsTabComponent,
     CreateParticipantPageComponent,
+    RuntimeManagementTabComponent,
+    SetDisplayNameDialogComponent,
+    SetMictophoneLevelDialogComponent,
+    UserSnapshotDialogComponent,
+    RecordingsTabComponent,
+    RecordingViewUrlColumnComponent,
   ],
 })
 export class ReservationRequestModule {}

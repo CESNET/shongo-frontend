@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { StateColor } from '../../../state-chip/state-chip.component';
 import { TableSettings } from '../../filter/data-table-filter';
+import { ColumnData } from '../../models/interfaces/column-data.interface';
 import { ColumnComponent } from '../column.component';
 
 export interface StateProps {
@@ -8,11 +9,16 @@ export interface StateProps {
   color: StateColor;
 }
 
-export abstract class StateChipColumnComponent extends ColumnComponent {
+export abstract class StateChipColumnComponent<T> extends ColumnComponent<T> {
   abstract statePropsMap: Map<string, StateProps>;
+  state: string;
 
-  constructor(value: string, settings: Observable<TableSettings>) {
-    super(value, settings);
+  constructor(
+    public columnData: ColumnData<T>,
+    settings: Observable<TableSettings>
+  ) {
+    super(columnData, settings);
+    this.state = String(columnData.row[columnData.columnName]);
   }
 
   getStateColor(state: string): StateColor {

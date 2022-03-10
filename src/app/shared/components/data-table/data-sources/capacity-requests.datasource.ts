@@ -5,15 +5,12 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ReservationRequestState } from 'src/app/models/enums/reservation-request-state.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
-import { TableButton } from '../buttons/table-button';
-import { RoomStateColumnComponent } from '../column-components/state-chip-column/components/room-state-column.component';
-import { TableColumn } from '../models/table-column.interface';
+import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
 import { DataTableDataSource } from './data-table-datasource';
 
 interface CapacityRequestsTableData {
@@ -21,16 +18,13 @@ interface CapacityRequestsTableData {
   slotStart: string;
   slotEnd: string;
   participantCount: number;
-  state: ReservationRequestState;
-  roomReservationRequestId: string;
+  parentRequestId?: string;
+  state: string;
 }
 
 export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequestsTableData> {
-  displayedColumns: TableColumn[];
-  buttons: TableButton<CapacityRequestsTableData>[];
-
   constructor(
-    public roomReservationRequestId: string,
+    public parentRequestId: string,
     private _resReqService: ReservationRequestService,
     private _datePipe: DatePipe,
     private _dialog: MatDialog
@@ -52,7 +46,7 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
       {
         name: 'state',
         displayName: 'State',
-        component: RoomStateColumnComponent,
+        component: ReservationRequestStateColumnComponent,
       },
     ];
 
@@ -73,10 +67,7 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
     sortDirection: SortDirection,
     filter: HttpParams
   ): Observable<ApiResponse<CapacityRequestsTableData>> {
-    filter = filter.set(
-      'roomReservationRequestId',
-      this.roomReservationRequestId
-    );
+    filter = filter.set('parentRequestId', this.parentRequestId);
 
     return this._resReqService
       .fetchTableItems<ReservationRequest>(
@@ -94,9 +85,8 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
             slotStart: item.slot.start,
             slotEnd: item.slot.end,
             state: item.state,
-            participantCount: item.roomCapacityData!.roomParticipantCount,
-            roomReservationRequestId:
-              item.roomCapacityData!.roomReservationRequestId,
+            participantCount: item.roomCapacityData!.capacityParticipantCount,
+            parentRequestId: item.parentRequestId,
           }));
 
           return { count, items: mappedItems };

@@ -7,18 +7,12 @@ import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceUtilizationColumnComponent } from 'src/app/modules/resource-management/components/resource-utilization-column/resource-utilization-column.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
+import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { TableButton } from '../buttons/table-button';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
-type Utilization = Omit<
-  ResourceCapacityUtilizationTableData,
-  'id' | 'interval'
->;
-
-interface ResourceCapacityUtilizationTableData {
-  id: string;
-  interval: string;
+export interface Utilization {
   pexip: string;
   tcs2: string;
   'connect-cesnet-new': string;
@@ -28,8 +22,14 @@ interface ResourceCapacityUtilizationTableData {
   'freepbx-uvt': string;
 }
 
+export interface ResourceCapacityUtilizationTableData extends Utilization {
+  intervalFrom: string;
+  intervalTo: string;
+  interval: string;
+}
+
 export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<ResourceCapacityUtilizationTableData> {
-  displayedColumns: TableColumn[];
+  displayedColumns: TableColumn<ResourceCapacityUtilizationTableData>[];
   buttons: TableButton<ResourceCapacityUtilizationTableData>[] = [];
 
   constructor(
@@ -97,7 +97,13 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
         map((data) => {
           const items = data.items.map((item: ResourceCapacityUtilization) => {
             const interval = this.getInterval(item);
-            return { id: interval, interval, ...this.getUtilization(item) };
+            const { intervalFrom, intervalTo } = item;
+            return {
+              intervalFrom,
+              intervalTo,
+              interval,
+              ...this.getUtilization(item),
+            };
           });
           return { count: data.count, items };
         })
@@ -108,30 +114,20 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
     const utilization: Record<string, string> = {};
 
     item.resources.forEach((resource) => {
-      utilization[resource.name] = JSON.stringify({
-        intervalFrom: item.intervalFrom,
-        intervalTo: item.intervalTo,
-        ...resource,
-      });
+      utilization[resource.name] = JSON.stringify(resource);
     });
 
-    return utilization as Utilization;
+    return utilization as unknown as Utilization;
   }
 
   getInterval(item: ResourceCapacityUtilization): string {
     if (item.intervalFrom === item.intervalTo) {
-      return this.datePipe(item.intervalFrom);
+      return this.datePipeFunc(item.intervalFrom);
     }
-    return `${this.datePipe(item.intervalFrom)} - ${this.datePipe(
+    return `${this.datePipeFunc(item.intervalFrom)} - ${this.datePipeFunc(
       item.intervalTo
     )}`;
   }
 
-  datePipe = (value: unknown): string => {
-    if (typeof value === 'string') {
-      return this._datePipe.transform(value, 'fullDate') ?? 'Not a date';
-    } else {
-      throw new Error('Invalid column data type for date pipe.');
-    }
-  };
+  datePipeFunc = datePipeFunc.bind({ datePipe: this._datePipe });
 }

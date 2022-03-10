@@ -3,8 +3,6 @@ import {
   ResourceReservation,
   ResourceReservationTableData,
 } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
-import { TableButton } from '../buttons/table-button';
-import { TableColumn } from '../models/table-column.interface';
 import { DatePipe } from '@angular/common';
 import { ReservationOwnerColumnComponent } from 'src/app/modules/resource-management/components/reservation-owner-column/reservation-owner-column.component';
 import { SortDirection } from '@angular/material/sort';
@@ -17,9 +15,6 @@ export class ReservationsDataSource extends StaticDataSource<
   ResourceReservationTableData,
   ResourceReservation
 > {
-  buttons: TableButton<ResourceReservationTableData>[] = [];
-  displayedColumns: TableColumn[];
-
   constructor(data: ResourceReservation[], private _datePipe: DatePipe) {
     super(data);
 

@@ -1,4 +1,4 @@
-import { ReservationRequestState } from 'src/app/models/enums/reservation-request-state.enum';
+import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { StateProps } from '../../column-components/state-chip-column/state-chip-column.component';
 
 export default new Map<ReservationRequestState, StateProps>([

@@ -25,7 +25,7 @@ import { TableButtonType } from '../../models/enums/table-button-type.enum';
 import { ActionButton } from './buttons/action-button';
 import {
   SETTINGS_PROVIDER,
-  VALUE_PROVIDER,
+  COL_DATA_PROVIDER,
 } from './column-components/column.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StaticDataSource } from './data-sources/static-datasource';
@@ -183,11 +183,11 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  createColComponentValueInjector(value: string): Injector {
+  createColComponentValueInjector(row: T, columnName: string): Injector {
     const tableSettings = this.filter?.settings$;
     return Injector.create({
       providers: [
-        { provide: VALUE_PROVIDER, useValue: value },
+        { provide: COL_DATA_PROVIDER, useValue: { row, columnName } },
         { provide: SETTINGS_PROVIDER, useValue: tableSettings },
       ],
       parent: this._injector,
@@ -198,6 +198,12 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     return (cellData && cellData.length) > this.maxCellTextLength
       ? cellData
       : '';
+  }
+
+  filterDisplayedButtons(row: T): TableButton<T>[] {
+    return this.dataSource.buttons.filter((button) =>
+      button.displayButtonFunc ? button.displayButtonFunc(row) : true
+    );
   }
 
   private _buildDisplayedColumnsArray(): string[] {

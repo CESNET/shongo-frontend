@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { TimeSlot } from 'src/app/models/interfaces/time-slot.interface';
 import { physicalResources } from 'src/app/models/data/physical-resources';
+import { TimeSlot } from 'src/app/shared/models/rest-api/time-slot.interface';
 
 @Component({
   selector: 'app-additional-information-step',

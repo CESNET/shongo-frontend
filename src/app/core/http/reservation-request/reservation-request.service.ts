@@ -11,6 +11,9 @@ import {
   RoleBody,
   UserParticipantPostBody,
 } from 'src/app/shared/models/rest-api/request-participant.interface';
+import { RuntimeParticipant } from 'src/app/shared/models/rest-api/runtime-participant.interface';
+import { SortDirection } from '@angular/material/sort';
+import { Recording } from 'src/app/shared/models/rest-api/recording';
 
 @Injectable({
   providedIn: 'root',
@@ -69,5 +72,95 @@ export class ReservationRequestService extends ApiService {
   postRole(body: RoleBody, requestId: string): Observable<RoleBody> {
     const url = `${this.endpointURL}/${requestId}/roles`;
     return this.postItem<RoleBody>(body, url) as Observable<RoleBody>;
+  }
+
+  fetchRuntimeParticipants(
+    pageSize: number,
+    pageIndex: number,
+    sortedColumn: string,
+    sortDirection: SortDirection,
+    filter: HttpParams,
+    requestId: string
+  ): Observable<ApiResponse<RuntimeParticipant>> {
+    const url = `${this.endpointURL}/${requestId}/runtime_management/participants`;
+    return this.fetchTableItems<RuntimeParticipant>(
+      pageSize,
+      pageIndex,
+      sortedColumn,
+      sortDirection,
+      filter,
+      url
+    );
+  }
+
+  setParticipantDisplayName(
+    requestId: string,
+    participantId: string,
+    displayName: string
+  ): Observable<string> {
+    const url = `${this.endpointURL}/${requestId}/runtime_management/participants/${participantId}`;
+    return this._http.patch<string>(url, { displayName });
+  }
+
+  setParticipantMicrophoneEnabled(
+    requestId: string,
+    participantId: string,
+    microphoneEnabled: boolean
+  ): Observable<string> {
+    const url = `${this.endpointURL}/${requestId}/runtime_management/participants/${participantId}`;
+    return this._http.patch<string>(url, { microphoneEnabled });
+  }
+
+  setParticipantVideoEnabled(
+    requestId: string,
+    participantId: string,
+    videoEnabled: boolean
+  ): Observable<string> {
+    const url = `${this.endpointURL}/${requestId}/runtime_management/participants/${participantId}`;
+    return this._http.patch<string>(url, { videoEnabled });
+  }
+
+  setParticipantMicrophoneLevel(
+    requestId: string,
+    participantId: string,
+    microphoneLevel: number
+  ): Observable<string> {
+    if (microphoneLevel < 0 || microphoneLevel > 100) {
+      throw new Error('Microphone level must be a number between 0 and 100');
+    }
+
+    const url = `${this.endpointURL}/${requestId}/runtime_management/participants/${participantId}`;
+    return this._http.patch<string>(url, { microphoneLevel });
+  }
+
+  disconnectUser(requestId: string, participantId: string): Observable<string> {
+    const url = `${this.endpointURL}/${requestId}/runtime_management/participants/${participantId}/disconnect`;
+    return this._http.post<string>(url, {});
+  }
+
+  fetchRecordings(
+    pageSize: number,
+    pageIndex: number,
+    sortedColumn: string,
+    sortDirection: SortDirection,
+    filter: HttpParams,
+    requestId: string
+  ): Observable<ApiResponse<Recording>> {
+    const url = `${this.endpointURL}/${requestId}/recordings`;
+    return this.fetchTableItems<Recording>(
+      pageSize,
+      pageIndex,
+      sortedColumn,
+      sortDirection,
+      filter,
+      url
+    );
+  }
+
+  setRecording(requestId: string, record: boolean): Observable<void> {
+    const url = `${
+      this.endpointURL
+    }/${requestId}/runtime_management/recording/${record ? 'start' : 'stop'}`;
+    return this._http.post<void>(url, {});
   }
 }

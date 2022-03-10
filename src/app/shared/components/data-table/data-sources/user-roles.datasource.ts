@@ -6,8 +6,6 @@ import { ReservationRequestService } from 'src/app/core/http/reservation-request
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { toTitleCase } from 'src/app/utils/toTitleCase';
 import { DeleteButton } from '../buttons/delete-button';
-import { TableButton } from '../buttons/table-button';
-import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
 interface UserRolesTableData {
@@ -19,9 +17,6 @@ interface UserRolesTableData {
 }
 
 export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData> {
-  displayedColumns: TableColumn[];
-  buttons: TableButton<UserRolesTableData>[];
-
   constructor(
     public requestId: string,
     public resReqService: ReservationRequestService,

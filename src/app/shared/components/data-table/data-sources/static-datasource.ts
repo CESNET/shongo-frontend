@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
-import { HasID } from 'src/app/models/interfaces/has-id.interface';
+import { HasID } from 'src/app/shared/models/interfaces/has-id.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
