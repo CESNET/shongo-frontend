@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IdentityClaims } from '../../shared/models/interfaces/identity-claims.interface';
-import { UserService } from '../http/user/user.service';
-import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionEndedDialogComponent } from 'src/app/shared/components/session-ended-dialog/session-ended-dialog.component';
 
@@ -12,15 +10,9 @@ import { SessionEndedDialogComponent } from 'src/app/shared/components/session-e
 })
 export class AuthenticationService {
   public isAuthenticated$: Observable<boolean>;
-
   private _isAuthenticated$ = new BehaviorSubject<boolean>(false);
-  private _userSettings?: UserSettings;
 
-  constructor(
-    private _oauthService: OAuthService,
-    private _userService: UserService,
-    private _dialog: MatDialog
-  ) {
+  constructor(private _oauthService: OAuthService, private _dialog: MatDialog) {
     this.isAuthenticated$ = this._isAuthenticated$.asObservable();
 
     this._observeStorage();
@@ -28,10 +20,6 @@ export class AuthenticationService {
 
     // Initialize silent refresh
     this._oauthService.setupAutomaticSilentRefresh();
-
-    if (this.hasValidAccessToken() && !this.userSettings) {
-      this._fetchUserSettings();
-    }
   }
 
   displayLoginDialog(): void {
@@ -69,18 +57,6 @@ export class AuthenticationService {
   get identityClaims(): IdentityClaims | null {
     return this._oauthService.getIdentityClaims() as IdentityClaims;
   }
-  get userSettings(): UserSettings | undefined {
-    return this._userSettings;
-  }
-
-  /**
-   * Fetches user settings from the backend (user permissions, timezone & locale settings).
-   */
-  private _fetchUserSettings(): void {
-    this._userService
-      .fetchSettings()
-      .subscribe((settings) => (this._userSettings = settings));
-  }
 
   private _observeAuthEvents(): void {
     this._oauthService.events.subscribe((e) => {
@@ -90,9 +66,6 @@ export class AuthenticationService {
         case 'session_error':
         case 'session_terminated':
           this.displayLoginDialog();
-          break;
-        case 'token_received':
-          this._fetchUserSettings();
           break;
         default:
           break;

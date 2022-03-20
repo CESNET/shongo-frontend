@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsAdminGuard } from './core/guards/is-admin.guard';
+import { IsAuthGuard } from './core/guards/is-auth.guard';
+import { UnauthorizedPageComponent } from './core/unauthorized-page/unauthorized-page.component';
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
 
 const routes: Routes = [
@@ -13,6 +16,7 @@ const routes: Routes = [
       import('./modules/reservation-request/reservation-request.module').then(
         (m) => m.ReservationRequestModule
       ),
+    canLoad: [IsAuthGuard],
   },
   {
     path: 'help',
@@ -25,6 +29,7 @@ const routes: Routes = [
       import('./modules/resource-management/resource-management.module').then(
         (m) => m.ResourceManagementModule
       ),
+    canLoad: [IsAuthGuard, IsAdminGuard],
   },
   {
     path: 'reserve',
@@ -32,11 +37,17 @@ const routes: Routes = [
       import('./modules/reservation/reservation.module').then(
         (m) => m.ReservationModule
       ),
+    canLoad: [IsAuthGuard],
   },
   {
     path: 'user',
     loadChildren: () =>
       import('./modules/user/user.module').then((m) => m.UserModule),
+    canLoad: [IsAuthGuard],
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedPageComponent,
   },
   {
     path: '**',

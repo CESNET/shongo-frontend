@@ -14,10 +14,10 @@ export abstract class ApiService {
     endpoint: Endpoint,
     version: string
   ) {
-    this.endpointURL = this.buildEndpointURL(endpoint, version);
+    this.endpointURL = ApiService.buildEndpointURL(endpoint, version);
   }
 
-  buildEndpointURL(endpoint: string, version: string) {
+  static buildEndpointURL(endpoint: string, version: string) {
     return `http://${environment.shongoRESTApiHost}:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
   }
 

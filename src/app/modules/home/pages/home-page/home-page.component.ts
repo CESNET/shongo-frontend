@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RoomService } from 'src/app/core/http/room/room.service';
 import { ParticipationInRoomsDataSource } from 'src/app/shared/components/data-table/data-sources/participation-in-rooms.datasource';
@@ -22,7 +23,8 @@ export class HomePageComponent {
     private _resReqService: ReservationRequestService,
     private _roomService: RoomService,
     private _datePipe: DatePipe,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    public auth: AuthenticationService
   ) {
     this.yourRoomsDataSource = new YourRoomsDataSource(
       this._resReqService,

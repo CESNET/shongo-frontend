@@ -11,8 +11,17 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  switchMapTo,
+  takeUntil,
+} from 'rxjs/operators';
+import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { SettingsService } from '../http/settings/settings.service';
 import {
   accountItems,
   locales,
@@ -43,7 +52,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject<void>();
 
-  constructor(public auth: AuthenticationService) {}
+  constructor(
+    public auth: AuthenticationService,
+    public settings: SettingsService
+  ) {}
 
   ngOnInit(): void {
     this.accountItems[1].func = () => this.auth.logout();
@@ -62,21 +74,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isDropdownClosed = !this.isDropdownClosed;
   }
 
-  filterAuthorizedItems(
-    items: MenuItem[] | undefined,
-    isAuthenticated: boolean
-  ): MenuItem[] {
-    if (!items) {
-      return [];
+  getAuthGuard(item: MenuItem): Observable<boolean> {
+    switch (item.itemAuth) {
+      case ItemAuthorization.LOGGED_IN:
+        return this.auth.isAuthenticated$.pipe(takeUntil(this._destroy$));
+      case ItemAuthorization.LOGGED_OUT:
+        return this.auth.isAuthenticated$.pipe(
+          map((value) => !value),
+          takeUntil(this._destroy$)
+        );
+      case ItemAuthorization.ADMIN:
+        return this.settings.userSettings$.pipe(
+          map((userSettings) => {
+            if (userSettings && userSettings.permissions) {
+              return userSettings.permissions.includes(
+                Permission.ADMINISTRATOR
+              );
+            } else {
+              return false;
+            }
+          }),
+          takeUntil(this._destroy$)
+        );
+      default:
+        return of(true);
     }
-    return items.filter((item) => {
-      switch (item.itemAuth) {
-        case ItemAuthorization.LOGGED_IN:
-          return isAuthenticated;
-        case ItemAuthorization.LOGGED_OUT:
-          return !isAuthenticated;
-      }
-      return true;
-    });
   }
 }

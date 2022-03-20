@@ -14,7 +14,7 @@ export class UserService extends ApiService {
   }
 
   fetchSettings(): Observable<UserSettings> {
-    const url = this.buildEndpointURL(Endpoint.SETTINGS, 'v1');
+    const url = ApiService.buildEndpointURL(Endpoint.SETTINGS, 'v1');
     return this._http.get<UserSettings>(url);
   }
 }

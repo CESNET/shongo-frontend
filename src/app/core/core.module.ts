@@ -27,13 +27,14 @@ import { authConfig as devAuthConfig } from './authentication/auth-dev.config';
 import { authModuleConfig } from './authentication/auth-module.config';
 import { authAppInitializerFactory } from './authentication/auth-app-initializer.factory';
 import { AuthenticationService } from './authentication/authentication.service';
+import { UnauthorizedPageComponent } from './unauthorized-page/unauthorized-page.component';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent],
+  declarations: [HeaderComponent, FooterComponent, UnauthorizedPageComponent],
   exports: [HeaderComponent, FooterComponent],
   imports: [
     CommonModule,

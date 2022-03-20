@@ -1,16 +1,18 @@
+main {
+  width: 50%;
+  max-width: 30rem;
+  margin-top: 3rem;
+}
 form {
   display: flex;
   flex-direction: column;
-  width: 50%;
-  max-width: 500px;
-  margin-top: 40px;
 }
 .row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: 1.34375em;
-  gap: 15px;
+  gap: 1em;
 
   &.space-between {
     justify-content: space-between;
@@ -28,7 +30,7 @@ form {
     width: 100%;
   }
   mat-checkbox {
-    margin: 0 15px 1.34375em 0;
+    margin: 0 1em 1.34375em 0;
   }
 }
 

@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [UserSettingsPageComponent],
@@ -18,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatSelectModule,
     NgxMatSelectSearchModule,
+    NgxSkeletonLoaderModule,
     MatCheckboxModule,
     ReactiveFormsModule,
     MatInputModule,

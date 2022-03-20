@@ -15,12 +15,7 @@
         <!-- Big layout menu -->
         <ul>
           <li
-            *ngFor="
-              let item of filterAuthorizedItems(
-                menuItems,
-                authData.isAuthenticated!
-              )
-            "
+            *ngFor="let item of menuItems"
             [fxHide.lt-lg]="item.hideOnTablet"
             fxHide.lt-md
           >
@@ -31,24 +26,19 @@
             </ng-container>
 
             <ng-template #itemWithSubMenu>
-              <button mat-button [matMenuTriggerFor]="popupSubMenu">
-                {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
-              </button>
+              <ng-container *ngIf="getAuthGuard(item) | async">
+                <button mat-button [matMenuTriggerFor]="popupSubMenu">
+                  {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
+                </button>
 
-              <mat-menu #popupSubMenu="matMenu">
-                <ng-container
-                  *ngFor="
-                    let subItem of filterAuthorizedItems(
-                      item.subItems,
-                      authData.isAuthenticated!
-                    )
-                  "
-                >
-                  <a mat-menu-item [routerLink]="subItem.route">{{
-                    subItem.label
-                  }}</a>
-                </ng-container>
-              </mat-menu>
+                <mat-menu #popupSubMenu="matMenu">
+                  <ng-container *ngFor="let subItem of item.subItems">
+                    <a mat-menu-item [routerLink]="subItem.route">{{
+                      subItem.label
+                    }}</a>
+                  </ng-container>
+                </mat-menu>
+              </ng-container>
             </ng-template>
           </li>
         </ul>
@@ -138,14 +128,14 @@
 
   <!-- Small layout menu -->
   <ul id="dropdown-menu" [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
-    <ng-container
-      *ngFor="
-        let item of filterAuthorizedItems(menuItems, authData.isAuthenticated!)
-      "
-    >
+    <ng-container *ngFor="let item of menuItems">
       <li fxHide fxShow.lt-md [fxShow.lt-lg]="item.hideOnTablet">
         <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
-          <div matRipple [matRippleCentered]="true">
+          <div
+            matRipple
+            [matRippleCentered]="true"
+            *ngIf="getAuthGuard(item) | async"
+          >
             <ng-container
               *ngTemplateOutlet="linkButton; context: { item: item }"
             ></ng-container>
@@ -157,34 +147,34 @@
             mat-ripple
             (click)="item.subMenuOpen = !item.subMenuOpen"
             class="mat-body"
+            *ngIf="getAuthGuard(item) | async"
           >
             {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
           </button>
         </ng-template>
       </li>
-      <li
-        class="subItem"
-        [@dropdown]="item.subMenuOpen ? 'open' : 'closed'"
-        *ngFor="
-          let subItem of filterAuthorizedItems(
-            item.subItems,
-            authData.isAuthenticated!
-          )
-        "
-      >
-        <ng-container
-          *ngTemplateOutlet="linkButton; context: { item: subItem }"
-        ></ng-container>
-      </li>
+      <ng-container *ngIf="getAuthGuard(item) | async">
+        <li
+          class="subItem"
+          [@dropdown]="item.subMenuOpen ? 'open' : 'closed'"
+          *ngFor="let subItem of item.subItems"
+        >
+          <ng-container
+            *ngTemplateOutlet="linkButton; context: { item: subItem }"
+          ></ng-container>
+        </li>
+      </ng-container>
     </ng-container>
   </ul>
 </header>
 
 <ng-template #linkButton let-item="item">
-  <a mat-button [href]="item.route" *ngIf="item.externalRoute">{{
-    item.label
-  }}</a>
-  <a mat-button [routerLink]="item.route" *ngIf="!item.externalRoute">{{
-    item.label
-  }}</a>
+  <ng-container *ngIf="getAuthGuard(item) | async">
+    <a mat-button [href]="item.route" *ngIf="item.externalRoute">{{
+      item.label
+    }}</a>
+    <a mat-button [routerLink]="item.route" *ngIf="!item.externalRoute">{{
+      item.label
+    }}</a>
+  </ng-container>
 </ng-template>

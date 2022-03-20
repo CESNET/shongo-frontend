@@ -20,7 +20,7 @@
   </p>
 </header>
 
-<main>
+<main *ngIf="auth.isAuthenticated$ | async">
   <div>
     <mat-tab-group [animationDuration]="0">
       <!-- Reservation requests -->

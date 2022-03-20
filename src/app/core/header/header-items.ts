@@ -17,45 +17,46 @@ export interface Locale {
 }
 
 export enum ItemAuthorization {
+  ADMIN,
   LOGGED_IN,
   LOGGED_OUT,
-  BOTH,
+  NONE,
 }
 
 export const menuItems: MenuItem[] = [
   {
     label: $localize`:navbar link|Link to help page:Help`,
     route: '/help',
-    itemAuth: ItemAuthorization.BOTH,
+    itemAuth: ItemAuthorization.NONE,
     hideOnTablet: true,
   },
   {
     label: $localize`:navbar link|Link to documentation page:Documentation`,
     route: 'https://vidcon.cesnet.cz/?back-url=/',
     externalRoute: true,
-    itemAuth: ItemAuthorization.BOTH,
+    itemAuth: ItemAuthorization.NONE,
     hideOnTablet: true,
   },
   {
     label: $localize`:navbar link|Link to report page:Report a problem`,
     route: '/help/report',
-    itemAuth: ItemAuthorization.BOTH,
+    itemAuth: ItemAuthorization.NONE,
     hideOnTablet: true,
   },
   {
     label: $localize`:navbar link|Link to resource management:Resource management`,
     route: '/',
-    itemAuth: ItemAuthorization.LOGGED_IN,
+    itemAuth: ItemAuthorization.ADMIN,
     subItems: [
       {
         label: $localize`:navbar link|Sublink in resource management:Resource capacity utilization`,
         route: '/resource-management/capacity-utilization',
-        itemAuth: ItemAuthorization.LOGGED_IN,
+        itemAuth: ItemAuthorization.ADMIN,
       },
       {
         label: $localize`:navbar link|Sublink in resource management:Resource reservations`,
         route: '/resource-management/resource-reservations',
-        itemAuth: ItemAuthorization.LOGGED_IN,
+        itemAuth: ItemAuthorization.ADMIN,
       },
     ],
   },
