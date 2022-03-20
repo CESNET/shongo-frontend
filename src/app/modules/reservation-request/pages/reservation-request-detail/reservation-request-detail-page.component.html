@@ -68,6 +68,7 @@
           *ngIf="
             reservationRequest.type === ReservationType.VIRTUAL_ROOM ||
             (reservationRequest.type === ReservationType.ROOM_CAPACITY &&
+              reservationRequest.roomCapacityData?.periodicity &&
               reservationRequest.roomCapacityData?.periodicity?.type !== 'NONE')
           "
         >

@@ -10,10 +10,8 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   OnInit,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication/authentication.service';
 import {
   accountItems,
@@ -48,20 +46,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(public auth: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.accountItems[1].func = () => this.logOut();
+    this.accountItems[1].func = () => this.auth.logout();
   }
 
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
-  }
-
-  logIn(): void {
-    this.auth.login();
-  }
-
-  logOut(): void {
-    this.auth.logout();
   }
 
   getUsername(): string {

@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RuntimeManagementDataSource } from 'src/app/shared/components/data-table/data-sources/runtime-management.datasource';
 
@@ -21,15 +20,10 @@ export class RuntimeManagementTabComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._route.params
-      .pipe(first())
-      .subscribe(
-        (params) =>
-          (this.runtimeManagementDataSource = new RuntimeManagementDataSource(
-            this._resReqService,
-            this._dialog,
-            params.id
-          ))
-      );
+    this.runtimeManagementDataSource = new RuntimeManagementDataSource(
+      this._resReqService,
+      this._dialog,
+      this._route.snapshot.params.id
+    );
   }
 }

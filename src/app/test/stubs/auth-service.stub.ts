@@ -4,7 +4,7 @@ import {
   mockIdentityClaims,
   mockIdToken,
   mockRefreshToken,
-} from 'src/app/core/authentication/mock-auth-data';
+} from 'src/app/test/mocks/auth-data.mock';
 
 export const authServiceStub = {
   isAuthenticatedSubject$: of(true),

@@ -1,0 +1,5 @@
+export enum Permission {
+  ADMINISTRATOR = 'ADMINISTRATOR',
+  OPERATOR = 'OPERATOR',
+  RESERVATION = 'RESERVATION',
+}

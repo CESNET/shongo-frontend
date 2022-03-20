@@ -5,4 +5,5 @@ export enum Endpoint {
   RESOURCE = 'resources',
   USER = 'users',
   GROUP = 'groups',
+  SETTINGS = 'settings',
 }

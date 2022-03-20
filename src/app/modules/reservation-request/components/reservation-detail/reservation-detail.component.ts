@@ -97,12 +97,14 @@ export class ReservationDetailComponent implements OnInit {
 
   isPeriodicityShown(): boolean {
     if (this.reservationRequest.type === ReservationType.PHYSICAL_RESOURCE) {
-      return true;
+      return (
+        this.reservationRequest.physicalResourceData?.periodicity !== undefined
+      );
     } else if (this.reservationRequest.type === ReservationType.ROOM_CAPACITY) {
       return (
-        !this.reservationRequest.parentRequestId &&
         this.reservationRequest.virtualRoomData?.technology !==
-          Technology.FREEPBX
+          Technology.FREEPBX &&
+        this.reservationRequest.roomCapacityData?.periodicity !== undefined
       );
     } else {
       return false;

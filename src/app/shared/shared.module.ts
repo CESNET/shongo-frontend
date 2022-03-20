@@ -31,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { UserSearchDirective } from './directives/user-search/user-search.directive';
 import { GroupSearchDirective } from './directives/group-search/group-search.directive';
+import { SessionEndedDialogComponent } from './components/session-ended-dialog/session-ended-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { GroupSearchDirective } from './directives/group-search/group-search.dir
     AlertComponent,
     UserSearchDirective,
     GroupSearchDirective,
+    SessionEndedDialogComponent,
   ],
   imports: [
     CommonModule,

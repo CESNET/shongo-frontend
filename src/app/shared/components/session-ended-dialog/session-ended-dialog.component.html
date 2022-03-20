@@ -1,0 +1,17 @@
+<div class="session-ended">
+  <header mat-dialog-title>
+    <h1>You have been logged out</h1>
+  </header>
+
+  <mat-dialog-content>
+    Your session ended or you have been logged out from another place, you can
+    log in again.
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="session-ended__actions">
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-flat-button color="primary" (click)="auth.login()">
+      Log in
+    </button>
+  </mat-dialog-actions>
+</div>

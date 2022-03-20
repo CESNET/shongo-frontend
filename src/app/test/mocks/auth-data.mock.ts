@@ -1,4 +1,4 @@
-import { IdentityClaims } from './identity-claims';
+import { IdentityClaims } from 'src/app/shared/models/interfaces/identity-claims.interface';
 
 export const mockAccessToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0MnoxOG5nenhhd2c4N3djeWx2emo0N2M2a2NqbjhpbTl3cnVkMzRqQGVpbmZyYS5jZXNuZXQuY3oiLCJhenAiOiI3OHF3MTU0Yy0yajBnLTEyNTQtODc5Ny12Z2c0N3d3MWI0bDIiLCJzY29wZSI6InZvcGVyc29uX2V4dGVybmFsX2lkIG9wZW5pZCBvZmZsaW5lX2FjY2VzcyBvcmdhbml6YXRpb24gcHJvZmlsZSBpc0Nlc25ldEVsaWdpYmxlTGFzdFNlZW4gZWR1cGVyc29uX2VudGl0bGVtZW50IGVtYWlsIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5jZXNuZXQuY3ovb2lkYy8iLCJleHAiOjE2NDQ1MTAzOTIsImlhdCI6MTY0NDUwNjc5MiwianRpIjoiNzg5ZmcxMDItOHQxMS00NXIyLWgwMjAtMTFldzE1OTdxMzMzIn0.ChMFavjOoO151snKQv7TSigDNhuI_Wa0LiwMTIPdK6M';
@@ -10,15 +10,15 @@ export const mockIdentityClaims: IdentityClaims = {
   sub: 't2z18ngzxawg87wcylvzj47c6kcjn8im9wrud34j@einfra.cesnet.cz',
   kid: 'rsa1',
   iss: 'https://login.cesnet.cz/oidc/',
-  given_name: 'Michal',
+  given_name: 'John',
   nonce: '2J8EfMuFLvdNxNBA9OaVPGttB0X4M5IsLEbLvDaX7dqr1L4NiWobBvugHLCT',
   aud: '78re658g-8b3j-0147-9485-bgh22hj4e3d0',
   acr: 'urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport',
   auth_time: 1644506791,
-  name: 'Michal Drobňák',
+  name: 'John Doe',
   exp: 1644507392,
   iat: 1644506792,
-  family_name: 'Drobňák',
+  family_name: 'Doe',
   jti: '8gt5j235-1h81-5217-yuyu-d4h8gnq721g9',
   email: '000000@mail.muni.cz',
 };

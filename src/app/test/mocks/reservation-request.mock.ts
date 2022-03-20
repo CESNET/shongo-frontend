@@ -1,8 +1,11 @@
-import { ReservationRequestState } from 'src/app/models/enums/reservation-request-state.enum';
-import { ReservationType } from 'src/app/models/enums/reservation-type.enum';
-import { Days } from 'src/app/shared/models/enums/days.enum';
-import { PeriodicityType } from 'src/app/shared/models/enums/periodicity-type.enum';
+import { AliasType } from 'src/app/shared/models/enums/alias-type.enum';
+import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
+import { ExecutableState } from 'src/app/shared/models/enums/executable-state.enum';
+import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationRequestType } from 'src/app/shared/models/enums/reservation-request-type.enum';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
+import { RoomState } from 'src/app/shared/models/enums/room-state.enum';
+import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 
 export const mockReservationRequest: ReservationRequestDetail = {
@@ -10,8 +13,8 @@ export const mockReservationRequest: ReservationRequestDetail = {
   description: 'A virtual room reservation.',
   createdAt: '2021-11-03T18:38:09.546Z',
   state: ReservationRequestState.FAILED,
-  allocationState: 'FAILED',
-  executableState: 'FAILED',
+  allocationState: AllocationState.NOT_ALLOCATED,
+  executableState: ExecutableState.NOT_STARTED,
   isWritable: true,
   isProvidable: true,
   notifyParticipants: true,
@@ -21,32 +24,26 @@ export const mockReservationRequest: ReservationRequestDetail = {
     start: '2021-11-04T15:30:00.000Z',
     end: '2021-11-04T16:30:00.000Z',
   },
-  periodicity: {
-    type: PeriodicityType.WEEKLY,
-    periodicityEnd: '2021-11-04T15:30:00.000Z',
-    periodicDaysInWeek: [Days.MONDAY, Days.TUESDAY],
-    periodicityCycle: 1,
-    excludeDates: ['2021-11-04'],
-  },
   futureSlotCount: 5,
   isDeprecated: false,
   type: ReservationType.VIRTUAL_ROOM,
   virtualRoomData: {
-    technology: 'PEXIP',
+    state: RoomState.FAILED,
+    technology: Technology.PEXIP,
     roomName: 'Some room',
-    roomParticipantCount: 5,
-    roomHasRecordingService: true,
-    roomHasRecordings: false,
+    roomHasRecordings: true,
   },
   authorizedData: {
     pin: '12345',
     adminPin: '56789',
     guestPin: '478',
     allowGuests: true,
-    aliases: {
-      'H323/SIP/PhoneNumber': '(00420)950087050',
-      'H.323 IP': '78.128.216.82 050#',
-    },
+    aliases: [
+      {
+        type: AliasType.ADOBE_CONNECT_URI,
+        value: 'https://adobe.connect.com/asd4559a498w49df5',
+      },
+    ],
   },
   history: [
     {

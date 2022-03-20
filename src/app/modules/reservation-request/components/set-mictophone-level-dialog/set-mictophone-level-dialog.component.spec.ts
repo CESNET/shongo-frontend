@@ -1,4 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MatDialog,
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { SetMictophoneLevelDialogComponent } from './set-mictophone-level-dialog.component';
 
@@ -9,6 +16,11 @@ describe('SetMictophoneLevelDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SetMictophoneLevelDialogComponent],
+      imports: [MatDialogModule, MatButtonModule, MatSliderModule],
+      providers: [
+        { provide: MatDialog, useValue: { close: () => {} } },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
     }).compileComponents();
   });
 
