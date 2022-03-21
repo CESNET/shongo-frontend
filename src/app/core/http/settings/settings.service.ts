@@ -9,6 +9,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
+import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { ApiService } from '../api.service';
@@ -43,6 +44,13 @@ export class SettingsService {
     return this._userSettings$.value;
   }
 
+  get isAdmin(): boolean {
+    return (
+      this.userSettings?.permissions?.includes(Permission.ADMINISTRATOR) ??
+      false
+    );
+  }
+
   updateSettings(settings: UserSettings): void {
     this._userSettingsLoading$.next(true);
     const url = ApiService.buildEndpointURL(Endpoint.SETTINGS, 'v1');
@@ -67,8 +75,6 @@ export class SettingsService {
    * Fetches user settings from the backend (user permissions, timezone & locale settings).
    */
   private _fetchUserSettings(): Observable<UserSettings> {
-    console.log('fetching');
-
     this._userSettingsLoading$.next(true);
     const url = ApiService.buildEndpointURL(Endpoint.SETTINGS, 'v1');
 

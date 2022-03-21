@@ -38,12 +38,11 @@
     <div class="selectable-form-field">
       <mat-checkbox
         color="primary"
-        (change)="currentTimeZoneSelect.disabled = !$event.checked"
         [formControl]="useCurrentTimeZoneCtrl"
       ></mat-checkbox>
       <mat-form-field appearance="outline">
         <mat-label>Current time zone</mat-label>
-        <mat-select #currentTimeZoneSelect formControlName="currentTimeZone">
+        <mat-select formControlName="currentTimeZone">
           <mat-option>
             <ngx-mat-select-search
               [formControl]="currentTimeZoneFilterCtrl"
@@ -73,6 +72,13 @@
         >Edit perun settings</a
       >
     </div>
+
+    <mat-checkbox
+      *ngIf="settings.isAdmin"
+      color="primary"
+      [formControl]="administrationModeCtrl"
+      >Administration mode</mat-checkbox
+    >
 
     <div class="row flex-end" id="submit-row">
       <a mat-button type="button" routerLink="/">Cancel</a>

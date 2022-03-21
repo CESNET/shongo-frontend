@@ -4,11 +4,12 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { IANA_TIMEZONES } from 'src/app/shared/models/data/timezones';
+import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 
@@ -28,16 +29,20 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
   filteredHomeTimezones = this.timezoneOptions;
   filteredCurrentTimezones = this.timezoneOptions;
 
-  settingsForm = new FormGroup({
-    locale: new FormControl(''),
-    homeTimeZone: new FormControl(''),
-    currentTimeZone: new FormControl({ value: '', disabled: true }),
-  });
-
   useCurrentTimeZoneCtrl = new FormControl(false);
   homeTimeZoneFilterCtrl = new FormControl('');
   currentTimeZoneFilterCtrl = new FormControl('');
   usePerunSettingsCtrl = new FormControl(false);
+  administrationModeCtrl = new FormControl(false);
+
+  settingsForm = new FormGroup({
+    locale: new FormControl(''),
+    homeTimeZone: new FormControl(''),
+    currentTimeZone: new FormControl({
+      value: '',
+      disabled: true,
+    }),
+  });
 
   private _destroy$ = new Subject<void>();
 
@@ -48,6 +53,7 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     this._initTimeZoneFilter(this.currentTimeZoneFilterCtrl);
     this._observeUsePerunSettings();
     this._observeUserSettings();
+    this._observeCurrentTimezone();
   }
 
   ngOnDestroy(): void {
@@ -62,6 +68,17 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
   private _getUserSettings(): UserSettings {
     const userSettings = this.settingsForm.value as UserSettings;
     userSettings.useWebService = this.usePerunSettingsCtrl.value;
+
+    if (this.settings.isAdmin) {
+      userSettings.administrationMode = this.administrationModeCtrl.value;
+    }
+    if (!this.useCurrentTimeZoneCtrl.value) {
+      delete userSettings.currentTimeZone;
+    }
+    if (this.usePerunSettingsCtrl.value) {
+      delete userSettings.homeTimeZone;
+      delete userSettings.locale;
+    }
 
     return userSettings;
   }
@@ -80,35 +97,49 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
             locale: userSettings.locale,
             homeTimeZone: userSettings.homeTimeZone,
             currentTimeZone: userSettings.currentTimeZone,
+            administrationMode: userSettings.administrationMode,
           });
 
-          if (userSettings.currentTimeZone != null) {
-            this.useCurrentTimeZoneCtrl.setValue(true);
-            this.settingsForm.get('currentTimeZone')!.enable();
-          } else {
-            this.useCurrentTimeZoneCtrl.setValue(false);
-            this.settingsForm.get('currentTimeZone')!.disable();
-          }
+          this.useCurrentTimeZoneCtrl.setValue(
+            userSettings.currentTimeZone != null,
+            { emitEvent: false }
+          );
+          this.usePerunSettingsCtrl.setValue(userSettings.useWebService, {
+            emitEvent: false,
+          });
 
-          this.usePerunSettingsCtrl.setValue(userSettings.useWebService);
+          const usePerunSettings = userSettings.useWebService ?? false;
+
+          this._handleCurrentTimezoneEnabled(
+            userSettings.currentTimeZone != null
+          );
+          this._handlePerunEnabled(!usePerunSettings);
         }
       });
+  }
+
+  private _observeCurrentTimezone(): void {
+    this.useCurrentTimeZoneCtrl.valueChanges
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((isChecked) => this._handleCurrentTimezoneEnabled(isChecked));
   }
 
   private _observeUsePerunSettings(): void {
     this.usePerunSettingsCtrl.valueChanges
       .pipe(takeUntil(this._destroy$))
-      .subscribe((isChecked) => this._setSettingsFormEnabled(!isChecked));
+      .subscribe((isChecked) => this._handlePerunEnabled(!isChecked));
   }
 
-  private _setSettingsFormEnabled(isEnabled: boolean): void {
-    if (isEnabled) {
-      this.settingsForm.enable();
-      this.useCurrentTimeZoneCtrl.enable();
-    } else {
-      this.settingsForm.disable();
-      this.useCurrentTimeZoneCtrl.disable();
-    }
+  private _handlePerunEnabled(isEnabled: boolean): void {
+    this._setControlEnabled(this.settingsForm.get('locale')!, isEnabled);
+    this._setControlEnabled(this.settingsForm.get('homeTimeZone')!, isEnabled);
+  }
+
+  private _handleCurrentTimezoneEnabled(isEnabled: boolean) {
+    this._setControlEnabled(
+      this.settingsForm.get('currentTimeZone')!,
+      isEnabled
+    );
   }
 
   private _filterTimeZones(filter: string): void {
@@ -123,5 +154,13 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
       .subscribe((filter) => {
         this._filterTimeZones(filter);
       });
+  }
+
+  private _setControlEnabled(control: AbstractControl, enabled: boolean): void {
+    if (enabled) {
+      control.enable({ emitEvent: false });
+    } else {
+      control.disable({ emitEvent: false });
+    }
   }
 }
