@@ -16,7 +16,6 @@ import {
 import resReqPropsMap from 'src/app/shared/components/data-table/models/maps/reservation-request-state-props.map';
 import { StateProps } from 'src/app/shared/components/data-table/column-components/state-chip-column/state-chip-column.component';
 import { ModificationHistoryDataSource } from 'src/app/shared/components/data-table/data-sources/modification-history.datasource';
-import { DatePipe } from '@angular/common';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { first } from 'rxjs/operators';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
@@ -26,6 +25,7 @@ import { AllocationState } from 'src/app/shared/models/enums/allocation-state.en
 import { AliasType } from 'src/app/shared/models/enums/alias-type.enum';
 import { aliasTypeMap } from 'src/app/shared/models/maps/alias-type.map';
 import { technologyMap } from 'src/app/shared/models/maps/technology.map';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -51,7 +51,7 @@ export class ReservationDetailComponent implements OnInit {
   currentRequest!: ReservationRequestDetail;
 
   constructor(
-    private _datePipe: DatePipe,
+    private _datePipe: MomentDatePipe,
     private _resReqService: ReservationRequestService
   ) {}
 

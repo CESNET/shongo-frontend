@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment-timezone';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
   filter,
   switchMapTo,
-  tap,
 } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { Permission } from 'src/app/shared/models/enums/permission.enum';
@@ -28,16 +28,8 @@ export class SettingsService {
     this.userSettingsLoading$ = this._userSettingsLoading$.asObservable();
     this.userSettings$ = this._userSettings$.asObservable();
 
-    this._auth.isAuthenticated$
-      .pipe(
-        distinctUntilChanged(),
-        filter((isAuth) => isAuth),
-        switchMapTo(this._fetchUserSettings())
-      )
-      .subscribe((userSettings) => {
-        this._userSettings$.next(userSettings);
-        this._userSettingsLoading$.next(false);
-      });
+    this._observeIsAuthenticated();
+    this._observeSettings();
   }
 
   get userSettings(): UserSettings | null {
@@ -85,5 +77,44 @@ export class SettingsService {
         return throwError(() => new Error('Failed to fetch user settings.'));
       })
     );
+  }
+
+  private _observeIsAuthenticated(): void {
+    this._auth.isAuthenticated$
+      .pipe(
+        distinctUntilChanged(),
+        filter((isAuth) => isAuth),
+        switchMapTo(this._fetchUserSettings())
+      )
+      .subscribe((userSettings) => {
+        this._userSettings$.next(userSettings);
+        this._userSettingsLoading$.next(false);
+      });
+  }
+
+  private _observeSettings(): void {
+    this.userSettings$
+      .pipe(filter((settings) => settings !== null))
+      .subscribe((settings) => this._handleSettingsChange(settings!));
+  }
+
+  private _handleSettingsChange(settings: UserSettings): void {
+    if (settings.currentTimeZone) {
+      this._handleTimezoneChange(settings.currentTimeZone);
+    } else if (settings.homeTimeZone) {
+      this._handleTimezoneChange(settings.homeTimeZone);
+    }
+
+    if (settings.locale) {
+      this._handleLocaleChange(settings.locale);
+    }
+  }
+
+  private _handleTimezoneChange(timezone: string): void {
+    moment.tz.setDefault(timezone);
+  }
+
+  private _handleLocaleChange(locale: 'cs' | 'en'): void {
+    moment.locale(locale);
   }
 }

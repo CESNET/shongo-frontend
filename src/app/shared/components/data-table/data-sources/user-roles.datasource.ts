@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { toTitleCase } from 'src/app/utils/toTitleCase';
 import { DeleteButton } from '../buttons/delete-button';
 import { DataTableDataSource } from './data-table-datasource';
@@ -20,7 +20,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
   constructor(
     public requestId: string,
     public resReqService: ReservationRequestService,
-    public datePipe: DatePipe,
+    public datePipe: MomentDatePipe,
     public dialog: MatDialog
   ) {
     super();

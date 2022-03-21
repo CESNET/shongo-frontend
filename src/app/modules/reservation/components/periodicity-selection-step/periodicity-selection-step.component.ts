@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -15,7 +14,9 @@ import {
 } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatRadioChange } from '@angular/material/radio';
+import * as moment from 'moment';
 import { TimeSlot } from 'src/app/shared/models/rest-api/time-slot.interface';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({
   selector: 'app-periodicity-selection-step',
@@ -60,7 +61,7 @@ export class PeriodicitySelectionStepComponent implements OnInit {
 
   excludedDays: Date[] = [];
 
-  constructor(private _datePipe: DatePipe) {}
+  constructor(private _datePipe: MomentDatePipe) {}
 
   ngOnInit(): void {
     this.periodicityForm
@@ -174,11 +175,13 @@ export class PeriodicitySelectionStepComponent implements OnInit {
     const res =
       `${periodicityString} until ${this._datePipe.transform(
         repeatUntil,
-        'mediumDate'
+        'LLL'
       )}` +
       (this.excludedDays.length !== 0
         ? ` except for ${this.excludedDays
-            .map((date) => this._datePipe.transform(date, 'mediumDate'))
+            .map((date) =>
+              this._datePipe.transform(moment(date).format(), 'LLL')
+            )
             .join(', ')}.`
         : '.');
 

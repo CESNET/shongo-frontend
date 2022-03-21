@@ -3,19 +3,19 @@ import {
   ResourceReservation,
   ResourceReservationTableData,
 } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
-import { DatePipe } from '@angular/common';
 import { ReservationOwnerColumnComponent } from 'src/app/modules/resource-management/components/reservation-owner-column/reservation-owner-column.component';
 import { SortDirection } from '@angular/material/sort';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 export class ReservationsDataSource extends StaticDataSource<
   ResourceReservationTableData,
   ResourceReservation
 > {
-  constructor(data: ResourceReservation[], private _datePipe: DatePipe) {
+  constructor(data: ResourceReservation[], private _datePipe: MomentDatePipe) {
     super(data);
 
     this.displayedColumns = [

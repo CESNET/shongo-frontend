@@ -1,15 +1,10 @@
-import { DatePipe } from '@angular/common';
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { CapacityRequestsDataSource } from 'src/app/shared/components/data-table/data-sources/capacity-requests.datasource';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({
   selector: 'app-capacity-reservations-tab',
@@ -23,7 +18,7 @@ export class CapacityReservationsTabComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _resReqService: ReservationRequestService,
-    private _datePipe: DatePipe,
+    private _datePipe: MomentDatePipe,
     private _dialog: MatDialog
   ) {}
 

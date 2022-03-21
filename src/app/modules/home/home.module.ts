@@ -11,8 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [HomePageComponent, ReservationRequestFilterComponent],
@@ -28,7 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     FlexLayoutModule,
     MatCheckboxModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatInputModule,
   ],
 })

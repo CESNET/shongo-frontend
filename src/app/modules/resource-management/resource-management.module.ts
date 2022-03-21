@@ -14,7 +14,7 @@ import { ResourceManagementRoutingModule } from './resource-management-routing.m
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
@@ -30,7 +30,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDatepickerModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatInputModule,
     MatSlideToggleModule,
   ],

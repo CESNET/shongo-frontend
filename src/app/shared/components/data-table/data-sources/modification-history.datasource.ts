@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { RequestModification } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { toTitleCase } from 'src/app/utils/toTitleCase';
 import { CustomActionButton } from '../buttons/custom-action-button';
@@ -16,7 +16,7 @@ export class ModificationHistoryDataSource extends StaticDataSource<
 > {
   constructor(
     data: RequestModification[],
-    private _datePipe: DatePipe,
+    private _datePipe: MomentDatePipe,
     private _openModification: (id: string) => void,
     private _isOpenDisabledFunc: (row: RequestModification) => boolean
   ) {

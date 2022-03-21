@@ -32,6 +32,8 @@ import { AuthenticationService } from 'src/app/core/authentication/authenticatio
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { HttpParams } from '@angular/common/http';
 import { ReservationRequest } from '../../models/rest-api/reservation-request.interface';
+import { MomentDatePipe } from '../../pipes/moment-date.pipe';
+import * as moment from 'moment';
 
 function floorToNearest(amount: number, precision: number) {
   return Math.floor(amount / precision) * precision;
@@ -231,13 +233,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   getSlotString(event: CalendarEvent): string {
-    const start = event.start.toLocaleTimeString();
-    const end = event.end?.toLocaleTimeString();
-
-    if (end) {
-      return `${start} - ${end}`;
+    if (event.end) {
+      return `${moment(event.start).format('LLL')} - ${moment(event.end).format(
+        'LLL'
+      )}`;
     }
-    return start;
+    return moment(event.start).format('LLL');
   }
 
   private _getInterval(viewDate: Date): Interval {

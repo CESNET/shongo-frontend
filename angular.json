@@ -37,7 +37,8 @@
               "node_modules/angular-calendar/css/angular-calendar.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["moment-timezone"]
           },
           "configurations": {
             "en-GB": {

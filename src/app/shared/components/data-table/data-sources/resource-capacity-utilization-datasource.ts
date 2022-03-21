@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
@@ -7,6 +6,7 @@ import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceUtilizationColumnComponent } from 'src/app/modules/resource-management/components/resource-utilization-column/resource-utilization-column.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { TableButton } from '../buttons/table-button';
 import { TableColumn } from '../models/table-column.interface';
@@ -34,7 +34,7 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
 
   constructor(
     private _resourceService: ResourceService,
-    private _datePipe: DatePipe
+    private _datePipe: MomentDatePipe
   ) {
     super();
 

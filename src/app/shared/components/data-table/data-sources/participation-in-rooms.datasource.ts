@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
@@ -8,8 +7,8 @@ import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
-import { LinkButton } from '../buttons/link-button';
 import { RoomStateColumnComponent } from '../column-components/state-chip-column/components/room-state-column.component';
 import { DataTableDataSource } from './data-table-datasource';
 
@@ -24,7 +23,10 @@ interface ParticipationInRoomsTableData {
 }
 
 export class ParticipationInRoomsDataSource extends DataTableDataSource<ParticipationInRoomsTableData> {
-  constructor(private _roomService: RoomService, private _datePipe: DatePipe) {
+  constructor(
+    private _roomService: RoomService,
+    private _datePipe: MomentDatePipe
+  ) {
     super();
 
     this.displayedColumns = [

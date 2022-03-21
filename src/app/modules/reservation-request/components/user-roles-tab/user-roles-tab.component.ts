@@ -1,10 +1,10 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { UserRolesDataSource } from 'src/app/shared/components/data-table/data-sources/user-roles.datasource';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({
   selector: 'app-user-roles-tab',
@@ -18,7 +18,7 @@ export class UserRolesTabComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _resReqService: ReservationRequestService,
-    private _datePipe: DatePipe,
+    private _datePipe: MomentDatePipe,
     private _dialog: MatDialog
   ) {}
 

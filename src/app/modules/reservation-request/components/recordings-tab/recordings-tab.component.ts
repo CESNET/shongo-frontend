@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -10,6 +9,7 @@ import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RoomRecordingsDataSource } from 'src/app/shared/components/data-table/data-sources/room-recordings.datasource';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({
   selector: 'app-recordings-tab',
@@ -24,7 +24,7 @@ export class RecordingsTabComponent implements OnInit {
   constructor(
     private _resReqService: ReservationRequestService,
     private _dialog: MatDialog,
-    private _datePipe: DatePipe
+    private _datePipe: MomentDatePipe
   ) {}
 
   ngOnInit(): void {

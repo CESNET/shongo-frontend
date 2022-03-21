@@ -19,7 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   imports: [
@@ -38,7 +38,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDividerModule,
     MatCheckboxModule,
     MatInputModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
   ],
   declarations: [
     ReservationPageComponent,

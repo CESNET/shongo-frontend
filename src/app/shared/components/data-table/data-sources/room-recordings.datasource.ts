@@ -8,15 +8,15 @@ import { Recording } from 'src/app/shared/models/rest-api/recording';
 import { DeleteButton } from '../buttons/delete-button';
 import { DataTableDataSource } from './data-table-datasource';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
-import { DatePipe } from '@angular/common';
 import { RecordingViewUrlColumnComponent } from 'src/app/modules/reservation-request/components/recording-view-url-column/recording-view-url-column.component';
 import { CustomActionButton } from '../buttons/custom-action-button';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
   constructor(
     private _resReqService: ReservationRequestService,
     private _dialog: MatDialog,
-    private _datePipe: DatePipe,
+    private _datePipe: MomentDatePipe,
     public requestId: string
   ) {
     super();

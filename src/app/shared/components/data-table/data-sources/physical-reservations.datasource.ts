@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
@@ -8,6 +7,7 @@ import { ReservationRequestService } from 'src/app/core/http/reservation-request
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
@@ -26,7 +26,7 @@ interface PhysicalReservationsTableData {
 export class PhysicalReservationsDataSource extends DataTableDataSource<PhysicalReservationsTableData> {
   constructor(
     private _resReqService: ReservationRequestService,
-    private _datePipe: DatePipe,
+    private _datePipe: MomentDatePipe,
     private _dialog: MatDialog
   ) {
     super();
