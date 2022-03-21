@@ -5,6 +5,7 @@
 <main>
   <form
     [formGroup]="settingsForm"
+    (ngSubmit)="submitSettings()"
     *ngIf="(settings.userSettingsLoading$ | async) === false; else loading"
   >
     <mat-form-field appearance="outline">
@@ -82,14 +83,7 @@
 
     <div class="row flex-end" id="submit-row">
       <a mat-button type="button" routerLink="/">Cancel</a>
-      <button
-        mat-flat-button
-        type="submit"
-        color="primary"
-        (click)="submitSettings()"
-      >
-        Submit
-      </button>
+      <button mat-flat-button type="submit" color="primary">Submit</button>
     </div>
   </form>
 
