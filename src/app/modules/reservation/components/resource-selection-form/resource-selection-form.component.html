@@ -1,0 +1,35 @@
+<form [formGroup]="form" class="resource-selection">
+  <mat-form-field appearance="outline">
+    <mat-label>Select resource type</mat-label>
+    <mat-select
+      placeholder="Select resource type"
+      formControlName="type"
+      (valueChange)="emitSelectedResource(null)"
+    >
+      <mat-option *ngFor="let opt of resourceTypes" [value]="opt.value">{{
+        opt.displayName
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Select resource</mat-label>
+    <mat-select
+      formControlName="resource"
+      (valueChange)="emitSelectedResource($event)"
+    >
+      <mat-option>
+        <ngx-mat-select-search
+          [formControl]="resourceFilterCtrl"
+          placeholderLabel="Search..."
+          noEntriesFoundLabel="No resources found"
+        ></ngx-mat-select-search>
+      </mat-option>
+      <mat-option
+        *ngFor="let resource of getResourcesByType()"
+        [value]="resource"
+        >{{ resource.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+</form>

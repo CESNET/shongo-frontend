@@ -39,6 +39,11 @@ import { GroupSearchDirective } from './directives/group-search/group-search.dir
 import { SessionEndedDialogComponent } from './components/session-ended-dialog/session-ended-dialog.component';
 import * as moment from 'moment';
 import { MomentDatePipe } from './pipes/moment-date.pipe';
+import { AccountMenuComponent } from './components/account-menu/account-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TimezoneSearchDirective } from './directives/timezone-search/timezone-search.directive';
+import { ComponentHostDirective } from './directives/component-host.directive';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -57,8 +62,11 @@ export function momentAdapterFactory() {
     AlertComponent,
     UserSearchDirective,
     GroupSearchDirective,
+    TimezoneSearchDirective,
     SessionEndedDialogComponent,
     MomentDatePipe,
+    AccountMenuComponent,
+    ComponentHostDirective,
   ],
   imports: [
     CommonModule,
@@ -92,6 +100,8 @@ export function momentAdapterFactory() {
     MatDividerModule,
     MatDialogModule,
     MatSortModule,
+    MatMenuModule,
+    FlexLayoutModule,
   ],
   providers: [
     MomentDatePipe,
@@ -110,6 +120,10 @@ export function momentAdapterFactory() {
     AlertComponent,
     UserSearchDirective,
     GroupSearchDirective,
+    TimezoneSearchDirective,
+    AccountMenuComponent,
+    CalendarModule,
+    ComponentHostDirective,
   ],
 })
 export class SharedModule {}

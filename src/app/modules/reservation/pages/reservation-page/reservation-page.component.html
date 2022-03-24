@@ -1,27 +1,136 @@
-<mat-stepper [linear]="true">
-  <mat-step label="Select resource" [completed]="resSelectStep.isCompleted()">
-    <app-resource-selection-step #resSelectStep></app-resource-selection-step>
-  </mat-step>
-  <mat-step label="Select time slot" [completed]="slotSelectStep.isCompleted()">
-    <app-time-slot-selection-step
-      #slotSelectStep
-      [selectedResourceId$]="resSelectStep.selectedResource$.asObservable()"
-    ></app-time-slot-selection-step>
-  </mat-step>
-  <mat-step
-    label="Select periodicity"
-    [completed]="periodicityStep.isCompleted()"
-  >
-    <app-periodicity-selection-step
-      #periodicityStep
-      [selectedSlot]="slotSelectStep.selectedSlot"
-    ></app-periodicity-selection-step>
-  </mat-step>
-  <mat-step label="Additional information">
-    <app-additional-information-step
-      [selectedResourceId]="resSelectStep.selectedResource$ | async"
-      [selectedTimeSlot]="slotSelectStep.selectedSlot"
-      [selectedPeriodicity]="periodicityStep.getPeriodicityString()"
-    ></app-additional-information-step>
-  </mat-step>
-</mat-stepper>
+<div class="reservation">
+  <mat-toolbar class="reservation__toolbar">
+    <!-- Toolbar left -->
+    <div class="reservation__toolbar-left">
+      <button
+        mat-icon-button
+        (click)="drawer.toggle()"
+        aria-label="Toggle side drawer"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <a mat-stroked-button aria-label="Go back to app" routerLink="..">
+        <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
+      </a>
+
+      <button
+        mat-stroked-button
+        aria-label="Select calendar view"
+        [matMenuTriggerFor]="viewMenu"
+      >
+        {{ calendar.view | titlecase }}&nbsp;<mat-icon
+          >arrow_drop_down</mat-icon
+        >
+      </button>
+
+      <mat-menu #viewMenu="matMenu">
+        <button mat-menu-item (click)="calendar.view = CalendarView.Day">
+          Day
+        </button>
+        <button mat-menu-item (click)="calendar.view = CalendarView.Week">
+          Week
+        </button>
+        <button mat-menu-item (click)="calendar.view = CalendarView.Month">
+          Month
+        </button>
+      </mat-menu>
+
+      <div class="reservation__calendar-navigation">
+        <button
+          mat-icon-button
+          aria-label="Previous"
+          mwlCalendarPreviousView
+          [view]="calendar.view"
+          [(viewDate)]="calendar.viewDate"
+        >
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <button mat-button mwlCalendarToday [(viewDate)]="calendar.viewDate">
+          Today
+        </button>
+        <button
+          mat-icon-button
+          aria-label="Previous"
+          mwlCalendarNextView
+          [view]="calendar.view"
+          [(viewDate)]="calendar.viewDate"
+        >
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+
+      <h1 class="reservation__date-header">
+        {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
+      </h1>
+    </div>
+
+    <!-- Toolbar right -->
+    <div class="reservation__toolbar-right">
+      <app-account-menu></app-account-menu>
+    </div>
+  </mat-toolbar>
+
+  <mat-drawer-container class="reservation__main">
+    <mat-drawer #drawer mode="side" opened>
+      <div class="sidebar">
+        <section class="sidebar__section">
+          <h2 class="sidebar__heading">Resource selection</h2>
+          <app-resource-selection-form
+            (resourceChange)="selectedResource = $event"
+          ></app-resource-selection-form>
+        </section>
+
+        <section class="sidebar__section">
+          <h2 class="sidebar__heading">Calendar settings</h2>
+          <mat-checkbox
+            color="primary"
+            (change)="calendar.highlightUsersReservations = $event.checked"
+            >Highlight mine</mat-checkbox
+          >
+        </section>
+
+        <section
+          class="sidebar__section"
+          *ngIf="selectedResource && selectedSlot"
+        >
+          <h2 class="sidebar__heading">Reservation</h2>
+
+          <div class="sidebar__slot">
+            <div class="sidebar__slot-part">
+              <div><b class="sidebar__slot-part-name">Slot start:</b></div>
+              <div class="sidebar__slot-part-value">
+                {{ selectedSlot.start | momentDate: "LLL" }}
+              </div>
+            </div>
+
+            <div class="sidebar__slot-part">
+              <div><b class="sidebar__slot-part-name">Slot end:</b></div>
+              <div class="sidebar__slot-part-value">
+                {{ selectedSlot.end | momentDate: "LLL" }}
+              </div>
+            </div>
+          </div>
+
+          <button
+            mat-flat-button
+            color="primary"
+            class="sidebar__button"
+            (click)="openReservationDialog()"
+          >
+            Create reservation
+          </button>
+        </section>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="reservation__content">
+      <app-reservation-calendar
+        #calendar
+        class="reservation__calendar fullscreen-calendar"
+        [allowSlotSelection]="true"
+        [selectedResourceId]="selectedResource?.id"
+        (slotSelected)="selectedSlot = $event"
+      ></app-reservation-calendar>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

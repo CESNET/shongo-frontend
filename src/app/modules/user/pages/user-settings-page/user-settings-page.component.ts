@@ -8,8 +8,6 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
-import { IANA_TIMEZONES } from 'src/app/shared/models/data/timezones';
-import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 
@@ -25,13 +23,8 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     { displayName: `Czech`, value: 'cz' },
     { displayName: `English`, value: 'en' },
   ];
-  timezoneOptions = IANA_TIMEZONES;
-  filteredHomeTimezones = this.timezoneOptions;
-  filteredCurrentTimezones = this.timezoneOptions;
 
   useCurrentTimeZoneCtrl = new FormControl(false);
-  homeTimeZoneFilterCtrl = new FormControl('');
-  currentTimeZoneFilterCtrl = new FormControl('');
   usePerunSettingsCtrl = new FormControl(false);
   administrationModeCtrl = new FormControl(false);
 
@@ -49,8 +42,6 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
   constructor(public settings: SettingsService) {}
 
   ngOnInit(): void {
-    this._initTimeZoneFilter(this.homeTimeZoneFilterCtrl);
-    this._initTimeZoneFilter(this.currentTimeZoneFilterCtrl);
     this._observeUsePerunSettings();
     this._observeUserSettings();
     this._observeCurrentTimezone();
@@ -140,20 +131,6 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
       this.settingsForm.get('currentTimeZone')!,
       isEnabled
     );
-  }
-
-  private _filterTimeZones(filter: string): void {
-    this.filteredHomeTimezones = this.timezoneOptions.filter((timeZone) =>
-      timeZone.label.toLowerCase().includes(filter.toLowerCase())
-    );
-  }
-
-  private _initTimeZoneFilter(filterControl: FormControl): void {
-    filterControl.valueChanges
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((filter) => {
-        this._filterTimeZones(filter);
-      });
   }
 
   private _setControlEnabled(control: AbstractControl, enabled: boolean): void {

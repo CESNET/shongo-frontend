@@ -4,9 +4,14 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   Input,
-  ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
-import { CalendarEvent, CalendarView } from 'angular-calendar';
+import {
+  CalendarEvent,
+  CalendarEventTimesChangedEvent,
+  CalendarView,
+} from 'angular-calendar';
 import { finalize, first, takeUntil } from 'rxjs/operators';
 import {
   addDays,
@@ -25,15 +30,16 @@ import {
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { FormControl, FormGroup } from '@angular/forms';
 import { WeekViewHourSegment } from 'calendar-utils';
-import { physicalResources } from 'src/app/models/data/physical-resources';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { HttpParams } from '@angular/common/http';
 import { ReservationRequest } from '../../models/rest-api/reservation-request.interface';
-import { MomentDatePipe } from '../../pipes/moment-date.pipe';
 import * as moment from 'moment';
+import { IdentityClaims } from '../../models/interfaces/identity-claims.interface';
+import { CalendarSlot } from '../../models/rest-api/slot.interface';
+
+type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 function floorToNearest(amount: number, precision: number) {
   return Math.floor(amount / precision) * precision;
@@ -74,63 +80,101 @@ const COLORS = {
   ],
 })
 export class ReservationCalendarComponent implements OnInit, OnDestroy {
-  @Input() showResourceSelection = true;
+  @Output() slotSelected = new EventEmitter<CalendarSlot | null>();
+
+  /**
+   * Allows selecting time slots in calendar (default = false).
+   */
   @Input() allowSlotSelection = false;
-  @Input() set selectedResourceId(id: string | null) {
+
+  /**
+   * ID of selected resource. Calendar will automatically refresh
+   * it's data when setting this property to display only resources with this ID.
+   */
+  @Input() set selectedResourceId(id: string | undefined) {
     this._selectedResourceId = id;
-    this.setResource(id);
+
+    // Clear created event to prevent event intersections.
+    this._createdEvent = undefined;
+    this.slotSelected.emit(null);
     this.fetchReservations();
   }
 
-  // For usage in template.
-  CalendarView = CalendarView;
+  /**
+   * If true, calendar will highlight all reservations that belong to the current user.
+   */
+  @Input() set highlightUsersReservations(value: boolean) {
+    this._highlightUsersReservations = value;
+    this._onHighlightChange();
+  }
 
-  // Date where calendar starts.
-  viewDate = new Date();
+  /**
+   * Currently displayed date.
+   */
+  @Input() set viewDate(value: Date) {
+    this._viewDate = value;
+    this.fetchReservations();
+  }
 
-  // Current calendar view.
-  view: CalendarView = CalendarView.Month;
+  /**
+   * Current calendar view (day, week, month).
+   */
+  @Input() set view(value: CalendarView) {
+    this._view = value;
+    this.fetchReservations();
+  }
 
-  resources = physicalResources;
-  filteredResources = this.resources;
+  readonly refresh$ = new Subject<void>();
+  readonly loading$: Observable<boolean>;
+  readonly weekStartsOn: WeekStartsOn = 0;
+  readonly CalendarView = CalendarView;
 
-  filterGroup = new FormGroup({
-    resource: new FormControl(this.resources[0].id),
-    highlightMine: new FormControl(false),
-    resourceFilter: new FormControl(''),
-  });
+  private _events: CalendarEvent[] = [];
+  private _createdEvent?: CalendarEvent;
+  private _highlightUsersReservations = false;
+  private _selectedResourceId?: string | null;
+  private _viewDate = new Date();
+  private _view = CalendarView.Month;
 
-  dragToCreateActive = false;
-  weekStartsOn: 0 = 0;
-
-  events: CalendarEvent[] = [];
-  createdEvent?: CalendarEvent;
-
-  loading$: Observable<boolean>;
   private _destroy$ = new Subject<void>();
   private _loading$ = new BehaviorSubject<boolean>(true);
-  private _selectedResourceId?: string | null;
 
   constructor(
     private _resReqService: ReservationRequestService,
-    private _cd: ChangeDetectorRef,
     private _auth: AuthenticationService
   ) {
     this.loading$ = this._loading$.asObservable();
   }
 
+  get highlightUsersReservations(): boolean {
+    return this._highlightUsersReservations;
+  }
+
+  get selectedResourceId(): string {
+    return this.selectedResourceId;
+  }
+
+  get events(): CalendarEvent[] {
+    return this._events;
+  }
+
+  get viewDate(): Date {
+    return this._viewDate;
+  }
+
+  get view(): CalendarView {
+    return this._view;
+  }
+
+  get selectedSlot(): CalendarSlot | undefined {
+    if (this._createdEvent && this._createdEvent.end) {
+      return { start: this._createdEvent.start, end: this._createdEvent.end };
+    }
+    return undefined;
+  }
+
   ngOnInit(): void {
     this.fetchReservations();
-    this._createHighlightSub();
-
-    const resourceFilter = this.filterGroup.get(
-      'resourceFilter'
-    ) as FormControl;
-    resourceFilter.valueChanges
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((filter) => {
-        this._filterResources(filter);
-      });
   }
 
   ngOnDestroy(): void {
@@ -142,11 +186,13 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this._loading$.next(true);
 
     const interval = this._getInterval(this.viewDate);
-    const resource = this.filterGroup.get('resource')!.value;
-    const filter = new HttpParams()
-      .set('resource', resource)
-      .set('intervalFrom', new Date(interval.start).toISOString())
-      .set('intervalTo', new Date(interval.end).toISOString());
+    let filter = new HttpParams()
+      .set('intervalFrom', moment(interval.start).toISOString())
+      .set('intervalTo', moment(interval.end).toISOString());
+
+    if (this._selectedResourceId) {
+      filter = filter.set('resource', this._selectedResourceId);
+    }
 
     this._resReqService
       .fetchItems<ReservationRequest>(filter)
@@ -154,7 +200,11 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (reservations) => {
           this._loading$.next(false);
-          this.events = this._createEvents(reservations);
+          this._events = this._createEvents(reservations);
+
+          if (this._createdEvent) {
+            this._events.push(this._createdEvent);
+          }
         },
         error: () => {
           this._loading$.next(false);
@@ -167,34 +217,28 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     setTimeout(() => this.fetchReservations(), 200);
   }
 
-  setResource(resource: string | null): void {
-    this.filterGroup.get('resource')!.setValue(resource);
+  openDate(date: Date): void {
+    this.viewDate = date;
+    this.view = CalendarView.Day;
   }
 
   startDragToCreate(
     segment: WeekViewHourSegment,
-    mouseDownEvent: MouseEvent,
+    _: MouseEvent,
     segmentElement: HTMLElement
   ) {
-    const prevCreatedEvent = this.createdEvent;
-    const { name, email } = this._auth.identityClaims!;
+    const prevCreatedEvent = this._createdEvent;
+    this._createdEvent = this._createSelectionEvent(
+      this._auth.identityClaims!,
+      segment.date
+    );
 
-    this.createdEvent = {
-      id: this.events.length,
-      title: 'New reservation',
-      start: segment.date,
-      color: COLORS.created,
-      meta: {
-        tmpEvent: true,
-        owner: name,
-        ownerEmail: email,
-      },
-    };
-    this.events = this.events
+    this._events = this._events
       .filter((event) => event !== prevCreatedEvent)
-      .concat([this.createdEvent]);
+      .concat([this._createdEvent]);
+    this.slotSelected.emit(this.selectedSlot);
+
     const segmentPosition = segmentElement.getBoundingClientRect();
-    this.dragToCreateActive = true;
     const endOfView = endOfWeek(this.viewDate, {
       weekStartsOn: this.weekStartsOn,
     });
@@ -202,9 +246,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     (fromEvent(document, 'mousemove') as Observable<MouseEvent>)
       .pipe(
         finalize(() => {
-          delete this.createdEvent!.meta.tmpEvent;
-          this.dragToCreateActive = false;
-          this._staticRefresh();
+          delete this._createdEvent!.meta.tmpEvent;
+          this.refresh$.next();
         }),
         takeUntil(fromEvent(document, 'mouseup'))
       )
@@ -224,11 +267,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
         if (
           newEnd > segment.date &&
           newEnd < endOfView &&
-          this._hasNoIntersection(this.createdEvent!.start, newEnd)
+          this._hasNoIntersection(this._createdEvent!.start, newEnd)
         ) {
-          this.createdEvent!.end = newEnd;
+          this._createdEvent!.end = newEnd;
         }
-        this._staticRefresh();
+        this.refresh$.next();
+        this.slotSelected.emit(this.selectedSlot);
       });
   }
 
@@ -239,6 +283,25 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
       )}`;
     }
     return moment(event.start).format('LLL');
+  }
+
+  validateEventTimesChanged = ({
+    newStart,
+    newEnd,
+  }: CalendarEventTimesChangedEvent) => {
+    return this._hasNoIntersection(newStart, newEnd!);
+  };
+
+  eventTimesChanged(
+    eventTimesChangedEvent: CalendarEventTimesChangedEvent
+  ): void {
+    if (this.validateEventTimesChanged(eventTimesChangedEvent)) {
+      const { event, newStart, newEnd } = eventTimesChangedEvent;
+      event.start = newStart;
+      event.end = newEnd;
+      this.refresh$.next();
+      this.slotSelected.emit(this.selectedSlot);
+    }
   }
 
   private _getInterval(viewDate: Date): Interval {
@@ -267,24 +330,29 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   private _hasNoIntersection(start: Date, end: Date): boolean {
-    return this.events.every(
+    return this._events.every(
       (event) =>
-        event === this.createdEvent ||
+        event === this._createdEvent ||
         (event.end && event.end <= start) ||
         event.start >= end
-    );
-  }
-
-  private _filterResources(filter: string): void {
-    this.filteredResources = this.resources.filter((resource) =>
-      resource.name.toLowerCase().includes(filter.toLowerCase())
     );
   }
 
   private _createEvents(
     reservations: ApiResponse<ReservationRequest>
   ): CalendarEvent[] {
-    const events = reservations.items.map((reservation) => ({
+    const events = reservations.items.map((reservation) =>
+      this._createEvent(reservation)
+    );
+
+    return this._highlightEvents(
+      events,
+      this.highlightUsersReservations ?? false
+    );
+  }
+
+  private _createEvent(reservation: ReservationRequest): CalendarEvent {
+    return {
       start: new Date(reservation.slot.start),
       end: new Date(reservation.slot.end),
       title: reservation.description,
@@ -292,24 +360,38 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
         owner: reservation.ownerName,
         ownerEmail: reservation.ownerEmail,
       },
-    }));
-
-    const highlightMine = this.filterGroup.get('highlightMine')?.value;
-    return this._highlightEvents(events, highlightMine ?? false);
+    };
   }
 
-  private _staticRefresh(): void {
-    this.events = [...this.events];
-    this._cd.detectChanges();
+  private _createSelectionEvent(
+    owner: IdentityClaims,
+    start: Date
+  ): CalendarEvent {
+    return {
+      id: this._events.length,
+      title: 'Selected time slot',
+      start,
+      end: moment(start).add(30, 'minutes').toDate(),
+      color: COLORS.created,
+      meta: {
+        tmpEvent: true,
+        owner: owner.name,
+        ownerEmail: owner.email,
+      },
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+    };
   }
 
-  private _createHighlightSub(): void {
-    this.filterGroup
-      .get('highlightMine')!
-      .valueChanges.pipe(takeUntil(this._destroy$))
-      .subscribe((highlightMine) => {
-        this.events = this._highlightEvents(this.events, highlightMine);
-      });
+  private _onHighlightChange(): void {
+    this._events = this._highlightEvents(
+      this._events,
+      this._highlightUsersReservations
+    );
+    this.refresh$.next();
   }
 
   private _highlightEvents(
@@ -324,16 +406,18 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
       highlightedEvents = events.map((event) => {
         if (event.meta.ownerEmail === email && event.meta.owner === name) {
           event.color = COLORS.owned;
+          event.cssClass = 'cal-event-color--white';
         }
         return event;
       });
     } else {
       highlightedEvents = events.map((event) => {
-        if (event === this.createdEvent) {
+        if (event === this._createdEvent) {
           event.color = COLORS.created;
         } else {
           event.color = COLORS.default;
         }
+        event.cssClass = '';
         return event;
       });
     }

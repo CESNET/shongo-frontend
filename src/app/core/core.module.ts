@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { EnsureModuleLoadedOnceGuard } from './ensure-module-loaded-once.guard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,14 +27,20 @@ import { authConfig as devAuthConfig } from './authentication/auth-dev.config';
 import { authModuleConfig } from './authentication/auth-module.config';
 import { authAppInitializerFactory } from './authentication/auth-app-initializer.factory';
 import { AuthenticationService } from './authentication/authentication.service';
-import { UnauthorizedPageComponent } from './unauthorized-page/unauthorized-page.component';
+import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
+import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, UnauthorizedPageComponent],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    UnauthorizedPageComponent,
+    MainLayoutComponent,
+  ],
   exports: [HeaderComponent, FooterComponent],
   imports: [
     CommonModule,

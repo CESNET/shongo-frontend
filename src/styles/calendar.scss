@@ -1,0 +1,18 @@
+.fullscreen-calendar .cal-day-cell {
+  --cal-header-cell-height: 30px;
+  --cal-border-height-total: 6px;
+  height: calc(
+    (
+        100vh - var(--toolbar-height) - var(--cal-header-cell-height) -
+          var(--cal-border-height-total)
+      ) / 5
+  );
+}
+
+.cal-event-color {
+  &--white {
+    .cal-event-title {
+      color: var(--white);
+    }
+  }
+}

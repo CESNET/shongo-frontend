@@ -1,0 +1,44 @@
+<ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOutFallback">
+  <button mat-button [matMenuTriggerFor]="accountSubMenu" fxHide.lt-sm>
+    <span class="fx-center-vert">
+      <mat-icon class="icon-xs">account_circle</mat-icon>
+      {{ "&nbsp;" + (getUsername() | appShortString: 15) + "&nbsp;" }}
+      <mat-icon>arrow_drop_down</mat-icon>
+    </span>
+  </button>
+
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="accountSubMenu"
+    fxHide
+    fxShow.lt-sm
+  >
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <mat-menu #accountSubMenu="matMenu">
+    <ng-container *ngFor="let item of accountItems">
+      <ng-container
+        [ngTemplateOutlet]="item.route ? linkItem : buttonItem"
+        [ngTemplateOutletContext]="{ item: item }"
+      >
+      </ng-container>
+    </ng-container>
+
+    <ng-template #linkItem let-item="item">
+      <a mat-menu-item [href]="item.route">{{ item.label }}</a>
+    </ng-template>
+
+    <ng-template #buttonItem let-item="item">
+      <button mat-menu-item (click)="item.func()">
+        {{ item.label }}
+      </button>
+    </ng-template>
+  </mat-menu>
+</ng-container>
+
+<ng-template #loggedOutFallback>
+  <button mat-button (click)="auth.login()" i18n="navbar button|Log in button">
+    Log in
+  </button>
+</ng-template>

@@ -1,3 +1,58 @@
-mat-stepper {
-  background: none;
+// Based on form field padding + margin.
+$section-margin: 1.34375em + 0.25em;
+
+.reservation {
+  height: 100vh;
+
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+
+    &-left,
+    &-right {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+  }
+
+  &__main {
+    height: calc(100vh - var(--toolbar-height));
+  }
+
+  &__calendar {
+    height: 100%;
+  }
+}
+
+.sidebar {
+  border: 0;
+  padding: 1rem;
+
+  &__heading {
+    font-size: var(--font-size-regular);
+  }
+
+  &__section:not(:first-of-type) {
+    margin-bottom: $section-margin;
+  }
+
+  &__button {
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+  &__slot {
+    &-part {
+      margin-bottom: 0.5em;
+      line-height: 1.5em;
+    }
+    &-part-name {
+      letter-spacing: 1px;
+    }
+  }
+}
+
+mat-drawer {
+  border: 0;
 }

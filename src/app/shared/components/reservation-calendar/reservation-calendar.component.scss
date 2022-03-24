@@ -1,22 +1,3 @@
-/* Layout */
-header {
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.calendar-options {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.room-options {
-  text-align: right;
-
-  :not(:last-child) {
-    margin-right: 15px;
-  }
-}
-
 /* Tooltip */
 .cal-tooltip-inner {
   display: flex;
@@ -34,6 +15,7 @@ header {
 /* Loading */
 .calendar-container {
   position: relative;
+  height: 100%;
 
   .loading-overlay {
     display: flex;
@@ -51,32 +33,5 @@ header {
     top: 0;
     left: 0;
     z-index: 1;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .calendar-options {
-    h1 {
-      order: 3;
-      width: 100%;
-      text-align: center;
-      margin-top: 20px;
-    }
-  }
-}
-
-@media only screen and (max-width: 420px) {
-  .room-options {
-    display: flex;
-    text-align: center;
-  }
-  .calendar-options,
-  .room-options {
-    flex-direction: column;
-    align-items: center;
-
-    > * {
-      margin-top: 15px;
-    }
   }
 }

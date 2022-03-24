@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ReservationPageComponent } from './pages/reservation-page/reservation-page.component';
-import { ResourceSelectionStepComponent } from './components/resource-selection-step/resource-selection-step.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TimeSlotSelectionStepComponent } from './components/time-slot-selection-step/time-slot-selection-step.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { PeriodicitySelectionStepComponent } from './components/periodicity-selection-step/periodicity-selection-step.component';
-import { AdditionalInformationStepComponent } from './components/additional-information-step/additional-information-step.component';
 import { ReservationRoutingModule } from './reservation-routing.module';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +16,19 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { ResourceSelectionFormComponent } from './components/resource-selection-form/resource-selection-form.component';
+import { PeriodicitySelectionFormComponent } from './components/periodicity-selection-form/periodicity-selection-form.component';
+import { PhysicalResourceReservationFormComponent } from './components/physical-resource-reservation-form/physical-resource-reservation-form.component';
+import { TeleconferenceReservationFormComponent } from './components/teleconference-reservation-form/teleconference-reservation-form.component';
+import { VideoconferenceReservationFormComponent } from './components/videoconference-reservation-form/videoconference-reservation-form.component';
+import { VirtualRoomReservationFormComponent } from './components/virtual-room-reservation-form/virtual-room-reservation-form.component';
+import { WebconferenceReservationFormComponent } from './components/webconference-reservation-form/webconference-reservation-form.component';
+import { ReservationDialogComponent } from './components/reservation-dialog/reservation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   imports: [
@@ -39,13 +48,22 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatCheckboxModule,
     MatInputModule,
     MatMomentDateModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatChipsModule,
   ],
   declarations: [
     ReservationPageComponent,
-    ResourceSelectionStepComponent,
-    TimeSlotSelectionStepComponent,
-    PeriodicitySelectionStepComponent,
-    AdditionalInformationStepComponent,
+    PeriodicitySelectionFormComponent,
+    ResourceSelectionFormComponent,
+    PhysicalResourceReservationFormComponent,
+    VirtualRoomReservationFormComponent,
+    VideoconferenceReservationFormComponent,
+    WebconferenceReservationFormComponent,
+    TeleconferenceReservationFormComponent,
+    ReservationDialogComponent,
   ],
 })
 export class ReservationModule {}

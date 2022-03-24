@@ -13,9 +13,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { ReservationCalendarTabComponent } from './components/reservation-calendar-tab/reservation-calendar-tab.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
-  declarations: [HomePageComponent, ReservationRequestFilterComponent],
+  declarations: [
+    HomePageComponent,
+    ReservationRequestFilterComponent,
+    ReservationCalendarTabComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -30,6 +39,10 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatCheckboxModule,
     MatMomentDateModule,
     MatInputModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonToggleModule,
+    NgxMatSelectSearchModule,
   ],
 })
 export class HomeModule {}

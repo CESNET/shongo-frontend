@@ -10,11 +10,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [UserSettingsPageComponent],
   imports: [
     CommonModule,
+    SharedModule,
     UserRoutingModule,
     MatFormFieldModule,
     MatSelectModule,
