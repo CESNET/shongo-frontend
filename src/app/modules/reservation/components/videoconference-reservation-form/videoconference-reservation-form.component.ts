@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { getFormError } from 'src/app/utils/getFormError';
 import { ReservationForm } from '../../models/reservation-form.interface';
 
@@ -24,7 +25,9 @@ export class VideoconferenceReservationFormComponent
 
   readonly getFormError = getFormError;
 
-  constructor() {}
+  constructor(private _settings: SettingsService) {
+    this.form.patchValue({ timezone: this._settings.timeZone });
+  }
 
   getFormValue() {
     throw new Error('Method not implemented.');

@@ -14,6 +14,8 @@ import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.inter
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { ApiService } from '../api.service';
 
+const SETTINGS_LOCALSTORAGE_KEY = 'userSettings';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -25,6 +27,8 @@ export class SettingsService {
   private _userSettingsLoading$ = new BehaviorSubject(false);
 
   constructor(private _http: HttpClient, private _auth: AuthenticationService) {
+    this._loadSettingsFromStorage();
+
     this.userSettingsLoading$ = this._userSettingsLoading$.asObservable();
     this.userSettings$ = this._userSettings$.asObservable();
 
@@ -40,6 +44,12 @@ export class SettingsService {
     return (
       this.userSettings?.permissions?.includes(Permission.ADMINISTRATOR) ??
       false
+    );
+  }
+
+  get timeZone(): string | undefined {
+    return (
+      this.userSettings?.currentTimeZone ?? this.userSettings?.homeTimeZone
     );
   }
 
@@ -61,6 +71,14 @@ export class SettingsService {
         this._userSettings$.next(userSettings);
         this._userSettingsLoading$.next(false);
       });
+  }
+
+  private _loadSettingsFromStorage(): void {
+    const settings = localStorage.getItem(SETTINGS_LOCALSTORAGE_KEY);
+
+    if (settings) {
+      this._userSettings$.next(JSON.parse(settings));
+    }
   }
 
   /**
@@ -99,6 +117,8 @@ export class SettingsService {
   }
 
   private _handleSettingsChange(settings: UserSettings): void {
+    localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
+
     if (settings.currentTimeZone) {
       this._handleTimezoneChange(settings.currentTimeZone);
     } else if (settings.homeTimeZone) {
