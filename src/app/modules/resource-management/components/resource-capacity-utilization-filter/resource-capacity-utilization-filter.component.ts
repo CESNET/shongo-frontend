@@ -14,6 +14,7 @@ import {
 } from 'src/app/shared/components/data-table/filter/data-table-filter';
 import { add } from 'date-fns';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
+import * as moment from 'moment';
 
 const DEFAULT_UNIT_DIST = 5;
 
@@ -92,8 +93,8 @@ export class ResourceCapacityUtilizationFilterComponent
     >;
     const params = new HttpParams()
       .set('unit', unit)
-      .set('intervalFrom', new Date(dateFrom).toISOString())
-      .set('intervalTo', new Date(dateTo).toISOString());
+      .set('intervalFrom', moment(dateFrom).unix())
+      .set('intervalTo', moment(dateTo).unix());
     return params;
   }
 

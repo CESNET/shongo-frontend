@@ -6,6 +6,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -87,11 +88,11 @@ export class ReservationRequestFilterComponent
       httpParams = httpParams.append('technology', technology);
     }
     if (dateFrom) {
-      const date = new Date(dateFrom).toISOString();
+      const date = moment(dateFrom).unix();
       httpParams = httpParams.append('date_from', date);
     }
     if (dateTo) {
-      const date = new Date(dateTo).toISOString();
+      const date = moment(dateTo).unix();
       httpParams = httpParams.append('date_to', date);
     }
     if (user) {
