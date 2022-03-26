@@ -122,11 +122,11 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
 
   getInterval(item: ResourceCapacityUtilization): string {
     if (item.intervalFrom === item.intervalTo) {
-      return this.datePipeFunc(item.intervalFrom);
+      return this.datePipeFunc(Number(item.intervalFrom));
     }
-    return `${this.datePipeFunc(item.intervalFrom)} - ${this.datePipeFunc(
-      item.intervalTo
-    )}`;
+    return `${this.datePipeFunc(
+      Number(item.intervalFrom)
+    )} - ${this.datePipeFunc(Number(item.intervalTo))}`;
   }
 
   datePipeFunc = datePipeFunc.bind({ datePipe: this._datePipe });

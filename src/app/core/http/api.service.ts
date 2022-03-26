@@ -45,10 +45,10 @@ export abstract class ApiService {
     let httpParams = filter ?? new HttpParams();
 
     if (pageSize != null) {
-      httpParams = httpParams.set('limit', pageSize);
+      httpParams = httpParams.set('count', pageSize);
 
       if (pageIndex != null) {
-        httpParams = httpParams.set('offset', pageSize * pageIndex);
+        httpParams = httpParams.set('start', pageSize * pageIndex);
       }
     }
     if (sortedColumn) {

@@ -41,9 +41,9 @@ export class ResourceService extends ApiService {
     const detailUrl = `${this.endpointURL}/${resourceId}/capacity_utilizations`;
 
     const httpParams = new HttpParams()
-      .set('resourceId', resourceId)
-      .set('intervalFrom', intervalFrom)
-      .set('intervalTo', intervalTo);
+      .set('resource', resourceId)
+      .set('interval_from', intervalFrom)
+      .set('interval_to', intervalTo);
 
     return this._http.get<ResourceUtilizationDetail>(detailUrl, {
       params: httpParams,
