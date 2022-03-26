@@ -11,7 +11,7 @@ import {
   OAuthModuleConfig,
   OAuthStorage,
 } from 'angular-oauth2-oidc';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +29,7 @@ import { authAppInitializerFactory } from './authentication/auth-app-initializer
 import { AuthenticationService } from './authentication/authentication.service';
 import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { AdminTokenInterceptor } from './interceptors/admin-token.interceptor';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -71,6 +72,11 @@ export function storageFactory(): OAuthStorage {
       useValue: environment.production ? prodAuthConfig : devAuthConfig,
     },
     { provide: OAuthModuleConfig, useValue: authModuleConfig },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AdminTokenInterceptor,
+      multi: true,
+    },
   ],
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {
