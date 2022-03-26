@@ -30,6 +30,8 @@ export class ReservationPageComponent {
 
     this._dialog.open(ReservationDialogComponent, {
       data: { resource: this.selectedResource },
+      width: '95%',
+      maxWidth: '120ch',
     });
   }
 }

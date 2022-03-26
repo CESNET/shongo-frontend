@@ -187,8 +187,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
     const interval = this._getInterval(this.viewDate);
     let filter = new HttpParams()
-      .set('intervalFrom', moment(interval.start).toISOString())
-      .set('intervalTo', moment(interval.end).toISOString());
+      .set('intervalFrom', moment(interval.start).unix())
+      .set('intervalTo', moment(interval.end).unix());
 
     if (this._selectedResourceId) {
       filter = filter.set('resource', this._selectedResourceId);
