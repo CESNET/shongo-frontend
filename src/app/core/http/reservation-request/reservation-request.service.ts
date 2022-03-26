@@ -29,8 +29,8 @@ export class ReservationRequestService extends ApiService {
     requestId: string
   ): Observable<ApiResponse<Role>> {
     const httpParams = new HttpParams()
-      .set('offset', pageSize * pageIndex)
-      .set('limit', pageSize);
+      .set('start', pageSize * pageIndex)
+      .set('count', pageSize);
     const rolesEndpoint = `${this.endpointURL}/${requestId}/roles`;
     return this.fetchItems(httpParams, rolesEndpoint);
   }
@@ -41,8 +41,8 @@ export class ReservationRequestService extends ApiService {
     requestId: string
   ): Observable<ApiResponse<RequestParticipant>> {
     const httpParams = new HttpParams()
-      .set('offset', pageSize * pageIndex)
-      .set('limit', pageSize);
+      .set('start', pageSize * pageIndex)
+      .set('count', pageSize);
     const participantsEndpoint = `${this.endpointURL}/${requestId}/participants`;
     return this.fetchItems(httpParams, participantsEndpoint);
   }

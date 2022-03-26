@@ -89,11 +89,11 @@ export class ReservationRequestFilterComponent
     }
     if (dateFrom) {
       const date = moment(dateFrom).unix();
-      httpParams = httpParams.append('date_from', date);
+      httpParams = httpParams.append('interval_from', date);
     }
     if (dateTo) {
       const date = moment(dateTo).unix();
-      httpParams = httpParams.append('date_to', date);
+      httpParams = httpParams.append('interval_to', date);
     }
     if (user) {
       httpParams = httpParams.append('user', user);
