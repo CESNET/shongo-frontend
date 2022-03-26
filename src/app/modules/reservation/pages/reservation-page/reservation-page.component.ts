@@ -21,13 +21,7 @@ export class ReservationPageComponent {
   };
   selectedSlot?: CalendarSlot | null;
 
-  constructor(private _dialog: MatDialog) {
-    this._dialog.open(ReservationDialogComponent, {
-      data: { resource: this.selectedResource },
-      width: '95%',
-      maxWidth: '120ch',
-    });
-  }
+  constructor(private _dialog: MatDialog) {}
 
   openReservationDialog(): void {
     if (!this.selectedResource) {
