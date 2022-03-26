@@ -17,7 +17,7 @@ type DateFormat =
   name: 'momentDate',
 })
 export class MomentDatePipe implements PipeTransform {
-  transform(date: string | Date | number, format?: DateFormat): string {
+  transform(date: string | number | Date, format?: DateFormat): string {
     return moment(date).format(format ?? 'LL');
   }
 }
