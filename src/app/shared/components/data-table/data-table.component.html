@@ -222,7 +222,8 @@
       (dataSource.loading$ | async) === false && dataSource.data.count === 0
     "
   >
-    <h2>No entries found</h2>
+    <b *ngIf="!dataSource.data.error">No entries found</b>
+    <b *ngIf="dataSource.data.error">An error occured</b>
   </div>
 
   <mat-paginator

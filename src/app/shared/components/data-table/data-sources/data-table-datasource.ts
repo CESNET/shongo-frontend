@@ -86,11 +86,15 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
             this.sort!.active,
             this.sort!.direction,
             filter ?? new HttpParams()
-          ).pipe(catchError(() => of({ count: 0, items: [] })))
+          ).pipe(catchError(() => of({ count: 0, items: [], error: true })))
         ),
         map((res) => {
           const pipedItems = res.items.map((item) => this.pipeRow(item));
-          return { count: res.count, items: pipedItems };
+          return {
+            count: res.count,
+            items: pipedItems,
+            error: res.error ?? false,
+          };
         }),
         tap((res: ApiResponse<T>) => {
           this.data = res;
