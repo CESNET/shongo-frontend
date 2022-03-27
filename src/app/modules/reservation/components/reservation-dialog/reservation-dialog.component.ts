@@ -92,8 +92,8 @@ export class ReservationDialogComponent implements OnInit {
     const reservationRequest = {
       resource: this._data.resource.id,
       slot: {
-        start: moment(this._data.slot.start).unix(),
-        end: moment(this._data.slot.end).unix(),
+        start: moment(this._data.slot.start).unix() * 1000,
+        end: moment(this._data.slot.end).unix() * 1000,
       },
       ...request,
     };

@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { RequestIdColumnComponent } from './components/request-id-column/request-id-column.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ResourceCapacityUtilizationFilterComponent,
     ResourceUtilizationColumnComponent,
     ResourceUtilizationDetailPageComponent,
+    RequestIdColumnComponent,
   ],
 })
 export class ResourceManagementModule {}

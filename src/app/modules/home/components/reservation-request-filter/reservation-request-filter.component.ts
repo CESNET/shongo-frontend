@@ -88,11 +88,11 @@ export class ReservationRequestFilterComponent
       httpParams = httpParams.append('technology', technology);
     }
     if (dateFrom) {
-      const date = moment(dateFrom).unix();
+      const date = moment(dateFrom).unix() * 1000;
       httpParams = httpParams.append('interval_from', date);
     }
     if (dateTo) {
-      const date = moment(dateTo).unix();
+      const date = moment(dateTo).unix() * 1000;
       httpParams = httpParams.append('interval_to', date);
     }
     if (user) {

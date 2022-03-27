@@ -1,17 +1,12 @@
 <ng-container *ngIf="data$ | async as data; else loadingOrError">
   <header>
     <h1>Resource capacity utilization</h1>
-    <dl>
+    <dl class="definition-list--flex">
       <dt>Resource:</dt>
       <dd>{{ data.name + " (" + data.id + ")" }}</dd>
       <dt>Interval:</dt>
       <dd>
-        {{
-          (data.intervalFrom | date) +
-            (data.intervalFrom !== data.intervalTo
-              ? " - " + (data.intervalTo | date)
-              : "")
-        }}
+        {{ this.getInterval(data.intervalFrom, data.intervalTo) }}
       </dd>
       <dt>Usage:</dt>
       <dd>{{ getUsage(data.totalCapacity, data.usedCapacity) }}</dd>
