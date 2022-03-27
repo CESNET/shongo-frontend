@@ -93,10 +93,6 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
    */
   @Input() set selectedResourceId(id: string | undefined) {
     this._selectedResourceId = id;
-
-    // Clear created event to prevent event intersections.
-    this._createdEvent = undefined;
-    this.slotSelected.emit(null);
     this.fetchReservations();
   }
 
@@ -203,7 +199,16 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
           this._events = this._createEvents(reservations);
 
           if (this._createdEvent) {
-            this._events.push(this._createdEvent);
+            if (
+              this._hasNoIntersection(
+                this._createdEvent.start,
+                this._createdEvent.end!
+              )
+            ) {
+              this._events.push(this._createdEvent);
+            } else {
+              this.slotSelected.emit(null);
+            }
           }
         },
         error: () => {
@@ -307,6 +312,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   clearSelectedSlot(): void {
     this._events = this._events.filter((event) => event !== this._createdEvent);
     this._createdEvent = undefined;
+    this.slotSelected.emit(null);
     this.refresh$.next();
   }
 

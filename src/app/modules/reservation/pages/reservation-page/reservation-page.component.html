@@ -97,14 +97,20 @@
           <h2 class="sidebar__heading">Reservation</h2>
 
           <div class="sidebar__slot">
-            <div class="sidebar__slot-part">
+            <div
+              class="sidebar__slot-part"
+              *ngIf="selectedSlot && selectedSlot.start"
+            >
               <div><b class="sidebar__slot-part-name">Slot start:</b></div>
               <div class="sidebar__slot-part-value">
                 {{ selectedSlot.start | momentDate: "LLL" }}
               </div>
             </div>
 
-            <div class="sidebar__slot-part">
+            <div
+              class="sidebar__slot-part"
+              *ngIf="selectedSlot && selectedSlot.end"
+            >
               <div><b class="sidebar__slot-part-name">Slot end:</b></div>
               <div class="sidebar__slot-part-value">
                 {{ selectedSlot.end | momentDate: "LLL" }}
@@ -112,14 +118,25 @@
             </div>
           </div>
 
-          <button
-            mat-flat-button
-            color="primary"
-            class="sidebar__button"
-            (click)="openReservationDialog()"
-          >
-            Create reservation
-          </button>
+          <div class="sidebar__buttons">
+            <button
+              mat-flat-button
+              color="primary"
+              class="sidebar__button"
+              (click)="openReservationDialog()"
+            >
+              Create reservation
+            </button>
+
+            <button
+              mat-flat-button
+              class="sidebar__button"
+              color="warn"
+              (click)="calendar.clearSelectedSlot()"
+            >
+              Cancel selection
+            </button>
+          </div>
         </section>
       </div>
     </mat-drawer>

@@ -1,29 +1,30 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { getFormError } from 'src/app/utils/getFormError';
-import { ReservationForm } from '../../models/reservation-form.interface';
+import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
+import { VideoconferenceReservationRequest } from '../../models/interfaces/videoconference-reservation-request.interface';
+import {
+  descriptionErrorHandler,
+  pinErrorHandler,
+  roomNameErrorHandler,
+} from '../../utils/custom-error-handlers';
+import {
+  PIN_MINLENGTH,
+  PIN_PATTERN,
+  ROOM_DESCRIPTION_MAXLENGTH,
+  ROOM_NAME_MAXLENGTH,
+  ROOM_NAME_PATTERN,
+} from '../../utils/reservation-form.constants';
 import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form/periodicity-selection-form.component';
-
-export interface VideoconferenceReservationRequest {
-  roomName: string;
-  description: string;
-  adminPin: string;
-  participantCount: number;
-  timezone: string;
-  allowGuests: boolean;
-  record: boolean;
-}
 
 @Component({
   selector: 'app-videoconference-reservation-form',
   templateUrl: './videoconference-reservation-form.component.html',
-  styleUrls: ['./videoconference-reservation-form.component.scss'],
+  styleUrls: [
+    './videoconference-reservation-form.component.scss',
+    '../../styles/resource-reservation-form.scss',
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoconferenceReservationFormComponent
@@ -35,17 +36,17 @@ export class VideoconferenceReservationFormComponent
   form = new FormGroup({
     roomName: new FormControl(null, [
       Validators.required,
-      Validators.maxLength(100),
-      Validators.pattern(/^[a-z0-9\-\_]+$/i),
+      Validators.maxLength(ROOM_NAME_MAXLENGTH),
+      Validators.pattern(ROOM_NAME_PATTERN),
     ]),
     description: new FormControl(null, [
       Validators.required,
-      Validators.maxLength(200),
+      Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
     adminPin: new FormControl(null, [
       Validators.required,
-      Validators.pattern(/^[0-9]+$/),
-      Validators.minLength(4),
+      Validators.pattern(PIN_PATTERN),
+      Validators.minLength(PIN_MINLENGTH),
     ]),
     participantCount: new FormControl(null, [Validators.required]),
     timezone: new FormControl(null, [Validators.required]),
@@ -54,6 +55,9 @@ export class VideoconferenceReservationFormComponent
   });
 
   readonly getFormError = getFormError;
+  readonly descriptionErrorHandler = descriptionErrorHandler;
+  readonly roomNameErrorHandler = roomNameErrorHandler;
+  readonly pinErrorHandler = pinErrorHandler;
 
   constructor(private _settings: SettingsService) {
     this.form.patchValue({ timezone: this._settings.timeZone });
@@ -69,35 +73,4 @@ export class VideoconferenceReservationFormComponent
     const periodicity = this.periodicityForm.getPeriodicity();
     return { periodicity, ...this.form.value };
   }
-
-  roomNameErrorHandler = (control: AbstractControl): string | null => {
-    const errors = control.errors!;
-
-    if (errors.pattern) {
-      return 'Field can contain only alphanumeric characters, dash or underscore.';
-    } else if (errors.maxlength) {
-      return `Field can have max. ${errors.maxlength.requiredLength} characters.`;
-    }
-    return null;
-  };
-
-  descriptionErrorHandler = (control: AbstractControl): string | null => {
-    const errors = control.errors!;
-
-    if (errors.maxlength) {
-      return `Field can have max. ${errors.maxlength.requiredLength} characters.`;
-    }
-    return null;
-  };
-
-  adminPinErrorHandler = (control: AbstractControl): string | null => {
-    const errors = control.errors!;
-
-    if (errors.pattern) {
-      return `Field can contain only numbers.`;
-    } else if (errors.minlength) {
-      return `PIN must consist of min. ${errors.minlength.requiredLength} digits.`;
-    }
-    return null;
-  };
 }

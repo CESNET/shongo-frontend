@@ -16,7 +16,7 @@ import { Resource } from 'src/app/models/data/resources';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
-import { ReservationForm } from '../../models/reservation-form.interface';
+import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
 import { PhysicalResourceReservationFormComponent } from '../physical-resource-reservation-form/physical-resource-reservation-form.component';
 import { TeleconferenceReservationFormComponent } from '../teleconference-reservation-form/teleconference-reservation-form.component';
 import { VideoconferenceReservationFormComponent } from '../videoconference-reservation-form/videoconference-reservation-form.component';

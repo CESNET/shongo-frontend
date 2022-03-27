@@ -1,1 +1,49 @@
-<p>physical-resource-reservation-dialog works!</p>
+<form [formGroup]="form" class="form">
+  <div class="form__left">
+    <h2>Reservation data</h2>
+
+    <!-- Description field -->
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label>Description</mat-label>
+      <input type="text" matInput formControlName="description" />
+      <mat-error
+        *ngIf="
+          getFormError(
+            form.get('description')!,
+            descriptionErrorHandler
+          ) as error
+        "
+        >{{ error }}</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Timezone field -->
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label>Time zone</mat-label>
+      <mat-select formControlName="timezone">
+        <mat-option>
+          <ngx-mat-select-search
+            appTimezoneSearch
+            #timezoneSarch="timezoneSearch"
+          ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option
+          *ngFor="let opt of timezoneSarch.filteredTimezones | async"
+          [value]="opt.timezone"
+        >
+          {{ opt.label }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="getFormError(form.get('timezone')!) as error">{{
+        error
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-divider vertical class="form__divider"></mat-divider>
+
+  <div class="form__right">
+    <h2>Periodicity</h2>
+    <app-periodicity-selection-form></app-periodicity-selection-form>
+  </div>
+</form>
