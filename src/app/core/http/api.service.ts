@@ -14,23 +14,24 @@ export abstract class ApiService {
     endpoint: Endpoint,
     version: string
   ) {
-    this.endpointURL = this._buildEndpointURL(endpoint, version);
+    this.endpointURL = ApiService.buildEndpointURL(endpoint, version);
   }
 
-  private _buildEndpointURL(endpoint: Endpoint, version: string) {
+  static buildEndpointURL(endpoint: string, version: string) {
     return `http://${environment.shongoRESTApiHost}:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
   }
 
-  fetchItems<T>(httpParams?: HttpParams): Observable<ApiResponse<T>> {
-    return this._http
-      .get<ApiResponse<T>>(this.endpointURL, { params: httpParams })
-      .pipe(
-        first(),
-        catchError((err) => {
-          console.error(err);
-          return throwError(err);
-        })
-      );
+  fetchItems<T>(
+    httpParams?: HttpParams,
+    url = this.endpointURL
+  ): Observable<ApiResponse<T>> {
+    return this._http.get<ApiResponse<T>>(url, { params: httpParams }).pipe(
+      first(),
+      catchError((err) => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
   }
 
   fetchTableItems<T>(
@@ -38,15 +39,16 @@ export abstract class ApiService {
     pageIndex: number,
     sortedColumn: string,
     sortDirection: SortDirection,
-    filter: HttpParams
+    filter: HttpParams,
+    url = this.endpointURL
   ): Observable<ApiResponse<T>> {
     let httpParams = filter ?? new HttpParams();
 
     if (pageSize != null) {
-      httpParams = httpParams.set('limit', pageSize);
+      httpParams = httpParams.set('count', pageSize);
 
       if (pageIndex != null) {
-        httpParams = httpParams.set('offset', pageSize * pageIndex);
+        httpParams = httpParams.set('start', pageSize * pageIndex);
       }
     }
     if (sortedColumn) {
@@ -56,10 +58,22 @@ export abstract class ApiService {
       httpParams = httpParams.set('sort_dir', sortDirection);
     }
 
-    return this.fetchItems<T>(httpParams);
+    return this.fetchItems<T>(httpParams, url);
   }
 
-  deleteItem(id: string): Observable<{}> {
-    return this._http.delete<{}>(this.endpointURL, { body: { id } });
+  fetchItem<T>(id: string, url = this.endpointURL): Observable<T> {
+    return this._http.get<T>(`${url}/${id}`);
+  }
+
+  deleteItem(id: string, url = this.endpointURL): Observable<{}> {
+    return this.deleteByUrl(`${url}/${id}`);
+  }
+
+  deleteByUrl(url: string): Observable<{}> {
+    return this._http.delete<{}>(url);
+  }
+
+  postItem<T>(body: T, url = this.endpointURL): Observable<unknown> {
+    return this._http.post(url, body);
   }
 }

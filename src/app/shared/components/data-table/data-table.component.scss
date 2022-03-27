@@ -1,6 +1,14 @@
 @import "../../directives/mat-table-responsive/mobile-table-row.scss";
 
 /* Responsive style is defined in mat-table-responive directive folder. */
+.table-container {
+  overflow: hidden;
+  background: white;
+  box-shadow: $table-card-shadow;
+  border-radius: 4px;
+  padding: 10px 20px;
+}
+
 .full-width-table {
   width: 100%;
 }
@@ -13,21 +21,29 @@
   padding-bottom: 10px;
   align-items: center;
 
-  h3 {
+  h4 {
     margin: 0;
   }
 }
 
 /* Buttons */
 .buttons {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
-.button-header {
+.button-container {
+  display: flex;
+  align-items: center;
+}
+.justify-center {
+  text-align: center;
+}
+.button-width {
   box-sizing: content-box; // To keep the padding-right of the last cell.
   width: 40px;
 }
-.justify-right {
-  text-align: center;
+mat-spinner.button-loading {
+  margin: 0 10px;
 }
 
 /* Loading display */
@@ -52,32 +68,15 @@
   }
 }
 
-/* Media queries */
-@media (max-width: 768px) {
-  mat-paginator {
-    @include styled-row;
+/* Mobile table sort */
+.mobile-table-sort {
+  .sort-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
 
-    &.extra-gap {
-      margin-top: 20px;
+    mat-form-field {
+      flex: 1;
     }
-  }
-
-  header,
-  .no-data,
-  .loading {
-    background: white;
-    box-shadow: $table-card-shadow;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-}
-@media (min-width: 769px) {
-  .table-container {
-    padding: 10px;
-    background: white;
-    box-shadow: $table-card-shadow;
-    border-radius: 4px;
-    overflow: hidden;
   }
 }

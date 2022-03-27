@@ -1,0 +1,29 @@
+<header mat-dialog-title>
+  <h1>Create reservation</h1>
+</header>
+
+<mat-dialog-content class="custom-scrollbar">
+  <div [hidden]="creating$ | async">
+    <div appComponentHost></div>
+  </div>
+
+  <div class="creating-container" *ngIf="creating$ | async">
+    <mat-progress-spinner
+      mode="indeterminate"
+      color="primary"
+    ></mat-progress-spinner>
+    <b>Creating reservation request</b>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="createReservationRequest()"
+    [disabled]="!formComponent || !formComponent.valid"
+  >
+    Create
+  </button>
+</mat-dialog-actions>

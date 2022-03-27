@@ -1,0 +1,94 @@
+<header>
+  <h1>User settings</h1>
+</header>
+
+<main>
+  <form
+    [formGroup]="settingsForm"
+    (ngSubmit)="submitSettings()"
+    *ngIf="(settings.userSettingsLoading$ | async) === false; else loading"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Preferred language</mat-label>
+      <mat-select formControlName="locale">
+        <mat-option *ngFor="let opt of languageOptions" [value]="opt.value">
+          {{ opt.displayName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Home time zone</mat-label>
+      <mat-select formControlName="homeTimeZone">
+        <mat-option>
+          <ngx-mat-select-search
+            appTimezoneSearch
+            #homeTimezoneSearch="timezoneSearch"
+          ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option
+          *ngFor="let opt of homeTimezoneSearch.filteredTimezones | async"
+          [value]="opt.timezone"
+        >
+          {{ opt.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="selectable-form-field">
+      <mat-checkbox
+        color="primary"
+        [formControl]="useCurrentTimeZoneCtrl"
+      ></mat-checkbox>
+      <mat-form-field appearance="outline">
+        <mat-label>Current time zone</mat-label>
+        <mat-select formControlName="currentTimeZone">
+          <mat-option>
+            <ngx-mat-select-search
+              appTimezoneSearch
+              #currentTimezoneSearch="timezoneSearch"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option
+            *ngFor="let opt of currentTimezoneSearch.filteredTimezones | async"
+            [value]="opt.timezone"
+          >
+            {{ opt.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row space-between">
+      <mat-checkbox color="primary" [formControl]="usePerunSettingsCtrl"
+        >Use perun settings</mat-checkbox
+      >
+      <a
+        href="https://einfra.cesnet.cz/a/user-profile/fed/"
+        target="_blank"
+        mat-flat-button
+        color="primary"
+        >Edit perun settings</a
+      >
+    </div>
+
+    <mat-checkbox
+      *ngIf="settings.isAdmin"
+      color="primary"
+      [formControl]="administrationModeCtrl"
+      >Administration mode</mat-checkbox
+    >
+
+    <div class="row flex-end" id="submit-row">
+      <a mat-button type="button" routerLink="/">Cancel</a>
+      <button mat-flat-button type="submit" color="primary">Submit</button>
+    </div>
+  </form>
+
+  <ng-template #loading>
+    <ngx-skeleton-loader
+      count="4"
+      [theme]="{ height: '50px' }"
+    ></ngx-skeleton-loader>
+  </ng-template>
+</main>

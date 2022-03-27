@@ -1,0 +1,23 @@
+form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  max-width: 500px;
+  margin-top: 40px;
+
+  button {
+    width: fit-content;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  form {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  form {
+    width: 100%;
+  }
+}

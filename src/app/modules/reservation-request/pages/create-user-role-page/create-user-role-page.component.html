@@ -1,0 +1,107 @@
+<header>
+  <h1>Add user role</h1>
+</header>
+
+<main>
+  <form *ngIf="form" [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Reservation request</mat-label>
+      <input type="text" matInput formControlName="reservationRequest" />
+    </mat-form-field>
+
+    <label>Identity type:</label>
+    <mat-radio-group
+      aria-label="Select identity type"
+      formControlName="identityType"
+      color="primary"
+    >
+      <mat-radio-button [value]="IdentityType.USER">User</mat-radio-button>
+      <mat-radio-button [value]="IdentityType.GROUP">Group</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field
+      appearance="outline"
+      *ngIf="
+        form.get('identityType')!.value === IdentityType.USER;
+        else groupSearch
+      "
+    >
+      <mat-label>User</mat-label>
+      <mat-select formControlName="identityId">
+        <mat-option>
+          <ngx-mat-select-search
+            appUserSearch
+            #userSearch="userSearch"
+          ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option
+          *ngFor="let opt of userSearch.filteredUsers | async"
+          [value]="opt.id"
+        >
+          {{ opt.user }}
+        </mat-option>
+      </mat-select>
+      <mat-hint>Type at least 2 characters</mat-hint>
+      <mat-error *ngIf="getFormError(form.get('identityId')!) as error">{{
+        error
+      }}</mat-error>
+    </mat-form-field>
+
+    <ng-template #groupSearch>
+      <mat-form-field appearance="outline">
+        <mat-label>Group</mat-label>
+        <mat-select formControlName="identityId">
+          <mat-option>
+            <ngx-mat-select-search
+              appGroupSearch
+              #groupSearch="groupSearch"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option
+            *ngFor="let opt of groupSearch.filteredGroups | async"
+            [value]="opt.id"
+          >
+            {{ opt.group }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="getFormError(form.get('identityId')!) as error">{{
+          error
+        }}</mat-error>
+      </mat-form-field>
+    </ng-template>
+
+    <mat-form-field appearance="outline">
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let roleType of roleTypes" [value]="roleType">{{
+          roleType | titlecase
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!isValid()"
+        (click)="postUserRole()"
+      >
+        Add participant
+      </button>
+
+      <ng-container *ngIf="posting$ | async; else cancelButton">
+        <div class="posting-loader">
+          <mat-spinner diameter="20"></mat-spinner>
+          <span>Creating participant...</span>
+        </div>
+      </ng-container>
+
+      <ng-template #cancelButton>
+        <a mat-button [routerLink]="'../../'">Cancel</a>
+      </ng-template>
+    </div>
+  </form>
+
+  <div class="alert">
+    <app-alert message="An error occured" type="error"></app-alert>
+  </div>
+</main>

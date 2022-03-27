@@ -1,0 +1,126 @@
+<header>
+  <h1>Add participant</h1>
+</header>
+
+<main>
+  <form *ngIf="form" [formGroup]="form">
+    <div class="participant-type-selection">
+      <label>Participant type:</label>
+      <mat-radio-group
+        aria-label="Select participant type"
+        formControlName="participantType"
+        color="primary"
+      >
+        <mat-radio-button [value]="ParticipantType.USER"
+          >With user account</mat-radio-button
+        >
+        <mat-radio-button [value]="ParticipantType.ANONYMOUS"
+          >Without user account</mat-radio-button
+        >
+      </mat-radio-group>
+    </div>
+
+    <form
+      *ngIf="
+        form.get('participantType')!.value === ParticipantType.USER;
+        else anonymousForm
+      "
+      formGroupName="userForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>User</mat-label>
+        <mat-select formControlName="userId">
+          <mat-option>
+            <ngx-mat-select-search
+              appUserSearch
+              #userSearch="userSearch"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option
+            *ngFor="let opt of userSearch.filteredUsers | async"
+            [value]="opt.id"
+          >
+            {{ opt.user }}
+          </mat-option>
+        </mat-select>
+        <mat-hint>Type at least 2 characters</mat-hint>
+        <mat-error
+          *ngIf="getFormError(form!.get('userForm')!.get('userId')!) as error"
+          >{{ error }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of participantRoles" [value]="role">{{
+            role | titlecase
+          }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="getFormError(form!.get('userForm')!.get('role')!) as error"
+          >{{ error }}</mat-error
+        >
+      </mat-form-field>
+    </form>
+
+    <ng-template #anonymousForm>
+      <form formGroupName="anonymousForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input type="text" matInput formControlName="name" />
+          <mat-error
+            *ngIf="
+              getFormError(form!.get('anonymousForm')!.get('name')!) as error
+            "
+            >{{ error }}</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input type="text" matInput formControlName="email" />
+          <mat-error
+            *ngIf="
+              getFormError(form!.get('anonymousForm')!.get('email')!) as error
+            "
+            >{{ error }}</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select value="guest" [disabled]="true">
+            <mat-option value="guest">Guest</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </ng-template>
+
+    <div class="buttons">
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!isValid()"
+        (click)="postParticipant()"
+      >
+        Add participant
+      </button>
+
+      <ng-container *ngIf="posting$ | async; else cancelButton">
+        <div class="posting-loader">
+          <mat-spinner diameter="20"></mat-spinner>
+          <span>Creating participant...</span>
+        </div>
+      </ng-container>
+
+      <ng-template #cancelButton>
+        <a mat-button [routerLink]="'../../'">Cancel</a>
+      </ng-template>
+    </div>
+  </form>
+
+  <div class="alert">
+    <app-alert message="An error occured" type="error"></app-alert>
+  </div>
+</main>

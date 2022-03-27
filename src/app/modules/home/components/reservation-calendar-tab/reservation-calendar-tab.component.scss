@@ -1,0 +1,68 @@
+/* Layout */
+header {
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.calendar-options {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.room-options {
+  text-align: right;
+
+  :not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
+/* Loading */
+.calendar-container {
+  position: relative;
+
+  .loading-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 245, 245, 0.6);
+    background: linear-gradient(
+      0deg,
+      rgba(245, 245, 245, 0.6) 0%,
+      rgba(255, 255, 255, 0.6) 100%
+    );
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .calendar-options {
+    h1 {
+      order: 3;
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .room-options {
+    display: flex;
+    text-align: center;
+  }
+  .calendar-options,
+  .room-options {
+    flex-direction: column;
+    align-items: center;
+
+    > * {
+      margin-top: 15px;
+    }
+  }
+}

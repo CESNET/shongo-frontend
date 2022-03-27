@@ -1,0 +1,168 @@
+<div class="help">
+  <aside>
+    <nav>
+      <h1>Navigation</h1>
+      <mat-nav-list>
+        <a mat-list-item routerLink="./" fragment="introduction"
+          ><span
+            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon>
+            Introduction</span
+          ></a
+        >
+        <a mat-list-item routerLink="./" fragment="level-of-authenticity"
+          ><span
+            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon> Level
+            of authenticity</span
+          ></a
+        >
+        <a mat-list-item routerLink="./" fragment="rooms"
+          ><span
+            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon>
+            Rooms</span
+          ></a
+        >
+        <a mat-list-item routerLink="./" fragment="resources"
+          ><span
+            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon>
+            Resources</span
+          ></a
+        >
+      </mat-nav-list>
+    </nav>
+  </aside>
+
+  <main>
+    <header>
+      <h1>Help</h1>
+    </header>
+
+    <section id="introduction">
+      <header>
+        <h2>Introduction</h2>
+        <mat-divider></mat-divider>
+      </header>
+
+      <p>
+        <b>Reservation system</b> allows you to create your own virtual rooms
+        for H.323/SIP videoconferences or Adobe Connect web conferences. You can
+        share the rooms with your colleagues and use them for your conference
+        calls. The creation of new rooms is allowed only for logged in users
+        with certain level of authenticity. You can log in with you user account
+        from your organization that is involved in
+        <a
+          href="https://www.eduid.cz/"
+          target="_blank"
+          class="mat-primary-color"
+          >eduID.cz</a
+        >
+        federation or you can create a new user account at
+        <a
+          href="https://www.eduid.cz/cs/hostel"
+          target="_blank"
+          class="mat-primary-color"
+          >hostel</a
+        >.
+      </p>
+      <p>
+        Terms and conditions under which personal data collated in providing the
+        CESNET e-infrastructure services are processed you can find here.
+      </p>
+      <p>
+        You can create a new room from main page or from page with your
+        reservation requests.
+      </p>
+    </section>
+
+    <section id="level-of-authenticity">
+      <header>
+        <h2>Level of authenticity</h2>
+        <mat-divider></mat-divider>
+      </header>
+
+      <p>
+        Only logged in user with a certain level of authenticity can create a
+        new room or book a capacity for existing room. If you see
+        <mat-icon color="warn" inline="true">warning</mat-icon> next to your
+        name in the top of the page, it means that your account doesn't meet the
+        requested level of authenticity. In this case you have two options:
+      </p>
+      <ul>
+        <li>
+          Request your identity provider to verify your identity (e.g., if you
+          use
+          <a
+            href="https://www.eduid.cz/cs/hostel"
+            target="_blank"
+            class="mat-primary-color"
+            >hostel</a
+          >
+          identity, you can follow this
+          <a
+            href="https://www.eduid.cz/cs/hostel"
+            target="_blank"
+            class="mat-primary-color"
+            >procedure</a
+          >).
+        </li>
+        <li>
+          Request the system
+          <a routerLink="/report" class="mat-primary-color">administrators</a>
+          to grant you the permissions to create new rooms and book room
+          capacities.
+        </li>
+      </ul>
+    </section>
+
+    <section id="rooms">
+      <header>
+        <h2>Rooms</h2>
+        <mat-divider></mat-divider>
+      </header>
+
+      <p>To be added.</p>
+    </section>
+
+    <section id="resources">
+      <header>
+        <h2>Resources</h2>
+        <mat-divider></mat-divider>
+      </header>
+
+      <p>
+        Reservation system manages hardware and software equipment (referred to
+        as <b>resources</b>), which provides the creation and management of
+        virtual rooms. Each resource has only a limited number of licenses that
+        can be used at a time. For instance if you want to join an Adobe Connect
+        room, the resource must have at least one available license, otherwise
+        it won't allow you to join the room. After joining the room the license
+        is consumed and after leaving the room the license is released. To be
+        able to guarantee a specific number of participants to be able to join
+        to every room, it is necessery to book the licenses in advance. That is
+        the reason why you must explicitly book a requested capacity for each
+        room when you want to use it (e.g., when creating a new one-time room or
+        when booking a capacity for permanent room).
+      </p>
+      <p>
+        <i
+          >You can imagine the resource as a building in which few rooms are
+          located and the limited number of licenses you can imagine as chairs
+          located in this building and which may be moved between the rooms.
+          Each room can contain different number of chairs at different times.
+          For every meeting in every room, the chairs must be booked in advance,
+          otherwise it may happen that participants won't be able to sit
+          down.</i
+        >
+      </p>
+
+      <div class="labeled-img">
+        <img
+          src="/assets/img/help/resource_licenses.png"
+          alt="Resource licenses"
+          width="200px"
+          height="160px"
+        />
+        <label><i>A building may contain, e.g., 20 chairs</i></label>
+      </div>
+    </section>
+  </main>
+</div>

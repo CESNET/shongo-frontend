@@ -1,0 +1,30 @@
+dl {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  min-width: 21em;
+  max-width: 31em;
+  overflow: visible;
+  font-size: 1em;
+  margin: 0;
+
+  dt,
+  dd {
+    font-size: 1em;
+    padding-bottom: 0.7em;
+  }
+  dt {
+    flex: 0 0 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: bold;
+    color: rgb(90, 90, 90);
+  }
+  dd {
+    flex: 0 0 50%;
+    margin-left: auto;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

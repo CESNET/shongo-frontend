@@ -1,0 +1,25 @@
+.icon-s {
+  transform: scale(0.9);
+}
+.icon-xs {
+  transform: scale(0.8);
+}
+.icon-xxs {
+  transform: scale(0.5);
+}
+
+.fx-center-hor,
+.fx-center-vert,
+.fx-center-both {
+  display: flex;
+}
+.fx-center-hor {
+  justify-content: center;
+}
+.fx-center-vert {
+  align-items: center;
+}
+.fx-center-both {
+  justify-content: center;
+  align-items: center;
+}

@@ -1,15 +1,54 @@
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api.service';
-import { HasID } from '../models/has-id.interface';
-import { TableButton } from '../models/table-button.interface';
+import { CertainityCheckComponent } from '../../certainity-check/certainity-check.component';
+import { WithPathTemplate } from '../models/interfaces/with-path-template.interface';
+import { ApiActionButton } from './api-action-button';
+import { RowPredicate } from './table-button';
 
-export class DeleteButton<T extends HasID> implements TableButton<T> {
+export class DeleteButton<T>
+  extends ApiActionButton<T>
+  implements WithPathTemplate
+{
   icon = 'delete';
-  name = 'delete';
-  tooltip = 'Delete item';
+  name = 'Delete';
 
-  constructor(private _apiService: ApiService) {}
+  constructor(
+    public apiService: ApiService,
+    public dialog: MatDialog,
+    public pathTemplate: string,
+    public isDisabledFunc?: RowPredicate<T>,
+    public displayButtonFunc?: RowPredicate<T>
+  ) {
+    super(isDisabledFunc, displayButtonFunc);
+  }
 
-  executeAction(row: T): void {
-    this._apiService.deleteItem(row.id);
+  executeAction(row: T): Observable<string> {
+    const dialogRef = this.dialog.open(CertainityCheckComponent);
+
+    const path = this.constructPath(row, this.pathTemplate);
+    const url = `${this.apiService.endpointURL}${path}`;
+
+    return dialogRef.afterClosed().pipe(
+      mergeMap((res): Observable<string> => {
+        if (res) {
+          this.addToLoading(row);
+          return this.apiService.deleteByUrl(url).pipe(
+            tap(() => {
+              this.removeFromLoading(row);
+              this._deleted$.next();
+            }),
+            mapTo('Item deleted successfully.'),
+            catchError(() => {
+              this.removeFromLoading(row);
+              return throwError('Item deletion failed.');
+            })
+          );
+        } else {
+          return of('');
+        }
+      })
+    );
   }
 }

@@ -1,0 +1,26 @@
+.state {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &.error {
+    background: rgba(255, 0, 0, 0.3);
+    color: red;
+  }
+  &.success {
+    background: rgba(20, 200, 80, 0.3);
+    color: rgb(0, 187, 56);
+  }
+  &.info {
+    background: rgba(255, 242, 54, 0.3);
+    color: rgb(187, 159, 0);
+  }
+  &.ready {
+    background: rgba(0, 119, 255, 0.3);
+    color: rgb(0, 60, 255);
+  }
+}

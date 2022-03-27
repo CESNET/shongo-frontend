@@ -1,0 +1,23 @@
+<header mat-dialog-title>
+  <h1>Set display name</h1>
+</header>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Display name</mat-label>
+    <input type="text" matInput [formControl]="nameCtrl" />
+    <mat-error *ngIf="getFormError(nameCtrl) as error">{{ error }}</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    mat-flat-button
+    color="primary"
+    [mat-dialog-close]="nameCtrl.value"
+    [disabled]="!nameCtrl.valid"
+  >
+    Confirm
+  </button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

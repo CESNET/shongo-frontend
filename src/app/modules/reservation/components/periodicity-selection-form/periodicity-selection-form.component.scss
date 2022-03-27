@@ -1,0 +1,88 @@
+.periodicity {
+  &__specification {
+    margin-top: 1.5em;
+  }
+
+  &__field {
+    font-size: 0.9em;
+
+    &--number {
+      width: 5ch;
+    }
+
+    &--text {
+      width: 15ch;
+    }
+
+    &--date {
+      font-size: 1em;
+      margin-top: 1em;
+    }
+  }
+
+  &__excluded-days-header {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1em 0 0.5em 0;
+
+    span {
+      font-size: 1.2em;
+      font-weight: 500;
+    }
+  }
+
+  &__excluded-days {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__excluded-date {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+
+    mat-icon {
+      $icon-size: 17px;
+      width: $icon-size;
+      height: $icon-size;
+      font-size: $icon-size;
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+      &:active {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__no-excluded-days {
+    margin-top: 1em;
+    color: var(--gray-400);
+  }
+}
+
+.selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  &--vertical {
+    flex-direction: column;
+  }
+
+  &--days {
+    margin-bottom: 1em;
+  }
+}

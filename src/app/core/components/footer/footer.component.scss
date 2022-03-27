@@ -1,0 +1,42 @@
+/* Layout */
+footer {
+  margin-top: 50px;
+  width: 100%;
+  padding: 50px 0;
+}
+.footer-section {
+  width: 100%;
+  flex-wrap: wrap;
+}
+.footer-items {
+  width: 100%;
+}
+.footer-items--group {
+  width: 200px;
+
+  mat-divider {
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    margin-bottom: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Other */
+#cesnet-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 228px;
+  max-height: 87px;
+  margin-bottom: 25px;
+}

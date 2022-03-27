@@ -1,0 +1,9 @@
+.unauthorized {
+  width: fit-content;
+  margin: 3rem auto;
+
+  &__header,
+  &__body {
+    text-align: center;
+  }
+}

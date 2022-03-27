@@ -4,43 +4,90 @@
 @import "./styles/res-container.scss";
 @import "./styles/themes/shongo-light.theme.scss";
 @import "./app/shared/directives/mat-table-responsive/mat-table-responsive.directive.scss";
+@import "./styles/utils.scss";
+@import "./styles/definition-list.scss";
+@import "./styles/calendar.scss";
+@import "./styles/scrollbar.scss";
+
+:root {
+  /* Colors */
+  --white: #fff;
+  --gray-300: rgb(150, 150, 150);
+  --gray-400: rgb(180, 180, 180);
+  --red-500: rgb(255, 21, 52);
+  --orange-500: rgb(241, 178, 4);
+  --green-500: rgb(22, 148, 22);
+
+  /* Element colors */
+  --warning-color: var(--orange-500);
+  --success-color: var(--green-500);
+  --error-color: var(--red-500);
+  --error-color-light: rgb(255, 241, 241);
+  --warning-color-light: rgb(255, 253, 247);
+  --success-color-light: rgb(238, 255, 238);
+
+  /* Element sizes */
+  --toolbar-height: 4.5rem;
+
+  /* Font sizes */
+  --font-size-regular: 1rem;
+  --font-size-small: 0.8rem;
+  --font-size-xs: 0.6rem;
+  --font-size-medium: 1.2rem;
+  --font-size-large: 1.4rem;
+}
 
 html,
 body {
   height: 100%;
+  box-sizing: border-box;
 }
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+b {
+  font-weight: 500;
+}
 
 /* Material */
+mat-toolbar.mat-toolbar {
+  height: var(--toolbar-height);
+}
 mat-toolbar.header-toolbar {
   padding: 0 !important;
 }
 
-.icon-s {
-  transform: scale(0.9);
-}
-.icon-xs {
-  transform: scale(0.8);
-}
-.icon-xxs {
-  transform: scale(0.5);
+.snackbar {
+  &--error {
+    border: 2px solid var(--error-color);
+    background: var(--error-color-light) !important;
+  }
+  &--warning {
+    border: 2px solid var(--warning-color);
+    background: var(--warning-color-light) !important;
+  }
+  &--success {
+    border: 2px solid var(--success-color);
+    background: var(--success-color-light) !important;
+  }
 }
 
-.fx-center-hor,
-.fx-center-vert,
-.fx-center-both {
-  display: flex;
+/* Mat tab content */
+.tab-content {
+  margin-top: 1.5rem;
+  overflow-x: hidden;
+  padding: 1rem 0.5rem;
 }
-.fx-center-hor {
-  justify-content: center;
-}
-.fx-center-vert {
-  align-items: center;
-}
-.fx-center-both {
-  justify-content: center;
-  align-items: center;
+
+/* Theme colors */
+.mat-primary-color {
+  $primary: map-get($shongo-frontend-theme, primary);
+  color: map-get($primary, default);
 }

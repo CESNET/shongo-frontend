@@ -1,0 +1,40 @@
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  width: fit-content;
+
+  &.error {
+    background: rgb(255, 149, 149);
+    border: 1px solid rgb(236, 126, 126);
+    color: rgb(173, 41, 41);
+  }
+  &.success {
+    background: rgb(152, 255, 157);
+    border: 1px solid rgb(140, 240, 115);
+    color: rgb(36, 143, 59);
+  }
+  &.info {
+    background: rgb(251, 253, 126);
+    border: 1px solid rgb(228, 216, 110);
+    color: rgb(161, 144, 43);
+  }
+}
+
+#close-btn {
+  $icon-size: 20px;
+  $button-size: $icon-size + 5px;
+
+  width: $button-size;
+  height: $button-size;
+  line-height: $button-size;
+
+  .mat-icon {
+    height: $icon-size;
+    width: $icon-size;
+    font-size: $icon-size;
+    line-height: $icon-size;
+  }
+}

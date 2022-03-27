@@ -1,39 +1,47 @@
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { BehaviorSubject } from 'rxjs';
-import { authConfig } from './auth-config';
-import { IdentityClaims } from './identity-claims';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { IdentityClaims } from '../../shared/models/interfaces/identity-claims.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { SessionEndedDialogComponent } from 'src/app/shared/components/session-ended-dialog/session-ended-dialog.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
-  public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
+  public isAuthenticated$: Observable<boolean>;
+  private _isAuthenticated$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private _oauthService: OAuthService) {
-    this.initializeOauthService();
+  constructor(private _oauthService: OAuthService, private _dialog: MatDialog) {
+    this.isAuthenticated$ = this._isAuthenticated$.asObservable();
 
-    this._oauthService.events.subscribe(() => {
-      this.isAuthenticatedSubject$.next(
-        this._oauthService.hasValidAccessToken()
-      );
+    this._observeStorage();
+    this._observeAuthEvents();
+
+    // Initialize silent refresh
+    this._oauthService.setupAutomaticSilentRefresh();
+  }
+
+  displayLoginDialog(): void {
+    this._dialog.open(SessionEndedDialogComponent, {
+      width: '95%',
+      maxWidth: '100ch',
     });
   }
 
   login(): void {
     this._oauthService.initCodeFlow();
   }
-  logout() {
+
+  logout(): void {
     this._oauthService.logOut();
   }
 
   async initializeOauthService(): Promise<void> {
-    this._oauthService.configure(authConfig);
     await this._oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
-  hasValidToken() {
+  hasValidAccessToken(): boolean {
     return this._oauthService.hasValidAccessToken();
   }
 
@@ -48,5 +56,41 @@ export class AuthenticationService {
   }
   get identityClaims(): IdentityClaims | null {
     return this._oauthService.getIdentityClaims() as IdentityClaims;
+  }
+
+  private _observeAuthEvents(): void {
+    this._oauthService.events.subscribe((e) => {
+      this._isAuthenticated$.next(this.hasValidAccessToken());
+
+      switch (e.type) {
+        case 'session_error':
+        case 'session_terminated':
+          this.displayLoginDialog();
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  /**
+   * Checks the change in session storage for log out/in from another tab.
+   */
+  private _observeStorage(): void {
+    window.addEventListener('storage', (e) => {
+      // The `key` is `null` if the event was caused by `.clear()`
+      if (e.key !== 'access_token' && e.key !== null) {
+        return;
+      }
+
+      console.warn(
+        'Noticed changes to access_token (most likely from another tab), updating isAuthenticated'
+      );
+      this._isAuthenticated$.next(this.hasValidAccessToken());
+
+      if (!this.hasValidAccessToken()) {
+        this.displayLoginDialog();
+      }
+    });
   }
 }

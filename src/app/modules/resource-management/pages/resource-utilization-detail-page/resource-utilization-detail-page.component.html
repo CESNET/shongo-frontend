@@ -1,0 +1,64 @@
+<ng-container *ngIf="data$ | async as data; else loadingOrError">
+  <header>
+    <h1>Resource capacity utilization</h1>
+    <dl>
+      <dt>Resource:</dt>
+      <dd>{{ data.name + " (" + data.id + ")" }}</dd>
+      <dt>Interval:</dt>
+      <dd>
+        {{
+          (data.intervalFrom | date) +
+            (data.intervalFrom !== data.intervalTo
+              ? " - " + (data.intervalTo | date)
+              : "")
+        }}
+      </dd>
+      <dt>Usage:</dt>
+      <dd>{{ getUsage(data.totalCapacity, data.usedCapacity) }}</dd>
+    </dl>
+  </header>
+
+  <main>
+    <h1>Reservations</h1>
+    <app-data-table
+      *ngIf="reservationsDataSource"
+      description="Reservations for this resource."
+      [dataSource]="reservationsDataSource"
+      [showCheckboxes]="false"
+      [showDeleteButtons]="false"
+    ></app-data-table>
+  </main>
+</ng-container>
+
+<ng-template #loadingOrError>
+  <ng-container *ngIf="loading$ | async; else error">
+    <header class="header-skeleton">
+      <h1>Resource capacity utilization</h1>
+      <ngx-skeleton-loader
+        count="3"
+        appearance="line"
+        [theme]="{
+          'border-radius': '5px',
+          height: '30px',
+          border: '1px solid white'
+        }"
+      ></ngx-skeleton-loader>
+    </header>
+    <main>
+      <h1>Reservations</h1>
+      <ngx-skeleton-loader
+        count="5"
+        appearance="line"
+        [theme]="{
+          'border-radius': '5px',
+          height: '30px',
+          border: '1px solid white'
+        }"
+      ></ngx-skeleton-loader>
+    </main>
+  </ng-container>
+</ng-template>
+
+<ng-template #error>
+  <span>Resource not found.</span>
+</ng-template>

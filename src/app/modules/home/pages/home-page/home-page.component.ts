@@ -1,11 +1,12 @@
-import { DatePipe } from '@angular/common';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { MeetingRoomService } from 'src/app/core/http/meeting-room/meeting-room.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RoomService } from 'src/app/core/http/room/room.service';
-import { MeetingRoomDataSource } from 'src/app/shared/components/data-table/data-source/meeting-room.datasource';
-import { ReservationRequestDataSource } from 'src/app/shared/components/data-table/data-source/reservation-request-datasource';
-import { RoomDataSource } from 'src/app/shared/components/data-table/data-source/room-datasource';
+import { ParticipationInRoomsDataSource } from 'src/app/shared/components/data-table/data-sources/participation-in-rooms.datasource';
+import { PhysicalReservationsDataSource } from 'src/app/shared/components/data-table/data-sources/physical-reservations.datasource';
+import { YourRoomsDataSource } from 'src/app/shared/components/data-table/data-sources/your-rooms.datasource';
+import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({
   selector: 'app-home-page',
@@ -14,23 +15,29 @@ import { RoomDataSource } from 'src/app/shared/components/data-table/data-source
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent {
-  resReqDataSource: ReservationRequestDataSource;
-  roomDataSource: RoomDataSource;
-  meetingRoomDataSource: MeetingRoomDataSource;
+  yourRoomsDataSource: YourRoomsDataSource;
+  physicalReservationsDataSource: PhysicalReservationsDataSource;
+  participationInRoomsDataSource: ParticipationInRoomsDataSource;
 
   constructor(
     private _resReqService: ReservationRequestService,
     private _roomService: RoomService,
-    private _meetingRoomService: MeetingRoomService,
-    private _datePipe: DatePipe
+    private _datePipe: MomentDatePipe,
+    private _dialog: MatDialog,
+    public auth: AuthenticationService
   ) {
-    this.resReqDataSource = new ReservationRequestDataSource(
+    this.yourRoomsDataSource = new YourRoomsDataSource(
       this._resReqService,
-      this._datePipe
+      this._datePipe,
+      this._dialog
     );
-    this.roomDataSource = new RoomDataSource(this._roomService, this._datePipe);
-    this.meetingRoomDataSource = new MeetingRoomDataSource(
-      this._meetingRoomService,
+    this.physicalReservationsDataSource = new PhysicalReservationsDataSource(
+      this._resReqService,
+      this._datePipe,
+      this._dialog
+    );
+    this.participationInRoomsDataSource = new ParticipationInRoomsDataSource(
+      this._roomService,
       this._datePipe
     );
   }

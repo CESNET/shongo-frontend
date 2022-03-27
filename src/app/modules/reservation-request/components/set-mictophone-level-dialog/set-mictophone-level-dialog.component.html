@@ -1,0 +1,24 @@
+<header mat-dialog-title>
+  <h1>Set microphone level</h1>
+</header>
+
+<mat-dialog-content>
+  <div class="slider-container">
+    <mat-slider
+      min="0"
+      max="100"
+      step="1"
+      [value]="data?.microphoneLevel ?? 50"
+      color="primary"
+      thumbLabel
+      #slider
+    ></mat-slider>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" [mat-dialog-close]="slider.value">
+    Confirm
+  </button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

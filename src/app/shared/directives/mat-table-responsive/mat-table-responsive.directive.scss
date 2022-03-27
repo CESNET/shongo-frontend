@@ -1,35 +1,27 @@
 @import "./mobile-table-row.scss";
 
+.mobile-table-sort {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .mat-table[appMatTableResponsive] {
-    background: none;
+  .mobile-table-sort {
+    @include styled-row;
+    display: block;
+  }
+
+  [appMatTableResponsive] {
+    &.table-container {
+      padding: 5px !important;
+      background: none !important;
+      box-shadow: none !important;
+    }
+    .mat-table {
+      background: none;
+    }
 
     .mat-header-row {
-      display: flex;
-      flex-wrap: wrap;
-      height: auto;
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      @include styled-row;
-
-      th.mat-header-cell {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        padding: 1rem 0.5rem;
-        justify-content: space-around;
-
-        & > .mat-sort-header-container {
-          padding-left: 15px; // padding is used to center the header table cells, due to the width of the sort icon
-        }
-
-        &:not([mat-sort-header]),
-        &.mat-sort-header-disabled,
-        &.mat-column-actions {
-          display: none;
-        }
-      }
+      display: none;
     }
 
     .mat-row {
@@ -42,7 +34,7 @@
         border: none;
       }
 
-      td.mat-cell:not(.mat-column-actions) {
+      td.mat-cell:not(.mat-column-actions):not(.mat-column-select) {
         display: grid;
         grid-template-columns: 50% 50%;
         padding: 0.5rem;
@@ -56,16 +48,19 @@
 
         &:before {
           content: attr(data-column-name);
+          display: flex;
+          align-items: center;
           text-align: left;
           font-weight: 600;
           color: rgb(70, 70, 70);
         }
       }
 
-      td.mat-column-actions {
+      td.mat-column-actions,
+      td.mat-column-select {
         display: flex;
         justify-content: center;
-        padding: 0 0.5rem;
+        padding: 1rem;
 
         & > button {
           margin: 0.5rem 0;
@@ -75,17 +70,36 @@
       &:last-of-type td:last-of-type {
         border: none;
       }
-
-      // &:not(:last-of-type) td:last-of-type {
-      //   border-bottom: 1rem solid #fafafa;
-      // }
     }
-  }
 
-  .mat-card,
-  .mat-expansion-panel {
-    .mat-table[matTableResponsive] {
-      border: 0.5rem solid #fafafa;
+    .mat-card,
+    .mat-expansion-panel {
+      .mat-table[matTableResponsive] {
+        border: 0.5rem solid #fafafa;
+      }
+    }
+
+    mat-paginator {
+      @include styled-row;
+
+      &.extra-gap {
+        margin-top: 20px;
+      }
+    }
+
+    header,
+    .no-data,
+    .loading {
+      background: white;
+      box-shadow: $table-card-shadow;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .custom-column {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }

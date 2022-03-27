@@ -1,0 +1,21 @@
+<header mat-dialog-title>
+  <h1>Snapshot of:</h1>
+  <span>{{ data.participant.participant }}</span>
+</header>
+
+<mat-dialog-content>
+  <img
+    *ngIf="snapshotUrl"
+    width="100%"
+    height="100%"
+    [src]="snapshotUrl"
+    alt="Participant snapshot"
+  />
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <a mat-flat-button color="primary" [href]="snapshotUrl" download="snapshot"
+    >Download</a
+  >
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

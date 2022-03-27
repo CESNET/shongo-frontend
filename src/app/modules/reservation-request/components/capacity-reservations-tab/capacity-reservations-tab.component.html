@@ -1,0 +1,11 @@
+<header>
+  <h2 class="mat-primary-color">List of capacity requests</h2>
+</header>
+
+<main>
+  <app-data-table
+    *ngIf="capacityRequestsDataSource"
+    [dataSource]="capacityRequestsDataSource"
+    description="Room capacity reservations for this reservation request"
+  ></app-data-table>
+</main>
