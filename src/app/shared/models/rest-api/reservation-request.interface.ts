@@ -69,10 +69,10 @@ export interface Periodicity {
   monthlyPeriodicityType?: MonthlyPeriodicityType;
   periodicDayInMonth?: Days;
   periodicityDayOrder?: number;
-  periodicityEnd?: string;
+  periodicityEnd?: number;
   periodicDaysInWeek?: Days[];
   periodicityCycle?: number;
-  excludeDates?: string[];
+  excludeDates?: number[];
 }
 export interface AuthorizedData {
   pin: string;

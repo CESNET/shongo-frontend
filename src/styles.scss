@@ -14,6 +14,17 @@
   --white: #fff;
   --gray-300: rgb(150, 150, 150);
   --gray-400: rgb(180, 180, 180);
+  --red-500: rgb(255, 21, 52);
+  --orange-500: rgb(241, 178, 4);
+  --green-500: rgb(22, 148, 22);
+
+  /* Element colors */
+  --warning-color: var(--orange-500);
+  --success-color: var(--green-500);
+  --error-color: var(--red-500);
+  --error-color-light: rgb(255, 241, 241);
+  --warning-color-light: rgb(255, 253, 247);
+  --success-color-light: rgb(238, 255, 238);
 
   /* Element sizes */
   --toolbar-height: 4.5rem;
@@ -41,6 +52,9 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+b {
+  font-weight: 500;
+}
 
 /* Material */
 mat-toolbar.mat-toolbar {
@@ -48,6 +62,21 @@ mat-toolbar.mat-toolbar {
 }
 mat-toolbar.header-toolbar {
   padding: 0 !important;
+}
+
+.snackbar {
+  &--error {
+    border: 2px solid var(--error-color);
+    background: var(--error-color-light) !important;
+  }
+  &--warning {
+    border: 2px solid var(--warning-color);
+    background: var(--warning-color-light) !important;
+  }
+  &--success {
+    border: 2px solid var(--success-color);
+    background: var(--success-color-light) !important;
+  }
 }
 
 /* Mat tab content */

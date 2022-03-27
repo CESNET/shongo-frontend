@@ -44,6 +44,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TimezoneSearchDirective } from './directives/timezone-search/timezone-search.directive';
 import { ComponentHostDirective } from './directives/component-host.directive';
+import { SnackbarAlertComponent } from './components/snackbar-alert/snackbar-alert.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -67,6 +69,7 @@ export function momentAdapterFactory() {
     MomentDatePipe,
     AccountMenuComponent,
     ComponentHostDirective,
+    SnackbarAlertComponent,
   ],
   imports: [
     CommonModule,
@@ -102,6 +105,7 @@ export function momentAdapterFactory() {
     MatSortModule,
     MatMenuModule,
     FlexLayoutModule,
+    MatSnackBarModule,
   ],
   providers: [
     MomentDatePipe,

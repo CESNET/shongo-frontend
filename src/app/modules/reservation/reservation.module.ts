@@ -24,11 +24,11 @@ import { PeriodicitySelectionFormComponent } from './components/periodicity-sele
 import { PhysicalResourceReservationFormComponent } from './components/physical-resource-reservation-form/physical-resource-reservation-form.component';
 import { TeleconferenceReservationFormComponent } from './components/teleconference-reservation-form/teleconference-reservation-form.component';
 import { VideoconferenceReservationFormComponent } from './components/videoconference-reservation-form/videoconference-reservation-form.component';
-import { VirtualRoomReservationFormComponent } from './components/virtual-room-reservation-form/virtual-room-reservation-form.component';
 import { WebconferenceReservationFormComponent } from './components/webconference-reservation-form/webconference-reservation-form.component';
 import { ReservationDialogComponent } from './components/reservation-dialog/reservation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -53,13 +53,13 @@ import { MatChipsModule } from '@angular/material/chips';
     MatMenuModule,
     MatDialogModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     ReservationPageComponent,
     PeriodicitySelectionFormComponent,
     ResourceSelectionFormComponent,
     PhysicalResourceReservationFormComponent,
-    VirtualRoomReservationFormComponent,
     VideoconferenceReservationFormComponent,
     WebconferenceReservationFormComponent,
     TeleconferenceReservationFormComponent,

@@ -6,11 +6,17 @@ import {
   ViewChild,
   Type,
 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { Resource } from 'src/app/models/data/resources';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
-import { ReservationForm } from '../../models/reservation-form.interface';
+import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
+import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
 import { PhysicalResourceReservationFormComponent } from '../physical-resource-reservation-form/physical-resource-reservation-form.component';
 import { TeleconferenceReservationFormComponent } from '../teleconference-reservation-form/teleconference-reservation-form.component';
 import { VideoconferenceReservationFormComponent } from '../videoconference-reservation-form/videoconference-reservation-form.component';
@@ -27,10 +33,34 @@ export class ReservationDialogComponent implements OnInit {
   formHost!: ComponentHostDirective;
   formComponent!: ReservationForm;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private _data: { resource: Resource }) {}
+  readonly creating$ = new BehaviorSubject<boolean>(false);
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    private _data: { resource: Resource; slot: CalendarSlot },
+    private _dialogRef: MatDialogRef<ReservationDialogComponent>,
+    private _resReqService: ReservationRequestService,
+    private _alert: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.renderFormComponent();
+  }
+
+  createReservationRequest(): void {
+    this.creating$.next(true);
+
+    this._createReservationRequest().subscribe({
+      next: () => {
+        this.creating$.next(false);
+        this._alert.showSuccess('Reservation request created successfully.');
+        this._dialogRef.close(true);
+      },
+      error: () => {
+        this.creating$.next(false);
+        this._alert.showError('Failed to create reservation request.');
+      },
+    });
   }
 
   renderFormComponent(): void {
@@ -55,5 +85,18 @@ export class ReservationDialogComponent implements OnInit {
     viewContainerRef.clear();
     this.formComponent =
       viewContainerRef.createComponent<ReservationForm>(component).instance;
+  }
+
+  private _createReservationRequest(): Observable<unknown> {
+    const request = this.formComponent.getFormValue();
+    const reservationRequest = {
+      resource: this._data.resource.id,
+      slot: {
+        start: moment(this._data.slot.start).unix(),
+        end: moment(this._data.slot.end).unix(),
+      },
+      ...request,
+    };
+    return this._resReqService.postItem(reservationRequest).pipe(first());
   }
 }

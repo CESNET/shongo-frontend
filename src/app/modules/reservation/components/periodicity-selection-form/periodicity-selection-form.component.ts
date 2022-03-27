@@ -10,7 +10,15 @@ import {
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatRadioChange } from '@angular/material/radio';
 import * as moment from 'moment';
+import { Days } from 'src/app/shared/models/enums/days.enum';
+import {
+  MonthlyPeriodicityType,
+  PeriodicityType,
+} from 'src/app/shared/models/enums/periodicity-type.enum';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
+import { Periodicity } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
+import { getFormError } from 'src/app/utils/getFormError';
 
 @Component({
   selector: 'app-periodicity-selection-form',
@@ -20,7 +28,7 @@ import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 })
 export class PeriodicitySelectionFormComponent implements OnInit {
   periodicityForm = new FormGroup({
-    periodicity: new FormControl(null, [Validators.required]),
+    periodicity: new FormControl(PeriodicityType.NONE, [Validators.required]),
     repeatUntil: new FormControl(null, [Validators.required]),
     weeklyForm: new FormGroup({
       nthWeek: new FormControl(1, [Validators.required]),
@@ -33,7 +41,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
       sunday: new FormControl(false),
     }),
     monthlyForm: new FormGroup({
-      periodicityType: new FormControl('regular', [Validators.required]),
+      periodicityType: new FormControl(MonthlyPeriodicityType.STANDARD, [
+        Validators.required,
+      ]),
       regularForm: new FormGroup({
         nthMonth: new FormControl(null, [Validators.required]),
       }),
@@ -51,14 +61,96 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }),
   });
 
+  monthlyDayOrderOpts: Option[] = [
+    { value: 1, displayName: '1.' },
+    { value: 2, displayName: '2.' },
+    { value: 3, displayName: '3.' },
+    { value: 4, displayName: '4.' },
+    { value: -1, displayName: 'last' },
+  ];
+
+  monthlyDayOpts: Option[] = [
+    { value: Days.MONDAY, displayName: 'Monday' },
+    { value: Days.TUESDAY, displayName: 'Tuesday' },
+    { value: Days.WEDNESDAY, displayName: 'Wednesday' },
+    { value: Days.THURSDAY, displayName: 'Thursday' },
+    { value: Days.FRIDAY, displayName: 'Friday' },
+    { value: Days.SATURDAY, displayName: 'Saturday' },
+    { value: Days.SUNDAY, displayName: 'Sunday' },
+  ];
+
+  MonthlyPeriodicityType = MonthlyPeriodicityType;
+  PeriodicityType = PeriodicityType;
   excludedDays = new Set<Date>();
 
+  getFormError = getFormError;
+
   constructor(private _datePipe: MomentDatePipe) {}
+
+  get valid(): boolean {
+    const { periodicity: type } = this.periodicityForm.value;
+
+    if (type === PeriodicityType.NONE) {
+      return true;
+    }
+    return this.periodicityForm.valid;
+  }
 
   ngOnInit(): void {
     this.periodicityForm
       .get('weeklyForm')!
       .setValidators(this._weeklyFormValidator());
+  }
+
+  getPeriodicity(): Periodicity | undefined {
+    const {
+      periodicity: type,
+      repeatUntil,
+      weeklyForm,
+      monthlyForm,
+    } = this.periodicityForm.value;
+
+    if (type === PeriodicityType.NONE) {
+      return {
+        type,
+      };
+    }
+
+    const periodicity: Periodicity = {
+      type,
+      periodicityEnd: moment(repeatUntil).unix(),
+      excludeDates: this.getExcludedDays(),
+    };
+
+    switch (type) {
+      case PeriodicityType.DAILY:
+        return periodicity;
+      case PeriodicityType.WEEKLY:
+        const { nthWeek } = weeklyForm;
+        periodicity.periodicityCycle = Number(nthWeek);
+        periodicity.periodicDaysInWeek = this._getDaysInWeek();
+
+        return periodicity;
+      case PeriodicityType.MONTHLY:
+        const { periodicityType } = monthlyForm;
+
+        if (periodicityType === MonthlyPeriodicityType.SPECIFIC_DAY) {
+          const { irregularForm } = monthlyForm;
+          periodicity.periodicityCycle = irregularForm.nthMonth;
+          periodicity.periodicDayInMonth = irregularForm.day;
+          periodicity.periodicityDayOrder = irregularForm.nthDay;
+        } else {
+          const { regularForm } = monthlyForm;
+          periodicity.periodicityCycle = regularForm.nthMonth;
+        }
+        return periodicity;
+      default:
+        return;
+    }
+  }
+
+  getExcludedDays(): number[] {
+    return Array.from(this.excludedDays).map((date) => moment(date).unix());
   }
 
   addExcludedDate(dateInputEvent: MatDatepickerInputEvent<any, any>): void {
@@ -76,25 +168,25 @@ export class PeriodicitySelectionFormComponent implements OnInit {
       this.periodicityForm.controls;
 
     switch (changeEvent.source.value) {
-      case 'none':
+      case PeriodicityType.NONE:
         weeklyForm.disable();
         monthlyForm.disable();
         repeatUntil.disable();
         break;
-      case 'daily':
+      case PeriodicityType.DAILY:
         weeklyForm.disable();
         monthlyForm.disable();
         repeatUntil.enable();
         break;
-      case 'weekly':
+      case PeriodicityType.WEEKLY:
         weeklyForm.enable();
         monthlyForm.disable();
         repeatUntil.enable();
         break;
-      case 'monthly':
+      case PeriodicityType.MONTHLY:
         weeklyForm.disable();
         monthlyForm.enable();
-        this.enableMonthlyForm('regular');
+        this.enableMonthlyForm(MonthlyPeriodicityType.STANDARD);
         repeatUntil.enable();
         break;
       default:
@@ -108,11 +200,11 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
   }
 
-  enableMonthlyForm(formType: 'regular' | 'irregular'): void {
+  enableMonthlyForm(formType: MonthlyPeriodicityType): void {
     const monthlyForm = this.periodicityForm.get('monthlyForm') as FormGroup;
     const { regularForm, irregularForm } = monthlyForm.controls;
 
-    if (formType === 'regular') {
+    if (formType === MonthlyPeriodicityType.STANDARD) {
       regularForm.enable();
       irregularForm.disable();
     } else {
@@ -172,15 +264,6 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     return res;
   }
 
-  isCompleted(): boolean {
-    return this.periodicityForm.valid;
-  }
-
-  shouldDisplayExcludedDays(): boolean {
-    const periodicity = this.periodicityForm.get('periodicity')!.value;
-    return periodicity && periodicity !== 'none';
-  }
-
   private _weeklyFormValidator =
     (): ValidatorFn =>
     (control: AbstractControl): ValidationErrors => {
@@ -189,4 +272,35 @@ export class PeriodicitySelectionFormComponent implements OnInit {
         ? {}
         : { noneChecked: true };
     };
+
+  private _getDaysInWeek(): Days[] {
+    const { monday, tuesday, wednesday, thursday, friday, saturday, sunday } =
+      this.periodicityForm.get('weeklyForm')!.value;
+
+    const days = [];
+
+    if (monday) {
+      days.push(Days.MONDAY);
+    }
+    if (tuesday) {
+      days.push(Days.TUESDAY);
+    }
+    if (wednesday) {
+      days.push(Days.WEDNESDAY);
+    }
+    if (thursday) {
+      days.push(Days.THURSDAY);
+    }
+    if (friday) {
+      days.push(Days.FRIDAY);
+    }
+    if (saturday) {
+      days.push(Days.SATURDAY);
+    }
+    if (sunday) {
+      days.push(Days.SUNDAY);
+    }
+
+    return days;
+  }
 }

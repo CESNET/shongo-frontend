@@ -26,7 +26,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5em;
+    margin: 1em 0 0.5em 0;
 
     span {
       font-size: 1.2em;
@@ -80,5 +80,9 @@
 
   &--vertical {
     flex-direction: column;
+  }
+
+  &--days {
+    margin-bottom: 1em;
   }
 }

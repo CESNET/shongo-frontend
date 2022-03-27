@@ -1,22 +1,35 @@
 <form [formGroup]="form" class="form">
   <div class="form__left">
     <h2>Reservation data</h2>
-    <mat-form-field appearance="outline" class="form__field">
-      <mat-label>Description</mat-label>
-      <input type="text" matInput formControlName="description" />
-      <mat-error *ngIf="getFormError(form.get('description')!) as error">{{
-        error
-      }}</mat-error>
-    </mat-form-field>
 
+    <!-- Room name field -->
     <mat-form-field appearance="outline" class="form__field">
       <mat-label>Room name</mat-label>
       <input type="text" matInput formControlName="roomName" />
-      <mat-error *ngIf="getFormError(form.get('roomName')!) as error">{{
-        error
-      }}</mat-error>
+      <mat-error
+        *ngIf="
+          getFormError(form.get('roomName')!, roomNameErrorHandler) as error
+        "
+        >{{ error }}</mat-error
+      >
     </mat-form-field>
 
+    <!-- Description field -->
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label>Description</mat-label>
+      <input type="text" matInput formControlName="description" />
+      <mat-error
+        *ngIf="
+          getFormError(
+            form.get('description')!,
+            descriptionErrorHandler
+          ) as error
+        "
+        >{{ error }}</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Participant count field -->
     <mat-form-field appearance="outline" class="form__field">
       <mat-label>Participant count</mat-label>
       <input type="number" matInput formControlName="participantCount" />
@@ -25,14 +38,17 @@
       }}</mat-error>
     </mat-form-field>
 
+    <!-- Admin pin field -->
     <mat-form-field appearance="outline" class="form__field">
       <mat-label>Admin PIN</mat-label>
       <input type="text" matInput formControlName="adminPin" />
-      <mat-error *ngIf="getFormError(form.get('adminPin')!) as error">{{
-        error
-      }}</mat-error>
+      <mat-error
+        *ngIf="getFormError(form.get('adminPin')!, pinErrorHandler) as error"
+        >{{ error }}</mat-error
+      >
     </mat-form-field>
 
+    <!-- Time zone field -->
     <mat-form-field appearance="outline" class="form__field">
       <mat-label>Time zone</mat-label>
       <mat-select formControlName="timezone">
@@ -54,9 +70,12 @@
       }}</mat-error>
     </mat-form-field>
 
+    <!-- Allow guests checkbox -->
     <mat-checkbox color="primary" formControlName="allowGuests"
       >Allow guests</mat-checkbox
     >
+
+    <!-- Record checkbox -->
     <mat-checkbox color="primary" formControlName="record">Record</mat-checkbox>
   </div>
 
