@@ -1,0 +1,18 @@
+<div
+  *ngIf="data"
+  class="snackbar-alert"
+  [class]="['snackbar-alert--' + data.type]"
+>
+  <div class="snackbar-alert__section">
+    <mat-icon>{{ getAlertIcon(data.type) }}</mat-icon>
+    <span class="snackbar-alert__message">{{
+      data.message ? data.message : "An error occured."
+    }}</span>
+  </div>
+
+  <div class="snackbar-alert__section">
+    <button mat-icon-button (click)="close()" aria-label="Dismiss alert">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

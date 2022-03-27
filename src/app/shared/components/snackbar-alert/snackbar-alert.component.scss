@@ -1,0 +1,26 @@
+.snackbar-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  &--error {
+    color: var(--error-color);
+  }
+  &--warning {
+    color: var(--warning-color);
+  }
+  &--success {
+    color: var(--success-color);
+  }
+
+  &__section {
+    display: flex;
+    align-items: center;
+  }
+
+  &__message {
+    margin: 0;
+    margin-left: 1rem;
+  }
+}

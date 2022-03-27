@@ -1,3 +1,6 @@
+import { VideoconferenceReservationRequest } from '../components/videoconference-reservation-form/videoconference-reservation-form.component';
+
 export interface ReservationForm {
-  getFormValue(): any;
+  valid: boolean;
+  getFormValue(): VideoconferenceReservationRequest;
 }

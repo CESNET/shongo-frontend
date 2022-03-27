@@ -304,6 +304,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
+  clearSelectedSlot(): void {
+    this._events = this._events.filter((event) => event !== this._createdEvent);
+    this._createdEvent = undefined;
+    this.refresh$.next();
+  }
+
   private _getInterval(viewDate: Date): Interval {
     let intervalFrom: Date;
     let intervalTo: Date;

@@ -14,7 +14,11 @@ export class WebconferenceReservationFormComponent
 
   ngOnInit(): void {}
 
-  getFormValue() {
+  get valid(): boolean {
+    return false;
+  }
+
+  getFormValue(): any {
     throw new Error('Method not implemented.');
   }
 }

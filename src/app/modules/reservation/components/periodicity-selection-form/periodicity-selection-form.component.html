@@ -5,15 +5,23 @@
     class="selection"
     (change)="handlePeriodicityRadioChange($event)"
   >
-    <mat-radio-button value="none" color="primary">None</mat-radio-button>
-    <mat-radio-button value="daily" color="primary">Daily</mat-radio-button>
-    <mat-radio-button value="weekly" color="primary">Weekly</mat-radio-button>
-    <mat-radio-button value="monthly" color="primary">Monthly</mat-radio-button>
+    <mat-radio-button [value]="PeriodicityType.NONE" color="primary"
+      >None</mat-radio-button
+    >
+    <mat-radio-button [value]="PeriodicityType.DAILY" color="primary"
+      >Daily</mat-radio-button
+    >
+    <mat-radio-button [value]="PeriodicityType.WEEKLY" color="primary"
+      >Weekly</mat-radio-button
+    >
+    <mat-radio-button [value]="PeriodicityType.MONTHLY" color="primary"
+      >Monthly</mat-radio-button
+    >
   </mat-radio-group>
 
   <div class="periodicity__specification">
     <div [ngSwitch]="periodicityForm.get('periodicity')!.value">
-      <form *ngSwitchCase="'weekly'" formGroupName="weeklyForm">
+      <form *ngSwitchCase="PeriodicityType.WEEKLY" formGroupName="weeklyForm">
         <span
           >Repeat every
           <mat-form-field class="periodicity__field periodicity__field--number">
@@ -28,7 +36,7 @@
             </mat-select> </mat-form-field
           >. week at:</span
         >
-        <section class="selection">
+        <section class="selection selection--days">
           <mat-checkbox color="primary" formControlName="monday"
             >Monday</mat-checkbox
           >
@@ -52,14 +60,18 @@
           >
         </section>
       </form>
-      <form *ngSwitchCase="'monthly'" formGroupName="monthlyForm">
+      <form *ngSwitchCase="PeriodicityType.MONTHLY" formGroupName="monthlyForm">
         <mat-radio-group
           aria-label="Select monthly periodicity option"
           class="selection--vertical"
           formControlName="periodicityType"
           (change)="handleMonthlyRadioChange($event)"
         >
-          <mat-radio-button value="regular" color="primary" #regularRadio>
+          <mat-radio-button
+            [value]="MonthlyPeriodicityType.STANDARD"
+            color="primary"
+            #regularRadio
+          >
             <form formGroupName="regularForm">
               &nbsp;Repeat every
               <mat-form-field
@@ -79,7 +91,11 @@
               >. month.
             </form>
           </mat-radio-button>
-          <mat-radio-button value="irregular" color="primary" #irregularRadio>
+          <mat-radio-button
+            [value]="MonthlyPeriodicityType.SPECIFIC_DAY"
+            color="primary"
+            #irregularRadio
+          >
             <form formGroupName="irregularForm">
               &nbsp;Repeat every
               <mat-form-field
@@ -91,9 +107,9 @@
                   formControlName="nthDay"
                 >
                   <mat-option
-                    *ngFor="let opt of ['1.', '2.', '3.', '4.', 'last']"
-                    [value]="opt"
-                    >{{ opt }}</mat-option
+                    *ngFor="let opt of monthlyDayOrderOpts"
+                    [value]="opt.value"
+                    >{{ opt.displayName }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -107,19 +123,9 @@
                   formControlName="day"
                 >
                   <mat-option
-                    *ngFor="
-                      let opt of [
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday',
-                        'Sunday'
-                      ]
-                    "
-                    [value]="opt"
-                    >{{ opt }}</mat-option
+                    *ngFor="let opt of monthlyDayOpts"
+                    [value]="opt.value"
+                    >{{ opt.displayName }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -147,24 +153,30 @@
     </div>
   </div>
 
-  <mat-form-field
-    appearance="outline"
-    class="periodicity__field periodicity__field--date"
+  <div
+    *ngIf="periodicityForm.get('periodicity')!.value !== PeriodicityType.NONE"
   >
-    <mat-label>Repeat until</mat-label>
-    <input
-      matInput
-      [matDatepicker]="repeatUntilDatePicker"
-      formControlName="repeatUntil"
-    />
-    <mat-datepicker-toggle
-      matSuffix
-      [for]="repeatUntilDatePicker"
-    ></mat-datepicker-toggle>
-    <mat-datepicker #repeatUntilDatePicker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field
+      appearance="outline"
+      class="periodicity__field periodicity__field--date"
+    >
+      <mat-label>Repeat until</mat-label>
+      <input
+        matInput
+        [matDatepicker]="repeatUntilDatePicker"
+        formControlName="repeatUntil"
+      />
+      <mat-error
+        *ngIf="getFormError(this.periodicityForm.get('repeatUntil')!) as error"
+        >{{ error }}</mat-error
+      >
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="repeatUntilDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #repeatUntilDatePicker></mat-datepicker>
+    </mat-form-field>
 
-  <div *ngIf="shouldDisplayExcludedDays()">
     <div class="periodicity__excluded-days-header">
       <span>Except for days</span>
 
