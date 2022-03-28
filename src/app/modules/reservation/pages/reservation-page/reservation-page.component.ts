@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarView } from 'angular-calendar';
 import { first } from 'rxjs/operators';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ReservationCalendarComponent } from 'src/app/shared/components/reservation-calendar/reservation-calendar.component';
 import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
@@ -21,13 +22,10 @@ export class ReservationPageComponent {
   selectedResource?: Resource | null;
   selectedSlot?: CalendarSlot | null;
 
-  constructor(private _dialog: MatDialog) {
-    // this._dialog.open(ReservationDialogComponent, {
-    //   data: { resource: this.selectedResource },
-    //   width: '95%',
-    //   maxWidth: '120ch',
-    // });
-  }
+  constructor(
+    private _dialog: MatDialog,
+    public resourceService: ResourceService
+  ) {}
 
   openReservationDialog(): void {
     if (!this.selectedResource) {

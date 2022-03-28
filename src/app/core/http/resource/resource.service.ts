@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, retry } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -14,6 +14,7 @@ import { ApiService } from '../api.service';
 
 const RESOURCES_LOCALSTORAGE_KEY = 'resources';
 const RESOURCES_TTL = 60 * 60 * 1000;
+const RESOURCE_FETCH_RETRY_COUNT = 3;
 
 interface ResourcesStore {
   timestamp: number;
@@ -112,7 +113,7 @@ export class ResourceService extends ApiService {
     this._loading$.next(true);
     this._http
       .get<Resource[]>(this.endpointURL)
-      .pipe(first())
+      .pipe(first(), retry(RESOURCE_FETCH_RETRY_COUNT))
       .subscribe({
         next: (resources) => {
           this._loading$.next(false);

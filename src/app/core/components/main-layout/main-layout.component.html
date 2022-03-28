@@ -1,7 +1,21 @@
 <div class="app-container">
   <app-header></app-header>
   <main class="res-container">
-    <router-outlet></router-outlet>
+    <ng-container
+      *ngIf="(resourceService.loading$ | async) === false; else loading"
+    >
+      <router-outlet></router-outlet>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="loading-display">
+        <h1>Loading resources</h1>
+        <mat-progress-spinner
+          color="primary"
+          mode="indeterminate"
+        ></mat-progress-spinner>
+      </div>
+    </ng-template>
   </main>
   <app-footer></app-footer>
 </div>
