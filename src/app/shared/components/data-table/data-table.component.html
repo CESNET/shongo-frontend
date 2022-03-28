@@ -19,6 +19,7 @@
             mat-icon-button
             matTooltip="Delete selected"
             aria-label="Delete selected"
+            (click)="deleteSelectedRows()"
           >
             <mat-icon>delete</mat-icon>
           </button>
@@ -26,6 +27,7 @@
             mat-icon-button
             matTooltip="Delete all"
             aria-label="Delete all"
+            (click)="deleteAllRows()"
           >
             <mat-icon>delete_forever</mat-icon>
           </button>

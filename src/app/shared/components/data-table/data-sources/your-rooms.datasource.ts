@@ -29,7 +29,7 @@ export interface YourRoomsTableData {
 
 export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData> {
   constructor(
-    private _resReqService: ReservationRequestService,
+    public apiService: ReservationRequestService,
     private _datePipe: MomentDatePipe,
     private _dialog: MatDialog
   ) {
@@ -77,7 +77,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         'settings',
         '/reservation-request/edit/:id'
       ),
-      new DeleteButton(this._resReqService, this._dialog, '/:id'),
+      new DeleteButton(this.apiService, this._dialog, '/:id'),
     ];
   }
 
@@ -89,7 +89,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
     filter: HttpParams
   ): Observable<ApiResponse<YourRoomsTableData>> {
     filter = filter.set('type', ReservationType.VIRTUAL_ROOM);
-    return this._resReqService
+    return this.apiService
       .fetchTableItems<ReservationRequest>(
         pageSize,
         pageIndex,
