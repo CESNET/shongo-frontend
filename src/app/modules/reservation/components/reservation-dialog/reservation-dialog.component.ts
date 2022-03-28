@@ -12,9 +12,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { Resource } from 'src/app/models/data/resources';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
+import { VirtualRoomTag } from 'src/app/shared/models/enums/virtual-room-tag.enum';
+import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
 import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
 import { PhysicalResourceReservationFormComponent } from '../physical-resource-reservation-form/physical-resource-reservation-form.component';
@@ -66,16 +67,13 @@ export class ReservationDialogComponent implements OnInit {
   renderFormComponent(): void {
     let component: Type<ReservationForm>;
 
-    if (
-      this._data.resource.type === ResourceType.MEETING_ROOM ||
-      this._data.resource.type === ResourceType.PARKING_PLACE
-    ) {
+    if (this._data.resource.type === ResourceType.PHYSICAL_RESOURCE) {
       component = PhysicalResourceReservationFormComponent;
-    } else if (this._data.resource.id === 'pexip') {
+    } else if (this._data.resource.tag === VirtualRoomTag.VIDEOCONFERENCE) {
       component = VideoconferenceReservationFormComponent;
-    } else if (this._data.resource.id === 'adobe_connect') {
+    } else if (this._data.resource.tag === VirtualRoomTag.WEBCONFERENCE) {
       component = WebconferenceReservationFormComponent;
-    } else if (this._data.resource.id === 'teleconference') {
+    } else if (this._data.resource.tag === VirtualRoomTag.TELECONFERENCE) {
       component = TeleconferenceReservationFormComponent;
     } else {
       throw new Error('Unsupported resource type.');

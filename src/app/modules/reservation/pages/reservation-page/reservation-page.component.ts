@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarView } from 'angular-calendar';
 import { first } from 'rxjs/operators';
-import { Resource } from 'src/app/models/data/resources';
 import { ReservationCalendarComponent } from 'src/app/shared/components/reservation-calendar/reservation-calendar.component';
+import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
 import { ReservationDialogComponent } from '../../components/reservation-dialog/reservation-dialog.component';
 

@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
-import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
@@ -47,7 +47,8 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         name: 'technology',
         displayName: 'Technology',
         pipeFunc: (value) =>
-          technologyMap.get(value as Technology) ?? 'Unknown',
+          virtualRoomResourceConfig.tagNameMap.get(value as Technology) ??
+          'Unknown',
       },
       {
         name: 'slotStart',

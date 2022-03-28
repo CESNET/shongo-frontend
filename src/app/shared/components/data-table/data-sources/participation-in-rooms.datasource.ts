@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RoomService } from 'src/app/core/http/room/room.service';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
-import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { RoomStateColumnComponent } from '../column-components/state-chip-column/components/room-state-column.component';
 import { DataTableDataSource } from './data-table-datasource';
 
@@ -35,7 +35,8 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
         name: 'technology',
         displayName: 'Technology',
         pipeFunc: (value) =>
-          technologyMap.get(value as Technology) ?? 'Unknown',
+          virtualRoomResourceConfig.tagNameMap.get(value as Technology) ??
+          'Unknown',
       },
       {
         name: 'slotStart',

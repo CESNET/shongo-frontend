@@ -4,7 +4,7 @@
     <mat-select
       placeholder="Select resource type"
       formControlName="type"
-      (valueChange)="emitSelectedResource(null)"
+      (valueChange)="handleResourceTypeChange($event)"
     >
       <mat-option *ngFor="let opt of resourceTypes" [value]="opt.value">{{
         opt.displayName
@@ -26,9 +26,9 @@
         ></ngx-mat-select-search>
       </mat-option>
       <mat-option
-        *ngFor="let resource of getResourcesByType()"
+        *ngFor="let resource of filteredResourceOpts"
         [value]="resource"
-        >{{ resource.name }}</mat-option
+        >{{ resource.displayName }}</mat-option
       >
     </mat-select>
   </mat-form-field>

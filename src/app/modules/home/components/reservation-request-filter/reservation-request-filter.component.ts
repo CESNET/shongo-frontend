@@ -9,11 +9,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Technology } from 'src/app/shared/models/enums/technology.enum';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import {
   DataTableFilter,
   TableSettings,
 } from '../../../../shared/components/data-table/filter/data-table-filter';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 
 @Component({
   selector: 'app-reservation-request-filter',
@@ -38,21 +40,13 @@ export class ReservationRequestFilterComponent
     showCapacity: new FormControl(true),
   });
 
-  technologyOptions = [
-    { name: 'All', value: -1 },
-    { name: 'Videoconference (PEXIP)', value: Technology.PEXIP },
-    {
-      name: 'Webconference (Adobe Connect)',
-      value: Technology.ADOBE_CONNECT,
-    },
-    { name: 'Teleconference', value: Technology.FREEPBX },
-    { name: 'Videoconference (MCU)', value: Technology.H323_SIP },
-  ];
+  readonly technologyOptions: Option[];
 
   private _destroy$ = new Subject<void>();
 
-  constructor() {
+  constructor(private _resourceService: ResourceService) {
     super();
+    this.technologyOptions = this._getTechnologyOpts();
   }
 
   ngOnInit(): void {
@@ -116,5 +110,19 @@ export class ReservationRequestFilterComponent
 
   getTableSettings(): TableSettings {
     return {};
+  }
+
+  private _getTechnologyOpts(): Option[] {
+    const technologies = this._resourceService.getVirtualRoomTechnologies();
+
+    const technologyOpts = technologies
+      .map((technology) => ({
+        value: technology,
+        displayName: virtualRoomResourceConfig.tagNameMap.get(technology),
+      }))
+      .filter((opt) => opt.displayName) as Option[];
+    technologyOpts.unshift({ value: '-1', displayName: $localize`All` });
+
+    return technologyOpts;
   }
 }
