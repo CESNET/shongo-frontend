@@ -3,6 +3,8 @@ $section-margin: 1.34375em + 0.25em;
 
 .reservation {
   height: 100vh;
+  font-size: 1em;
+  min-width: 1024px;
 
   &__toolbar {
     display: flex;
@@ -81,4 +83,10 @@ $section-margin: 1.34375em + 0.25em;
 
 mat-drawer {
   border: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  .reservation {
+    font-size: 0.8em;
+  }
 }

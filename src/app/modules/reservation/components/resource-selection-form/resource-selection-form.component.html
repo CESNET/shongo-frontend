@@ -27,7 +27,7 @@
       </mat-option>
       <mat-option
         *ngFor="let resource of filteredResourceOpts"
-        [value]="resource"
+        [value]="resource.value"
         >{{ resource.displayName }}</mat-option
       >
     </mat-select>
