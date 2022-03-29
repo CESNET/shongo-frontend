@@ -29,6 +29,9 @@ import {
 } from './column-components/column.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StaticDataSource } from './data-sources/static-datasource';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CertainityCheckComponent } from '../certainity-check/certainity-check.component';
 
 @Component({
   selector: 'app-data-table',
@@ -63,7 +66,12 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   // Prevents infinite loops of changing sort in the form and the header.
   private _sortChangeMutex = true;
 
-  constructor(private _injector: Injector, private _cd: ChangeDetectorRef) {
+  constructor(
+    private _injector: Injector,
+    private _cd: ChangeDetectorRef,
+    private _alert: AlertService,
+    private _dialog: MatDialog
+  ) {
     this.displayedColumns = this._displayedColumns.asObservable();
   }
 
@@ -72,6 +80,7 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this._observeLoading();
     this._displayedColumns.next(this._buildDisplayedColumnsArray());
     this.sortForm.valueChanges
       .pipe(
@@ -179,7 +188,17 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   handleButtonClick(button: TableButton<T>, row: T): void {
     if (button instanceof ActionButton) {
-      button.executeAction(row).pipe(first()).subscribe();
+      button
+        .executeAction(row)
+        .pipe(first())
+        .subscribe({
+          next: (msg) => {
+            this._alert.showSuccess(msg);
+          },
+          error: (msg) => {
+            this._alert.showError(msg);
+          },
+        });
     }
   }
 
@@ -206,6 +225,86 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  deleteSelectedRows(): void {
+    if (!this.dataSource.apiService) {
+      console.error($localize`No api service defined in table's datasource`);
+      return this._alert.showError(
+        $localize`Mass deletion is not available for this table`
+      );
+    } else if (!this.selection || this.selection.isEmpty()) {
+      return this._alert.showWarning('No rows were selected');
+    } else if (!this.selection.selected.every((item) => 'id' in item)) {
+      console.error($localize`All selected rows must have an id`);
+      return this._alert.showError(
+        $localize`All selected rows must have an id`
+      );
+    }
+
+    this._dialog
+      .open(CertainityCheckComponent, {
+        data: {
+          message: $localize`Are you sure you want to delete selected rows?`,
+        },
+      })
+      .afterClosed()
+      .pipe(first())
+      .subscribe((shouldDelete) => {
+        if (shouldDelete) {
+          const selected = this.selection.selected as (T & { id: string })[];
+          this.dataSource
+            .apiService!.deleteItems(selected.map((row) => row.id))
+            .pipe(first())
+            .subscribe({
+              next: () => {
+                this._alert.showSuccess($localize`Items deleted successfully.`);
+                this.dataSource.refreshData();
+              },
+              error: (err) => {
+                console.error(err);
+                this._alert.showError(
+                  $localize`Failed to delete selected rows.`
+                );
+              },
+            });
+        }
+      });
+  }
+
+  deleteAllRows(): void {
+    if (!this.dataSource.apiService) {
+      console.error($localize`No api service defined in table's datasource`);
+      return this._alert.showError(
+        $localize`Mass deletion is not available for this table`
+      );
+    } else if (this.dataSource.data.count === 0) {
+      return this._alert.showWarning($localize`Table is empty`);
+    }
+
+    this._dialog
+      .open(CertainityCheckComponent, {
+        data: { message: $localize`Are you sure you want to delete all rows?` },
+      })
+      .afterClosed()
+      .pipe(first())
+      .subscribe((shouldDelete) => {
+        if (shouldDelete) {
+          this.dataSource
+            .apiService!.deleteItems()
+            .pipe(first())
+            .subscribe({
+              next: () => {
+                this._alert.showSuccess($localize`Rows deleted successfully.`);
+                this.dataSource.refreshData();
+              },
+              error: (err) => {
+                console.error(err);
+                this._alert.showError($localize`Failed to delete all rows.`);
+              },
+            });
+        }
+      });
+  }
+
   private _buildDisplayedColumnsArray(): string[] {
     const displayedColumns = [...this.dataSource.getColumnNames()];
 
@@ -218,5 +317,14 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return displayedColumns;
+  }
+
+  private _observeLoading(): void {
+    this.dataSource.loading$
+      .pipe(
+        takeUntil(this._destroy$),
+        filter((loading) => !loading)
+      )
+      .subscribe(() => this.selection.clear());
   }
 }

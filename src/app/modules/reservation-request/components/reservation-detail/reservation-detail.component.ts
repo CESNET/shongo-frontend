@@ -24,8 +24,8 @@ import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
 import { AliasType } from 'src/app/shared/models/enums/alias-type.enum';
 import { aliasTypeMap } from 'src/app/shared/models/maps/alias-type.map';
-import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -41,7 +41,7 @@ export class ReservationDetailComponent implements OnInit {
   PeriodicityType = PeriodicityType;
   Technology = Technology;
   AllocationState = AllocationState;
-  technologyMap = technologyMap;
+  technologyMap = virtualRoomResourceConfig.tagNameMap;
 
   requestTypeMap = new Map([
     [ReservationType.PHYSICAL_RESOURCE, 'Physical resource'],

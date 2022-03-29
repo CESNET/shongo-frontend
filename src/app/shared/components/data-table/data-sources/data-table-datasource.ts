@@ -7,6 +7,7 @@ import { PipeFunction, TableColumn } from '../models/table-column.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { TableButton } from '../buttons/table-button';
 import { HttpParams } from '@angular/common/http';
+import { ApiService } from 'src/app/core/http/api.service';
 
 export const REFRESH_TIMEOUT = 200;
 
@@ -16,6 +17,8 @@ export const REFRESH_TIMEOUT = 200;
  * (including sorting, pagination, and filtering).
  */
 export abstract class DataTableDataSource<T> extends DataSource<T> {
+  readonly apiService?: ApiService;
+
   displayedColumns: TableColumn<T>[] = [];
   buttons: TableButton<T>[] = [];
   paginator: MatPaginator | undefined;
@@ -86,11 +89,15 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
             this.sort!.active,
             this.sort!.direction,
             filter ?? new HttpParams()
-          ).pipe(catchError(() => of({ count: 0, items: [] })))
+          ).pipe(catchError(() => of({ count: 0, items: [], error: true })))
         ),
         map((res) => {
           const pipedItems = res.items.map((item) => this.pipeRow(item));
-          return { count: res.count, items: pipedItems };
+          return {
+            count: res.count,
+            items: pipedItems,
+            error: res.error ?? false,
+          };
         }),
         tap((res: ApiResponse<T>) => {
           this.data = res;

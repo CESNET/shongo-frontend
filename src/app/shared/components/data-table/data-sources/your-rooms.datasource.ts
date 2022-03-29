@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
-import { technologyMap } from 'src/app/shared/models/maps/technology.map';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
@@ -29,7 +29,7 @@ export interface YourRoomsTableData {
 
 export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData> {
   constructor(
-    private _resReqService: ReservationRequestService,
+    public apiService: ReservationRequestService,
     private _datePipe: MomentDatePipe,
     private _dialog: MatDialog
   ) {
@@ -47,7 +47,8 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         name: 'technology',
         displayName: 'Technology',
         pipeFunc: (value) =>
-          technologyMap.get(value as Technology) ?? 'Unknown',
+          virtualRoomResourceConfig.tagNameMap.get(value as Technology) ??
+          'Unknown',
       },
       {
         name: 'slotStart',
@@ -77,7 +78,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         'settings',
         '/reservation-request/edit/:id'
       ),
-      new DeleteButton(this._resReqService, this._dialog, '/:id'),
+      new DeleteButton(this.apiService, this._dialog, '/:id'),
     ];
   }
 
@@ -89,7 +90,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
     filter: HttpParams
   ): Observable<ApiResponse<YourRoomsTableData>> {
     filter = filter.set('type', ReservationType.VIRTUAL_ROOM);
-    return this._resReqService
+    return this.apiService
       .fetchTableItems<ReservationRequest>(
         pageSize,
         pageIndex,

@@ -4,8 +4,7 @@ import {
   Input,
   ChangeDetectorRef,
 } from '@angular/core';
-
-type AlertType = 'error' | 'success' | 'info';
+import { AlertType } from '../../models/enums/alert-type.enum';
 
 @Component({
   selector: 'app-alert',
@@ -14,20 +13,32 @@ type AlertType = 'error' | 'success' | 'info';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlertComponent {
-  @Input() type: AlertType = 'info';
+  @Input() type: AlertType = AlertType.WARNING;
   @Input() message: string = '';
-
-  isActive = false;
-
-  constructor(private _cd: ChangeDetectorRef) {}
-
-  activate(): void {
-    this.isActive = true;
+  @Input() showCloseButton = true;
+  @Input()
+  get isActive(): boolean {
+    return this._isActive;
+  }
+  set isActive(value: boolean) {
+    this._isActive = value;
     this._cd.detectChanges();
   }
 
-  deactivate(): void {
-    this.isActive = false;
-    this._cd.detectChanges();
+  private _isActive: boolean = false;
+
+  constructor(private _cd: ChangeDetectorRef) {}
+
+  getAlertIcon(alertType: AlertType): string {
+    switch (alertType) {
+      case AlertType.ERROR:
+        return 'error';
+      case AlertType.WARNING:
+        return 'warning';
+      case AlertType.SUCCESS:
+        return 'check_circle';
+      default:
+        return '';
+    }
   }
 }

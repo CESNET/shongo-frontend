@@ -78,9 +78,9 @@ export class ResourceUtilizationColumnComponent
 
   getQueryParams(): Record<string, string> {
     return {
-      resourceId: this.cellData.id,
-      intervalFrom: this.columnData.row.intervalFrom,
-      intervalTo: this.columnData.row.intervalTo,
+      resource_id: this.cellData.id,
+      interval_from: this.columnData.row.intervalFrom,
+      interval_to: this.columnData.row.intervalTo,
     };
   }
 

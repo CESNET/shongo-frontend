@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-certainity-check',
@@ -7,7 +7,10 @@ import { MatDialogRef } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CertainityCheckComponent {
-  constructor(public dialogRef: MatDialogRef<CertainityCheckComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<CertainityCheckComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { message?: string }
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

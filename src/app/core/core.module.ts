@@ -29,6 +29,7 @@ import { authAppInitializerFactory } from './authentication/auth-app-initializer
 import { AuthenticationService } from './authentication/authentication.service';
 import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -56,6 +57,7 @@ export function storageFactory(): OAuthStorage {
     MatToolbarModule,
     MatDividerModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     OAuthModule.forRoot(),
   ],
   providers: [

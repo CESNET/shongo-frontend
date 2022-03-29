@@ -1,10 +1,17 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ViewChild,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { WebconferenceAccessMode } from 'src/app/shared/models/enums/webconference-access-mode.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { getFormError } from 'src/app/utils/getFormError';
-import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
+import { VirtualRoomReservationForm } from '../../models/interfaces/virtual-room-reservation-form.interface';
+import { WebconferenceReservationRequest } from '../../models/interfaces/webconference-reservation-request.interface';
 import { ReservationRequestPostBody } from '../../models/types/reservation-request-post-body.type';
 import {
   descriptionErrorHandler,
@@ -20,6 +27,11 @@ import {
 } from '../../utils/reservation-form.constants';
 import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form/periodicity-selection-form.component';
 
+type WebconferenceReservationFormValue = Omit<
+  WebconferenceReservationRequest,
+  'periodicity'
+>;
+
 @Component({
   selector: 'app-webconference-reservation-form',
   templateUrl: './webconference-reservation-form.component.html',
@@ -29,22 +41,20 @@ import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WebconferenceReservationFormComponent implements ReservationForm {
+export class WebconferenceReservationFormComponent
+  implements VirtualRoomReservationForm, OnInit
+{
   @ViewChild(PeriodicitySelectionFormComponent)
   periodicityForm!: PeriodicitySelectionFormComponent;
 
+  @Input() capacityBookingMode = false;
+
   readonly form = new FormGroup({
-    roomName: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(ROOM_NAME_MAXLENGTH),
-      Validators.pattern(ROOM_NAME_PATTERN),
-    ]),
     description: new FormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
     userPin: new FormControl(null, [
-      Validators.required,
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
@@ -76,8 +86,27 @@ export class WebconferenceReservationFormComponent implements ReservationForm {
     );
   }
 
-  getFormValue(): ReservationRequestPostBody {
-    const periodicity = this.periodicityForm.getPeriodicity();
-    return { periodicity, ...this.form.value };
+  ngOnInit(): void {
+    if (!this.capacityBookingMode) {
+      this.form.addControl(
+        'roomName',
+        new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(ROOM_NAME_MAXLENGTH),
+          Validators.pattern(ROOM_NAME_PATTERN),
+        ])
+      );
+    }
+  }
+
+  getFormValue(): WebconferenceReservationRequest {
+    const periodicity = this.periodicityForm.getPeriodicity()!;
+    const formValue: WebconferenceReservationFormValue = this.form.value;
+
+    if (formValue.userPin == null) {
+      delete formValue.userPin;
+    }
+
+    return { periodicity, ...formValue };
   }
 }

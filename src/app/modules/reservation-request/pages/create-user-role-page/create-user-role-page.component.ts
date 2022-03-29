@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 import { first, switchMap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { IdentityType } from 'src/app/shared/models/enums/identity-type.enum';
 import { RoleType } from 'src/app/shared/models/enums/role-type.enum';
 import { getFormError } from 'src/app/utils/getFormError';
@@ -27,6 +28,8 @@ export class CreateUserRolePageComponent implements OnInit {
   IdentityType = IdentityType;
   roleTypes = Object.values(RoleType);
   posting$ = new BehaviorSubject(false);
+
+  AlertType = AlertType;
 
   getFormError = getFormError;
 
@@ -64,7 +67,7 @@ export class CreateUserRolePageComponent implements OnInit {
         },
         error: () => {
           this.posting$.next(false);
-          this.alert.activate();
+          this.alert.isActive = true;
         },
       });
   }

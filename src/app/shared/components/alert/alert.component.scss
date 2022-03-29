@@ -5,21 +5,22 @@
   padding: 0.5em 1em;
   border-radius: 5px;
   width: fit-content;
+  border: 1px solid;
 
   &.error {
-    background: rgb(255, 149, 149);
-    border: 1px solid rgb(236, 126, 126);
-    color: rgb(173, 41, 41);
+    background: var(--error-color-light);
+    border-color: var(--error-color);
+    color: var(--error-color);
   }
   &.success {
-    background: rgb(152, 255, 157);
-    border: 1px solid rgb(140, 240, 115);
-    color: rgb(36, 143, 59);
+    background: var(--success-color-light);
+    border-color: var(--success-color);
+    color: var(--success-color);
   }
   &.info {
-    background: rgb(251, 253, 126);
-    border: 1px solid rgb(228, 216, 110);
-    color: rgb(161, 144, 43);
+    background: var(--warning-color-light);
+    border-color: var(--warning-color);
+    color: var(--warning-color);
   }
 }
 

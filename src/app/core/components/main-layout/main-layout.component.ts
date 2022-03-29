@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ResourceService } from '../../http/resource/resource.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -6,8 +7,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./main-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainLayoutComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class MainLayoutComponent {
+  constructor(public resourceService: ResourceService) {}
 }
