@@ -38,6 +38,10 @@ import { ReservationRequest } from '../../models/rest-api/reservation-request.in
 import * as moment from 'moment';
 import { IdentityClaims } from '../../models/interfaces/identity-claims.interface';
 import { CalendarSlot } from '../../models/rest-api/slot.interface';
+import { SettingsService } from 'src/app/core/http/settings/settings.service';
+import { ReservationRequestState } from '../../models/enums/reservation-request-state.enum';
+import { MatDialog } from '@angular/material/dialog';
+import { RequestConfirmationDialogComponent } from '../request-confirmation-dialog/request-confirmation-dialog.component';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -63,6 +67,12 @@ const COLORS = {
     secondary: '#c9e4ff',
   },
 };
+
+interface CalendarEventMeta {
+  reservationRequest: ReservationRequest;
+  ownerName: string;
+  ownerEmail: string;
+}
 
 @Component({
   selector: 'app-reservation-calendar',
@@ -137,7 +147,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
   constructor(
     private _resReqService: ReservationRequestService,
-    private _auth: AuthenticationService
+    private _auth: AuthenticationService,
+    private _settings: SettingsService,
+    private _dialog: MatDialog
   ) {
     this.loading$ = this._loading$.asObservable();
   }
@@ -316,6 +328,29 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.refresh$.next();
   }
 
+  handleEventClick(event: CalendarEvent): void {
+    const { reservationRequest } = event.meta as CalendarEventMeta;
+
+    if (
+      reservationRequest.state === ReservationRequestState.CONFIRM_AWAITING &&
+      this._settings.isAdmin
+    ) {
+      const dialogRef = this._dialog.open(RequestConfirmationDialogComponent, {
+        data: { reservationRequest },
+        maxWidth: '100ch',
+        width: '95%',
+      });
+      dialogRef
+        .afterClosed()
+        .pipe(first())
+        .subscribe((performedAction) => {
+          if (performedAction) {
+            this.fetchReservations();
+          }
+        });
+    }
+  }
+
   private _getInterval(viewDate: Date): Interval {
     let intervalFrom: Date;
     let intervalTo: Date;
@@ -351,10 +386,10 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   private _createEvents(
-    reservations: ApiResponse<ReservationRequest>
+    reservationRequests: ApiResponse<ReservationRequest>
   ): CalendarEvent[] {
-    const events = reservations.items.map((reservation) =>
-      this._createEvent(reservation)
+    const events = reservationRequests.items.map((resReq) =>
+      this._createEvent(resReq)
     );
 
     return this._highlightEvents(
@@ -363,14 +398,15 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     );
   }
 
-  private _createEvent(reservation: ReservationRequest): CalendarEvent {
+  private _createEvent(reservationRequest: ReservationRequest): CalendarEvent {
     return {
-      start: new Date(reservation.slot.start),
-      end: new Date(reservation.slot.end),
-      title: reservation.description,
+      start: new Date(reservationRequest.slot.start),
+      end: new Date(reservationRequest.slot.end),
+      title: reservationRequest.description,
       meta: {
-        owner: reservation.ownerName,
-        ownerEmail: reservation.ownerEmail,
+        reservationRequest,
+        owner: reservationRequest.ownerName,
+        ownerEmail: reservationRequest.ownerEmail,
       },
     };
   }
