@@ -26,17 +26,9 @@ aside {
     width: fit-content;
   }
 }
-dl.wrapped-dl {
-  display: block;
 
-  dt,
-  dd {
-    flex: none;
-  }
-
-  dd {
-    padding-left: 1em;
-  }
+dl {
+  font-size: 0.9rem;
 }
 
 /* Other */

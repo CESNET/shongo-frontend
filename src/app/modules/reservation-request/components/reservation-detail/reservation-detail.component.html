@@ -3,7 +3,7 @@
     <header>
       <h2 class="mat-primary-color">Detail</h2>
     </header>
-    <dl>
+    <dl class="definition-list--flex">
       <!-- Type -->
       <ng-container *ngIf="currentRequest.type as type">
         <dt>Type:</dt>
@@ -233,7 +233,7 @@
         <ng-container *ngIf="authorizedData.aliases">
           <dt>Connection methods:</dt>
           <dd>
-            <dl class="wrapped-dl">
+            <dl>
               <ng-container *ngFor="let alias of authorizedData.aliases">
                 <dt>{{ getAliasDisplayType(alias.type) }}</dt>
                 <dd>{{ alias.value }}</dd>

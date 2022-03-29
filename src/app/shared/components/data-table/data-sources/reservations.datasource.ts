@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
+import { RequestIdColumnComponent } from 'src/app/modules/resource-management/components/request-id-column/request-id-column.component';
 
 export class ReservationsDataSource extends StaticDataSource<
   ResourceReservationTableData,
@@ -40,6 +41,7 @@ export class ReservationsDataSource extends StaticDataSource<
       {
         name: 'requestId',
         displayName: 'Reservation request',
+        component: RequestIdColumnComponent,
       },
       {
         name: 'owner',

@@ -5,16 +5,17 @@
     class="buttons"
     *ngIf="(loading$ | async) === false && reservationRequest"
   >
-    <button mat-flat-button color="primary">
+    <button mat-flat-button color="primary" [disabled]="true">
       <mat-icon>content_copy</mat-icon>&nbsp;Create new as copy
     </button>
-    <button
+    <a
       mat-flat-button
       color="primary"
+      [routerLink]="'/reserve/' + reservationRequest.id"
       *ngIf="reservationRequest.type === ReservationType.VIRTUAL_ROOM"
     >
       <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
-    </button>
+    </a>
     <button mat-flat-button color="warn">
       <mat-icon>delete_forever</mat-icon>&nbsp;Delete
     </button>

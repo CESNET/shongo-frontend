@@ -1,9 +1,14 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { getFormError } from 'src/app/utils/getFormError';
-import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
-import { ReservationRequestPostBody } from '../../models/types/reservation-request-post-body.type';
+import { TeleconferenceReservationRequest } from '../../models/interfaces/teleconference-reservation-request.interface';
+import { VirtualRoomReservationForm } from '../../models/interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
   roomNameErrorHandler,
@@ -26,25 +31,22 @@ import {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TeleconferenceReservationFormComponent implements ReservationForm {
+export class TeleconferenceReservationFormComponent
+  implements VirtualRoomReservationForm, OnInit
+{
+  @Input() capacityBookingMode = false;
+
   form = new FormGroup({
-    roomName: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(ROOM_NAME_MAXLENGTH),
-      Validators.pattern(ROOM_NAME_PATTERN),
-    ]),
     description: new FormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
     timezone: new FormControl(null, [Validators.required]),
     adminPin: new FormControl(null, [
-      Validators.required,
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
     userPin: new FormControl(null, [
-      Validators.required,
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
@@ -63,7 +65,29 @@ export class TeleconferenceReservationFormComponent implements ReservationForm {
     return this.form.valid;
   }
 
-  getFormValue(): ReservationRequestPostBody {
-    return this.form.value;
+  ngOnInit(): void {
+    if (!this.capacityBookingMode) {
+      this.form.addControl(
+        'roomName',
+        new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(ROOM_NAME_MAXLENGTH),
+          Validators.pattern(ROOM_NAME_PATTERN),
+        ])
+      );
+    }
+  }
+
+  getFormValue(): TeleconferenceReservationRequest {
+    const formValue: TeleconferenceReservationRequest = this.form.value;
+
+    if (formValue.adminPin == null) {
+      delete formValue.adminPin;
+    }
+    if (formValue.userPin == null) {
+      delete formValue.userPin;
+    }
+
+    return formValue;
   }
 }

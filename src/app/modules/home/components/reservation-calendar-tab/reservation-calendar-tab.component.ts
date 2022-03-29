@@ -9,7 +9,9 @@ import { CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Resource, resources } from 'src/app/models/data/resources';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
+import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
+import { PhysicalResource } from 'src/app/shared/models/rest-api/resource.interface';
 
 @Component({
   selector: 'app-reservation-calendar-tab',
@@ -19,20 +21,21 @@ import { Resource, resources } from 'src/app/models/data/resources';
 })
 export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
   selectedResourceId?: string;
-  filteredResources: Resource[];
+  filteredResources: PhysicalResource[];
 
-  readonly resources = resources;
   readonly filterGroup = new FormGroup({
-    resource: new FormControl(this.resources[0].id),
+    resource: new FormControl(null),
     highlightMine: new FormControl(false),
     resourceFilter: new FormControl(''),
   });
 
   readonly CalendarView = CalendarView;
   private readonly _destroy$ = new Subject<void>();
+  private readonly _physicalResources: PhysicalResource[];
 
-  constructor() {
-    this.filteredResources = this.resources;
+  constructor(private _resourceService: ResourceService) {
+    this._physicalResources = this._getPhysicalResources();
+    this.filteredResources = this._physicalResources;
   }
 
   ngOnInit(): void {
@@ -63,8 +66,17 @@ export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
   }
 
   private _filterResources(filter: string): void {
-    this.filteredResources = this.resources.filter((resource) =>
+    this.filteredResources = this._physicalResources.filter((resource) =>
       resource.name.toLowerCase().includes(filter.toLowerCase())
     );
+  }
+
+  private _getPhysicalResources(): PhysicalResource[] {
+    if (!this._resourceService.resources) {
+      return [];
+    }
+    return this._resourceService.resources.filter(
+      (resource) => resource.type === ResourceType.PHYSICAL_RESOURCE
+    ) as PhysicalResource[];
   }
 }

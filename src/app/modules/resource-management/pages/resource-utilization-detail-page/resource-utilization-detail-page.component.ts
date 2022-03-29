@@ -29,9 +29,9 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
     this.data$ = this._route.queryParams.pipe(
       switchMap((params) =>
         this._resourceService.fetchResourceUtilization(
-          params.resourceId,
-          params.intervalFrom,
-          params.intervalTo
+          params.resource_id,
+          params.interval_from,
+          params.interval_to
         )
       ),
       tap((data) => {
@@ -51,9 +51,13 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
 
   getInterval(intervalFrom: string, intervalTo: string): string {
     if (intervalFrom === intervalTo) {
-      return intervalFrom;
+      return this._datePipe.transform(Number(intervalFrom));
     }
-    return intervalFrom + ' - ' + intervalTo;
+    return (
+      this._datePipe.transform(Number(intervalFrom), 'LLL') +
+      ' - ' +
+      this._datePipe.transform(Number(intervalTo), 'LLL')
+    );
   }
 
   getUsage(totalCapacity: number, usedCapacity: number): string {

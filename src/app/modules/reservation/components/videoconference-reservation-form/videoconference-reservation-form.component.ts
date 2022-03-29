@@ -1,9 +1,15 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ViewChild,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { getFormError } from 'src/app/utils/getFormError';
-import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
 import { VideoconferenceReservationRequest } from '../../models/interfaces/videoconference-reservation-request.interface';
+import { VirtualRoomReservationForm } from '../../models/interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
   pinErrorHandler,
@@ -18,6 +24,11 @@ import {
 } from '../../utils/reservation-form.constants';
 import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form/periodicity-selection-form.component';
 
+type VideoconferenceReservationFormValue = Omit<
+  VideoconferenceReservationRequest,
+  'periodicity'
+>;
+
 @Component({
   selector: 'app-videoconference-reservation-form',
   templateUrl: './videoconference-reservation-form.component.html',
@@ -28,23 +39,19 @@ import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoconferenceReservationFormComponent
-  implements ReservationForm
+  implements VirtualRoomReservationForm, OnInit
 {
   @ViewChild(PeriodicitySelectionFormComponent)
   periodicityForm!: PeriodicitySelectionFormComponent;
 
+  @Input() capacityBookingMode = false;
+
   form = new FormGroup({
-    roomName: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(ROOM_NAME_MAXLENGTH),
-      Validators.pattern(ROOM_NAME_PATTERN),
-    ]),
     description: new FormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
     adminPin: new FormControl(null, [
-      Validators.required,
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
@@ -69,8 +76,27 @@ export class VideoconferenceReservationFormComponent
     );
   }
 
+  ngOnInit(): void {
+    if (!this.capacityBookingMode) {
+      this.form.addControl(
+        'roomName',
+        new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(ROOM_NAME_MAXLENGTH),
+          Validators.pattern(ROOM_NAME_PATTERN),
+        ])
+      );
+    }
+  }
+
   getFormValue(): VideoconferenceReservationRequest {
-    const periodicity = this.periodicityForm.getPeriodicity();
-    return { periodicity, ...this.form.value };
+    const periodicity = this.periodicityForm.getPeriodicity()!;
+    const formValue: VideoconferenceReservationFormValue = this.form.value;
+
+    if (formValue.adminPin == null) {
+      delete formValue.adminPin;
+    }
+
+    return { periodicity, ...formValue };
   }
 }

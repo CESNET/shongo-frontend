@@ -118,7 +118,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
 
     const periodicity: Periodicity = {
       type,
-      periodicityEnd: moment(repeatUntil).unix(),
+      periodicityEnd: moment(repeatUntil).unix() * 1000,
       excludeDates: this.getExcludedDays(),
     };
 
@@ -150,7 +150,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
   }
 
   getExcludedDays(): number[] {
-    return Array.from(this.excludedDays).map((date) => moment(date).unix());
+    return Array.from(this.excludedDays).map(
+      (date) => moment(date).unix() * 1000
+    );
   }
 
   addExcludedDate(dateInputEvent: MatDatepickerInputEvent<any, any>): void {

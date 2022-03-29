@@ -1,4 +1,7 @@
-<div class="reservation">
+<div
+  class="reservation"
+  *ngIf="(resourceService.loading$ | async) === false; else loadingResources"
+>
   <mat-toolbar class="reservation__toolbar">
     <!-- Toolbar left -->
     <div class="reservation__toolbar-left">
@@ -10,7 +13,7 @@
         <mat-icon>menu</mat-icon>
       </button>
 
-      <a mat-stroked-button aria-label="Go back to app" routerLink="..">
+      <a mat-stroked-button aria-label="Go back to app" routerLink="/">
         <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
       </a>
 
@@ -71,15 +74,106 @@
     </div>
   </mat-toolbar>
 
-  <mat-drawer-container class="reservation__main">
+  <mat-drawer-container class="reservation__main" [autosize]="true">
     <mat-drawer #drawer mode="side" opened>
       <div class="sidebar">
-        <section class="sidebar__section">
+        <section
+          class="sidebar__section sidebar__section--form-field-padded"
+          *ngIf="!parentReservationRequest; else capacityBookingSection"
+        >
           <h2 class="sidebar__heading">Resource selection</h2>
           <app-resource-selection-form
             (resourceChange)="selectedResource = $event"
           ></app-resource-selection-form>
         </section>
+
+        <ng-template #capacityBookingSection>
+          <section class="sidebar__section">
+            <ng-container
+              *ngIf="parentReservationRequest; else loadingParentOrError"
+            >
+              <h2 class="sidebar__heading">Reserving capacity for</h2>
+              <div>
+                <a
+                  class="mat-primary-color"
+                  [routerLink]="
+                    '/reservation-request/' + parentReservationRequest.id
+                  "
+                  >{{
+                    parentReservationRequest.virtualRoomData?.roomName ??
+                      parentReservationRequest.id
+                  }}</a
+                >
+              </div>
+            </ng-container>
+          </section>
+
+          <!-- Loading or error -->
+          <ng-template #loadingParentOrError>
+            <ng-container
+              *ngTemplateOutlet="
+                (loadingParentRequest$ | async) ? loadingParent : parentError
+              "
+            ></ng-container>
+          </ng-template>
+
+          <!-- Loading display -->
+          <ng-template #loadingParent>
+            <div class="loading">
+              <mat-progress-spinner
+                diameter="70"
+                mode="indeterminate"
+                color="primary"
+              ></mat-progress-spinner>
+              <span>Loading parent request</span>
+            </div>
+          </ng-template>
+
+          <!-- Error display -->
+          <ng-template #parentError>
+            <ng-container
+              *ngTemplateOutlet="
+                parentPropertyErrorOccured()
+                  ? parentPropertyError
+                  : loadingParentError
+              "
+            >
+            </ng-container>
+          </ng-template>
+
+          <ng-template #loadingParentError>
+            <div class="sidebar__loading-error">
+              <div class="sidebar__error-container">
+                <app-alert
+                  [type]="AlertType.ERROR"
+                  message="Failed to load parent request"
+                  [showCloseButton]="false"
+                  [isActive]="true"
+                ></app-alert>
+              </div>
+              <button
+                mat-flat-button
+                color="primary"
+                (click)="retryLoadingParentRequest()"
+              >
+                Try again
+              </button>
+            </div>
+          </ng-template>
+
+          <ng-template #parentPropertyError>
+            <div class="sidebar__loading-error">
+              <div class="sidebar__error-container">
+                <app-alert
+                  [type]="AlertType.ERROR"
+                  [isActive]="true"
+                  [showCloseButton]="false"
+                  [message]="parentRequestError!.message"
+                ></app-alert>
+              </div>
+            </div>
+          </ng-template>
+        </ng-template>
 
         <section class="sidebar__section">
           <h2 class="sidebar__heading">Calendar settings</h2>
@@ -94,7 +188,7 @@
           class="sidebar__section"
           *ngIf="selectedResource && selectedSlot"
         >
-          <h2 class="sidebar__heading">Reservation</h2>
+          <h2 class="sidebar__heading">Reservation slot</h2>
 
           <div class="sidebar__slot">
             <div
@@ -151,3 +245,13 @@
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
+
+<ng-template #loadingResources>
+  <div class="loading loading--fullscreen">
+    <h1>Loading resources</h1>
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  </div>
+</ng-template>

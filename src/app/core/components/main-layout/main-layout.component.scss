@@ -7,6 +7,13 @@
     margin-top: auto;
   }
 }
+.loading-display {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 main {
-  padding-top: 50px;
+  padding-top: 3rem;
 }

@@ -25,7 +25,7 @@ interface PhysicalReservationsTableData {
 
 export class PhysicalReservationsDataSource extends DataTableDataSource<PhysicalReservationsTableData> {
   constructor(
-    private _resReqService: ReservationRequestService,
+    public apiService: ReservationRequestService,
     private _datePipe: MomentDatePipe,
     private _dialog: MatDialog
   ) {
@@ -58,7 +58,7 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
         '/reservation-request/:id'
       ),
       new LinkButton('Edit meeting room', 'settings', '/meeting_room/:id'),
-      new DeleteButton(this._resReqService, this._dialog, '/:id'),
+      new DeleteButton(this.apiService, this._dialog, '/:id'),
     ];
   }
 
@@ -70,7 +70,7 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
     filter: HttpParams
   ): Observable<ApiResponse<PhysicalReservationsTableData>> {
     filter = filter.set('type', ReservationType.PHYSICAL_RESOURCE);
-    return this._resReqService
+    return this.apiService
       .fetchTableItems<ReservationRequest>(
         pageSize,
         pageIndex,
