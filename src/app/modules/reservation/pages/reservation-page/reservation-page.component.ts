@@ -41,6 +41,7 @@ export class ReservationPageComponent implements OnInit {
   selectedSlot?: CalendarSlot | null;
   parentReservationRequest?: ReservationRequestDetail;
   parentRequestError?: Error;
+  capacityBookingMode = false;
 
   AlertType = AlertType;
 
@@ -100,8 +101,13 @@ export class ReservationPageComponent implements OnInit {
     const requestId = this._route.snapshot.params.id;
 
     if (requestId) {
-      this._loadParentRequest(requestId);
+      this._initCapacityBookingMode(requestId);
     }
+  }
+
+  private _initCapacityBookingMode(requestId: string): void {
+    this.capacityBookingMode = true;
+    this._loadParentRequest(requestId);
   }
 
   private _loadParentRequest(requestId: string): void {

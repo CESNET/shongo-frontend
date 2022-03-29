@@ -79,7 +79,7 @@
       <div class="sidebar">
         <section
           class="sidebar__section sidebar__section--form-field-padded"
-          *ngIf="!parentReservationRequest; else capacityBookingSection"
+          *ngIf="!capacityBookingMode; else capacityBookingSection"
         >
           <h2 class="sidebar__heading">Resource selection</h2>
           <app-resource-selection-form
