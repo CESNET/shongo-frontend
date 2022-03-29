@@ -9,7 +9,10 @@ import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
-import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
+import {
+  Resource,
+  VirtualRoomResource,
+} from 'src/app/shared/models/rest-api/resource.interface';
 import { ApiService } from '../api.service';
 
 const RESOURCES_LOCALSTORAGE_KEY = 'resources';
@@ -99,6 +102,18 @@ export class ResourceService extends ApiService {
     return Array.from(tags);
   }
 
+  findResourceByTechnology(technology: Technology): VirtualRoomResource | null {
+    if (!this.resources) {
+      return null;
+    }
+
+    return (
+      (this.resources.find(
+        (resource) => resource.tag === technology
+      ) as VirtualRoomResource) ?? null
+    );
+  }
+
   private _loadResources(): void {
     const resources = this._getFromLocalStorage();
 
@@ -148,7 +163,7 @@ export class ResourceService extends ApiService {
 
     if (
       !canExceedTtl &&
-      resourcesStore.timestamp - Date.now() > RESOURCES_TTL
+      Date.now() - resourcesStore.timestamp > RESOURCES_TTL
     ) {
       return null;
     }

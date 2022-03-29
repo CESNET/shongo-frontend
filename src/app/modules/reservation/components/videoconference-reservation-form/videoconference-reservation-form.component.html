@@ -3,7 +3,11 @@
     <h2>Reservation data</h2>
 
     <!-- Room name field -->
-    <mat-form-field appearance="outline" class="form__field">
+    <mat-form-field
+      appearance="outline"
+      class="form__field"
+      *ngIf="!capacityBookingMode"
+    >
       <mat-label>Room name</mat-label>
       <input type="text" matInput formControlName="roomName" />
       <mat-error

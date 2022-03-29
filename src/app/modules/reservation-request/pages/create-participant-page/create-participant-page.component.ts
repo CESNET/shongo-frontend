@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { first, switchMap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ParticipantRole } from 'src/app/shared/models/enums/participant-role.enum';
 import { ParticipantType } from 'src/app/shared/models/enums/participant-type.enum';
 import {
@@ -43,6 +44,8 @@ export class CreateParticipantPageComponent {
   participantRoles = Object.values(ParticipantRole);
   searchingUsers$ = new BehaviorSubject<boolean>(false);
   posting$ = new BehaviorSubject<boolean>(false);
+
+  AlertType = AlertType;
 
   getFormError = getFormError;
 
@@ -90,7 +93,7 @@ export class CreateParticipantPageComponent {
         },
         error: () => {
           this.posting$.next(false);
-          this.alert.activate();
+          this.alert.isActive = true;
         },
       });
   }
