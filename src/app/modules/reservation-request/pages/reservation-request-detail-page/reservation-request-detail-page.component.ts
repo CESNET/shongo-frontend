@@ -11,6 +11,7 @@ import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
+import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { RoomState } from 'src/app/shared/models/enums/room-state.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -29,6 +30,7 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
   ReservationType = ReservationType;
   AllocationState = AllocationState;
   RoomState = RoomState;
+  ReservationRequestState = ReservationRequestState;
 
   private _destroy$ = new Subject<void>();
 

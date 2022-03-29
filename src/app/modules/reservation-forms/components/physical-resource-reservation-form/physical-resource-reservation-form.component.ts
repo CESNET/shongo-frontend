@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { getFormError } from 'src/app/utils/getFormError';
-import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
+import { ReservationForm } from '../../interfaces/reservation-form.interface';
 import { descriptionErrorHandler } from '../../utils/custom-error-handlers';
 import { ROOM_DESCRIPTION_MAXLENGTH } from '../../utils/reservation-form.constants';
 import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form/periodicity-selection-form.component';

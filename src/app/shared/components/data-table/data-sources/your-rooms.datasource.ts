@@ -4,6 +4,7 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
@@ -25,6 +26,7 @@ export interface YourRoomsTableData {
   slotStart: string;
   slotEnd: string;
   state: string;
+  isWritable: boolean;
 }
 
 export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData> {
@@ -76,9 +78,17 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
       new LinkButton(
         'Edit reservation request',
         'settings',
-        '/reservation-request/edit/:id'
+        '/reservation-request/:id/edit',
+        (row: YourRoomsTableData) =>
+          !Boolean(row.isWritable) ||
+          row.state === ReservationRequestState.ALLOCATED_FINISHED
       ),
-      new DeleteButton(this.apiService, this._dialog, '/:id'),
+      new DeleteButton(
+        this.apiService,
+        this._dialog,
+        '/:id',
+        (row: YourRoomsTableData) => !Boolean(row.isWritable)
+      ),
     ];
   }
 
@@ -102,8 +112,15 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         map((tableData) => {
           const { count, items } = tableData;
           const mappedItems = items.map((item: ReservationRequest) => {
-            const { id, ownerName, createdAt, slot, virtualRoomData, state } =
-              item;
+            const {
+              id,
+              ownerName,
+              createdAt,
+              slot,
+              virtualRoomData,
+              state,
+              isWritable,
+            } = item;
             return {
               id,
               ownerName,
@@ -113,6 +130,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
               slotEnd: slot.end,
               roomName: virtualRoomData?.roomName ?? 'unknown',
               technology: virtualRoomData?.technology ?? 'unknown',
+              isWritable: isWritable,
             };
           });
           return { count, items: mappedItems };

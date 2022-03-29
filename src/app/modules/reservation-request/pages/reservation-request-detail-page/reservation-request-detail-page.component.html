@@ -5,20 +5,38 @@
     class="buttons"
     *ngIf="(loading$ | async) === false && reservationRequest"
   >
-    <button mat-flat-button color="primary" [disabled]="true">
-      <mat-icon>content_copy</mat-icon>&nbsp;Create new as copy
-    </button>
+    <!-- Book room capacity button -->
     <a
       mat-flat-button
       color="primary"
       [routerLink]="'/reserve/' + reservationRequest.id"
-      *ngIf="reservationRequest.type === ReservationType.VIRTUAL_ROOM"
+      *ngIf="
+        reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
+        reservationRequest.isProvidable &&
+        reservationRequest.state !== ReservationRequestState.ALLOCATED_FINISHED
+      "
     >
       <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
     </a>
-    <button mat-flat-button color="warn">
-      <mat-icon>delete_forever</mat-icon>&nbsp;Delete
-    </button>
+
+    <ng-container *ngIf="reservationRequest.isWritable">
+      <!-- Edit button -->
+      <a
+        mat-flat-button
+        color="primary"
+        [routerLink]="'edit'"
+        *ngIf="
+          reservationRequest.state !==
+          ReservationRequestState.ALLOCATED_FINISHED
+        "
+      >
+        <mat-icon>settings</mat-icon>&nbsp;Edit
+      </a>
+      <!-- Delete button -->
+      <button mat-flat-button color="warn">
+        <mat-icon>delete_forever</mat-icon>&nbsp;Delete
+      </button>
+    </ng-container>
   </div>
 </header>
 

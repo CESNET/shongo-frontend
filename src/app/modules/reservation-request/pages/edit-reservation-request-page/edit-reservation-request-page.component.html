@@ -1,0 +1,65 @@
+<header>
+  <h1>Edit reservation request</h1>
+</header>
+
+<main>
+  <ng-container *ngIf="reservationRequest; else loadingOrError">
+    <div [ngSwitch]="reservationRequest.type">
+      <div *ngSwitchCase="ReservationType.VIRTUAL_ROOM">output</div>
+      <div *ngSwitchCase="ReservationType.PHYSICAL_RESOURCE">
+        <app-physical-resource-reservation-form></app-physical-resource-reservation-form>
+      </div>
+      <div *ngSwitchCase="ReservationType.ROOM_CAPACITY">
+        <div [ngSwitch]="reservationRequest.virtualRoomData!.technology">
+          <div *ngSwitchCase="Technology.PEXIP">
+            <app-videoconference-reservation-form
+              [editingMode]="true"
+            ></app-videoconference-reservation-form>
+          </div>
+          <div *ngSwitchCase="Technology.H323_SIP">
+            <app-videoconference-reservation-form
+              [editingMode]="true"
+            ></app-videoconference-reservation-form>
+          </div>
+          <div *ngSwitchCase="Technology.FREEPBX">
+            <app-teleconference-reservation-form
+              [editingMode]="true"
+            ></app-teleconference-reservation-form>
+          </div>
+          <div *ngSwitchCase="Technology.ADOBE_CONNECT">
+            <app-webconference-reservation-form
+              [editingMode]="true"
+            ></app-webconference-reservation-form>
+          </div>
+          <div *ngSwitchDefault>Unknown technology.</div>
+        </div>
+      </div>
+      <div *ngSwitchDefault>
+        <b>Unknown reservation request type.</b>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingOrError>
+    <ng-container
+      *ngTemplateOutlet="(loading$ | async) ? loading : errorOccured"
+    ></ng-container>
+  </ng-template>
+
+  <ng-template #loading>
+    <div class="loading">
+      <ngx-skeleton-loader
+        count="4"
+        [theme]="{ height: '50px' }"
+      ></ngx-skeleton-loader>
+    </div>
+  </ng-template>
+  <ng-template #errorOccured>
+    <app-alert
+      [type]="AlertType.ERROR"
+      [isActive]="true"
+      [showCloseButton]="false"
+      [message]="error?.message ?? 'Failed to load reservation request.'"
+    ></app-alert>
+  </ng-template>
+</main>

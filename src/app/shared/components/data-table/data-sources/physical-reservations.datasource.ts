@@ -57,7 +57,11 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
         'visibility',
         '/reservation-request/:id'
       ),
-      new LinkButton('Edit meeting room', 'settings', '/meeting_room/:id'),
+      new LinkButton(
+        'Edit meeting room',
+        'settings',
+        '/reservation-request/:id/edit'
+      ),
       new DeleteButton(this.apiService, this._dialog, '/:id'),
     ];
   }

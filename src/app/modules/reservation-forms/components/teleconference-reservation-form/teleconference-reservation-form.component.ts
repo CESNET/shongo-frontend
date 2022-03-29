@@ -6,20 +6,20 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
+import { TeleconferenceReservationRequest } from 'src/app/modules/reservation/models/interfaces/teleconference-reservation-request.interface';
 import { getFormError } from 'src/app/utils/getFormError';
-import { TeleconferenceReservationRequest } from '../../models/interfaces/teleconference-reservation-request.interface';
-import { VirtualRoomReservationForm } from '../../models/interfaces/virtual-room-reservation-form.interface';
+import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
   roomNameErrorHandler,
   pinErrorHandler,
 } from '../../utils/custom-error-handlers';
 import {
-  ROOM_NAME_MAXLENGTH,
-  ROOM_NAME_PATTERN,
   ROOM_DESCRIPTION_MAXLENGTH,
   PIN_PATTERN,
   PIN_MINLENGTH,
+  ROOM_NAME_MAXLENGTH,
+  ROOM_NAME_PATTERN,
 } from '../../utils/reservation-form.constants';
 
 @Component({
@@ -34,7 +34,7 @@ import {
 export class TeleconferenceReservationFormComponent
   implements VirtualRoomReservationForm, OnInit
 {
-  @Input() capacityBookingMode = false;
+  @Input() editingMode = false;
 
   form = new FormGroup({
     description: new FormControl(null, [
@@ -66,7 +66,7 @@ export class TeleconferenceReservationFormComponent
   }
 
   ngOnInit(): void {
-    if (!this.capacityBookingMode) {
+    if (!this.editingMode) {
       this.form.addControl(
         'roomName',
         new FormControl(null, [

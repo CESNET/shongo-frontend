@@ -7,74 +7,65 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
-import { WebconferenceAccessMode } from 'src/app/shared/models/enums/webconference-access-mode.enum';
-import { Option } from 'src/app/shared/models/interfaces/option.interface';
+import { VideoconferenceReservationRequest } from 'src/app/modules/reservation/models/interfaces/videoconference-reservation-request.interface';
 import { getFormError } from 'src/app/utils/getFormError';
-import { VirtualRoomReservationForm } from '../../models/interfaces/virtual-room-reservation-form.interface';
-import { WebconferenceReservationRequest } from '../../models/interfaces/webconference-reservation-request.interface';
-import { ReservationRequestPostBody } from '../../models/types/reservation-request-post-body.type';
+import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
-  pinErrorHandler,
   roomNameErrorHandler,
+  pinErrorHandler,
 } from '../../utils/custom-error-handlers';
 import {
-  PIN_MINLENGTH,
-  PIN_PATTERN,
   ROOM_DESCRIPTION_MAXLENGTH,
+  PIN_PATTERN,
+  PIN_MINLENGTH,
   ROOM_NAME_MAXLENGTH,
   ROOM_NAME_PATTERN,
 } from '../../utils/reservation-form.constants';
+
 import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form/periodicity-selection-form.component';
 
-type WebconferenceReservationFormValue = Omit<
-  WebconferenceReservationRequest,
+type VideoconferenceReservationFormValue = Omit<
+  VideoconferenceReservationRequest,
   'periodicity'
 >;
 
 @Component({
-  selector: 'app-webconference-reservation-form',
-  templateUrl: './webconference-reservation-form.component.html',
+  selector: 'app-videoconference-reservation-form',
+  templateUrl: './videoconference-reservation-form.component.html',
   styleUrls: [
-    './webconference-reservation-form.component.scss',
+    './videoconference-reservation-form.component.scss',
     '../../styles/resource-reservation-form.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WebconferenceReservationFormComponent
+export class VideoconferenceReservationFormComponent
   implements VirtualRoomReservationForm, OnInit
 {
   @ViewChild(PeriodicitySelectionFormComponent)
   periodicityForm!: PeriodicitySelectionFormComponent;
 
-  @Input() capacityBookingMode = false;
+  @Input() editingMode = false;
 
-  readonly form = new FormGroup({
+  form = new FormGroup({
     description: new FormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
-    userPin: new FormControl(null, [
+    adminPin: new FormControl(null, [
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
     participantCount: new FormControl(null, [Validators.required]),
     timezone: new FormControl(null, [Validators.required]),
-    accessMode: new FormControl(WebconferenceAccessMode.CONTROLLED, [
-      Validators.required,
-    ]),
+    allowGuests: new FormControl(false),
+    record: new FormControl(false),
   });
 
-  readonly accessModeOpts: Option[] = [
-    { value: WebconferenceAccessMode.CONTROLLED, displayName: 'Controlled' },
-    { value: WebconferenceAccessMode.PUBLIC, displayName: 'Public' },
-    { value: WebconferenceAccessMode.PRIVATE, displayName: 'Private' },
-  ];
-
+  readonly getFormError = getFormError;
   readonly descriptionErrorHandler = descriptionErrorHandler;
   readonly roomNameErrorHandler = roomNameErrorHandler;
   readonly pinErrorHandler = pinErrorHandler;
-  readonly getFormError = getFormError;
 
   constructor(private _settings: SettingsService) {
     this.form.patchValue({ timezone: this._settings.timeZone });
@@ -87,7 +78,7 @@ export class WebconferenceReservationFormComponent
   }
 
   ngOnInit(): void {
-    if (!this.capacityBookingMode) {
+    if (!this.editingMode) {
       this.form.addControl(
         'roomName',
         new FormControl(null, [
@@ -99,12 +90,12 @@ export class WebconferenceReservationFormComponent
     }
   }
 
-  getFormValue(): WebconferenceReservationRequest {
+  getFormValue(): VideoconferenceReservationRequest {
     const periodicity = this.periodicityForm.getPeriodicity()!;
-    const formValue: WebconferenceReservationFormValue = this.form.value;
+    const formValue: VideoconferenceReservationFormValue = this.form.value;
 
-    if (formValue.userPin == null) {
-      delete formValue.userPin;
+    if (formValue.adminPin == null) {
+      delete formValue.adminPin;
     }
 
     return { periodicity, ...formValue };
