@@ -15,7 +15,6 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
-import { VirtualRoomTag } from 'src/app/shared/models/enums/virtual-room-tag.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';

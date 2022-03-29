@@ -5,7 +5,6 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -38,7 +37,6 @@ export class ResourceSelectionFormComponent {
 
   get filteredResourceOpts(): Option[] {
     const filter = this.resourceFilterCtrl.value;
-    const type = this.form.get('type')!.value;
 
     if (!filter) {
       return this.resourceOpts;
@@ -57,7 +55,7 @@ export class ResourceSelectionFormComponent {
     if (typeOrTag === ResourceType.VIRTUAL_ROOM) {
       this.resourceOpts = resources
         .map((res) => ({
-          value: res.id,
+          value: res,
           displayName: virtualRoomResourceConfig.tagNameMap.get(
             res.tag as Technology
           ),
@@ -66,7 +64,7 @@ export class ResourceSelectionFormComponent {
     } else {
       this.resourceOpts = resources
         .map((res) => ({
-          value: res.id,
+          value: res,
           displayName: res.name,
         }))
         .filter((opt) => opt.displayName) as Option[];
