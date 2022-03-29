@@ -163,4 +163,12 @@ export class ReservationRequestService extends ApiService {
     }/${requestId}/runtime_management/recording/${record ? 'start' : 'stop'}`;
     return this._http.post<void>(url, {});
   }
+
+  acceptRequest(requestId: string): Observable<{}> {
+    return this._http.post<{}>(`${this.endpointURL}/${requestId}/accept`, {});
+  }
+
+  rejectRequest(requestId: string): Observable<{}> {
+    return this._http.post<{}>(`${this.endpointURL}/${requestId}/reject`, {});
+  }
 }

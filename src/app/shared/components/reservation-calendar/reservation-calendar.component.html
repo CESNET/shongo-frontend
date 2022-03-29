@@ -13,6 +13,7 @@
       [refresh]="refresh$"
       [validateEventTimesChanged]="validateEventTimesChanged"
       (eventTimesChanged)="eventTimesChanged($event)"
+      (eventClicked)="handleEventClick($event.event)"
     ></mwl-calendar-day-view>
     <mwl-calendar-week-view
       *ngSwitchCase="CalendarView.Week"
@@ -26,6 +27,7 @@
       [validateEventTimesChanged]="validateEventTimesChanged"
       (eventTimesChanged)="eventTimesChanged($event)"
       (dayHeaderClicked)="openDate($event.day.date)"
+      (eventClicked)="handleEventClick($event.event)"
     ></mwl-calendar-week-view>
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
@@ -35,6 +37,7 @@
       [tooltipTemplate]="calendarTooltip"
       [refresh]="refresh$"
       (dayClicked)="openDate($event.day.date)"
+      (eventClicked)="handleEventClick($event.event)"
     ></mwl-calendar-month-view>
   </div>
 </div>

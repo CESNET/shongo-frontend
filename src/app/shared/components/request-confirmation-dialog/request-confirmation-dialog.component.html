@@ -1,0 +1,101 @@
+<header>
+  <h1 mat-dialog-title>Request confirmation</h1>
+</header>
+
+<mat-dialog-content>
+  <div class="request-detail">
+    <div
+      class="request-detail__loading"
+      *ngIf="loading$ | async; else requestDetail"
+    >
+      <mat-progress-spinner
+        diameter="60"
+        mode="indeterminate"
+        color="primary"
+      ></mat-progress-spinner>
+      <b>Processing</b>
+    </div>
+
+    <ng-template #requestDetail>
+      <dl class="definition-list--flex">
+        <dt>Created by</dt>
+        <dd>
+          {{
+            reservationRequest.ownerName +
+              (reservationRequest.ownerEmail
+                ? " (" + reservationRequest.ownerEmail + ")"
+                : "")
+          }}
+        </dd>
+
+        <dt>Requested slot</dt>
+        <dd>
+          {{
+            (reservationRequest.slot.start | momentDate: "LLL") +
+              " - " +
+              (reservationRequest.slot.end | momentDate: "LLL")
+          }}
+        </dd>
+
+        <dt>Request description</dt>
+        <dd>{{ reservationRequest.description }}</dd>
+
+        <ng-container
+          *ngIf="
+            reservationRequest.type === ReservationType.VIRTUAL_ROOM;
+            else physicalResource
+          "
+        >
+          <dt>Requested technology</dt>
+          <dd>
+            {{
+              getTechnologyTitle(reservationRequest.virtualRoomData?.technology)
+            }}
+          </dd>
+        </ng-container>
+
+        <ng-template #physicalResource>
+          <dt>Requested resource</dt>
+          <dd>
+            {{
+              reservationRequest.physicalResourceData?.resourceName ?? "Unknown"
+            }}
+          </dd>
+        </ng-template>
+      </dl>
+    </ng-template>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <div class="dialog-actions__left">
+    <a
+      mat-button
+      aria-label="View request"
+      [routerLink]="'/reservation-request/' + reservationRequest.id"
+      [disabled]="loading$ | async"
+      ><mat-icon>visibility</mat-icon>&nbsp;View request</a
+    >
+    <button mat-button mat-dialog-close [disabled]="loading$ | async">
+      Close
+    </button>
+  </div>
+  <div class="dialog-actions__right">
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="loading$ | async"
+      (click)="accept()"
+    >
+      Accept
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      [disabled]="loading$ | async"
+      (click)="reject()"
+    >
+      Reject
+    </button>
+  </div>
+</mat-dialog-actions>
