@@ -62,7 +62,7 @@ $section-margin: 1.34375em + 0.25em;
   }
 
   &__error-container {
-    max-width: 30ch;
+    width: clamp(15ch, 20vw, 30ch);
   }
 }
 
