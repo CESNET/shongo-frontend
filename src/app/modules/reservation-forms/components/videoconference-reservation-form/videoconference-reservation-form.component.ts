@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
-import { VideoconferenceReservationRequest } from 'src/app/modules/reservation/models/interfaces/videoconference-reservation-request.interface';
+import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { VideoconferenceReservationRequest } from 'src/app/shared/models/rest-api/videoconference-reservation-request.interface';
 import { getFormError } from 'src/app/utils/getFormError';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
@@ -46,6 +47,7 @@ export class VideoconferenceReservationFormComponent
   periodicityForm!: PeriodicitySelectionFormComponent;
 
   @Input() editingMode = false;
+  @Input() editedRequest?: ReservationRequestDetail | undefined;
 
   form = new FormGroup({
     description: new FormControl(null, [
@@ -78,7 +80,7 @@ export class VideoconferenceReservationFormComponent
   }
 
   ngOnInit(): void {
-    if (!this.editingMode) {
+    if (!this.editingMode && !this.editedRequest) {
       this.form.addControl(
         'roomName',
         new FormControl(null, [
@@ -87,6 +89,41 @@ export class VideoconferenceReservationFormComponent
           Validators.pattern(ROOM_NAME_PATTERN),
         ])
       );
+    }
+
+    if (this.editedRequest) {
+      this.fill(this.editedRequest);
+    }
+  }
+
+  fill({
+    description,
+    authorizedData,
+    roomCapacityData,
+  }: ReservationRequestDetail): void {
+    if (description) {
+      this.form.get('description')!.setValue(description);
+    }
+    if (authorizedData) {
+      const { adminPin, allowGuests } = authorizedData;
+
+      if (adminPin) {
+        this.form.get('adminPin')!.setValue(adminPin);
+      }
+      if (allowGuests) {
+        this.form.get('allowGuests')!.setValue(allowGuests);
+      }
+    }
+    if (roomCapacityData) {
+      const { capacityParticipantCount, capacityHasRecordingService } =
+        roomCapacityData;
+
+      if (capacityParticipantCount) {
+        this.form.get('participantCount')!.setValue(capacityParticipantCount);
+      }
+      if (capacityHasRecordingService) {
+        this.form.get('record')!.setValue(capacityHasRecordingService);
+      }
     }
   }
 

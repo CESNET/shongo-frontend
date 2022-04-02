@@ -23,8 +23,8 @@ export interface YourRoomsTableData {
   createdAt: string;
   roomName: string;
   technology: string;
-  slotStart: string;
-  slotEnd: string;
+  slotStart: number;
+  slotEnd: number;
   state: string;
   isWritable: boolean;
 }

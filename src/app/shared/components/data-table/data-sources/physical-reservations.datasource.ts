@@ -17,8 +17,8 @@ import { DataTableDataSource } from './data-table-datasource';
 interface PhysicalReservationsTableData {
   id: string;
   resourceName: string;
-  slotStart: string;
-  slotEnd: string;
+  slotStart: number;
+  slotEnd: number;
   state: string;
   resourceDescription: string;
 }

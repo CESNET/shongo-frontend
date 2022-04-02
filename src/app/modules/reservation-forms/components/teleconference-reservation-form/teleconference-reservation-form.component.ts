@@ -6,7 +6,8 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
-import { TeleconferenceReservationRequest } from 'src/app/modules/reservation/models/interfaces/teleconference-reservation-request.interface';
+import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { TeleconferenceReservationRequest } from 'src/app/shared/models/rest-api/teleconference-reservation-request.interface';
 import { getFormError } from 'src/app/utils/getFormError';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
@@ -35,6 +36,7 @@ export class TeleconferenceReservationFormComponent
   implements VirtualRoomReservationForm, OnInit
 {
   @Input() editingMode = false;
+  @Input() editedRequest?: ReservationRequestDetail | undefined;
 
   form = new FormGroup({
     description: new FormControl(null, [
@@ -66,7 +68,7 @@ export class TeleconferenceReservationFormComponent
   }
 
   ngOnInit(): void {
-    if (!this.editingMode) {
+    if (!this.editingMode && !this.editedRequest) {
       this.form.addControl(
         'roomName',
         new FormControl(null, [
@@ -75,6 +77,26 @@ export class TeleconferenceReservationFormComponent
           Validators.pattern(ROOM_NAME_PATTERN),
         ])
       );
+    }
+
+    if (this.editedRequest) {
+      this.fill(this.editedRequest);
+    }
+  }
+
+  fill({ description, authorizedData }: ReservationRequestDetail): void {
+    if (description) {
+      this.form.get('description')!.setValue(description);
+    }
+    if (authorizedData) {
+      const { adminPin, userPin } = authorizedData;
+
+      if (adminPin) {
+        this.form.get('adminPin')!.setValue(adminPin);
+      }
+      if (userPin) {
+        this.form.get('userPin')!.setValue(userPin);
+      }
     }
   }
 

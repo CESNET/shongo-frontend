@@ -32,6 +32,7 @@ import { RecordingsTabComponent } from './components/recordings-tab/recordings-t
 import { RecordingViewUrlColumnComponent } from './components/recording-view-url-column/recording-view-url-column.component';
 import { EditReservationRequestPageComponent } from './pages/edit-reservation-request-page/edit-reservation-request-page.component';
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import { ReservationFormsModule } from '../reservation-forms/reservation-forms.m
     MatDialogModule,
     MatSliderModule,
     ReservationFormsModule,
+    MatDatepickerModule,
   ],
   declarations: [
     ReservationRequestDetailPageComponent,

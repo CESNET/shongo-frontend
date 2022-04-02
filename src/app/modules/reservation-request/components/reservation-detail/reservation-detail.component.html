@@ -224,10 +224,10 @@
           <dd>{{ adminPin }}</dd>
         </ng-container>
 
-        <!-- Guest PIN -->
-        <ng-container *ngIf="authorizedData.guestPin as guestPin">
-          <dt>Guest PIN:</dt>
-          <dd>{{ guestPin }}</dd>
+        <!-- User PIN -->
+        <ng-container *ngIf="authorizedData.userPin as userPin">
+          <dt>User PIN:</dt>
+          <dd>{{ userPin }}</dd>
         </ng-container>
 
         <ng-container *ngIf="authorizedData.aliases">

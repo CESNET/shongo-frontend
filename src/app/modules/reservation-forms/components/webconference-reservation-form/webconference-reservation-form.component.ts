@@ -7,9 +7,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
-import { WebconferenceReservationRequest } from 'src/app/modules/reservation/models/interfaces/webconference-reservation-request.interface';
 import { WebconferenceAccessMode } from 'src/app/shared/models/enums/webconference-access-mode.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
+import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { WebconferenceReservationRequest } from 'src/app/shared/models/rest-api/webconference-reservation-request.interface';
 import { getFormError } from 'src/app/utils/getFormError';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
@@ -47,6 +48,7 @@ export class WebconferenceReservationFormComponent
   periodicityForm!: PeriodicitySelectionFormComponent;
 
   @Input() editingMode = false;
+  @Input() editedRequest?: ReservationRequestDetail | undefined;
 
   readonly form = new FormGroup({
     description: new FormControl(null, [
@@ -59,9 +61,6 @@ export class WebconferenceReservationFormComponent
     ]),
     participantCount: new FormControl(null, [Validators.required]),
     timezone: new FormControl(null, [Validators.required]),
-    accessMode: new FormControl(WebconferenceAccessMode.CONTROLLED, [
-      Validators.required,
-    ]),
   });
 
   readonly accessModeOpts: Option[] = [
@@ -86,7 +85,7 @@ export class WebconferenceReservationFormComponent
   }
 
   ngOnInit(): void {
-    if (!this.editingMode) {
+    if (!this.editingMode && !this.editedRequest) {
       this.form.addControl(
         'roomName',
         new FormControl(null, [
@@ -95,6 +94,41 @@ export class WebconferenceReservationFormComponent
           Validators.pattern(ROOM_NAME_PATTERN),
         ])
       );
+    }
+
+    if (this.editedRequest) {
+      this.fill(this.editedRequest);
+    } else {
+      this.form.addControl(
+        'accessMode',
+        new FormControl(WebconferenceAccessMode.CONTROLLED, [
+          Validators.required,
+        ])
+      );
+    }
+  }
+
+  fill({
+    description,
+    roomCapacityData,
+    authorizedData,
+  }: ReservationRequestDetail): void {
+    if (description) {
+      this.form.get('description')!.setValue(description);
+    }
+    if (authorizedData) {
+      const { userPin } = authorizedData;
+
+      if (userPin) {
+        this.form.get('userPin')!.setValue(userPin);
+      }
+    }
+    if (roomCapacityData) {
+      const { capacityParticipantCount } = roomCapacityData;
+
+      if (capacityParticipantCount) {
+        this.form.get('participantCount')!.setValue(capacityParticipantCount);
+      }
     }
   }
 

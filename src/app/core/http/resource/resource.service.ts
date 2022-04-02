@@ -102,6 +102,16 @@ export class ResourceService extends ApiService {
     return Array.from(tags);
   }
 
+  getVirtualRoomResources(): VirtualRoomResource[] {
+    if (!this.resources) {
+      return [];
+    }
+
+    return this.resources.filter(
+      (resource) => resource.type === ResourceType.VIRTUAL_ROOM
+    ) as VirtualRoomResource[];
+  }
+
   findResourceByTechnology(technology: Technology): VirtualRoomResource | null {
     if (!this.resources) {
       return null;
@@ -112,6 +122,14 @@ export class ResourceService extends ApiService {
         (resource) => resource.tag === technology
       ) as VirtualRoomResource) ?? null
     );
+  }
+
+  findResourceById(id: string): Resource | null {
+    if (!this.resources) {
+      return null;
+    }
+
+    return this.resources.find((resource) => resource.id === id) ?? null;
   }
 
   private _loadResources(): void {

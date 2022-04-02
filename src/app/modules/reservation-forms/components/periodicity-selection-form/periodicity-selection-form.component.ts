@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -20,6 +25,16 @@ import { Periodicity } from 'src/app/shared/models/rest-api/reservation-request.
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { getFormError } from 'src/app/utils/getFormError';
 
+const daysMap = new Map<Days, string>([
+  [Days.MONDAY, 'monday'],
+  [Days.TUESDAY, 'tuesday'],
+  [Days.WEDNESDAY, 'wednesday'],
+  [Days.THURSDAY, 'thursday'],
+  [Days.FRIDAY, 'friday'],
+  [Days.SATURDAY, 'saturday'],
+  [Days.SUNDAY, 'sunday'],
+]);
+
 @Component({
   selector: 'app-periodicity-selection-form',
   templateUrl: './periodicity-selection-form.component.html',
@@ -27,6 +42,8 @@ import { getFormError } from 'src/app/utils/getFormError';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PeriodicitySelectionFormComponent implements OnInit {
+  @Input() periodicity?: Periodicity;
+
   periodicityForm = new FormGroup({
     periodicity: new FormControl(PeriodicityType.NONE, [Validators.required]),
     repeatUntil: new FormControl(null, [Validators.required]),
@@ -100,6 +117,80 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     this.periodicityForm
       .get('weeklyForm')!
       .setValidators(this._weeklyFormValidator());
+
+    if (this.periodicity) {
+      this.fill(this.periodicity);
+    }
+  }
+
+  fill(periodicity: Periodicity): void {
+    if (!periodicity) {
+      return;
+    }
+    if (periodicity.type) {
+      this.periodicityForm.get('periodicity')!.setValue(periodicity.type);
+    }
+    if (periodicity.periodicityEnd) {
+      this.periodicityForm
+        .get('repeatUntil')!
+        .setValue(new Date(periodicity.periodicityEnd));
+    }
+    if (periodicity.excludeDates) {
+      periodicity.excludeDates.forEach((timestamp) =>
+        this.excludedDays.add(new Date(timestamp))
+      );
+    }
+
+    if (periodicity.type === PeriodicityType.WEEKLY) {
+      const weeklyForm = this.periodicityForm.get('weeklyForm')! as FormGroup;
+      const { nthWeek } = weeklyForm.controls;
+
+      if (periodicity.periodicityCycle) {
+        nthWeek.setValue(periodicity.periodicityCycle);
+      }
+      if (periodicity.periodicDaysInWeek) {
+        periodicity.periodicDaysInWeek.forEach((day) => {
+          weeklyForm.get(daysMap.get(day)!)!.setValue(true);
+        });
+      }
+    } else if (periodicity.type === PeriodicityType.MONTHLY) {
+      const monthlyForm = this.periodicityForm.get('monthlyForm')! as FormGroup;
+
+      if (periodicity.monthlyPeriodicityType) {
+        monthlyForm
+          .get('periodicityType')!
+          .setValue(periodicity.monthlyPeriodicityType);
+        this.enableMonthlyForm(periodicity.monthlyPeriodicityType);
+      }
+
+      if (
+        periodicity.monthlyPeriodicityType === MonthlyPeriodicityType.STANDARD
+      ) {
+        const { nthMonth } = (monthlyForm.get('regularForm')! as FormGroup)
+          .controls;
+
+        if (periodicity.periodicityCycle) {
+          nthMonth.setValue(periodicity.periodicityCycle);
+        }
+      } else if (
+        periodicity.monthlyPeriodicityType ===
+        MonthlyPeriodicityType.SPECIFIC_DAY
+      ) {
+        const { nthMonth, nthDay, day } = (
+          monthlyForm.get('irregularForm')! as FormGroup
+        ).controls;
+
+        if (periodicity.periodicityCycle) {
+          nthMonth.setValue(periodicity.periodicityCycle);
+        }
+        if (periodicity.periodicityDayOrder) {
+          nthDay.setValue(periodicity.periodicityDayOrder);
+        }
+        if (periodicity.periodicDayInMonth) {
+          day.setValue(periodicity.periodicDayInMonth);
+        }
+      }
+    }
   }
 
   getPeriodicity(): Periodicity | undefined {

@@ -7,6 +7,7 @@ import {
   distinctUntilChanged,
   filter,
   switchMapTo,
+  tap,
 } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { Permission } from 'src/app/shared/models/enums/permission.enum';
@@ -51,6 +52,10 @@ export class SettingsService {
     return (
       this.userSettings?.currentTimeZone ?? this.userSettings?.homeTimeZone
     );
+  }
+
+  clearSettings(): void {
+    this._userSettings$.next(null);
   }
 
   updateSettings(settings: UserSettings): void {
@@ -101,6 +106,11 @@ export class SettingsService {
     this._auth.isAuthenticated$
       .pipe(
         distinctUntilChanged(),
+        tap((isAuth) => {
+          if (!isAuth) {
+            this.clearSettings();
+          }
+        }),
         filter((isAuth) => isAuth),
         switchMapTo(this._fetchUserSettings())
       )
@@ -116,17 +126,21 @@ export class SettingsService {
       .subscribe((settings) => this._handleSettingsChange(settings!));
   }
 
-  private _handleSettingsChange(settings: UserSettings): void {
-    localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
+  private _handleSettingsChange(settings: UserSettings | null): void {
+    if (settings) {
+      localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
 
-    if (settings.currentTimeZone) {
-      this._handleTimezoneChange(settings.currentTimeZone);
-    } else if (settings.homeTimeZone) {
-      this._handleTimezoneChange(settings.homeTimeZone);
-    }
+      if (settings.currentTimeZone) {
+        this._handleTimezoneChange(settings.currentTimeZone);
+      } else if (settings.homeTimeZone) {
+        this._handleTimezoneChange(settings.homeTimeZone);
+      }
 
-    if (settings.locale) {
-      this._handleLocaleChange(settings.locale);
+      if (settings.locale) {
+        this._handleLocaleChange(settings.locale);
+      }
+    } else {
+      localStorage.removeItem(SETTINGS_LOCALSTORAGE_KEY);
     }
   }
 

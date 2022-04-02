@@ -17,6 +17,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { VirtualRoomReservationFormComponent } from './components/virtual-room-reservation-form/virtual-room-reservation-form.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
     TeleconferenceReservationFormComponent,
     VideoconferenceReservationFormComponent,
     WebconferenceReservationFormComponent,
+    VirtualRoomReservationFormComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatSelectModule,
     MatIconModule,
+    MatButtonModule,
   ],
   exports: [
     PeriodicitySelectionFormComponent,
@@ -48,6 +52,7 @@ import { MatIconModule } from '@angular/material/icon';
     TeleconferenceReservationFormComponent,
     VideoconferenceReservationFormComponent,
     WebconferenceReservationFormComponent,
+    VirtualRoomReservationFormComponent,
   ],
 })
 export class ReservationFormsModule {}
