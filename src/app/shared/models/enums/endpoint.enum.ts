@@ -6,4 +6,5 @@ export enum Endpoint {
   USER = 'users',
   GROUP = 'groups',
   SETTINGS = 'settings',
+  REPORT = 'report',
 }

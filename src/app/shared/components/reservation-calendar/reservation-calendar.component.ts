@@ -139,7 +139,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   private _createdEvent?: CalendarEvent;
   private _highlightUsersReservations = false;
   private _selectedResourceId?: string | null;
-  private _viewDate = new Date();
+  private _viewDate = moment().toDate();
   private _view = CalendarView.Month;
 
   private _destroy$ = new Subject<void>();
@@ -400,8 +400,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
   private _createEvent(reservationRequest: ReservationRequest): CalendarEvent {
     return {
-      start: new Date(reservationRequest.slot.start),
-      end: new Date(reservationRequest.slot.end),
+      start: moment(reservationRequest.slot.start).toDate(),
+      end: moment(reservationRequest.slot.end).toDate(),
       title: reservationRequest.description,
       meta: {
         reservationRequest,

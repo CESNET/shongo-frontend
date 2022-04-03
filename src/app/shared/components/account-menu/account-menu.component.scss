@@ -1,0 +1,11 @@
+.account {
+  &__body {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  &__timezone {
+    color: var(--gray-300);
+  }
+}

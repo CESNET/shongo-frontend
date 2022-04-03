@@ -15,8 +15,8 @@ import { DataTableDataSource } from './data-table-datasource';
 
 interface CapacityRequestsTableData {
   id: string;
-  slotStart: string;
-  slotEnd: string;
+  slotStart: number;
+  slotEnd: number;
   participantCount: number;
   parentRequestId?: string;
   state: string;

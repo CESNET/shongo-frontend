@@ -193,7 +193,9 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
         .pipe(first())
         .subscribe({
           next: (msg) => {
-            this._alert.showSuccess(msg);
+            if (msg) {
+              this._alert.showSuccess(msg);
+            }
           },
           error: (msg) => {
             this._alert.showError(msg);

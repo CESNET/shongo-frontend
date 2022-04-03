@@ -1,23 +1,32 @@
-form {
+.form {
   display: flex;
   flex-direction: column;
-  width: 50%;
-  max-width: 500px;
-  margin-top: 40px;
+  width: 100%;
+  max-width: 35em;
+  margin-top: 3em;
 
-  button {
+  &__buttons {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+
+  &__button {
     width: fit-content;
   }
 }
 
-@media only screen and (max-width: 768px) {
-  form {
-    width: 80%;
-  }
+.metadata {
+  margin-top: 1em;
+  background-color: var(--gray-800);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  max-width: 35em;
 }
 
-@media only screen and (max-width: 550px) {
-  form {
+@media only screen and (max-width: 375px) {
+  .form__button {
     width: 100%;
   }
 }

@@ -60,7 +60,7 @@ export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
 
   getNextDate(viewDate: Date, increment: 0 | 1 | -1): Date {
     if (increment === 0) {
-      return new Date();
+      return moment().toDate();
     }
     return moment(viewDate).add(increment, 'days').toDate();
   }

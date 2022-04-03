@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReservationRequestDetailPageComponent } from './pages/reservation-request-detail/reservation-request-detail-page.component';
+import { ReservationRequestDetailPageComponent } from './pages/reservation-request-detail-page/reservation-request-detail-page.component';
 import { ReservationDetailComponent } from './components/reservation-detail/reservation-detail.component';
 import { CommonModule } from '@angular/common';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -30,6 +30,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { UserSnapshotDialogComponent } from './components/user-snapshot-dialog/user-snapshot-dialog.component';
 import { RecordingsTabComponent } from './components/recordings-tab/recordings-tab.component';
 import { RecordingViewUrlColumnComponent } from './components/recording-view-url-column/recording-view-url-column.component';
+import { EditReservationRequestPageComponent } from './pages/edit-reservation-request-page/edit-reservation-request-page.component';
+import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -51,6 +54,8 @@ import { RecordingViewUrlColumnComponent } from './components/recording-view-url
     MatProgressSpinnerModule,
     MatDialogModule,
     MatSliderModule,
+    ReservationFormsModule,
+    MatDatepickerModule,
   ],
   declarations: [
     ReservationRequestDetailPageComponent,
@@ -66,6 +71,7 @@ import { RecordingViewUrlColumnComponent } from './components/recording-view-url
     UserSnapshotDialogComponent,
     RecordingsTabComponent,
     RecordingViewUrlColumnComponent,
+    EditReservationRequestPageComponent,
   ],
 })
 export class ReservationRequestModule {}

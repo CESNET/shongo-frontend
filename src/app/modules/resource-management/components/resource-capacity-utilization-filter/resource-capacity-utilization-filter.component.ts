@@ -47,7 +47,7 @@ export class ResourceCapacityUtilizationFilterComponent
   constructor() {
     super();
 
-    const currentDate = new Date(Date.now());
+    const currentDate = moment().toDate();
     this.filterForm.get('dateFrom')!.setValue(currentDate);
     this.filterForm
       .get('dateTo')!

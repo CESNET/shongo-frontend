@@ -1,10 +1,13 @@
+import { ParticipantRole } from '../enums/participant-role.enum';
+import { RoomLayout } from '../enums/room-layout.enum';
+
 export interface RuntimeParticipant {
   id: number;
   name: string;
   displayName: string;
-  role: string;
+  role: ParticipantRole;
   email: string;
-  layout: string;
+  layout: RoomLayout;
   microphoneEnabled: boolean;
   microphoneLevel: number;
   videoEnabled: boolean;

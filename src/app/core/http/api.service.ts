@@ -80,4 +80,8 @@ export abstract class ApiService {
   postItem<T>(body: T, url = this.endpointURL): Observable<unknown> {
     return this._http.post(url, body);
   }
+
+  putItem<T>(id: string, body: T, url = this.endpointURL): Observable<unknown> {
+    return this._http.put(`${url}/${id}`, body);
+  }
 }

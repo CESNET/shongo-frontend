@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [HelpPageComponent, ReportPageComponent],
@@ -27,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatInputModule,
     MatButtonModule,
+    SharedModule,
   ],
 })
 export class HelpModule {}

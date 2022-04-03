@@ -12,18 +12,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { PhysicalResourceReservationFormComponent } from 'src/app/modules/reservation-forms/components/physical-resource-reservation-form/physical-resource-reservation-form.component';
+import { TeleconferenceReservationFormComponent } from 'src/app/modules/reservation-forms/components/teleconference-reservation-form/teleconference-reservation-form.component';
+import { VideoconferenceReservationFormComponent } from 'src/app/modules/reservation-forms/components/videoconference-reservation-form/videoconference-reservation-form.component';
+import { WebconferenceReservationFormComponent } from 'src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component';
+import { VirtualRoomReservationForm } from 'src/app/modules/reservation-forms/interfaces/virtual-room-reservation-form.interface';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
-import { ReservationForm } from '../../models/interfaces/reservation-form.interface';
-import { VirtualRoomReservationForm } from '../../models/interfaces/virtual-room-reservation-form.interface';
-import { PhysicalResourceReservationFormComponent } from '../physical-resource-reservation-form/physical-resource-reservation-form.component';
-import { TeleconferenceReservationFormComponent } from '../teleconference-reservation-form/teleconference-reservation-form.component';
-import { VideoconferenceReservationFormComponent } from '../videoconference-reservation-form/videoconference-reservation-form.component';
-import { WebconferenceReservationFormComponent } from '../webconference-reservation-form/webconference-reservation-form.component';
+import { ReservationForm } from '../../../reservation-forms/interfaces/reservation-form.interface';
 
 @Component({
   selector: 'app-reservation-dialog',
@@ -102,8 +102,7 @@ export class ReservationDialogComponent implements OnInit {
       this._data.resource.type === ResourceType.VIRTUAL_ROOM &&
       this._data.parentRequest
     ) {
-      (this.formComponent as VirtualRoomReservationForm).capacityBookingMode =
-        true;
+      (this.formComponent as VirtualRoomReservationForm).editingMode = true;
     }
   }
 

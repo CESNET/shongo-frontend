@@ -17,8 +17,8 @@ import { DataTableDataSource } from './data-table-datasource';
 interface PhysicalReservationsTableData {
   id: string;
   resourceName: string;
-  slotStart: string;
-  slotEnd: string;
+  slotStart: number;
+  slotEnd: number;
   state: string;
   resourceDescription: string;
 }
@@ -57,7 +57,11 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
         'visibility',
         '/reservation-request/:id'
       ),
-      new LinkButton('Edit meeting room', 'settings', '/meeting_room/:id'),
+      new LinkButton(
+        'Edit meeting room',
+        'settings',
+        '/reservation-request/:id/edit'
+      ),
       new DeleteButton(this.apiService, this._dialog, '/:id'),
     ];
   }

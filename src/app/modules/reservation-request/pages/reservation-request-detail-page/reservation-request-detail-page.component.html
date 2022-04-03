@@ -1,0 +1,168 @@
+<header>
+  <h1>Reservation request detail</h1>
+
+  <div
+    class="buttons"
+    *ngIf="(loading$ | async) === false && reservationRequest"
+  >
+    <!-- Book room capacity button -->
+    <a
+      mat-flat-button
+      color="primary"
+      [routerLink]="'/reserve/' + reservationRequest.id"
+      *ngIf="
+        reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
+        reservationRequest.isProvidable &&
+        reservationRequest.state !== ReservationRequestState.ALLOCATED_FINISHED
+      "
+    >
+      <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
+    </a>
+
+    <ng-container *ngIf="reservationRequest.isWritable">
+      <!-- Edit button -->
+      <a
+        mat-flat-button
+        color="primary"
+        [routerLink]="'edit'"
+        *ngIf="
+          reservationRequest.state !==
+          ReservationRequestState.ALLOCATED_FINISHED
+        "
+      >
+        <mat-icon>settings</mat-icon>&nbsp;Edit
+      </a>
+      <!-- Delete button -->
+      <button mat-flat-button color="warn">
+        <mat-icon>delete_forever</mat-icon>&nbsp;Delete
+      </button>
+    </ng-container>
+  </div>
+</header>
+
+<main>
+  <div *ngIf="loading$ | async; else dataOrError">
+    <ngx-skeleton-loader
+      count="5"
+      [theme]="{
+        'border-radius': '5px',
+        height: '50px',
+        width: '150px',
+        'margin-right': '15px',
+        border: '1px solid white'
+      }"
+    ></ngx-skeleton-loader>
+    <ngx-skeleton-loader
+      count="4"
+      [theme]="{ height: '50px' }"
+    ></ngx-skeleton-loader>
+  </div>
+
+  <!-- Data or error -->
+  <ng-template #dataOrError>
+    <ng-container *ngIf="reservationRequest; else error">
+      <ng-container *ngTemplateOutlet="data"></ng-container>
+    </ng-container>
+  </ng-template>
+
+  <!-- Data loaded -->
+  <ng-template #data>
+    <ng-container *ngIf="reservationRequest">
+      <mat-divider></mat-divider>
+      <mat-tab-group [animationDuration]="0">
+        <!-- Reservation -->
+        <mat-tab label="Reservation">
+          <ng-template matTabContent>
+            <div class="tab-content">
+              <app-reservation-detail
+                [reservationRequest]="reservationRequest"
+              ></app-reservation-detail>
+            </div>
+          </ng-template>
+        </mat-tab>
+
+        <!-- Capacity reservations -->
+        <mat-tab
+          label="Capacity reservations"
+          *ngIf="
+            reservationRequest.type === ReservationType.VIRTUAL_ROOM ||
+            (reservationRequest.type === ReservationType.ROOM_CAPACITY &&
+              reservationRequest.roomCapacityData?.periodicity &&
+              reservationRequest.roomCapacityData?.periodicity?.type !== 'NONE')
+          "
+        >
+          <ng-template matTabContent>
+            <div class="tab-content">
+              <app-capacity-reservations-tab></app-capacity-reservations-tab>
+            </div>
+          </ng-template>
+        </mat-tab>
+
+        <!-- User roles -->
+        <mat-tab
+          label="User roles"
+          *ngIf="reservationRequest.type !== ReservationType.ROOM_CAPACITY"
+        >
+          <ng-template matTabContent>
+            <div class="tab-content">
+              <app-user-roles-tab></app-user-roles-tab>
+            </div>
+          </ng-template>
+        </mat-tab>
+
+        <ng-container
+          *ngIf="
+            !reservationRequest.futureSlotCount &&
+            reservationRequest.type !== ReservationType.PHYSICAL_RESOURCE
+          "
+        >
+          <!-- Participants -->
+          <mat-tab label="Participants">
+            <ng-template matTabContent>
+              <div class="tab-content">
+                <app-participants-tab></app-participants-tab>
+              </div>
+            </ng-template>
+          </mat-tab>
+
+          <!-- Runtime management -->
+          <mat-tab
+            label="Runtime management"
+            *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
+            [disabled]="
+              reservationRequest.allocationState !==
+                AllocationState.ALLOCATED ||
+              reservationRequest.virtualRoomData?.technology === 'FREEPBX' ||
+              (reservationRequest.virtualRoomData?.state !==
+                RoomState.STARTED &&
+                reservationRequest.virtualRoomData?.state !==
+                  RoomState.STARTED_AVAILABLE)
+            "
+          >
+            <ng-template matTabContent>
+              <div class="tab-content">
+                <app-runtime-management-tab></app-runtime-management-tab>
+              </div>
+            </ng-template>
+          </mat-tab>
+
+          <!-- Recordings -->
+          <mat-tab label="Recordings" [disabled]="areRecordingsDisabled()">
+            <ng-template matTabContent>
+              <div class="tab-content">
+                <app-recordings-tab
+                  [reservationRequest]="reservationRequest"
+                ></app-recordings-tab>
+              </div>
+            </ng-template>
+          </mat-tab>
+        </ng-container>
+      </mat-tab-group>
+    </ng-container>
+  </ng-template>
+
+  <!-- Error -->
+  <ng-template #error>
+    <h2>Error</h2>
+  </ng-template>
+</main>
