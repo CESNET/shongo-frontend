@@ -47,6 +47,7 @@ import { ComponentHostDirective } from './directives/component-host.directive';
 import { SnackbarAlertComponent } from './components/snackbar-alert/snackbar-alert.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RequestConfirmationDialogComponent } from './components/request-confirmation-dialog/request-confirmation-dialog.component';
+import { LoadingTextComponent } from './components/loading-text/loading-text.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -72,6 +73,7 @@ export function momentAdapterFactory() {
     ComponentHostDirective,
     SnackbarAlertComponent,
     RequestConfirmationDialogComponent,
+    LoadingTextComponent,
   ],
   imports: [
     CommonModule,
@@ -130,6 +132,7 @@ export function momentAdapterFactory() {
     AccountMenuComponent,
     CalendarModule,
     ComponentHostDirective,
+    LoadingTextComponent,
   ],
 })
 export class SharedModule {}

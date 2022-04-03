@@ -13,8 +13,6 @@ import { UserSnapshotDialogComponent } from 'src/app/modules/reservation-request
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { toTitleCase } from 'src/app/utils/toTitleCase';
 import { CustomActionButton } from '../buttons/custom-action-button';
-import { TableButton } from '../buttons/table-button';
-import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
 // MatTable automatically converts all data to type string, consequently we have to compare boolean types as strings.
@@ -54,7 +52,8 @@ export class RuntimeManagementDataSource extends DataTableDataSource<RuntimePart
       new CustomActionButton(
         'Take video snapshot',
         'photo_camera',
-        (participant) => this.openUserSnapshot(participant)
+        (participant) => this.openUserSnapshot(participant),
+        (participant) => participant.videoSnapshot === 'true'
       ),
       new SetMicrophoneLevelButton(
         this._resReqService,

@@ -29,14 +29,14 @@ export default new Map<ReservationRequestState, StateProps>([
     ReservationRequestState.ALLOCATED_STARTED_AVAILABLE,
     {
       color: 'success',
-      displayName: 'Opened',
+      displayName: 'Open',
     },
   ],
   [
     ReservationRequestState.ALLOCATED_STARTED,
     {
       color: 'success',
-      displayName: 'Opened',
+      displayName: 'Open',
     },
   ],
   [

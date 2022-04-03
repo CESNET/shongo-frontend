@@ -128,6 +128,7 @@
           <!-- Runtime management -->
           <mat-tab
             label="Runtime management"
+            *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
             [disabled]="
               reservationRequest.allocationState !==
                 AllocationState.ALLOCATED ||

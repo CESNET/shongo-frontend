@@ -7,17 +7,75 @@
 </header>
 
 <main>
-  <form>
+  <form class="form" [formGroup]="form" (submit)="report()">
     <mat-form-field appearance="outline">
       <mat-label>Your e-mail</mat-label>
-      <input matInput type="text" />
+      <input matInput type="text" formControlName="email" />
+      <mat-error
+        *ngIf="getFormError(form.get('email')!, emailErrorHandler) as error"
+        >{{ error }}</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Message</mat-label>
-      <textarea matInput cols="30" rows="10"></textarea>
+      <textarea
+        matInput
+        cols="30"
+        rows="10"
+        formControlName="message"
+      ></textarea>
+      <mat-error
+        *ngIf="
+          getFormError(form.get('message')!, minLengthErrorHandler) as error
+        "
+        >{{ error }}</mat-error
+      >
     </mat-form-field>
 
-    <button mat-flat-button type="submit" color="primary">Submit</button>
+    <ng-template #metadata>
+      <button
+        mat-button
+        type="button"
+        (click)="toggleMetadata()"
+        class="form__button"
+      >
+        <mat-icon>expand_less</mat-icon>&nbsp;Hide metadata
+      </button>
+    </ng-template>
+
+    <div class="form__buttons">
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        class="form__button"
+        [disabled]="!form.valid"
+        *ngIf="(loading$ | async) === false; else loading"
+      >
+        Submit
+      </button>
+      <ng-template #loading>
+        <app-loading-text message="sending..."></app-loading-text>
+      </ng-template>
+
+      <button
+        mat-button
+        type="button"
+        class="form__button"
+        (click)="toggleMetadata()"
+      >
+        <ng-container *ngIf="!showMetadata; else hideMetadata">
+          <mat-icon>expand_more</mat-icon>&nbsp;Show metadata
+        </ng-container>
+        <ng-template #hideMetadata>
+          <mat-icon>expand_less</mat-icon>&nbsp;Hide metadata
+        </ng-template>
+      </button>
+    </div>
   </form>
+
+  <div class="metadata" *ngIf="showMetadata">
+    <pre>{{ reportService.reportMetadata | json }}</pre>
+  </div>
 </main>
