@@ -22,7 +22,9 @@ import { ReservationRequestPostBody } from 'src/app/shared/models/types/reservat
 import { getFormError } from 'src/app/utils/getFormError';
 import { RequestNotEditableError } from './errors/request-not-editable.error';
 
-type EditRequestBody = ReservationRequestPostBody & { slot: Slot };
+type EditRequestBody = Omit<ReservationRequestPostBody, 'timezone'> & {
+  slot: Slot;
+};
 
 @Component({
   selector: 'app-edit-reservation-request-page',
@@ -34,8 +36,8 @@ export class EditReservationRequestPageComponent implements OnInit {
   @ViewChild('reservationForm') reservationForm?: ReservationForm;
 
   readonly slotForm = new FormGroup({
-    startDate: new FormControl(new Date(moment.now()), [Validators.required]),
-    startTime: new FormControl(new Date(moment.now()), [Validators.required]),
+    startDate: new FormControl(moment().toDate(), [Validators.required]),
+    startTime: new FormControl(moment().toDate(), [Validators.required]),
     endDate: new FormControl(null, [Validators.required]),
     endTime: new FormControl(null, [Validators.required]),
   });
@@ -94,8 +96,8 @@ export class EditReservationRequestPageComponent implements OnInit {
 
   private _createEditRequestBody(): EditRequestBody {
     const { startDate, startTime, endDate, endTime } = this.slotForm.value;
-    const reservationFormValue = this.reservationForm!.getFormValue();
-    const timezone = reservationFormValue.timezone;
+    const { timezone, ...reservationFormValue } =
+      this.reservationForm!.getFormValue();
 
     const start = this._getSlotPartTimestamp(startDate, startTime, timezone);
     const end = this._getSlotPartTimestamp(endDate, endTime, timezone);

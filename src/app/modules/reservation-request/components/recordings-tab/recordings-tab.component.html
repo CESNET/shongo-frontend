@@ -11,6 +11,9 @@
   <button
     mat-button
     (click)="setRecording(false)"
+    [disabled]="
+      reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
+    "
     *ngIf="
       reservationRequest.roomCapacityData?.isRecordingActive;
       else startRecord
@@ -20,7 +23,13 @@
   </button>
 
   <ng-template #startRecord>
-    <button mat-button (click)="setRecording(true)">
+    <button
+      mat-button
+      (click)="setRecording(true)"
+      [disabled]="
+        reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
+      "
+    >
       <mat-icon color="primary">videocam</mat-icon>&nbsp;Start recording
     </button>
   </ng-template>

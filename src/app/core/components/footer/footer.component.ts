@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-footer',
@@ -7,7 +8,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
-  currentYear = new Date(Date.now()).getFullYear();
+  currentYear = moment().year();
 
   constructor() {}
 }

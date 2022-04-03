@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RoomRecordingsDataSource } from 'src/app/shared/components/data-table/data-sources/room-recordings.datasource';
+import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
@@ -20,6 +21,8 @@ import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 export class RecordingsTabComponent implements OnInit {
   @Input() reservationRequest!: ReservationRequestDetail;
   roomRecordingDataSource!: RoomRecordingsDataSource;
+
+  readonly ReservationRequestState = ReservationRequestState;
 
   constructor(
     private _resReqService: ReservationRequestService,

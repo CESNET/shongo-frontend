@@ -133,11 +133,11 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     if (periodicity.periodicityEnd) {
       this.periodicityForm
         .get('repeatUntil')!
-        .setValue(new Date(periodicity.periodicityEnd));
+        .setValue(moment(periodicity.periodicityEnd).toDate());
     }
     if (periodicity.excludeDates) {
       periodicity.excludeDates.forEach((timestamp) =>
-        this.excludedDays.add(new Date(timestamp))
+        this.excludedDays.add(moment(timestamp).toDate())
       );
     }
 

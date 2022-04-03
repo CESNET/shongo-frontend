@@ -181,7 +181,7 @@
           >
         </dd>
         <ng-template #noResReqId>
-          <dd>{{ capacityData.roomName }}</dd>
+          <dd>{{ currentRequest?.virtualRoomData?.roomName ?? "Room" }}</dd>
         </ng-template>
 
         <!-- Participant count -->

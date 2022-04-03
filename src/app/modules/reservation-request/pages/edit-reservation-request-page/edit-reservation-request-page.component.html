@@ -76,7 +76,7 @@
       </div>
 
       <section class="slot-selection__section">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label>Start date</mat-label>
           <input
             matInput
@@ -94,7 +94,7 @@
           >
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label>Start time</mat-label>
           <input matInput type="time" formControlName="startTime" />
           <mat-error
@@ -109,7 +109,7 @@
       </div>
 
       <section class="slot-selection__section">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label>End date</mat-label>
           <input
             matInput
@@ -126,7 +126,7 @@
           }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label>End time</mat-label>
           <input matInput type="time" formControlName="endTime" />
           <mat-error *ngIf="getFormError(slotForm.get('endTime')!) as error">{{

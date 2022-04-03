@@ -48,10 +48,26 @@ export class SettingsService {
     );
   }
 
+  /**
+   * Returns first available timezone setting in this order:
+   *
+   * Current > Home > OS
+   */
   get timeZone(): string | undefined {
     return (
-      this.userSettings?.currentTimeZone ?? this.userSettings?.homeTimeZone
+      this.userSettings?.currentTimeZone ??
+      this.userSettings?.homeTimeZone ??
+      moment.tz.guess()
     );
+  }
+
+  get timeZoneOffset(): string | undefined {
+    const timezone = this.timeZone;
+
+    if (timezone) {
+      return moment.tz(timezone).format('Z');
+    }
+    return undefined;
   }
 
   clearSettings(): void {

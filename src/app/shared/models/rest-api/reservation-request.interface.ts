@@ -56,7 +56,7 @@ export interface PhysicalResourceData {
   periodicity: Periodicity;
 }
 
-export interface RoomCapacityData extends VirtualRoomData {
+export interface RoomCapacityData {
   roomReservationRequestId: string;
   capacityParticipantCount: number;
   capacityHasRecordingService: boolean;

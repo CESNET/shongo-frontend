@@ -29,3 +29,9 @@
 .reservation-form-container {
   margin-bottom: 1em;
 }
+
+@media only screen and (max-width: 550px) {
+  .slot-selection__field {
+    width: 100%;
+  }
+}

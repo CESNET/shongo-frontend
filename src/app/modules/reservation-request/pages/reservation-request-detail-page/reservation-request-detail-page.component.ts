@@ -11,6 +11,7 @@ import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
+import { ExecutableState } from 'src/app/shared/models/enums/executable-state.enum';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { RoomState } from 'src/app/shared/models/enums/room-state.enum';
@@ -65,11 +66,32 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Recordings tab should be disabled if:
+   *
+   * Virtual room:
+   * 1. Room is not yet allocated.
+   * 2. Room has no recordings.
+   *
+   * Room capacity:
+   * 1. Has no recording service.
+   * 2. Has stopped and there are no recordings.
+   *
+   * @returns True if recordings tab should be disabled.
+   */
   areRecordingsDisabled(): boolean {
+    if (
+      this.reservationRequest?.allocationState !== AllocationState.ALLOCATED
+    ) {
+      return false;
+    }
     if (this.reservationRequest?.type === ReservationType.ROOM_CAPACITY) {
       return (
-        this.reservationRequest.allocationState !== AllocationState.ALLOCATED ||
-        !this.reservationRequest.roomCapacityData?.capacityHasRecordingService
+        !this.reservationRequest.roomCapacityData
+          ?.capacityHasRecordingService ||
+        (this.reservationRequest.state ===
+          ReservationRequestState.ALLOCATED_FINISHED &&
+          !this.reservationRequest.roomCapacityData.capacityHasRecordings)
       );
     } else {
       return !this.reservationRequest?.virtualRoomData?.roomHasRecordings;
