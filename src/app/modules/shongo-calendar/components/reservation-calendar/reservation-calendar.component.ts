@@ -34,14 +34,14 @@ import { WeekViewHourSegment } from 'calendar-utils';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { HttpParams } from '@angular/common/http';
-import { ReservationRequest } from '../../models/rest-api/reservation-request.interface';
+import { ReservationRequest } from '../../../../shared/models/rest-api/reservation-request.interface';
 import * as moment from 'moment';
-import { IdentityClaims } from '../../models/interfaces/identity-claims.interface';
-import { CalendarSlot } from '../../models/rest-api/slot.interface';
+import { IdentityClaims } from '../../../../shared/models/interfaces/identity-claims.interface';
+import { CalendarSlot } from '../../../../shared/models/rest-api/slot.interface';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
-import { ReservationRequestState } from '../../models/enums/reservation-request-state.enum';
+import { ReservationRequestState } from '../../../../shared/models/enums/reservation-request-state.enum';
 import { MatDialog } from '@angular/material/dialog';
-import { RequestConfirmationDialogComponent } from '../request-confirmation-dialog/request-confirmation-dialog.component';
+import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -204,10 +204,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
     this._resReqService
       .fetchItems<ReservationRequest>(filter)
-      .pipe(first())
+      .pipe(
+        first(),
+        finalize(() => this._loading$.next(false))
+      )
       .subscribe({
         next: (reservations) => {
-          this._loading$.next(false);
           this._events = this._createEvents(reservations);
 
           if (this._createdEvent) {
@@ -222,9 +224,6 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
               this.slotSelected.emit(null);
             }
           }
-        },
-        error: () => {
-          this._loading$.next(false);
         },
       });
   }

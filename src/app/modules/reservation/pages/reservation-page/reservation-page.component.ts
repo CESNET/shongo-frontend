@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import { finalize, first, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ReservationCalendarComponent } from 'src/app/shared/components/reservation-calendar/reservation-calendar.component';
+import { ReservationCalendarComponent } from 'src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';

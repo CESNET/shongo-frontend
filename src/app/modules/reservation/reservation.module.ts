@@ -22,6 +22,7 @@ import { ReservationDialogComponent } from './components/reservation-dialog/rese
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
+import { ShongoCalendarModule } from '../shongo-calendar/shongo-calendar.module';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { ReservationFormsModule } from '../reservation-forms/reservation-forms.m
     MatDialogModule,
     MatProgressSpinnerModule,
     ReservationFormsModule,
+    ShongoCalendarModule,
   ],
   declarations: [
     ReservationPageComponent,

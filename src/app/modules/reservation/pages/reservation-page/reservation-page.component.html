@@ -17,51 +17,16 @@
         <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
       </a>
 
-      <button
-        mat-stroked-button
-        aria-label="Select calendar view"
-        [matMenuTriggerFor]="viewMenu"
-      >
-        {{ calendar.view | titlecase }}&nbsp;<mat-icon
-          >arrow_drop_down</mat-icon
-        >
-      </button>
+      <app-calendar-view-selection
+        [selectedView]="calendar.view"
+        (viewSelected)="calendar.view = $event"
+      ></app-calendar-view-selection>
 
-      <mat-menu #viewMenu="matMenu">
-        <button mat-menu-item (click)="calendar.view = CalendarView.Day">
-          Day
-        </button>
-        <button mat-menu-item (click)="calendar.view = CalendarView.Week">
-          Week
-        </button>
-        <button mat-menu-item (click)="calendar.view = CalendarView.Month">
-          Month
-        </button>
-      </mat-menu>
-
-      <div class="reservation__calendar-navigation">
-        <button
-          mat-icon-button
-          aria-label="Previous"
-          mwlCalendarPreviousView
-          [view]="calendar.view"
-          [(viewDate)]="calendar.viewDate"
-        >
-          <mat-icon>navigate_before</mat-icon>
-        </button>
-        <button mat-button mwlCalendarToday [(viewDate)]="calendar.viewDate">
-          Today
-        </button>
-        <button
-          mat-icon-button
-          aria-label="Previous"
-          mwlCalendarNextView
-          [view]="calendar.view"
-          [(viewDate)]="calendar.viewDate"
-        >
-          <mat-icon>navigate_next</mat-icon>
-        </button>
-      </div>
+      <app-calendar-paginator
+        [view]="calendar.view"
+        [viewDate]="calendar.viewDate"
+        (viewDateChange)="calendar.viewDate = $event"
+      ></app-calendar-paginator>
 
       <h1 class="reservation__date-header">
         {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}

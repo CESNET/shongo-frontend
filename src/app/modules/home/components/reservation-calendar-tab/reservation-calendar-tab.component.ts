@@ -20,7 +20,6 @@ import { PhysicalResource } from 'src/app/shared/models/rest-api/resource.interf
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
-  selectedResourceId?: string;
   filteredResources: PhysicalResource[];
 
   readonly filterGroup = new FormGroup({
