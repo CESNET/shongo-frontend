@@ -26,7 +26,8 @@ import { PhysicalResource } from 'src/app/shared/models/rest-api/resource.interf
 export class ReservationCalendarTabComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
-  @ViewChild('calendar') calendar!: ReservationCalendarComponent;
+  @ViewChild(ReservationCalendarComponent)
+  calendar!: ReservationCalendarComponent;
 
   filteredResources: PhysicalResource[];
 

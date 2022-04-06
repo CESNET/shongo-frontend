@@ -41,7 +41,7 @@ export class ReservationDetailComponent implements OnInit {
   PeriodicityType = PeriodicityType;
   Technology = Technology;
   AllocationState = AllocationState;
-  technologyMap = virtualRoomResourceConfig.tagNameMap;
+  technologyMap = virtualRoomResourceConfig.technologyNameMap;
 
   requestTypeMap = new Map([
     [ReservationType.PHYSICAL_RESOURCE, 'Physical resource'],

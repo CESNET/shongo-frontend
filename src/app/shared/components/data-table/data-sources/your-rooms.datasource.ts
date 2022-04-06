@@ -49,8 +49,9 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         name: 'technology',
         displayName: 'Technology',
         pipeFunc: (value) =>
-          virtualRoomResourceConfig.tagNameMap.get(value as Technology) ??
-          'Unknown',
+          virtualRoomResourceConfig.technologyNameMap.get(
+            value as Technology
+          ) ?? 'Unknown',
       },
       {
         name: 'slotStart',

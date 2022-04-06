@@ -77,16 +77,18 @@ export class ReservationDialogComponent implements OnInit {
       component = PhysicalResourceReservationFormComponent;
     } else if (this._data.resource.type === ResourceType.VIRTUAL_ROOM) {
       if (
-        this._data.resource.tag === Technology.PEXIP ||
-        this._data.resource.tag === Technology.H323_SIP
+        this._data.resource.technology === Technology.PEXIP ||
+        this._data.resource.technology === Technology.H323_SIP
       ) {
         component = VideoconferenceReservationFormComponent;
-      } else if (this._data.resource.tag === Technology.ADOBE_CONNECT) {
+      } else if (this._data.resource.technology === Technology.ADOBE_CONNECT) {
         component = WebconferenceReservationFormComponent;
-      } else if (this._data.resource.tag === Technology.FREEPBX) {
+      } else if (this._data.resource.technology === Technology.FREEPBX) {
         component = TeleconferenceReservationFormComponent;
       } else {
-        throw new Error('Unsupported technology: ' + this._data.resource.tag);
+        throw new Error(
+          'Unsupported technology: ' + this._data.resource.technology
+        );
       }
     } else {
       throw new Error('Unsupported resource type: ' + this._data.resource.type);

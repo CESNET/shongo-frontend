@@ -118,7 +118,8 @@ export class ReservationRequestFilterComponent
     const technologyOpts = technologies
       .map((technology) => ({
         value: technology,
-        displayName: virtualRoomResourceConfig.tagNameMap.get(technology),
+        displayName:
+          virtualRoomResourceConfig.technologyNameMap.get(technology),
       }))
       .filter((opt) => opt.displayName) as Option[];
     technologyOpts.unshift({ value: '-1', displayName: $localize`All` });

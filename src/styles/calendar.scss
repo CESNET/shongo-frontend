@@ -3,7 +3,7 @@
   --cal-border-height-total: 6px;
   height: calc(
     (
-        100vh - var(--toolbar-height) - var(--cal-header-cell-height) -
+        100vh - var(--toolbar-row-height) - var(--cal-header-cell-height) -
           var(--cal-border-height-total)
       ) / 5
   );

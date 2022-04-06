@@ -3,14 +3,14 @@
   <mat-form-field appearance="outline" class="form__field">
     <mat-label>Technology</mat-label>
     <mat-select
-      formControlName="technology"
+      formControlName="resource"
       (valueChange)="onTechnologyChange($event)"
     >
       <mat-option *ngFor="let opt of technologyOpts" [value]="opt.value">{{
         opt.displayName
       }}</mat-option>
     </mat-select>
-    <mat-error *ngIf="getFormError(form.get('technology')!) as error">{{
+    <mat-error *ngIf="getFormError(form.get('resource')!) as error">{{
       error
     }}</mat-error>
   </mat-form-field>

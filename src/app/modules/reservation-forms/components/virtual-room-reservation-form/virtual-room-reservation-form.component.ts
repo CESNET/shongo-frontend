@@ -41,7 +41,7 @@ export class VirtualRoomReservationFormComponent
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
   readonly form = new FormGroup({
-    technology: new FormControl(null, [Validators.required]),
+    resource: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [Validators.required]),
     roomName: new FormControl(null, [Validators.required]),
     timezone: new FormControl(null, [Validators.required]),
@@ -136,8 +136,8 @@ export class VirtualRoomReservationFormComponent
 
     if (authorizedData && resource) {
       if (
-        resource.tag === Technology.PEXIP ||
-        resource.tag === Technology.H323_SIP
+        resource.technology === Technology.PEXIP ||
+        resource.technology === Technology.H323_SIP
       ) {
         if (authorizedData.adminPin) {
           this.videoconferenceFieldsForm
@@ -149,7 +149,7 @@ export class VirtualRoomReservationFormComponent
             .get('allowGuests')!
             .setValue(authorizedData.allowGuests);
         }
-      } else if (resource.tag === Technology.FREEPBX) {
+      } else if (resource.technology === Technology.FREEPBX) {
         if (authorizedData.adminPin) {
           this.videoconferenceFieldsForm
             .get('adminPin')!
@@ -160,7 +160,7 @@ export class VirtualRoomReservationFormComponent
             .get('userPin')!
             .setValue(authorizedData.userPin);
         }
-      } else if (resource.tag === Technology.ADOBE_CONNECT) {
+      } else if (resource.technology === Technology.ADOBE_CONNECT) {
         if (authorizedData.userPin) {
           this.videoconferenceFieldsForm
             .get('userPin')!
@@ -172,7 +172,7 @@ export class VirtualRoomReservationFormComponent
 
   getFormValue(): VirtualRoomReservationRequest {
     const {
-      technology,
+      resource,
       videoconferenceFields,
       teleconferenceFields,
       webconferenceFields,
@@ -180,14 +180,14 @@ export class VirtualRoomReservationFormComponent
     } = this.form.value;
 
     if (
-      technology.tag === Technology.PEXIP ||
-      technology.tag === Technology.H323_SIP
+      resource.technology === Technology.PEXIP ||
+      resource.technology === Technology.H323_SIP
     ) {
-      return { resource: technology.id, ...videoconferenceFields, ...rest };
-    } else if (technology.tag === Technology.ADOBE_CONNECT) {
-      return { resource: technology.id, ...webconferenceFields, ...rest };
-    } else if (technology.tag === Technology.FREEPBX) {
-      return { resource: technology.id, ...teleconferenceFields, ...rest };
+      return { resource: resource.id, ...videoconferenceFields, ...rest };
+    } else if (resource.technology === Technology.ADOBE_CONNECT) {
+      return { resource: resource.id, ...webconferenceFields, ...rest };
+    } else if (resource.technology === Technology.FREEPBX) {
+      return { resource: resource.id, ...teleconferenceFields, ...rest };
     } else {
       throw new Error($localize`Unsupported technology.`);
     }
@@ -200,11 +200,11 @@ export class VirtualRoomReservationFormComponent
       return null;
     }
 
-    return selectedResource.tag;
+    return selectedResource.technology;
   }
 
   onTechnologyChange(selectedResource: VirtualRoomResource): void {
-    switch (selectedResource.tag) {
+    switch (selectedResource.technology) {
       case Technology.PEXIP:
       case Technology.H323_SIP:
         this.videoconferenceFieldsForm.enable();
@@ -234,7 +234,9 @@ export class VirtualRoomReservationFormComponent
     return resources
       .map((res) => ({
         value: res,
-        displayName: virtualRoomResourceConfig.tagNameMap.get(res.tag),
+        displayName: virtualRoomResourceConfig.technologyNameMap.get(
+          res.technology
+        ),
       }))
       .filter((opt) => opt.displayName) as Option[];
   }
