@@ -5,13 +5,15 @@ export interface Resource {
   id: string;
   type: ResourceType;
   name: string;
-  tag: string;
+  description: string;
+  tags?: string[];
+  technology?: Technology;
 }
 
 export interface PhysicalResource extends Resource {
-  tag: string;
+  tags: string[];
 }
 
 export interface VirtualRoomResource extends Resource {
-  tag: Technology;
+  technology: Technology;
 }

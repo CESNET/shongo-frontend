@@ -9,15 +9,6 @@ import { CertainityCheckComponent } from './components/certainity-check/certaini
 import { StateChipComponent } from './components/state-chip/state-chip.component';
 import { ReservationRequestStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/reservation-request-state-column.component';
 import { RoomStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/room-state-column.component';
-import { ReservationCalendarComponent } from './components/reservation-calendar/reservation-calendar.component';
-import {
-  CalendarDateFormatter,
-  CalendarModule,
-  CalendarMomentDateFormatter,
-  DateAdapter,
-  MOMENT,
-} from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AlertComponent } from './components/alert/alert.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -37,7 +28,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserSearchDirective } from './directives/user-search/user-search.directive';
 import { GroupSearchDirective } from './directives/group-search/group-search.directive';
 import { SessionEndedDialogComponent } from './components/session-ended-dialog/session-ended-dialog.component';
-import * as moment from 'moment';
 import { MomentDatePipe } from './pipes/moment-date.pipe';
 import { AccountMenuComponent } from './components/account-menu/account-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -49,10 +39,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RequestConfirmationDialogComponent } from './components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { LoadingTextComponent } from './components/loading-text/loading-text.component';
 
-export function momentAdapterFactory() {
-  return adapterFactory(moment);
-}
-
 @NgModule({
   declarations: [
     DataTableComponent,
@@ -62,7 +48,6 @@ export function momentAdapterFactory() {
     StateChipComponent,
     ReservationRequestStateColumnComponent,
     RoomStateColumnComponent,
-    ReservationCalendarComponent,
     AlertComponent,
     UserSearchDirective,
     GroupSearchDirective,
@@ -81,18 +66,6 @@ export function momentAdapterFactory() {
     ReactiveFormsModule,
     RouterModule,
     NgxMatSelectSearchModule,
-    CalendarModule.forRoot(
-      {
-        provide: DateAdapter,
-        useFactory: momentAdapterFactory,
-      },
-      {
-        dateFormatter: {
-          provide: CalendarDateFormatter,
-          useClass: CalendarMomentDateFormatter,
-        },
-      }
-    ),
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
@@ -111,28 +84,20 @@ export function momentAdapterFactory() {
     FlexLayoutModule,
     MatSnackBarModule,
   ],
-  providers: [
-    MomentDatePipe,
-    {
-      provide: MOMENT,
-      useValue: moment,
-    },
-  ],
   exports: [
     DataTableComponent,
     ShortStringPipe,
     MomentDatePipe,
     CertainityCheckComponent,
-    ReservationCalendarComponent,
     StateChipComponent,
     AlertComponent,
     UserSearchDirective,
     GroupSearchDirective,
     TimezoneSearchDirective,
     AccountMenuComponent,
-    CalendarModule,
     ComponentHostDirective,
     LoadingTextComponent,
   ],
+  providers: [MomentDatePipe],
 })
 export class SharedModule {}

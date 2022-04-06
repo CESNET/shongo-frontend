@@ -1,0 +1,19 @@
+<div class="calendar-view-selection">
+  <button
+    mat-stroked-button
+    aria-label="Select calendar view"
+    [matMenuTriggerFor]="viewMenu"
+  >
+    {{ selectedView | titlecase }}&nbsp;<mat-icon>arrow_drop_down</mat-icon>
+  </button>
+
+  <mat-menu #viewMenu="matMenu">
+    <button
+      *ngFor="let opt of calendarViewOpts"
+      mat-menu-item
+      (click)="onViewSelection(opt.value)"
+    >
+      {{ opt.displayName }}
+    </button>
+  </mat-menu>
+</div>

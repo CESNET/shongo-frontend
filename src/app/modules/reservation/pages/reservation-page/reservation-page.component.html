@@ -3,80 +3,91 @@
   *ngIf="(resourceService.loading$ | async) === false; else loadingResources"
 >
   <mat-toolbar class="reservation__toolbar">
-    <!-- Toolbar left -->
-    <div class="reservation__toolbar-left">
-      <button
-        mat-icon-button
-        (click)="drawer.toggle()"
-        aria-label="Toggle side drawer"
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
-
-      <a mat-stroked-button aria-label="Go back to app" routerLink="/">
-        <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
-      </a>
-
-      <button
-        mat-stroked-button
-        aria-label="Select calendar view"
-        [matMenuTriggerFor]="viewMenu"
-      >
-        {{ calendar.view | titlecase }}&nbsp;<mat-icon
-          >arrow_drop_down</mat-icon
-        >
-      </button>
-
-      <mat-menu #viewMenu="matMenu">
-        <button mat-menu-item (click)="calendar.view = CalendarView.Day">
-          Day
-        </button>
-        <button mat-menu-item (click)="calendar.view = CalendarView.Week">
-          Week
-        </button>
-        <button mat-menu-item (click)="calendar.view = CalendarView.Month">
-          Month
-        </button>
-      </mat-menu>
-
-      <div class="reservation__calendar-navigation">
+    <mat-toolbar-row
+      class="reservation__toolbar-row reservation__toolbar-row--main"
+    >
+      <!-- Toolbar left -->
+      <div class="reservation__toolbar-row-left">
         <button
           mat-icon-button
-          aria-label="Previous"
-          mwlCalendarPreviousView
-          [view]="calendar.view"
-          [(viewDate)]="calendar.viewDate"
+          (click)="drawer.toggle()"
+          aria-label="Toggle side drawer"
         >
-          <mat-icon>navigate_before</mat-icon>
+          <mat-icon>menu</mat-icon>
         </button>
-        <button mat-button mwlCalendarToday [(viewDate)]="calendar.viewDate">
-          Today
-        </button>
-        <button
-          mat-icon-button
-          aria-label="Previous"
-          mwlCalendarNextView
-          [view]="calendar.view"
-          [(viewDate)]="calendar.viewDate"
+
+        <a
+          mat-stroked-button
+          aria-label="Go back to app"
+          routerLink="/"
+          class="reservation__back reservation__back--navbar"
         >
-          <mat-icon>navigate_next</mat-icon>
-        </button>
+          <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
+        </a>
+
+        <app-calendar-view-selection
+          class="reservation__view-selection"
+          [selectedView]="calendar.view"
+          (viewSelected)="calendar.view = $event"
+        ></app-calendar-view-selection>
+
+        <app-calendar-paginator
+          [view]="calendar.view"
+          [viewDate]="calendar.viewDate"
+          (viewDateChange)="calendar.viewDate = $event"
+        ></app-calendar-paginator>
+
+        <h1 class="reservation__date-header reservation__date-header--main">
+          {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
+        </h1>
       </div>
 
-      <h1 class="reservation__date-header">
+      <!-- Toolbar right -->
+      <div class="reservation__toolbar-row-right">
+        <app-account-menu></app-account-menu>
+      </div>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row
+      class="reservation__toolbar-row reservation__toolbar-row--mobile"
+    >
+      <h1 class="reservation__date-header reservation__date-header--mobile">
         {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
       </h1>
-    </div>
-
-    <!-- Toolbar right -->
-    <div class="reservation__toolbar-right">
-      <app-account-menu></app-account-menu>
-    </div>
+    </mat-toolbar-row>
   </mat-toolbar>
 
   <mat-drawer-container class="reservation__main" [autosize]="true">
-    <mat-drawer #drawer mode="side" opened>
+    <mat-drawer #drawer [mode]="showSidebarOver ? 'over' : 'side'" opened>
       <div class="sidebar">
+        <section class="sidebar__section sidebar__section--mobile">
+          <a
+            mat-stroked-button
+            aria-label="Go back to app"
+            routerLink="/"
+            class="reservation__back reservation__back--sidebar"
+          >
+            <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
+          </a>
+
+          <div class="jump-to-date">
+            <button
+              mat-stroked-button
+              (click)="picker.open()"
+              class="jump-to-date__button"
+            >
+              <mat-icon>event</mat-icon>&nbsp;Jump to date
+            </button>
+            <input
+              type="date"
+              class="jump-to-date__input"
+              [matDatepicker]="picker"
+              (dateInput)="onDateSelection($event.value)"
+            />
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </section>
+
         <section
           class="sidebar__section sidebar__section--form-field-padded"
           *ngIf="!capacityBookingMode; else capacityBookingSection"

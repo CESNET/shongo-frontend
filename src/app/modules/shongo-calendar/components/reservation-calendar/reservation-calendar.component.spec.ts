@@ -5,7 +5,7 @@ import { AuthenticationService } from 'src/app/core/authentication/authenticatio
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { Spied } from 'src/app/test/models/spied.type';
 import { authServiceStub } from 'src/app/test/stubs/auth-service.stub';
-import { HomeModule } from '../../../modules/home/home.module';
+import { HomeModule } from '../../../home/home.module';
 import { ReservationCalendarComponent } from './reservation-calendar.component';
 
 describe('ReservationCalendarComponent', () => {

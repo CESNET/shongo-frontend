@@ -1,91 +1,110 @@
 <mat-card>
-  <header>
-    <span>{{ selectedResourceId }}</span>
-    <form class="room-options" [formGroup]="filterGroup">
-      <button mat-button (click)="calendar.refresh()" type="button">
-        <mat-icon>refresh</mat-icon> Refresh
-      </button>
-      <mat-checkbox color="primary" formControlName="highlightMine"
-        >Highlight your reservations</mat-checkbox
-      >
-      <mat-form-field>
-        <mat-label>Physical resource</mat-label>
-        <mat-select
-          #resourceSelect
-          formControlName="resource"
-          (valueChange)="calendar.fetchReservations()"
-        >
-          <mat-option>
-            <ngx-mat-select-search
-              formControlName="resourceFilter"
-              placeholderLabel="Search..."
-              noEntriesFoundLabel="No resources found"
-            ></ngx-mat-select-search>
-          </mat-option>
-          <mat-option
-            *ngFor="let resource of filteredResources"
-            [value]="resource.id"
+  <div class="calendar">
+    <header class="calendar__header">
+      <form class="calendar__options" [formGroup]="filterGroup">
+        <div class="calendar__options-left">
+          <button
+            mat-button
+            (click)="calendar.refresh()"
+            type="button"
+            aria-label="Refresh"
+            class="calendar__refresh"
+            *ngIf="
+              (tabletSizeHit$ | async)?.matches === false;
+              else iconOnlyRefresh
+            "
           >
-            {{ resource.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
+            <mat-icon>refresh</mat-icon>&nbsp;Refresh
+          </button>
 
-    <section class="calendar-options">
-      <!-- Calendar view selection -->
-      <div class="btn-group">
-        <mat-button-toggle-group
-          name="calendarView"
-          aria-label="Calendar view selection"
-          [(value)]="calendar.view"
-        >
-          <mat-button-toggle [value]="CalendarView.Day">Day</mat-button-toggle>
-          <mat-button-toggle [value]="CalendarView.Week"
-            >Week</mat-button-toggle
-          >
-          <mat-button-toggle [value]="CalendarView.Month"
-            >Month</mat-button-toggle
-          >
-        </mat-button-toggle-group>
-      </div>
+          <ng-template #iconOnlyRefresh>
+            <button
+              mat-icon-button
+              (click)="calendar.refresh()"
+              type="button"
+              class="calendar__refresh"
+            >
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </ng-template>
 
-      <h1>
-        {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
-      </h1>
+          <mat-checkbox
+            color="primary"
+            formControlName="highlightMine"
+            class="calendar__highlight-mine"
+            >Highlight mine</mat-checkbox
+          >
+        </div>
+        <div class="calendar__options-right">
+          <mat-form-field
+            appearance="outline"
+            class="unpadded calendar__resource-selection"
+          >
+            <mat-label>Physical resource</mat-label>
+            <mat-select
+              #resourceSelect
+              formControlName="resource"
+              (valueChange)="calendar.fetchReservations()"
+            >
+              <mat-option>
+                <ngx-mat-select-search
+                  formControlName="resourceFilter"
+                  placeholderLabel="Search..."
+                  noEntriesFoundLabel="No resources found"
+                ></ngx-mat-select-search>
+              </mat-option>
+              <mat-option
+                *ngFor="let resource of filteredResources"
+                [value]="resource.id"
+              >
+                {{ resource.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
 
-      <div class="btn-group">
-        <mat-button-toggle-group
-          name="viewPagination"
-          aria-label="Calendar pagination"
-        >
-          <mat-button-toggle
-            mwlCalendarPreviousView
-            [view]="calendar.view"
-            [(viewDate)]="calendar.viewDate"
-            (viewDateChange)="calendar.refresh()"
-            ><mat-icon>chevron_left</mat-icon></mat-button-toggle
-          >
-          <mat-button-toggle
-            mwlCalendarToday
-            [(viewDate)]="calendar.viewDate"
-            (viewDateChange)="calendar.refresh()"
-            >Now</mat-button-toggle
-          >
-          <mat-button-toggle
-            mwlCalendarNextView
-            [view]="calendar.view"
-            [(viewDate)]="calendar.viewDate"
-            (viewDateChange)="calendar.refresh()"
-            ><mat-icon>chevron_right</mat-icon></mat-button-toggle
-          >
-        </mat-button-toggle-group>
-      </div>
-    </section>
-  </header>
+      <section class="calendar__navigation">
+        <app-calendar-view-selection
+          *ngIf="(tabletSizeHit$ | async)?.matches === false; else jumpToDate"
+          [selectedView]="calendar.view"
+          [tabletSizeHit$]="tabletSizeHit$"
+          (viewSelected)="calendar.view = $event"
+        ></app-calendar-view-selection>
 
-  <app-reservation-calendar
-    #calendar
-    [selectedResourceId]="resourceSelect.value"
-  ></app-reservation-calendar>
+        <ng-template #jumpToDate>
+          <button
+            mat-button
+            (click)="picker.open()"
+            class="calendar__datepicker"
+          >
+            <mat-icon>event</mat-icon>&nbsp;Jump to date
+          </button>
+          <input
+            type="date"
+            style="visibility: hidden; width: 0; height: 0"
+            [matDatepicker]="picker"
+            (dateInput)="onDateSelection($event.value)"
+          />
+          <mat-datepicker #picker></mat-datepicker>
+        </ng-template>
+
+        <h1 class="calendar__view-date">
+          {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
+        </h1>
+
+        <app-calendar-paginator
+          class="calendar__paginator"
+          [view]="calendar.view"
+          [viewDate]="calendar.viewDate"
+          (viewDateChange)="calendar.viewDate = $event"
+        ></app-calendar-paginator>
+      </section>
+    </header>
+
+    <app-reservation-calendar
+      #calendar
+      [selectedResourceId]="resourceSelect.value"
+    ></app-reservation-calendar>
+  </div>
 </mat-card>

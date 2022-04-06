@@ -36,7 +36,9 @@ export class RequestConfirmationDialogComponent {
     if (!technology) {
       return $localize`Unknown`;
     }
-    return virtualRoomResourceConfig.tagNameMap.get(technology) ?? technology;
+    return (
+      virtualRoomResourceConfig.technologyNameMap.get(technology) ?? technology
+    );
   }
 
   accept(): void {

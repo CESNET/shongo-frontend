@@ -1,4 +1,6 @@
+@use "./styles/mat-theme-colors" as mat-theme-colors;
 @use "~@angular/material" as mat;
+
 @include mat.core();
 
 @import "./styles/res-container.scss";
@@ -10,6 +12,8 @@
 @import "./styles/scrollbar.scss";
 
 :root {
+  @include mat-theme-colors.publish($shongo-frontend-theme);
+
   /* Colors */
   --white: #fff;
   --gray-300: rgb(150, 150, 150);
@@ -28,20 +32,25 @@
   --success-color-light: rgb(238, 255, 238);
 
   /* Element sizes */
-  --toolbar-height: 4.5rem;
+  --toolbar-row-height: 4.5rem;
 
   /* Font sizes */
-  --font-size-regular: 1em;
-  --font-size-small: 0.8em;
-  --font-size-xs: 0.6em;
-  --font-size-medium: 1.2em;
-  --font-size-large: 1.4em;
+  --font-size-regular: 1rem;
+  --font-size-small: 0.8rem;
+  --font-size-xs: 0.6rem;
+  --font-size-medium: 1.2rem;
+  --font-size-large: 1.4rem;
+}
+
+html {
+  font-size: var(--font-size-regular);
 }
 
 html,
 body {
   height: 100%;
   box-sizing: border-box;
+  font-size: var(--font-size-regular);
 }
 *,
 *:before,
@@ -53,13 +62,10 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-b {
-  font-weight: 500;
-}
 
 /* Material */
-mat-toolbar.mat-toolbar {
-  height: var(--toolbar-height);
+mat-toolbar-row.mat-toolbar-row {
+  height: var(--toolbar-row-height);
 }
 mat-toolbar.header-toolbar {
   padding: 0 !important;
@@ -89,6 +95,17 @@ mat-toolbar.header-toolbar {
 
 /* Theme colors */
 .mat-primary-color {
-  $primary: map-get($shongo-frontend-theme, primary);
-  color: map-get($primary, default);
+  color: var(--mat-primary);
+}
+
+@media screen and (max-width: 1024px) {
+  html {
+    font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: var(--font-size-small);
+  }
 }

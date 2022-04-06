@@ -10,9 +10,12 @@ import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interfa
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import {
+  PhysicalResource,
   Resource,
   VirtualRoomResource,
 } from 'src/app/shared/models/rest-api/resource.interface';
+import { physicalResourceConfig } from 'src/config/physical-resource.config';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { ApiService } from '../api.service';
 
 const RESOURCES_LOCALSTORAGE_KEY = 'resources';
@@ -82,7 +85,13 @@ export class ResourceService extends ApiService {
     const tags = new Set(
       this.resources
         .filter((resource) => resource.type === ResourceType.PHYSICAL_RESOURCE)
-        .map((resource) => resource.tag)
+        .reduce((acc: string[], curr: Resource) => {
+          const supportedTags = (curr as PhysicalResource).tags.filter((tag) =>
+            physicalResourceConfig.supportedTags.includes(tag)
+          );
+          acc.push(...supportedTags);
+          return acc;
+        }, [])
     );
 
     return Array.from(tags);
@@ -95,21 +104,29 @@ export class ResourceService extends ApiService {
 
     const tags = new Set(
       this.resources
-        .filter((resource) => resource.type === ResourceType.VIRTUAL_ROOM)
-        .map((resource) => resource.tag as Technology)
+        .filter(
+          (resource) =>
+            resource.type === ResourceType.VIRTUAL_ROOM &&
+            virtualRoomResourceConfig.supportedTechnologies.includes(
+              (resource as VirtualRoomResource).technology
+            )
+        )
+        .map((resource) => resource.technology as Technology)
     );
 
     return Array.from(tags);
   }
 
   getVirtualRoomResources(): VirtualRoomResource[] {
-    if (!this.resources) {
-      return [];
-    }
-
-    return this.resources.filter(
-      (resource) => resource.type === ResourceType.VIRTUAL_ROOM
+    return this._getResourcesByType(
+      ResourceType.VIRTUAL_ROOM
     ) as VirtualRoomResource[];
+  }
+
+  getPhyisicalResources(): PhysicalResource[] {
+    return this._getResourcesByType(
+      ResourceType.PHYSICAL_RESOURCE
+    ) as PhysicalResource[];
   }
 
   findResourceByTechnology(technology: Technology): VirtualRoomResource | null {
@@ -119,7 +136,7 @@ export class ResourceService extends ApiService {
 
     return (
       (this.resources.find(
-        (resource) => resource.tag === technology
+        (resource) => resource.technology === technology
       ) as VirtualRoomResource) ?? null
     );
   }
@@ -150,8 +167,8 @@ export class ResourceService extends ApiService {
       .subscribe({
         next: (resources) => {
           this._loading$.next(false);
-          this.resources = resources;
-          this._saveToLocalStorage(resources);
+          this.resources = this._filterSupportedResources(resources);
+          this._saveToLocalStorage(this.resources);
         },
         error: (err) => {
           console.error(err);
@@ -196,5 +213,25 @@ export class ResourceService extends ApiService {
       RESOURCES_LOCALSTORAGE_KEY,
       JSON.stringify(resourcesStore)
     );
+  }
+
+  private _filterSupportedResources(resources: Resource[]): Resource[] {
+    return resources.filter((res) => {
+      if (res.type === ResourceType.PHYSICAL_RESOURCE) {
+        return (res as PhysicalResource).tags.some((tag) =>
+          physicalResourceConfig.supportedTags.includes(tag)
+        );
+      } else {
+        return virtualRoomResourceConfig.supportedTechnologies.includes(
+          (res as VirtualRoomResource).technology
+        );
+      }
+    });
+  }
+
+  private _getResourcesByType(type: ResourceType): Resource[] {
+    return this.resources
+      ? this.resources.filter((resource) => resource.type === type)
+      : [];
   }
 }
