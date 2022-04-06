@@ -119,9 +119,6 @@ mat-drawer {
 
 @media only screen and (max-width: 1024px) {
   .reservation {
-    &__view-selection {
-      display: none;
-    }
     &__back {
       &--sidebar {
         display: block;

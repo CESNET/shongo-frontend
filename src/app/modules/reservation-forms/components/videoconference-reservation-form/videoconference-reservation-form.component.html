@@ -74,13 +74,17 @@
       }}</mat-error>
     </mat-form-field>
 
-    <!-- Allow guests checkbox -->
-    <mat-checkbox color="primary" formControlName="allowGuests"
-      >Allow guests</mat-checkbox
-    >
+    <div class="form__checkbox-group">
+      <!-- Allow guests checkbox -->
+      <mat-checkbox color="primary" formControlName="allowGuests"
+        >Allow guests</mat-checkbox
+      >
 
-    <!-- Record checkbox -->
-    <mat-checkbox color="primary" formControlName="record">Record</mat-checkbox>
+      <!-- Record checkbox -->
+      <mat-checkbox color="primary" formControlName="record"
+        >Record</mat-checkbox
+      >
+    </div>
   </div>
 
   <mat-divider vertical class="form__divider"></mat-divider>

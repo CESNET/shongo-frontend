@@ -2,7 +2,7 @@
   <mat-radio-group
     aria-label="Select periodicity option"
     formControlName="periodicity"
-    class="selection"
+    class="selection selection--periodicity"
     (change)="handlePeriodicityRadioChange($event)"
   >
     <mat-radio-button [value]="PeriodicityType.NONE" color="primary"
@@ -18,6 +18,8 @@
       >Monthly</mat-radio-button
     >
   </mat-radio-group>
+
+  <mat-divider></mat-divider>
 
   <div class="periodicity__specification">
     <div [ngSwitch]="periodicityForm.get('periodicity')!.value">
@@ -60,7 +62,11 @@
           >
         </section>
       </form>
-      <form *ngSwitchCase="PeriodicityType.MONTHLY" formGroupName="monthlyForm">
+      <form
+        *ngSwitchCase="PeriodicityType.MONTHLY"
+        formGroupName="monthlyForm"
+        class="monthly-form"
+      >
         <mat-radio-group
           aria-label="Select monthly periodicity option"
           class="selection--vertical"
@@ -72,7 +78,7 @@
             color="primary"
             #regularRadio
           >
-            <form formGroupName="regularForm">
+            <form formGroupName="regularForm" class="monthly-form__regular">
               &nbsp;Repeat every
               <mat-form-field
                 class="periodicity__field periodicity__field--number"
@@ -96,8 +102,8 @@
             color="primary"
             #irregularRadio
           >
-            <form formGroupName="irregularForm">
-              &nbsp;Repeat every
+            <form formGroupName="irregularForm" class="monthly-form__irregular">
+              Repeat every
               <mat-form-field
                 class="periodicity__field periodicity__field--number"
               >
@@ -129,6 +135,7 @@
                   >
                 </mat-select>
               </mat-form-field>
+              <br class="monthly-form__break" />
               in every
               <mat-form-field
                 class="periodicity__field periodicity__field--number"
@@ -143,8 +150,9 @@
                     [value]="opt"
                     >{{ opt }}</mat-option
                   >
-                </mat-select> </mat-form-field
-              >. month.
+                </mat-select>
+              </mat-form-field>
+              . month.
             </form>
           </mat-radio-button>
         </mat-radio-group>

@@ -26,7 +26,7 @@
         </a>
 
         <app-calendar-view-selection
-          class="reservation__view-selection"
+          *ngIf="(tabletSizeHit$ | async)?.matches === false"
           [selectedView]="calendar.view"
           (viewSelected)="calendar.view = $event"
         ></app-calendar-view-selection>
@@ -58,7 +58,11 @@
   </mat-toolbar>
 
   <mat-drawer-container class="reservation__main" [autosize]="true">
-    <mat-drawer #drawer [mode]="showSidebarOver ? 'over' : 'side'" opened>
+    <mat-drawer
+      #drawer
+      [mode]="(tabletSizeHit$ | async)?.matches ? 'over' : 'side'"
+      opened
+    >
       <div class="sidebar">
         <section class="sidebar__section sidebar__section--mobile">
           <a
