@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReservationCalendarComponent } from './components/reservation-calendar/reservation-calendar.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CalendarPaginatorComponent } from './components/calendar-paginator/calendar-paginator.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -33,6 +34,7 @@ export function momentAdapterFactory() {
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    LayoutModule,
     CalendarModule.forRoot(
       {
         provide: DateAdapter,

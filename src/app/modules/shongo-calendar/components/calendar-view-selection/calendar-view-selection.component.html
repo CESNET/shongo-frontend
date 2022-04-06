@@ -8,14 +8,12 @@
   </button>
 
   <mat-menu #viewMenu="matMenu">
-    <button mat-menu-item (click)="onViewSelection(CalendarView.Day)">
-      Day
-    </button>
-    <button mat-menu-item (click)="onViewSelection(CalendarView.Week)">
-      Week
-    </button>
-    <button mat-menu-item (click)="onViewSelection(CalendarView.Month)">
-      Month
+    <button
+      *ngFor="let opt of calendarViewOpts"
+      mat-menu-item
+      (click)="onViewSelection(opt.value)"
+    >
+      {{ opt.displayName }}
     </button>
   </mat-menu>
 </div>
