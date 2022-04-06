@@ -6,6 +6,7 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -48,7 +49,6 @@ export class ReservationPageComponent
   parentReservationRequest?: ReservationRequestDetail;
   parentRequestError?: Error;
   capacityBookingMode = false;
-  showSidebarOver = false;
 
   AlertType = AlertType;
 
@@ -61,6 +61,7 @@ export class ReservationPageComponent
     private _resReqService: ReservationRequestService,
     private _resourceService: ResourceService,
     private _br: BreakpointObserver,
+    private _cd: ChangeDetectorRef,
     public resourceService: ResourceService
   ) {
     this.tabletSizeHit$ = this._createTabletSizeObservable();
@@ -125,9 +126,7 @@ export class ReservationPageComponent
     state$.subscribe((state) => {
       if (state.matches) {
         this.calendar.view = CalendarView.Day;
-        this.showSidebarOver = true;
-      } else {
-        this.showSidebarOver = false;
+        this._cd.detectChanges();
       }
     });
   }

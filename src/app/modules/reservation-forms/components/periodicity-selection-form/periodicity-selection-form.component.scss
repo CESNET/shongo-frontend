@@ -80,9 +80,33 @@
 
   &--vertical {
     flex-direction: column;
+
+    > * {
+      width: 100%;
+    }
   }
 
-  &--days {
+  &--days,
+  &--periodicity {
     margin-bottom: 1em;
+  }
+}
+
+.monthly-form {
+  &__break {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .periodicity {
+    &__field--date {
+      width: 100%;
+    }
+  }
+  .monthly-form {
+    &__break {
+      display: inline;
+    }
   }
 }
