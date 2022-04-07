@@ -5,7 +5,6 @@ import {
   Input,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -189,7 +188,7 @@ export class VirtualRoomReservationFormComponent
     } else if (resource.technology === Technology.FREEPBX) {
       return { resource: resource.id, ...teleconferenceFields, ...rest };
     } else {
-      throw new Error($localize`Unsupported technology.`);
+      throw new Error('Unsupported technology.');
     }
   }
 

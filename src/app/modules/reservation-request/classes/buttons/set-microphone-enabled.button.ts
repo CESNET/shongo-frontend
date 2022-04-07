@@ -1,4 +1,4 @@
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ApiActionButton } from 'src/app/shared/components/data-table/buttons/api-action-button';
@@ -20,17 +20,17 @@ export class SetMicrophoneEnabledButton extends ApiActionButton<RuntimeParticipa
 
     if (enableMicrophone) {
       this.icon = 'mic';
-      this.name = 'Unmute user';
+      this.name = $localize`:button name:Unmute user`;
     } else {
       this.icon = 'mic_off';
-      this.name = 'Mute user';
+      this.name = $localize`:button name:Mute user`;
     }
   }
 
   executeAction(row: RuntimeParticipantTableData): Observable<string> {
     this.addToLoading(row);
 
-    const action = this.enableMicrophone ? 'unmuted' : 'muted';
+    const action = this.enableMicrophone ? 'unmute' : 'mute';
 
     return this.resReqService
       .setParticipantMicrophoneEnabled(
@@ -42,10 +42,19 @@ export class SetMicrophoneEnabledButton extends ApiActionButton<RuntimeParticipa
         tap(() => {
           this.removeFromLoading(row);
         }),
-        mapTo(`User ${action} successfully.`),
+        mapTo(
+          this.enableMicrophone
+            ? $localize`:success message:User unmuted`
+            : $localize`:success message:User muted`
+        ),
         catchError(() => {
           this.removeFromLoading(row);
-          return throwError(`Failed to ${action} user.`);
+
+          if (this.enableMicrophone) {
+            throw new Error($localize`:error message:Failed to unmute user`);
+          } else {
+            throw new Error($localize`:error message:Failed to mute user`);
+          }
         })
       );
   }

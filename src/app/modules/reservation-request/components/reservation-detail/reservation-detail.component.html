@@ -1,18 +1,18 @@
 <div class="reservation-detail">
   <main>
     <header>
-      <h2 class="mat-primary-color">Detail</h2>
+      <h2 class="mat-primary-color" i18n="heading">Detail</h2>
     </header>
     <dl class="definition-list--flex">
       <!-- Type -->
       <ng-container *ngIf="currentRequest.type as type">
-        <dt>Type:</dt>
+        <dt i18n="definition tag">Type:</dt>
         <dd>{{ requestTypeMap.get(type) }}</dd>
       </ng-container>
 
       <!-- Parent request -->
       <ng-container *ngIf="currentRequest.parentRequestId">
-        <dt>Event from request:</dt>
+        <dt i18n="definition tag">Event from request:</dt>
         <dd>
           <a
             [routerLink]="
@@ -26,11 +26,18 @@
       <!-- Time slot -->
       <ng-container *ngIf="currentRequest.slot as slot">
         <dt>
-          {{
-            (currentRequest.allocationState === AllocationState.ALLOCATED
-              ? "Allocated"
-              : "Requested") + " time slot:"
-          }}
+          <span
+            *ngIf="
+              currentRequest.allocationState === AllocationState.ALLOCATED;
+              else requestedTimeSlotTag
+            "
+            i18n="definition tag"
+          >
+            Allocated time slot
+          </span>
+          <ng-template #requestedTimeSlotTag>
+            <span i18n="definition tag">Requested time slot:</span>
+          </ng-template>
         </dt>
         <dd>
           {{
@@ -41,13 +48,13 @@
 
       <!-- Description -->
       <ng-container *ngIf="currentRequest.description">
-        <dt>Description:</dt>
+        <dt i18n="definition tag">Description:</dt>
         <dd>{{ currentRequest.description }}</dd>
       </ng-container>
 
       <!-- State -->
       <ng-container *ngIf="currentRequest.state as state">
-        <dt>State:</dt>
+        <dt i18n="definition tag">State:</dt>
         <dd>
           <app-state-chip
             *ngIf="getStateProps(state) as props"
@@ -59,7 +66,7 @@
 
       <!-- Created at -->
       <ng-container *ngIf="currentRequest.createdAt as createdAt">
-        <dt>Created at:</dt>
+        <dt i18n="definition tag">Created at:</dt>
         <dd>{{ createdAt | date }}</dd>
       </ng-container>
 
@@ -69,8 +76,12 @@
           currentRequest.notifyParticipants !== undefined
         "
       >
-        <dt>Notify participants:</dt>
-        <dd>{{ currentRequest.notifyParticipants ? "yes" : "no" }}</dd>
+        <dt i18n="definition tag">Notify participants:</dt>
+        <dd>
+          <span *ngIf="currentRequest.notifyParticipants; else no" i18n
+            >Yes</span
+          >
+        </dd>
       </ng-container>
 
       <!-- Periodicity -->
@@ -80,17 +91,21 @@
           currentRequest.roomCapacityData?.periodicity as periodicity
         "
       >
-        <dt>Periodicity</dt>
+        <dt i18n="definition tag">Periodicity</dt>
         <dd>
           <span [ngSwitch]="periodicity.type">
-            <span *ngSwitchCase="PeriodicityType.DAILY"> Daily </span>
+            <span
+              *ngSwitchCase="PeriodicityType.DAILY"
+              i18n="periodicity option"
+              >Daily</span
+            >
             <span *ngSwitchCase="PeriodicityType.WEEKLY">
               {{ getWeeklyPeriodicityString(periodicity) }}
             </span>
             <span *ngSwitchCase="PeriodicityType.MONTHLY">
               {{ getMonthlyPeriodicityString(periodicity) }}
             </span>
-            <span *ngSwitchDefault>None</span>
+            <span *ngSwitchDefault i18n="periodicity option">None</span>
           </span>
 
           <span
@@ -99,7 +114,9 @@
               periodicity.type !== PeriodicityType.NONE
             "
           >
-            <i class="gray">(until {{ periodicity.periodicityEnd | date }})</i>
+            <i class="grayed-text" i18n="note"
+              >(until {{ periodicity.periodicityEnd | date }})</i
+            >
           </span>
         </dd>
         <ng-container
@@ -107,7 +124,7 @@
             periodicity.excludeDates && periodicity.excludeDates.length !== 0
           "
         >
-          <dt>Exclude dates:</dt>
+          <dt i18n="definition tag">Exclude dates:</dt>
           <dd>
             <span *ngFor="let date of periodicity.excludeDates; index as i">
               {{ date | date }}
@@ -126,7 +143,7 @@
       >
         <!-- Resource name -->
         <ng-container *ngIf="physicalResData.resourceName as resourceName">
-          <dt>Resource name:</dt>
+          <dt i18n="definition tag">Resource name:</dt>
           <dd>{{ resourceName }}</dd>
         </ng-container>
 
@@ -134,7 +151,7 @@
         <ng-container
           *ngIf="physicalResData.resourceDescription as description"
         >
-          <dt>Resource description:</dt>
+          <dt i18n="definition tag">Resource description:</dt>
           <dd>
             {{ description }}
           </dd>
@@ -147,9 +164,20 @@
         <ng-container
           *ngIf="currentRequest.virtualRoomData.technology as technology"
         >
-          <dt>Technology</dt>
-          <dd>{{ technologyMap.get(technology) ?? "Unknown" }}</dd>
-        </ng-container>
+          <dt i18n="definition tag">Technology</dt>
+          <dd>
+            <span
+              *ngIf="
+                technologyMap.get(technology) as technology;
+                else unknownTechnology
+              "
+              >{{ technology }}</span
+            >
+            <ng-template #unknownTechnology>
+              <span i18n="definition data">Unknown technology</span>
+            </ng-template>
+          </dd></ng-container
+        >
 
         <!-- Room name -->
         <ng-container
@@ -158,7 +186,7 @@
             currentRequest.type !== ReservationType.ROOM_CAPACITY
           "
         >
-          <dt>Room name:</dt>
+          <dt i18n="definition tag">Room name:</dt>
           <dd>{{ currentRequest.virtualRoomData.roomName }}</dd>
         </ng-container>
       </ng-container>
@@ -171,17 +199,33 @@
         "
       >
         <!-- Reservation request ID -->
-        <dt>For virtual room:</dt>
+        <dt i18n="definition tag">For virtual room:</dt>
         <dd *ngIf="capacityData.roomReservationRequestId; else noResReqId">
           <a
             [routerLink]="
               '/reservation-request/' + capacityData.roomReservationRequestId
             "
-            >{{ reservationRequest?.virtualRoomData?.roomName ?? "Room" }}</a
           >
+            <span
+              *ngIf="
+                reservationRequest?.virtualRoomData?.roomName as roomName;
+                else undefinedRoomName
+              "
+            >
+              {{ roomName }}
+            </span>
+          </a>
         </dd>
         <ng-template #noResReqId>
-          <dd>{{ currentRequest?.virtualRoomData?.roomName ?? "Room" }}</dd>
+          <dd>
+            <span
+              *ngIf="
+                currentRequest?.virtualRoomData?.roomName as roomName;
+                else undefinedRoomName
+              "
+              >{{ roomName }}</span
+            >
+          </dd>
         </ng-template>
 
         <!-- Participant count -->
@@ -191,11 +235,11 @@
             capacityData.capacityParticipantCount as participantCount
           "
         >
-          <dt>Number of participants:</dt>
+          <dt i18n="definition tag">Number of participants:</dt>
           <dd>{{ participantCount }}</dd>
         </ng-container>
 
-        <!-- Recourd -->
+        <!-- Record -->
         <ng-container
           *ngIf="
             currentRequest.virtualRoomData?.technology !==
@@ -203,9 +247,11 @@
             currentRequest.virtualRoomData?.technology !== Technology.FREEPBX
           "
         >
-          <dt>Record:</dt>
+          <dt i18n="definition tag">Record:</dt>
           <dd>
-            {{ capacityData.capacityHasRecordingService ? "yes" : "no" }}
+            <span *ngIf="capacityData.capacityHasRecordingService; else no"
+              >Yes</span
+            >
           </dd>
         </ng-container>
       </ng-container>
@@ -214,28 +260,30 @@
       <ng-container *ngIf="currentRequest.authorizedData as authorizedData">
         <!-- PIN -->
         <ng-container *ngIf="authorizedData.pin as pin">
-          <dt>PIN:</dt>
+          <dt i18n="definition tag">PIN:</dt>
           <dd>{{ pin }}</dd>
         </ng-container>
 
         <!-- Admin PIN -->
         <ng-container *ngIf="authorizedData.adminPin as adminPin">
-          <dt>Admin PIN:</dt>
+          <dt i18n="definition tag">Admin PIN:</dt>
           <dd>{{ adminPin }}</dd>
         </ng-container>
 
         <!-- User PIN -->
         <ng-container *ngIf="authorizedData.userPin as userPin">
-          <dt>User PIN:</dt>
+          <dt i18n="definition tag">User PIN:</dt>
           <dd>{{ userPin }}</dd>
         </ng-container>
 
         <ng-container *ngIf="authorizedData.aliases">
-          <dt>Connection methods:</dt>
+          <dt i18n="definition tag">Connection methods:</dt>
           <dd>
             <dl>
               <ng-container *ngFor="let alias of authorizedData.aliases">
-                <dt>{{ getAliasDisplayType(alias.type) }}</dt>
+                <dt i18n="definition tag">
+                  {{ getAliasDisplayType(alias.type) }}
+                </dt>
                 <dd>{{ alias.value }}</dd>
               </ng-container>
             </dl>
@@ -246,7 +294,7 @@
   </main>
   <aside>
     <section *ngIf="reservationRequest.history">
-      <h2 class="mat-primary-color">History of modifications</h2>
+      <h2 class="mat-primary-color" i18n="heading">History of modifications</h2>
       <app-data-table
         *ngIf="modificationHistoryDataSource as dataSource"
         [dataSource]="dataSource"
@@ -256,3 +304,11 @@
     </section>
   </aside>
 </div>
+
+<ng-template #undefinedRoomName>
+  <span class="grayed-text" i18n="definition data">Unnamed room</span>
+</ng-template>
+
+<ng-template #no>
+  <span i18n>No</span>
+</ng-template>

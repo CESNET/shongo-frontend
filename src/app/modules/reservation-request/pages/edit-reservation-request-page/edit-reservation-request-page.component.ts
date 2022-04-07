@@ -83,13 +83,15 @@ export class EditReservationRequestPageComponent implements OnInit {
       .subscribe({
         next: () => {
           this._alert.showSuccess(
-            $localize`Reservation request edited successfully.`
+            $localize`:success message:Reservation request edited`
           );
           this._router.navigate(['../'], { relativeTo: this._route });
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError($localize`Failed to edit reservation request.`);
+          this._alert.showError(
+            $localize`:error message:Failed to edit reservation request`
+          );
         },
       });
   }

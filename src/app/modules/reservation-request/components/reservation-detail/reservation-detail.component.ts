@@ -44,9 +44,12 @@ export class ReservationDetailComponent implements OnInit {
   technologyMap = virtualRoomResourceConfig.technologyNameMap;
 
   requestTypeMap = new Map([
-    [ReservationType.PHYSICAL_RESOURCE, 'Physical resource'],
-    [ReservationType.VIRTUAL_ROOM, 'Virtual room'],
-    [ReservationType.ROOM_CAPACITY, 'Room capacity'],
+    [
+      ReservationType.PHYSICAL_RESOURCE,
+      $localize`:resource type:Physical resource`,
+    ],
+    [ReservationType.VIRTUAL_ROOM, $localize`:resource type:Virtual room`],
+    [ReservationType.ROOM_CAPACITY, $localize`:resource type:Room capacity`],
   ]);
   currentRequest!: ReservationRequestDetail;
 
@@ -69,21 +72,21 @@ export class ReservationDetailComponent implements OnInit {
     const daysString = periodicity.periodicDaysInWeek
       ?.map((day) => String(day).toLowerCase())
       .join(', ');
-    return `Every ${periodicity.periodicityCycle}. week on ${daysString}`;
+    return $localize`:periodicity:Every ${periodicity.periodicityCycle}. week on ${daysString}`;
   }
 
   getMonthlyPeriodicityString(periodicity: Periodicity): string {
     if (
       periodicity.monthlyPeriodicityType === MonthlyPeriodicityType.STANDARD
     ) {
-      return `Every ${periodicity.periodicityCycle}. month`;
+      return $localize`:periodicity:Every ${periodicity.periodicityCycle}. month`;
     } else {
       const dayOrder =
         periodicity.periodicityDayOrder === -1
-          ? 'last'
+          ? $localize`:option|Last {day}:last`
           : `${periodicity.periodicityDayOrder}.`;
       const day = String(periodicity.periodicDayInMonth).toLocaleLowerCase();
-      return `Every ${dayOrder} ${day} in every ${periodicity.periodicityCycle}. month`;
+      return $localize`:periodicity:Every ${dayOrder} ${day} in every ${periodicity.periodicityCycle}. month`;
     }
   }
 
@@ -92,7 +95,7 @@ export class ReservationDetailComponent implements OnInit {
   }
 
   getAliasDisplayType(type: AliasType): string {
-    return aliasTypeMap.get(type) ?? 'Unknown';
+    return aliasTypeMap.get(type) ?? $localize`:fallback text:Unknown`;
   }
 
   isPeriodicityShown(): boolean {

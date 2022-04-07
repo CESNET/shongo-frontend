@@ -47,7 +47,10 @@ export class HeaderComponent implements OnDestroy {
   }
 
   getUsername(): string {
-    return this.auth.identityClaims?.name ?? 'Unknown user';
+    return (
+      this.auth.identityClaims?.name ??
+      $localize`:user name fallback:Unknown user`
+    );
   }
 
   toggleDropdown(): void {

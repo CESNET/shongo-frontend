@@ -2,9 +2,9 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { finalize, first, switchMap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ParticipantRole } from 'src/app/shared/models/enums/participant-role.enum';
 import { ParticipantType } from 'src/app/shared/models/enums/participant-type.enum';
@@ -22,8 +22,6 @@ import { getFormError } from 'src/app/utils/getFormError';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateParticipantPageComponent {
-  @ViewChild(AlertComponent) alert!: AlertComponent;
-
   form = new FormGroup({
     participantType: new FormControl(ParticipantType.USER, [
       Validators.required,
@@ -52,7 +50,8 @@ export class CreateParticipantPageComponent {
   constructor(
     private _resReqService: ReservationRequestService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _alert: AlertService
   ) {}
 
   isValid(): boolean {
@@ -76,24 +75,25 @@ export class CreateParticipantPageComponent {
         switchMap((params) => {
           if (participantType === ParticipantType.USER) {
             const userBody = this._createUserBody();
-            return this._resReqService.postUserParticipant(userBody, params.id);
+            return this._resReqService.postParticipant(userBody, params.id);
           } else {
             const guestBody = this._createGuestBody();
-            return this._resReqService.postGuestParticipant(
-              guestBody,
-              params.id
-            );
+            return this._resReqService.postParticipant(guestBody, params.id);
           }
-        })
+        }),
+        finalize(() => this.posting$.next(false))
       )
       .subscribe({
         next: () => {
-          this.posting$.next(false);
+          this._alert.showSuccess(
+            $localize`:success message:Participant created`
+          );
           this._router.navigate(['../../'], { relativeTo: this._route });
         },
         error: () => {
-          this.posting$.next(false);
-          this.alert.isActive = true;
+          this._alert.showError(
+            $localize`:error message:Failed to create participant`
+          );
         },
       });
   }

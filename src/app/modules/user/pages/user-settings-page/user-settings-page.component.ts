@@ -19,9 +19,12 @@ import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.inter
 })
 export class UserSettingsPageComponent implements OnInit, OnDestroy {
   languageOptions: Option[] = [
-    { displayName: `Use your operating system's configuration`, value: 'os' },
-    { displayName: `Czech`, value: 'cz' },
-    { displayName: `English`, value: 'en' },
+    {
+      displayName: $localize`:option name:Use your operating system's configuration`,
+      value: 'os',
+    },
+    { displayName: $localize`:language:Czech`, value: 'cz' },
+    { displayName: $localize`:language:English`, value: 'en' },
   ];
 
   useCurrentTimeZoneCtrl = new FormControl(false);

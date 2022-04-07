@@ -2,6 +2,7 @@
   <button
     mat-icon-button
     aria-label="Previous"
+    i18n-aria-label="button name"
     mwlCalendarPreviousView
     [view]="view"
     [viewDate]="viewDate"
@@ -12,6 +13,7 @@
   <button
     mat-button
     mwlCalendarToday
+    i18n="button name"
     [viewDate]="viewDate"
     (viewDateChange)="onViewDateChange($event)"
   >
@@ -20,6 +22,7 @@
   <button
     mat-icon-button
     aria-label="Previous"
+    i18n-aria-label="button name"
     mwlCalendarNextView
     [view]="view"
     [viewDate]="viewDate"

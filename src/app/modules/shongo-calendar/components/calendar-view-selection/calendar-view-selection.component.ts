@@ -24,9 +24,9 @@ export class CalendarViewSelectionComponent {
   @Output() viewSelected = new EventEmitter<CalendarView>();
 
   calendarViewOpts: CalendarViewOption[] = [
-    { displayName: $localize`Day`, value: CalendarView.Day },
-    { displayName: $localize`Week`, value: CalendarView.Week },
-    { displayName: $localize`Month`, value: CalendarView.Month },
+    { displayName: $localize`:time unit:Day`, value: CalendarView.Day },
+    { displayName: $localize`:time unit:Week`, value: CalendarView.Week },
+    { displayName: $localize`:time unit:Month`, value: CalendarView.Month },
   ];
 
   readonly CalendarView = CalendarView;

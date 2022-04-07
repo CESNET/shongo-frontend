@@ -2,19 +2,20 @@
 .help {
   display: flex;
   flex-wrap: wrap;
+  gap: 1em;
 
   aside {
     width: 20%;
   }
   main {
     flex: 1;
+    line-height: 200%;
+    text-align: justify;
   }
 }
-main {
-  line-height: 200%;
-}
+
 header {
-  margin-bottom: 15px;
+  margin-bottom: 1em;
 }
 
 /* Text */
@@ -28,14 +29,15 @@ aside {
 }
 nav {
   position: fixed;
-  margin-right: 15px;
+  margin-right: 1em;
   width: fit-content;
-}
-.selected {
-  color: rgb(16, 197, 16);
 }
 
 /* Images */
+.image-row {
+  display: flex;
+  gap: 1em;
+}
 .labeled-img {
   width: fit-content;
   display: flex;
@@ -56,7 +58,7 @@ nav {
     }
 
     aside {
-      margin-bottom: 40px;
+      margin-bottom: 2.5em;
     }
   }
 }

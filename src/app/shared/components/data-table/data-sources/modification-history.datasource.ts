@@ -25,25 +25,25 @@ export class ModificationHistoryDataSource extends StaticDataSource<
     this.displayedColumns = [
       {
         name: 'createdAt',
-        displayName: 'Created at',
+        displayName: $localize`:table column:Created at`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'createdBy', displayName: 'Created by' },
+      { name: 'createdBy', displayName: $localize`:table column:Created by` },
       {
         name: 'type',
-        displayName: 'Type',
+        displayName: $localize`:table column:Type`,
         pipeFunc: (value: unknown) => toTitleCase(value as string),
       },
       {
         name: 'state',
-        displayName: 'State',
+        displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
       },
     ];
 
     this.buttons = [
       new CustomActionButton(
-        'View modification',
+        $localize`:button name:View modification`,
         'visibility',
         (row: RequestModification) => {
           this._openModification(row.id);

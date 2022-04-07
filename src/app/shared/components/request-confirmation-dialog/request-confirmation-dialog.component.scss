@@ -1,5 +1,6 @@
 .dialog-actions {
   justify-content: space-between;
+  gap: 1em;
 }
 
 .request-detail {
@@ -14,5 +15,20 @@
     gap: 1em;
     width: 100%;
     height: 100%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .dialog-actions {
+    &__left,
+    &__right {
+      display: flex;
+      gap: 1em;
+      flex: 1;
+
+      > * {
+        flex: 1;
+      }
+    }
   }
 }

@@ -1,23 +1,24 @@
 <ng-container *ngIf="data$ | async as data; else loadingOrError">
   <header>
-    <h1>Resource capacity utilization</h1>
+    <h1 i18n="heading">Resource capacity utilization</h1>
     <dl class="definition-list--flex">
-      <dt>Resource:</dt>
+      <dt i18b="definition tag">Resource:</dt>
       <dd>{{ data.name + " (" + data.id + ")" }}</dd>
-      <dt>Interval:</dt>
+      <dt i18b="definition tag">Interval:</dt>
       <dd>
         {{ this.getInterval(data.intervalFrom, data.intervalTo) }}
       </dd>
-      <dt>Usage:</dt>
+      <dt i18b="definition tag">Usage:</dt>
       <dd>{{ getUsage(data.totalCapacity, data.usedCapacity) }}</dd>
     </dl>
   </header>
 
   <main>
-    <h1>Reservations</h1>
+    <h1 i18n="heading">Reservations</h1>
     <app-data-table
       *ngIf="reservationsDataSource"
       description="Reservations for this resource."
+      i18n-description="table description"
       [dataSource]="reservationsDataSource"
       [showCheckboxes]="false"
       [showDeleteButtons]="false"
@@ -28,7 +29,7 @@
 <ng-template #loadingOrError>
   <ng-container *ngIf="loading$ | async; else error">
     <header class="header-skeleton">
-      <h1>Resource capacity utilization</h1>
+      <h1 i18n="heading">Resource capacity utilization</h1>
       <ngx-skeleton-loader
         count="3"
         appearance="line"
@@ -40,7 +41,7 @@
       ></ngx-skeleton-loader>
     </header>
     <main>
-      <h1>Reservations</h1>
+      <h1 i18n="heading">Reservations</h1>
       <ngx-skeleton-loader
         count="5"
         appearance="line"
@@ -55,5 +56,9 @@
 </ng-template>
 
 <ng-template #error>
-  <span>Resource not found.</span>
+  <app-alert
+    [type]="AlertType.ERROR"
+    message="Resource not found"
+    i18n-message="error message"
+  ></app-alert>
 </ng-template>

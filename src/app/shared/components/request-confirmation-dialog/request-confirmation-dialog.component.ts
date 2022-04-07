@@ -34,7 +34,7 @@ export class RequestConfirmationDialogComponent {
 
   getTechnologyTitle(technology?: Technology): string {
     if (!technology) {
-      return $localize`Unknown`;
+      return $localize`:fallback text:Unknown`;
     }
     return (
       virtualRoomResourceConfig.technologyNameMap.get(technology) ?? technology
@@ -52,13 +52,15 @@ export class RequestConfirmationDialogComponent {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Reservation request accepted.`);
+          this._alert.showSuccess(
+            $localize`:success message:Reservation request accepted.`
+          );
           this._dialogRef.close(true);
         },
         error: (err) => {
           console.error(err);
           this._alert.showError(
-            $localize`Failed to accept reservation request.`
+            $localize`:error message:Failed to accept reservation request.`
           );
         },
       });
@@ -75,13 +77,15 @@ export class RequestConfirmationDialogComponent {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Reservation request rejected.`);
+          this._alert.showSuccess(
+            $localize`:success message:Reservation request rejected.`
+          );
           this._dialogRef.close(true);
         },
         error: (err) => {
           console.error(err);
           this._alert.showError(
-            $localize`Failed to reject reservation request.`
+            $localize`:error message:Failed to reject reservation request.`
           );
         },
       });

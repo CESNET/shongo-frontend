@@ -15,22 +15,34 @@ import {
 })
 export class RoomStateColumnComponent<T> extends StateChipColumnComponent<T> {
   statePropsMap: Map<string, StateProps> = new Map([
-    [RoomState.FAILED, { color: 'error', displayName: 'Error' }],
-    [RoomState.NOT_STARTED, { color: 'info', displayName: 'Unprepared' }],
-    [RoomState.STARTED, { color: 'success', displayName: 'Opened' }],
-    [RoomState.STARTED_AVAILABLE, { color: 'success', displayName: 'Opened' }],
+    [
+      RoomState.FAILED,
+      { color: 'error', displayName: $localize`:room state:Error` },
+    ],
+    [
+      RoomState.NOT_STARTED,
+      { color: 'info', displayName: $localize`:room state:Unprepared` },
+    ],
+    [
+      RoomState.STARTED,
+      { color: 'success', displayName: $localize`:room state:Opened` },
+    ],
+    [
+      RoomState.STARTED_AVAILABLE,
+      { color: 'success', displayName: $localize`:room state:Opened` },
+    ],
     [
       RoomState.STARTED_NOT_AVAILABLE,
       {
         color: 'success',
-        displayName: 'Prepared',
+        displayName: $localize`:room state:Prepared`,
       },
     ],
     [
       RoomState.STOPPED,
       {
         color: 'success',
-        displayName: 'Stopped',
+        displayName: $localize`:room state:Stopped`,
       },
     ],
   ]);

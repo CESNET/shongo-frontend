@@ -32,33 +32,39 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
     super();
 
     this.displayedColumns = [
-      { name: 'resourceName', displayName: 'Meeting room' },
+      {
+        name: 'resourceName',
+        displayName: $localize`:table column:Meeting room`,
+      },
       {
         name: 'slotStart',
-        displayName: 'Slot start',
+        displayName: $localize`:table column:Slot start`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'slotEnd',
-        displayName: 'Slot end',
+        displayName: $localize`:table column:Slot end`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'state',
-        displayName: 'Reservation state',
+        displayName: $localize`:table column:Reservation state`,
         component: ReservationRequestStateColumnComponent,
       },
-      { name: 'resourceDescription', displayName: 'Description' },
+      {
+        name: 'resourceDescription',
+        displayName: $localize`:table column:Description`,
+      },
     ];
 
     this.buttons = [
       new LinkButton(
-        'View reservation request',
+        $localize`:button name:View reservation request`,
         'visibility',
         '/reservation-request/:id'
       ),
       new LinkButton(
-        'Edit meeting room',
+        $localize`:button name:Edit meeting room`,
         'settings',
         '/reservation-request/:id/edit'
       ),
@@ -87,12 +93,15 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
           const { count, items } = tableData;
           const mappedItems = items.map((item) => ({
             id: item.id,
-            resourceName: item?.physicalResourceData?.resourceName ?? 'unknown',
+            resourceName:
+              item?.physicalResourceData?.resourceName ??
+              $localize`:fallback text:Unknown`,
             slotStart: item.slot.start,
             slotEnd: item.slot.end,
             state: item.state,
             resourceDescription:
-              item?.physicalResourceData?.resourceDescription ?? 'unknown',
+              item?.physicalResourceData?.resourceDescription ??
+              $localize`:fallback text:Unknown`,
           }));
 
           return { count, items: mappedItems };

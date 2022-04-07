@@ -22,6 +22,9 @@ export class AccountMenuComponent implements OnInit {
   }
 
   getUsername(): string {
-    return this.auth.identityClaims?.name ?? 'Unknown user';
+    return (
+      this.auth.identityClaims?.name ??
+      $localize`:user name fallback:Unknown user`
+    );
   }
 }

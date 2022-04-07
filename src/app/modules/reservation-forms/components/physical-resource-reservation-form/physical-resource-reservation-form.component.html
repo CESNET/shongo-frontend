@@ -1,10 +1,10 @@
 <form [formGroup]="form" class="form">
   <div class="form__left">
-    <h2>Reservation data</h2>
+    <h2 i18n="heading">Reservation data</h2>
 
     <!-- Description field -->
     <mat-form-field appearance="outline" class="form__field">
-      <mat-label>Description</mat-label>
+      <mat-label i18n="field label">Description</mat-label>
       <input type="text" matInput formControlName="description" />
       <mat-error
         *ngIf="
@@ -19,7 +19,7 @@
 
     <!-- Timezone field -->
     <mat-form-field appearance="outline" class="form__field">
-      <mat-label>Time zone</mat-label>
+      <mat-label i18n="field label">Time zone</mat-label>
       <mat-select formControlName="timezone">
         <mat-option>
           <ngx-mat-select-search
@@ -43,7 +43,7 @@
   <mat-divider vertical class="form__divider"></mat-divider>
 
   <div class="form__right">
-    <h2>Periodicity</h2>
+    <h2 i18n="heading">Periodicity</h2>
     <app-periodicity-selection-form
       [periodicity]="editedRequest?.physicalResourceData?.periodicity"
     ></app-periodicity-selection-form>

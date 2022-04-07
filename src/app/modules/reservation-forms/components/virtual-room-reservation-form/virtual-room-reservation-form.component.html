@@ -1,7 +1,7 @@
 <form [formGroup]="form" class="form">
   <!-- Technology field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>Technology</mat-label>
+    <mat-label i18n="field label">Technology</mat-label>
     <mat-select
       formControlName="resource"
       (valueChange)="onTechnologyChange($event)"
@@ -17,7 +17,7 @@
 
   <!-- Description field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>Description</mat-label>
+    <mat-label i18n="field label">Description</mat-label>
     <input type="text" matInput formControlName="description" />
     <mat-error
       *ngIf="
@@ -29,7 +29,7 @@
 
   <!-- Room name field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>Room name</mat-label>
+    <mat-label i18n="field label">Room name</mat-label>
     <input type="text" matInput formControlName="roomName" />
     <mat-error
       *ngIf="getFormError(form.get('roomName')!, roomNameErrorHandler) as error"
@@ -39,7 +39,7 @@
 
   <!-- Time zone field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>Time zone</mat-label>
+    <mat-label i18n="field label">Time zone</mat-label>
     <mat-select formControlName="timezone">
       <mat-option>
         <ngx-mat-select-search
@@ -73,7 +73,7 @@
     >
       <!-- User pin field -->
       <mat-form-field appearance="outline" class="form__field--pin">
-        <mat-label>User PIN</mat-label>
+        <mat-label i18n="field label">User PIN</mat-label>
         <input type="text" matInput formControlName="userPin" />
         <mat-error
           *ngIf="
@@ -93,7 +93,7 @@
     >
       <!-- Admin pin field -->
       <mat-form-field appearance="outline" class="form__field--pin">
-        <mat-label>Admin PIN</mat-label>
+        <mat-label i18n="field label">Admin PIN</mat-label>
         <input type="text" matInput formControlName="adminPin" />
         <mat-error
           *ngIf="
@@ -108,7 +108,7 @@
 
       <!-- User pin field -->
       <mat-form-field appearance="outline" class="form__field--pin">
-        <mat-label>User PIN</mat-label>
+        <mat-label i18n="field label">User PIN</mat-label>
         <input type="text" matInput formControlName="userPin" />
         <mat-error
           *ngIf="
@@ -129,7 +129,7 @@
   <div [formGroup]="videoconferenceFieldsForm" class="form">
     <!-- Admin pin field -->
     <mat-form-field appearance="outline" class="form__field--pin">
-      <mat-label>Admin PIN</mat-label>
+      <mat-label i18n="field label">Admin PIN</mat-label>
       <input type="text" matInput formControlName="adminPin" />
       <mat-error
         *ngIf="
@@ -143,7 +143,10 @@
     </mat-form-field>
 
     <!-- Allow guests checkbox -->
-    <mat-checkbox color="primary" formControlName="allowGuests"
+    <mat-checkbox
+      color="primary"
+      formControlName="allowGuests"
+      i18n="checkbox label"
       >Allow guests</mat-checkbox
     >
   </div>

@@ -1,5 +1,5 @@
 <header>
-  <h1>Reservation request detail</h1>
+  <h1 i18n="heading">Reservation request detail</h1>
 
   <div
     class="buttons"
@@ -9,6 +9,8 @@
     <a
       mat-flat-button
       color="primary"
+      class="buttons__button"
+      aria-labelledby="book-room-capacity-btn-name"
       [routerLink]="'/reserve/' + reservationRequest.id"
       *ngIf="
         reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
@@ -16,7 +18,11 @@
         reservationRequest.state !== ReservationRequestState.ALLOCATED_FINISHED
       "
     >
-      <mat-icon>group_add</mat-icon>&nbsp;Book room capacity
+      <mat-icon>group_add</mat-icon>&nbsp;<span
+        i18n="button name"
+        id="book-room-capacity-btn-name"
+        >Book room capacity</span
+      >
     </a>
 
     <ng-container *ngIf="reservationRequest.isWritable">
@@ -24,18 +30,42 @@
       <a
         mat-flat-button
         color="primary"
+        class="buttons__button"
+        aria-labelledby="edit-btn-name"
         [routerLink]="'edit'"
         *ngIf="
           reservationRequest.state !==
           ReservationRequestState.ALLOCATED_FINISHED
         "
       >
-        <mat-icon>settings</mat-icon>&nbsp;Edit
+        <mat-icon>settings</mat-icon>&nbsp;<span
+          i18n="button name"
+          id="edit-btn-name"
+          >Edit</span
+        >
       </a>
       <!-- Delete button -->
-      <button mat-flat-button color="warn">
-        <mat-icon>delete_forever</mat-icon>&nbsp;Delete
+      <button
+        mat-flat-button
+        color="warn"
+        class="buttons__button"
+        aria-labelledby="delete-btn-name"
+        *ngIf="(deleting$ | async) === false; else deleting"
+        (click)="delete()"
+      >
+        <mat-icon>delete_forever</mat-icon>&nbsp;<span
+          i18n="button name"
+          id="delete-btn-name"
+          >Delete</span
+        >
       </button>
+
+      <ng-template #deleting>
+        <app-loading-text
+          message="Deleting..."
+          i18n-message="loading text"
+        ></app-loading-text>
+      </ng-template>
     </ng-container>
   </div>
 </header>
@@ -71,7 +101,7 @@
       <mat-divider></mat-divider>
       <mat-tab-group [animationDuration]="0">
         <!-- Reservation -->
-        <mat-tab label="Reservation">
+        <mat-tab label="Reservation" i18n-label="tab label">
           <ng-template matTabContent>
             <div class="tab-content">
               <app-reservation-detail
@@ -84,6 +114,7 @@
         <!-- Capacity reservations -->
         <mat-tab
           label="Capacity reservations"
+          i18n-label="tab label"
           *ngIf="
             reservationRequest.type === ReservationType.VIRTUAL_ROOM ||
             (reservationRequest.type === ReservationType.ROOM_CAPACITY &&
@@ -101,6 +132,7 @@
         <!-- User roles -->
         <mat-tab
           label="User roles"
+          i18n-label="tab label"
           *ngIf="reservationRequest.type !== ReservationType.ROOM_CAPACITY"
         >
           <ng-template matTabContent>
@@ -117,7 +149,7 @@
           "
         >
           <!-- Participants -->
-          <mat-tab label="Participants">
+          <mat-tab label="Participants" i18n-label="tab label">
             <ng-template matTabContent>
               <div class="tab-content">
                 <app-participants-tab></app-participants-tab>
@@ -128,6 +160,7 @@
           <!-- Runtime management -->
           <mat-tab
             label="Runtime management"
+            i18n-label="tab label"
             *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
             [disabled]="
               reservationRequest.allocationState !==
@@ -147,7 +180,11 @@
           </mat-tab>
 
           <!-- Recordings -->
-          <mat-tab label="Recordings" [disabled]="areRecordingsDisabled()">
+          <mat-tab
+            label="Recordings"
+            i18n-label="tab label"
+            [disabled]="areRecordingsDisabled()"
+          >
             <ng-template matTabContent>
               <div class="tab-content">
                 <app-recordings-tab
@@ -163,6 +200,10 @@
 
   <!-- Error -->
   <ng-template #error>
-    <h2>Error</h2>
+    <app-alert
+      message="An error occured"
+      i18n-message="error message"
+      [type]="AlertType.ERROR"
+    ></app-alert>
   </ng-template>
 </main>

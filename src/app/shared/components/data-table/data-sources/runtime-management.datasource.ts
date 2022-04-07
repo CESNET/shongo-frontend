@@ -41,16 +41,16 @@ export class RuntimeManagementDataSource extends DataTableDataSource<RuntimePart
     super();
 
     this.displayedColumns = [
-      { name: 'participant', displayName: 'User' },
-      { name: 'role', displayName: 'Role' },
-      { name: 'layout', displayName: 'Layout' },
-      { name: 'microphone', displayName: 'Microphone' },
-      { name: 'video', displayName: 'Video' },
+      { name: 'participant', displayName: $localize`:table column:User` },
+      { name: 'role', displayName: $localize`:table column:Role` },
+      { name: 'layout', displayName: $localize`:table column:Layout` },
+      { name: 'microphone', displayName: $localize`:table column:Microphone` },
+      { name: 'video', displayName: $localize`:table column:Video` },
     ];
 
     this.buttons = [
       new CustomActionButton(
-        'Take video snapshot',
+        $localize`:button name:Take video snapshot`,
         'photo_camera',
         (participant) => this.openUserSnapshot(participant),
         (participant) => participant.videoSnapshot === 'true'
@@ -137,12 +137,12 @@ export class RuntimeManagementDataSource extends DataTableDataSource<RuntimePart
             role: toTitleCase(item.role),
             layout: toTitleCase(item.layout),
             microphone:
-              `${item.microphoneEnabled ? 'Yes' : 'No'}` +
+              `${item.microphoneEnabled ? $localize`Yes` : $localize`No`}` +
               (item.microphoneEnabled && item.microphoneLevel
                 ? ` (${item.microphoneLevel}%)`
                 : ''),
             microphoneLevel: String(item.microphoneLevel),
-            video: item.videoEnabled ? 'Yes' : 'No',
+            video: item.videoEnabled ? $localize`Yes` : $localize`No`,
             videoSnapshot: String(item.videoSnapshot) as StringBool,
             microphoneEnabled: String(item.microphoneEnabled) as StringBool,
             videoEnabled: String(item.videoEnabled) as StringBool,

@@ -1,20 +1,33 @@
 <form [formGroup]="periodicityForm" class="periodicity">
   <mat-radio-group
     aria-label="Select periodicity option"
+    i18n-aria-label="label"
     formControlName="periodicity"
     class="selection selection--periodicity"
     (change)="handlePeriodicityRadioChange($event)"
   >
-    <mat-radio-button [value]="PeriodicityType.NONE" color="primary"
+    <mat-radio-button
+      [value]="PeriodicityType.NONE"
+      color="primary"
+      i18n="option name"
       >None</mat-radio-button
     >
-    <mat-radio-button [value]="PeriodicityType.DAILY" color="primary"
+    <mat-radio-button
+      [value]="PeriodicityType.DAILY"
+      color="primary"
+      i18n="option name"
       >Daily</mat-radio-button
     >
-    <mat-radio-button [value]="PeriodicityType.WEEKLY" color="primary"
+    <mat-radio-button
+      [value]="PeriodicityType.WEEKLY"
+      color="primary"
+      i18n="option name"
       >Weekly</mat-radio-button
     >
-    <mat-radio-button [value]="PeriodicityType.MONTHLY" color="primary"
+    <mat-radio-button
+      [value]="PeriodicityType.MONTHLY"
+      color="primary"
+      i18n="option name"
       >Monthly</mat-radio-button
     >
   </mat-radio-group>
@@ -25,7 +38,13 @@
     <div [ngSwitch]="periodicityForm.get('periodicity')!.value">
       <form *ngSwitchCase="PeriodicityType.WEEKLY" formGroupName="weeklyForm">
         <span
-          >Repeat every
+          ><span
+            i18n="
+              sentence part|Start of sentence: Repeat every {nth}. week at {days
+              e.g. monday, tuesday...}.
+            "
+            >Repeat every</span
+          >
           <mat-form-field class="periodicity__field periodicity__field--number">
             <mat-select
               appearance="outline"
@@ -36,28 +55,34 @@
                 opt
               }}</mat-option>
             </mat-select> </mat-form-field
-          >. week at:</span
+          ><span
+            i18n="
+              sentence part|Middle part of sentence: Repeat every {nth}. week at
+              {days e.g. monday, tuesday...}.
+            "
+            >. week at:</span
+          ></span
         >
         <section class="selection selection--days">
-          <mat-checkbox color="primary" formControlName="monday"
+          <mat-checkbox color="primary" formControlName="monday" i18n="day"
             >Monday</mat-checkbox
           >
-          <mat-checkbox color="primary" formControlName="tuesday"
+          <mat-checkbox color="primary" formControlName="tuesday" i18n="day"
             >Tuesday</mat-checkbox
           >
-          <mat-checkbox color="primary" formControlName="wednesday"
+          <mat-checkbox color="primary" formControlName="wednesday" i18n="day"
             >Wednesday</mat-checkbox
           >
-          <mat-checkbox color="primary" formControlName="thursday"
+          <mat-checkbox color="primary" formControlName="thursday" i18n="day"
             >Thursday</mat-checkbox
           >
-          <mat-checkbox color="primary" formControlName="friday"
+          <mat-checkbox color="primary" formControlName="friday" i18n="day"
             >Friday</mat-checkbox
           >
-          <mat-checkbox color="primary" formControlName="saturday"
+          <mat-checkbox color="primary" formControlName="saturday" i18n="day"
             >Saturday</mat-checkbox
           >
-          <mat-checkbox color="primary" formControlName="sunday"
+          <mat-checkbox color="primary" formControlName="sunday" i18n="day"
             >Sunday</mat-checkbox
           >
         </section>
@@ -69,6 +94,7 @@
       >
         <mat-radio-group
           aria-label="Select monthly periodicity option"
+          i18n-aria-label="label"
           class="selection--vertical"
           formControlName="periodicityType"
           (change)="handleMonthlyRadioChange($event)"
@@ -79,7 +105,12 @@
             #regularRadio
           >
             <form formGroupName="regularForm" class="monthly-form__regular">
-              &nbsp;Repeat every
+              &nbsp;<span
+                i18n="
+                  sentence part|Start of sentence: Repeat every {nth}. month.
+                "
+                >Repeat every</span
+              >
               <mat-form-field
                 class="periodicity__field periodicity__field--number"
               >
@@ -94,7 +125,10 @@
                     >{{ opt }}</mat-option
                   >
                 </mat-select> </mat-form-field
-              >. month.
+              ><span
+                i18n="sentence part|End of sentence: Repeat every {nth}. month."
+                >. month.</span
+              >
             </form>
           </mat-radio-button>
           <mat-radio-button
@@ -103,7 +137,13 @@
             #irregularRadio
           >
             <form formGroupName="irregularForm" class="monthly-form__irregular">
-              Repeat every
+              <span
+                i18n="
+                  sentence part|Start of sentence: Repeat every {nth}. {day} in
+                  every {nth}. month.
+                "
+                >Repeat every</span
+              >
               <mat-form-field
                 class="periodicity__field periodicity__field--number"
               >
@@ -119,7 +159,7 @@
                   >
                 </mat-select>
               </mat-form-field>
-              &nbsp;
+              .&nbsp;
               <mat-form-field
                 class="periodicity__field periodicity__field--text"
               >
@@ -136,7 +176,13 @@
                 </mat-select>
               </mat-form-field>
               <br class="monthly-form__break" />
-              in every
+              <span
+                i18n="
+                  sentence part|Middle of sentence: Repeat every {nth}. {day} in
+                  every {nth}. month.
+                "
+                >in every</span
+              >
               <mat-form-field
                 class="periodicity__field periodicity__field--number"
               >
@@ -152,7 +198,13 @@
                   >
                 </mat-select>
               </mat-form-field>
-              . month.
+              <span
+                i18n="
+                  sentence part|End of sentence: Repeat every {nth}. {day} in
+                  every {nth}. month.
+                "
+                >. month.</span
+              >
             </form>
           </mat-radio-button>
         </mat-radio-group>
@@ -168,7 +220,7 @@
       appearance="outline"
       class="periodicity__field periodicity__field--date"
     >
-      <mat-label>Repeat until</mat-label>
+      <mat-label i18m="field label">Repeat until</mat-label>
       <input
         matInput
         [matDatepicker]="repeatUntilDatePicker"
@@ -186,7 +238,7 @@
     </mat-form-field>
 
     <div class="periodicity__excluded-days-header">
-      <span>Except for days</span>
+      <span i18m="label">Except for days</span>
 
       <div>
         <input
@@ -199,17 +251,25 @@
         <button
           mat-button
           type="button"
-          aria-label="Add date"
+          aria-labelledby="add-date-btn-name"
           (click)="excludedDatePicker.open()"
         >
-          <mat-icon color="primary">add</mat-icon>Add date
+          <mat-icon color="primary">add</mat-icon>&nbsp;<span
+            i18n="button name"
+            id="add-date-btn-name"
+            >Add date</span
+          >
         </button>
       </div>
     </div>
 
     <mat-divider></mat-divider>
 
-    <div *ngIf="excludedDays.size === 0" class="periodicity__no-excluded-days">
+    <div
+      *ngIf="excludedDays.size === 0"
+      class="periodicity__no-excluded-days"
+      i18n="fallback text"
+    >
       None
     </div>
     <mat-chip-list class="periodicity__excluded-days">

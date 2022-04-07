@@ -3,7 +3,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  font-size: 1rem;
 
   main,
   aside {
@@ -27,16 +26,14 @@ aside {
   }
 }
 
-dl {
-  font-size: 0.9rem;
-}
-
-/* Other */
-.gray {
-  color: gray;
-}
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  .reservation-detail {
+    flex-direction: column;
+  }
 }

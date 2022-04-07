@@ -60,12 +60,16 @@ export class ReservationDialogComponent implements OnInit {
     this._createReservationRequest().subscribe({
       next: () => {
         this.creating$.next(false);
-        this._alert.showSuccess('Reservation request created successfully.');
+        this._alert.showSuccess(
+          $localize`:success message:Reservation request created`
+        );
         this._dialogRef.close(true);
       },
       error: () => {
         this.creating$.next(false);
-        this._alert.showError('Failed to create reservation request.');
+        this._alert.showError(
+          $localize`:error message:Failed to create reservation request`
+        );
       },
     });
   }

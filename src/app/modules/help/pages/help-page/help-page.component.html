@@ -1,29 +1,29 @@
 <div class="help">
   <aside>
     <nav>
-      <h1>Navigation</h1>
+      <h1 i18n="Header of navigation sidebar in help page">Navigation</h1>
       <mat-nav-list>
         <a mat-list-item routerLink="./" fragment="introduction"
-          ><span
-            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon>
+          ><span i18n="Navigation link in help page"
+            ><mat-icon color="primary" inline>arrow_forward_ios</mat-icon>
             Introduction</span
           ></a
         >
         <a mat-list-item routerLink="./" fragment="level-of-authenticity"
-          ><span
-            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon> Level
+          ><span i18n="Navigation link in help page"
+            ><mat-icon color="primary" inline>arrow_forward_ios</mat-icon> Level
             of authenticity</span
           ></a
         >
         <a mat-list-item routerLink="./" fragment="rooms"
-          ><span
-            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon>
+          ><span i18n="Navigation link in help page"
+            ><mat-icon color="primary" inline>arrow_forward_ios</mat-icon>
             Rooms</span
           ></a
         >
         <a mat-list-item routerLink="./" fragment="resources"
-          ><span
-            ><mat-icon color="priary" inline>arrow_forward_ios</mat-icon>
+          ><span i18n="Navigation link in help page"
+            ><mat-icon color="primary" inline>arrow_forward_ios</mat-icon>
             Resources</span
           ></a
         >
@@ -33,16 +33,16 @@
 
   <main>
     <header>
-      <h1>Help</h1>
+      <h1 i18n="Header in help page">Help</h1>
     </header>
 
     <section id="introduction">
       <header>
-        <h2>Introduction</h2>
+        <h2 i18n="Subheader in help page">Introduction</h2>
         <mat-divider></mat-divider>
       </header>
 
-      <p>
+      <p i18n="Help page text">
         <b>Reservation system</b> allows you to create your own virtual rooms
         for H.323/SIP videoconferences or Adobe Connect web conferences. You can
         share the rooms with your colleagues and use them for your conference
@@ -63,11 +63,17 @@
           >hostel</a
         >.
       </p>
-      <p>
+      <p i18n="Help page text">
         Terms and conditions under which personal data collated in providing the
-        CESNET e-infrastructure services are processed you can find here.
+        CESNET e-infrastructure services are processed you can find
+        <a
+          href="https://www.cesnet.cz/cesnet/documents/privacy"
+          target="_blank"
+          class="mat-primary-color"
+          >here</a
+        >.
       </p>
-      <p>
+      <p i18n="Help page text">
         You can create a new room from main page or from page with your
         reservation requests.
       </p>
@@ -75,19 +81,19 @@
 
     <section id="level-of-authenticity">
       <header>
-        <h2>Level of authenticity</h2>
+        <h2 i18n="Subheader in help page">Level of authenticity</h2>
         <mat-divider></mat-divider>
       </header>
 
-      <p>
-        Only logged in user with a certain level of authenticity can create a
+      <p i18n="Help page text">
+        Only logged in user with a certain level of authorization can create a
         new room or book a capacity for existing room. If you see
         <mat-icon color="warn" inline="true">warning</mat-icon> next to your
-        name in the top of the page, it means that your account doesn't meet the
-        requested level of authenticity. In this case you have two options:
+        name on the top of the page, it means that your account doesn't meet the
+        required level of authorization. In this case you have two options:
       </p>
       <ul>
-        <li>
+        <li i18n="Help page text">
           Request your identity provider to verify your identity (e.g., if you
           use
           <a
@@ -104,7 +110,7 @@
             >procedure</a
           >).
         </li>
-        <li>
+        <li i18n="Help page text">
           Request the system
           <a routerLink="/report" class="mat-primary-color">administrators</a>
           to grant you the permissions to create new rooms and book room
@@ -115,20 +121,85 @@
 
     <section id="rooms">
       <header>
-        <h2>Rooms</h2>
+        <h2 i18n="Subheader in help page">Rooms</h2>
         <mat-divider></mat-divider>
       </header>
 
-      <p>To be added.</p>
+      <p i18n="Help page text">
+        Virtual rooms can be used for multiple conference calls (e.g., periodic
+        meetings). The room can be created for longer period of time (a number
+        of years), but throughout the period it isn't automatically available
+        for participants to join. For each conference call in the virtual room
+        you must book capacity, which determines how many participants will be
+        able to join to the room. The virtual room gets assigned identifiers on
+        creation which don't change throughout the room's existence (if you
+        don't requet a change). Thus the identifiers are the same for all
+        conference calls that take place in the virtual room.
+      </p>
+      <p i18n="Help page text">
+        <i
+          >You can imagine the virtual room as a room with a table, but without
+          chairs. Therefore participants cannot just come and sit down to take a
+          meeting, but someone has to „prepare chairs” in advance for every
+          meeting.</i
+        >
+      </p>
+      <div class="labeled-img">
+        <img
+          src="/assets/img/help/virtual_room.png"
+          alt="Virtual room"
+          width="200px"
+          height="160px"
+        />
+        <label><i i18n="Help page image label">Virtual room</i></label>
+      </div>
+      <p i18n="Help page text">
+        <i
+          >Once you prepare chairs in the virtual room (i.e., on room creation
+          or when you book requested capacity), participants can enter the room,
+          sit down and the meeting can begin. For each meeting you can prepare
+          different number of chairs. The room is situated in the same building
+          on the same location and it's invariably labeled (e.g., My room) and
+          therefore all meetings take place at the same location.</i
+        >
+      </p>
+      <div class="image-row">
+        <div class="labeled-img">
+          <img
+            src="/assets/img/help/virtual_room_capacity1.png"
+            alt="Capacity for 4 participants"
+            width="200px"
+            height="160px"
+          />
+          <label
+            ><i i18n="Help page image label"
+              >Capacity for 4 participants</i
+            ></label
+          >
+        </div>
+        <div class="labeled-img">
+          <img
+            src="/assets/img/help/virtual_room_capacity2.png"
+            alt="Capacity for 8 participants"
+            width="200px"
+            height="160px"
+          />
+          <label
+            ><i i18n="Help page image label"
+              >Capacity for 8 participants</i
+            ></label
+          >
+        </div>
+      </div>
     </section>
 
     <section id="resources">
       <header>
-        <h2>Resources</h2>
+        <h2 i18n="Subheader in help page">Resources</h2>
         <mat-divider></mat-divider>
       </header>
 
-      <p>
+      <p i18n="Help page text">
         Reservation system manages hardware and software equipment (referred to
         as <b>resources</b>), which provides the creation and management of
         virtual rooms. Each resource has only a limited number of licenses that
@@ -139,10 +210,9 @@
         able to guarantee a specific number of participants to be able to join
         to every room, it is necessery to book the licenses in advance. That is
         the reason why you must explicitly book a requested capacity for each
-        room when you want to use it (e.g., when creating a new one-time room or
-        when booking a capacity for permanent room).
+        room when you want to use it (when booking a capacity for virtual room).
       </p>
-      <p>
+      <p i18n="Help page text">
         <i
           >You can imagine the resource as a building in which few rooms are
           located and the limited number of licenses you can imagine as chairs
@@ -161,7 +231,11 @@
           width="200px"
           height="160px"
         />
-        <label><i>A building may contain, e.g., 20 chairs</i></label>
+        <label
+          ><i i18n="Help page image label"
+            >A building may contain, e.g., 20 chairs</i
+          ></label
+        >
       </div>
     </section>
   </main>

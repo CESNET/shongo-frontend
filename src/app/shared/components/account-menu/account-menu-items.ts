@@ -3,12 +3,12 @@ import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
 
 export const accountMenuItems: MenuItem[] = [
   {
-    label: $localize`:navbar link|Sublink in account:Settings`,
+    label: $localize`:account menu link|Sublink in account:Settings`,
     route: '/user/settings',
     itemAuth: ItemAuthorization.LOGGED_IN,
   },
   {
-    label: $localize`:navbar link|Sublink in account:Log out`,
+    label: $localize`:account menu link|Sublink in account:Log out`,
     itemAuth: ItemAuthorization.LOGGED_IN,
   },
 ];

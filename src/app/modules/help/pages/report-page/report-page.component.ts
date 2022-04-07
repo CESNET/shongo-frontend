@@ -65,11 +65,15 @@ export class ReportPageComponent implements OnDestroy {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess('Report has been sent.');
+          this._alert.showSuccess(
+            $localize`:alert message|Alert message on successful report submission:Report has been sent`
+          );
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError('Failed to send report.');
+          this._alert.showError(
+            $localize`:alert message|Alert message on fauled report submission:Failed to send report.`
+          );
         },
       });
   }

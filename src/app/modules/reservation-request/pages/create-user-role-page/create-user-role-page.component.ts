@@ -1,15 +1,10 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { finalize, first, switchMap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { IdentityType } from 'src/app/shared/models/enums/identity-type.enum';
 import { RoleType } from 'src/app/shared/models/enums/role-type.enum';
@@ -22,8 +17,6 @@ import { getFormError } from 'src/app/utils/getFormError';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateUserRolePageComponent implements OnInit {
-  @ViewChild(AlertComponent) alert!: AlertComponent;
-
   form?: FormGroup;
   IdentityType = IdentityType;
   roleTypes = Object.values(RoleType);
@@ -36,7 +29,8 @@ export class CreateUserRolePageComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _resReqService: ReservationRequestService,
-    private _router: Router
+    private _router: Router,
+    private _alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -58,16 +52,19 @@ export class CreateUserRolePageComponent implements OnInit {
         switchMap((params) => {
           const roleBody = this._createRoleBody();
           return this._resReqService.postRole(roleBody, params.id);
-        })
+        }),
+
+        finalize(() => this.posting$.next(false))
       )
       .subscribe({
         next: () => {
-          this.posting$.next(false);
+          this._alert.showSuccess($localize`:success message:Role created`);
           this._router.navigate(['../../'], { relativeTo: this._route });
         },
         error: () => {
-          this.posting$.next(false);
-          this.alert.isActive = true;
+          this._alert.showError(
+            $localize`:error message:Failed to create role`
+          );
         },
       });
   }

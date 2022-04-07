@@ -28,12 +28,12 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
     this.displayedColumns = [
       {
         name: 'identity',
-        displayName: 'For user/group',
+        displayName: $localize`:table column:For user/group`,
       },
-      { name: 'role', displayName: 'Role' },
+      { name: 'role', displayName: $localize`:table column:Role` },
       {
         name: 'email',
-        displayName: 'E-mail',
+        displayName: $localize`:table column:E-mail`,
       },
     ];
 
@@ -41,7 +41,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
       new DeleteButton(
         this.resReqService,
         this.dialog,
-        `/${this.requestId}/role/:id`,
+        `/${this.requestId}/roles/:id`,
         (row: UserRolesTableData) => row.deletable
       ),
     ];

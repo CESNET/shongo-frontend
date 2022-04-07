@@ -39,9 +39,7 @@ $section-margin: 1.34375em + 0.25em;
   }
 
   &__date-header {
-    &--mobile {
-      font-size: var(--font-size-medium);
-    }
+    font-size: var(--font-size-medium);
   }
 }
 
@@ -51,6 +49,8 @@ $section-margin: 1.34375em + 0.25em;
 
   &__heading {
     font-size: var(--font-size-regular);
+    display: block;
+    margin-bottom: 0.5em;
   }
 
   &__section {
@@ -76,6 +76,10 @@ $section-margin: 1.34375em + 0.25em;
     &-part {
       margin-bottom: 0.5em;
       line-height: 1.5em;
+
+      &-name {
+        font-weight: 500;
+      }
     }
   }
 

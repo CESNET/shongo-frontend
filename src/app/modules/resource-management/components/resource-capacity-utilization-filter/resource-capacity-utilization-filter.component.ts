@@ -12,7 +12,6 @@ import {
   DataTableFilter,
   TableSettings,
 } from 'src/app/shared/components/data-table/filter/data-table-filter';
-import { add } from 'date-fns';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import * as moment from 'moment';
 
@@ -36,10 +35,10 @@ export class ResourceCapacityUtilizationFilterComponent
   useAbsoluteValues = new FormControl(false);
 
   units: Option[] = [
-    { value: 'day', displayName: 'Days' },
-    { value: 'week', displayName: 'Weeks' },
-    { value: 'month', displayName: 'Months' },
-    { value: 'year', displayName: 'Years' },
+    { value: 'day', displayName: $localize`:unit option:Days` },
+    { value: 'week', displayName: $localize`:unit option:Weeks` },
+    { value: 'month', displayName: $localize`:unit option:Months` },
+    { value: 'year', displayName: $localize`:unit option:Years` },
   ];
 
   private _destroy$ = new Subject<void>();
@@ -51,7 +50,7 @@ export class ResourceCapacityUtilizationFilterComponent
     this.filterForm.get('dateFrom')!.setValue(currentDate);
     this.filterForm
       .get('dateTo')!
-      .setValue(add(currentDate, { days: DEFAULT_UNIT_DIST }));
+      .setValue(moment(currentDate).add(DEFAULT_UNIT_DIST, 'day').toDate());
   }
 
   ngOnInit(): void {
@@ -72,12 +71,10 @@ export class ResourceCapacityUtilizationFilterComponent
       .get('unit')!
       .valueChanges.pipe(takeUntil(this._destroy$))
       .subscribe((unit) => {
-        const dateFnsUnit = unit + 's';
         const { dateFrom } = this.filterForm.value;
-
-        const duration: Record<string, number> = {};
-        duration[dateFnsUnit] = DEFAULT_UNIT_DIST;
-        this.filterForm.get('dateTo')!.setValue(add(dateFrom, duration));
+        this.filterForm
+          .get('dateTo')!
+          .setValue(moment(dateFrom).add(DEFAULT_UNIT_DIST, unit).toDate());
       });
   }
 

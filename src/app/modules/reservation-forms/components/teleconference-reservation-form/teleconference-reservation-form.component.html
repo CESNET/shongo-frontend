@@ -1,9 +1,9 @@
 <form [formGroup]="form" class="form form--single-section">
-  <h2>Reservation data</h2>
+  <h2 i18n="heading">Reservation data</h2>
 
   <!-- Room name field -->
   <mat-form-field appearance="outline" class="form__field" *ngIf="!editingMode">
-    <mat-label>Room name</mat-label>
+    <mat-label i18n="field label">Room name</mat-label>
     <input type="text" matInput formControlName="roomName" />
     <mat-error
       *ngIf="getFormError(form.get('roomName')!, roomNameErrorHandler) as error"
@@ -13,7 +13,7 @@
 
   <!-- Description field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>Description</mat-label>
+    <mat-label i18n="field label">Description</mat-label>
     <input type="text" matInput formControlName="description" />
     <mat-error
       *ngIf="
@@ -25,7 +25,7 @@
 
   <!-- Time zone field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>Time zone</mat-label>
+    <mat-label i18n="field label">Time zone</mat-label>
     <mat-select formControlName="timezone">
       <mat-option>
         <ngx-mat-select-search
@@ -47,7 +47,7 @@
 
   <!-- Admin pin field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>Admin PIN</mat-label>
+    <mat-label i18n="field label">Admin PIN</mat-label>
     <input type="text" matInput formControlName="adminPin" />
     <mat-error
       *ngIf="getFormError(form.get('adminPin')!, pinErrorHandler) as error"
@@ -57,7 +57,7 @@
 
   <!-- User pin field -->
   <mat-form-field appearance="outline" class="form__field">
-    <mat-label>User PIN</mat-label>
+    <mat-label i18n="field label">User PIN</mat-label>
     <input type="text" matInput formControlName="userPin" />
     <mat-error
       *ngIf="getFormError(form.get('userPin')!, pinErrorHandler) as error"

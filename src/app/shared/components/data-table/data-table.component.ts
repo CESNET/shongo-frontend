@@ -32,6 +32,7 @@ import { StaticDataSource } from './data-sources/static-datasource';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CertainityCheckComponent } from '../certainity-check/certainity-check.component';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-data-table',
@@ -70,7 +71,8 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     private _injector: Injector,
     private _cd: ChangeDetectorRef,
     private _alert: AlertService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _br: BreakpointObserver
   ) {
     this.displayedColumns = this._displayedColumns.asObservable();
   }
@@ -80,31 +82,10 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._observeLoading();
     this._displayedColumns.next(this._buildDisplayedColumnsArray());
-    this.sortForm.valueChanges
-      .pipe(
-        takeUntil(this._destroy$),
-        filter(() => this._sortChangeMutex)
-      )
-      .subscribe(({ field, order }) => {
-        if (field) {
-          this._sortChangeMutex = false;
-          const sortable = this.sort.sortables.get(field)!;
-          sortable.start = order;
-          const dir = this.sort.getNextSortDirection(sortable);
-          this.sort.sort(sortable);
-
-          // Skip the no direction option
-          if (dir === '') {
-            this.sort.sort(sortable);
-          }
-          this._sortChangeMutex = true;
-        }
-      });
-    this.maxCellTextLength = Math.round(
-      150 / this._displayedColumns.value.length
-    );
+    this._observeLoading();
+    this._observeSortForm();
+    this._observeTabletBreakpoint();
   }
 
   ngAfterViewInit(): void {
@@ -229,16 +210,16 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   deleteSelectedRows(): void {
     if (!this.dataSource.apiService) {
-      console.error($localize`No api service defined in table's datasource`);
+      console.error(`No api service defined in table's datasource`);
       return this._alert.showError(
-        $localize`Mass deletion is not available for this table`
+        $localize`:error message:Mass deletion is not available for this table`
       );
     } else if (!this.selection || this.selection.isEmpty()) {
-      return this._alert.showWarning('No rows were selected');
+      return this._alert.showWarning(`:warning message:No rows were selected`);
     } else if (!this.selection.selected.every((item) => 'id' in item)) {
-      console.error($localize`All selected rows must have an id`);
+      console.error(`All selected rows must have an id`);
       return this._alert.showError(
-        $localize`All selected rows must have an id`
+        $localize`:error message:All selected rows must have an id`
       );
     }
 
@@ -258,13 +239,15 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
             .pipe(first())
             .subscribe({
               next: () => {
-                this._alert.showSuccess($localize`Items deleted successfully.`);
+                this._alert.showSuccess(
+                  $localize`:success message:Items deleted`
+                );
                 this.dataSource.refreshData();
               },
               error: (err) => {
                 console.error(err);
                 this._alert.showError(
-                  $localize`Failed to delete selected rows.`
+                  $localize`:error message:Failed to delete selected rows`
                 );
               },
             });
@@ -276,10 +259,12 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     if (!this.dataSource.apiService) {
       console.error($localize`No api service defined in table's datasource`);
       return this._alert.showError(
-        $localize`Mass deletion is not available for this table`
+        $localize`:error message:Mass deletion is not available for this table`
       );
     } else if (this.dataSource.data.count === 0) {
-      return this._alert.showWarning($localize`Table is empty`);
+      return this._alert.showWarning(
+        $localize`:warning message:Table is empty`
+      );
     }
 
     this._dialog
@@ -295,12 +280,16 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
             .pipe(first())
             .subscribe({
               next: () => {
-                this._alert.showSuccess($localize`Rows deleted successfully.`);
+                this._alert.showSuccess(
+                  $localize`:success message:Rows deleted`
+                );
                 this.dataSource.refreshData();
               },
               error: (err) => {
                 console.error(err);
-                this._alert.showError($localize`Failed to delete all rows.`);
+                this._alert.showError(
+                  $localize`:error message:Failed to delete all rows`
+                );
               },
             });
         }
@@ -328,5 +317,46 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
         filter((loading) => !loading)
       )
       .subscribe(() => this.selection.clear());
+  }
+
+  private _observeTabletBreakpoint(): void {
+    this._br
+      .observe('(max-width: 768px)')
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((hit) => {
+        if (hit.matches) {
+          this.maxCellTextLength = 200;
+        } else {
+          this.maxCellTextLength = this._calcMaxCellLength();
+        }
+        this._cd.detectChanges();
+      });
+  }
+
+  private _calcMaxCellLength(): number {
+    return Math.round(150 / this._displayedColumns.value.length);
+  }
+
+  private _observeSortForm(): void {
+    this.sortForm.valueChanges
+      .pipe(
+        takeUntil(this._destroy$),
+        filter(() => this._sortChangeMutex)
+      )
+      .subscribe(({ field, order }) => {
+        if (field) {
+          this._sortChangeMutex = false;
+          const sortable = this.sort.sortables.get(field)!;
+          sortable.start = order;
+          const dir = this.sort.getNextSortDirection(sortable);
+          this.sort.sort(sortable);
+
+          // Skip the no direction option
+          if (dir === '') {
+            this.sort.sort(sortable);
+          }
+          this._sortChangeMutex = true;
+        }
+      });
   }
 }

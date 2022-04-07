@@ -1,6 +1,6 @@
 export class RequestNotEditableError extends Error {
   constructor() {
-    super($localize`Reservation request is not editable.`);
+    super($localize`:error message:Reservation request is not editable.`);
     this.name = 'RequestNotEditableError';
   }
 }

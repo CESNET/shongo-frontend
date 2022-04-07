@@ -1,5 +1,5 @@
 <header>
-  <h2 class="mat-primary-color">List of active participants</h2>
+  <h2 class="mat-primary-color" i18n="heading">List of active participants</h2>
 </header>
 
 <main>
@@ -9,5 +9,6 @@
     [showCheckboxes]="false"
     [dataSource]="runtimeManagementDataSource"
     description="Table shows participants which are currently connected to the room."
+    i18n-description="table description"
   ></app-data-table>
 </main>

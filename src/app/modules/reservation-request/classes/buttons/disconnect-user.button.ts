@@ -7,7 +7,7 @@ import { RuntimeParticipantTableData } from 'src/app/shared/components/data-tabl
 
 export class DisconnectUserButton extends ApiActionButton<RuntimeParticipantTableData> {
   icon = 'person_off';
-  name = 'Disconnect user';
+  name = $localize`:button name:Disconnect user`;
 
   constructor(
     public resReqService: ReservationRequestService,
@@ -26,10 +26,10 @@ export class DisconnectUserButton extends ApiActionButton<RuntimeParticipantTabl
         this.removeFromLoading(row);
         this._deleted$.next();
       }),
-      mapTo(`User disconnected successfully.`),
+      mapTo($localize`:success message:User disconnected`),
       catchError(() => {
         this.removeFromLoading(row);
-        return throwError(`Failed to disconnect user.`);
+        return throwError($localize`:error message:Failed to disconnect user`);
       })
     );
   }

@@ -26,7 +26,9 @@ export class DeleteButton<T>
 
   executeAction(row: T): Observable<string> {
     const dialogRef = this.dialog.open(CertainityCheckComponent, {
-      data: { message: 'Are you sure you want to delete this item?' },
+      data: {
+        message: $localize`Are you sure you want to delete this item?`,
+      },
     });
 
     const path = this.constructPath(row, this.pathTemplate);
@@ -41,10 +43,10 @@ export class DeleteButton<T>
               this.removeFromLoading(row);
               this._deleted$.next();
             }),
-            mapTo('Item deleted successfully'),
+            mapTo($localize`:success message:Item deleted`),
             catchError(() => {
               this.removeFromLoading(row);
-              return throwError('Item deletion failed');
+              return throwError($localize`:error message:Item deletion failed`);
             })
           );
         } else {

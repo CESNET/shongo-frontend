@@ -1,3 +1,4 @@
+// Mat icon helpers
 .icon-s {
   transform: scale(0.9);
 }
@@ -8,6 +9,7 @@
   transform: scale(0.5);
 }
 
+// Flex helpers
 .fx-center-hor,
 .fx-center-vert,
 .fx-center-both {
@@ -24,7 +26,16 @@
   align-items: center;
 }
 
+// Mat component style overrides
 mat-form-field.unpadded > .mat-form-field-wrapper {
   padding: 0;
   margin: 0;
+}
+
+// Colors
+.grayed-text {
+  color: var(--grayed-text-color);
+}
+.mat-primary-color {
+  color: var(--mat-primary);
 }

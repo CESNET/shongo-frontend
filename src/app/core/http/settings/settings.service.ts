@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
   filter,
+  finalize,
   switchMapTo,
   tap,
 } from 'rxjs/operators';
@@ -13,6 +14,7 @@ import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { AlertService } from '../../services/alert.service';
 import { ApiService } from '../api.service';
 
 const SETTINGS_LOCALSTORAGE_KEY = 'userSettings';
@@ -27,7 +29,11 @@ export class SettingsService {
   private _userSettings$ = new BehaviorSubject<UserSettings | null>(null);
   private _userSettingsLoading$ = new BehaviorSubject(false);
 
-  constructor(private _http: HttpClient, private _auth: AuthenticationService) {
+  constructor(
+    private _http: HttpClient,
+    private _auth: AuthenticationService,
+    private _alert: AlertService
+  ) {
     this._loadSettingsFromStorage();
 
     this.userSettingsLoading$ = this._userSettingsLoading$.asObservable();
@@ -45,6 +51,12 @@ export class SettingsService {
     return (
       this.userSettings?.permissions?.includes(Permission.ADMINISTRATOR) ??
       false
+    );
+  }
+
+  get canReserve(): boolean {
+    return (
+      this.userSettings?.permissions?.includes(Permission.RESERVATION) ?? false
     );
   }
 
@@ -82,15 +94,15 @@ export class SettingsService {
       .put<UserSettings>(url, settings)
       .pipe(
         catchError((err) => {
-          this._userSettings$.next(settings);
-          this._userSettingsLoading$.next(false);
           console.error('Failed to update user settings, reason: ', err);
-          return throwError(() => new Error('Failed to update user settings.'));
-        })
+          this._alert.showError($localize`Failed to update settings`);
+          throw err;
+        }),
+        finalize(() => this._userSettingsLoading$.next(false))
       )
       .subscribe((userSettings) => {
         this._userSettings$.next(userSettings);
-        this._userSettingsLoading$.next(false);
+        this._alert.showSuccess($localize`Settings updated`);
       });
   }
 
@@ -113,7 +125,9 @@ export class SettingsService {
       catchError((err) => {
         this._userSettingsLoading$.next(false);
         console.error('Failed to fetch user settings, reason: ', err);
-        return throwError(() => new Error('Failed to fetch user settings.'));
+        throw new Error(
+          $localize`:error message:Failed to fetch user settings`
+        );
       })
     );
   }

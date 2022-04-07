@@ -1,7 +1,7 @@
 import { AbstractControl } from '@angular/forms';
 import { formErrors } from '../shared/models/data/form-errors';
 
-const DEFAULT_ERROR_MSG = 'Field is invalid';
+const DEFAULT_ERROR_MSG = $localize`:error message:Field is invalid`;
 
 export const getFormError = (
   control: AbstractControl,
