@@ -96,7 +96,7 @@
           class="sidebar__section sidebar__section--form-field-padded"
           *ngIf="!capacityBookingMode; else capacityBookingSection"
         >
-          <h2 class="sidebar__heading">Resource selection</h2>
+          <b class="sidebar__heading">Resource selection</b>
           <app-resource-selection-form
             (resourceChange)="selectedResource = $event"
           ></app-resource-selection-form>
@@ -107,7 +107,7 @@
             <ng-container
               *ngIf="parentReservationRequest; else loadingParentOrError"
             >
-              <h2 class="sidebar__heading">Reserving capacity for</h2>
+              <b class="sidebar__heading">Reserving capacity for</b>
               <div>
                 <a
                   class="mat-primary-color"
@@ -191,7 +191,7 @@
         </ng-template>
 
         <section class="sidebar__section">
-          <h2 class="sidebar__heading">Calendar settings</h2>
+          <b class="sidebar__heading">Calendar settings</b>
           <mat-checkbox
             color="primary"
             (change)="calendar.highlightUsersReservations = $event.checked"
@@ -203,7 +203,7 @@
           class="sidebar__section"
           *ngIf="selectedResource && selectedSlot"
         >
-          <h2 class="sidebar__heading">Reservation slot</h2>
+          <b class="sidebar__heading">Reservation slot</b>
 
           <div class="sidebar__slot">
             <div

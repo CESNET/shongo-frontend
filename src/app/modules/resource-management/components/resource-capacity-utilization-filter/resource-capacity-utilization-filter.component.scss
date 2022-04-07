@@ -1,17 +1,20 @@
-$form-field-padding-bottom: 1.34375em;
-$form-field-margin: 0.25em 0;
+.filter {
+  padding-top: var(--form-field-padding-bottom);
 
-.table-filter {
-  padding-top: $form-field-padding-bottom;
+  &__form {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__slide-toggle {
+    margin-bottom: var(--form-field-padding-bottom);
+  }
 }
 
-form {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-mat-slide-toggle {
-  margin-bottom: $form-field-padding-bottom;
+@media only screen and (max-width: 425px) {
+  .filter__field {
+    width: 100%;
+  }
 }

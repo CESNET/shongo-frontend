@@ -1,5 +1,7 @@
 <div class="owner">
-  <span>{{ owner.name }}</span>
-  <span>{{ owner.id }}</span>
-  <a [href]="'mailto:' + owner.email">{{ owner.email }}</a>
+  <span class="owner__name">{{ owner.name }}</span>
+  <span class="owner__id">{{ owner.id }}</span>
+  <a class="owner__mail mat-primary-color" [href]="'mailto:' + owner.email">{{
+    owner.email
+  }}</a>
 </div>

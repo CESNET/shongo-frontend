@@ -9,6 +9,7 @@
     <a
       mat-flat-button
       color="primary"
+      class="buttons__button"
       [routerLink]="'/reserve/' + reservationRequest.id"
       *ngIf="
         reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
@@ -24,6 +25,7 @@
       <a
         mat-flat-button
         color="primary"
+        class="buttons__button"
         [routerLink]="'edit'"
         *ngIf="
           reservationRequest.state !==
@@ -33,7 +35,7 @@
         <mat-icon>settings</mat-icon>&nbsp;Edit
       </a>
       <!-- Delete button -->
-      <button mat-flat-button color="warn">
+      <button mat-flat-button color="warn" class="buttons__button">
         <mat-icon>delete_forever</mat-icon>&nbsp;Delete
       </button>
     </ng-container>

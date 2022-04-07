@@ -3,7 +3,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  font-size: 1rem;
 
   main,
   aside {
@@ -25,10 +24,6 @@ aside {
   button {
     width: fit-content;
   }
-}
-
-dl {
-  font-size: 0.9rem;
 }
 
 /* Other */

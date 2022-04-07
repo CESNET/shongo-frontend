@@ -20,6 +20,7 @@
   justify-content: space-between;
   padding-bottom: 1em;
   align-items: center;
+  gap: 1em;
 }
 
 /* Buttons */
@@ -75,5 +76,11 @@ mat-spinner.button-loading {
     mat-form-field {
       flex: 1;
     }
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .top-header-section {
+    flex-direction: column;
   }
 }

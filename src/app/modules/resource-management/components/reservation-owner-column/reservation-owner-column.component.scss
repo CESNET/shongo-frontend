@@ -2,4 +2,12 @@
   display: flex;
   flex-direction: column;
   padding: 5px;
+
+  &__name {
+    font-weight: 500;
+  }
+
+  > * {
+    word-break: break-all;
+  }
 }

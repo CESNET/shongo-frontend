@@ -1,6 +1,6 @@
-<div class="table-filter">
-  <form [formGroup]="filterForm">
-    <mat-form-field appearance="outline">
+<div class="filter">
+  <form [formGroup]="filterForm" class="filter__form">
+    <mat-form-field appearance="outline" class="filter__field">
       <mat-label>Time unit</mat-label>
       <mat-select formControlName="unit">
         <mat-option *ngFor="let unit of units" [value]="unit.value">{{
@@ -8,7 +8,8 @@
         }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field appearance="outline" class="filter__field">
       <mat-label>From</mat-label>
       <input matInput [matDatepicker]="fromPicker" formControlName="dateFrom" />
       <mat-datepicker-toggle
@@ -17,14 +18,18 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #fromPicker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field appearance="outline" class="filter__field">
       <mat-label>To</mat-label>
       <input matInput [matDatepicker]="toPicker" formControlName="dateTo" />
       <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
       <mat-datepicker #toPicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-slide-toggle color="primary" [formControl]="useAbsoluteValues"
+    <mat-slide-toggle
+      color="primary"
+      [formControl]="useAbsoluteValues"
+      class="filter__slide-toggle"
       >Show absolute values</mat-slide-toggle
     >
   </form>
