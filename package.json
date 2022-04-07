@@ -9,6 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "prepare": "husky install",
+    "extract-i18n": "ng extract-i18n --output-path src/locales",
     "pre-commit": "lint-staged"
   },
   "private": true,

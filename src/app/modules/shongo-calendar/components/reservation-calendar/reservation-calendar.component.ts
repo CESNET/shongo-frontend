@@ -414,7 +414,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   ): CalendarEvent {
     return {
       id: this._events.length,
-      title: 'Selected time slot',
+      title: $localize`:event name:Name of calendar event that user just selected:Selected time slot`,
       start,
       end: moment(start).add(30, 'minutes').toDate(),
       color: COLORS.created,

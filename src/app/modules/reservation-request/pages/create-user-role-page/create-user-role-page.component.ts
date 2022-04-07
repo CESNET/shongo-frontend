@@ -1,16 +1,10 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { finalize, first, switchMap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { IdentityType } from 'src/app/shared/models/enums/identity-type.enum';
 import { RoleType } from 'src/app/shared/models/enums/role-type.enum';
@@ -64,11 +58,13 @@ export class CreateUserRolePageComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Role created`);
+          this._alert.showSuccess($localize`:success message:Role created`);
           this._router.navigate(['../../'], { relativeTo: this._route });
         },
         error: () => {
-          this._alert.showError($localize`Failed to create role`);
+          this._alert.showError(
+            $localize`:error message:Failed to create role`
+          );
         },
       });
   }

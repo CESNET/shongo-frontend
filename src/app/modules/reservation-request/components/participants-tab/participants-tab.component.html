@@ -1,7 +1,15 @@
 <header>
-  <h2 class="mat-primary-color">Modification of participants</h2>
-  <a mat-button routerLink="participant/create">
-    <mat-icon color="primary">add_circle</mat-icon>&nbsp;Add participant
+  <h2 class="mat-primary-color" i18n="heading">Modification of participants</h2>
+  <a
+    mat-button
+    routerLink="participant/create"
+    aria-labelledby="add-participant-btn-name"
+  >
+    <mat-icon color="primary">add_circle</mat-icon>&nbsp;<span
+      i18n="button name"
+      id="add-participant-btn-name"
+      >Add participant</span
+    >
   </a>
 </header>
 
@@ -9,6 +17,7 @@
   <app-data-table
     *ngIf="participantsDataSource"
     description="Configure participants who will receive invitation and notifications."
+    i18n-description="table description"
     [showDeleteButtons]="false"
     [showCheckboxes]="false"
     [dataSource]="participantsDataSource"

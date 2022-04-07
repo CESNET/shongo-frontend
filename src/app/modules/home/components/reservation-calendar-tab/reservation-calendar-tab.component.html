@@ -7,14 +7,18 @@
             mat-button
             (click)="calendar.refresh()"
             type="button"
-            aria-label="Refresh"
+            aria-labelledby="refresh-button-name"
             class="calendar__refresh"
             *ngIf="
               (tabletSizeHit$ | async)?.matches === false;
               else iconOnlyRefresh
             "
           >
-            <mat-icon>refresh</mat-icon>&nbsp;Refresh
+            <mat-icon>refresh</mat-icon>&nbsp;<span
+              i18n="button name"
+              id="refresh-button-name"
+              >Refresh</span
+            >
           </button>
 
           <ng-template #iconOnlyRefresh>
@@ -22,6 +26,8 @@
               mat-icon-button
               (click)="calendar.refresh()"
               type="button"
+              aria-label="Refresh"
+              i18n-aria-label="button name"
               class="calendar__refresh"
             >
               <mat-icon>refresh</mat-icon>
@@ -32,6 +38,7 @@
             color="primary"
             formControlName="highlightMine"
             class="calendar__highlight-mine"
+            i18n="checkbox name"
             >Highlight mine</mat-checkbox
           >
         </div>
@@ -40,7 +47,7 @@
             appearance="outline"
             class="unpadded calendar__resource-selection"
           >
-            <mat-label>Physical resource</mat-label>
+            <mat-label i18n="field label">Physical resource</mat-label>
             <mat-select
               #resourceSelect
               formControlName="resource"
@@ -51,6 +58,8 @@
                   formControlName="resourceFilter"
                   placeholderLabel="Search..."
                   noEntriesFoundLabel="No resources found"
+                  i18n-placeholderLabel="placeholder text"
+                  i18n-noEntriesFoundLabel="fallback text"
                 ></ngx-mat-select-search>
               </mat-option>
               <mat-option
@@ -73,20 +82,22 @@
         ></app-calendar-view-selection>
 
         <ng-template #jumpToDate>
-          <button
-            mat-button
-            (click)="picker.open()"
-            class="calendar__datepicker"
-          >
-            <mat-icon>event</mat-icon>&nbsp;Jump to date
-          </button>
-          <input
-            type="date"
-            style="visibility: hidden; width: 0; height: 0"
-            [matDatepicker]="picker"
-            (dateInput)="onDateSelection($event.value)"
-          />
-          <mat-datepicker #picker></mat-datepicker>
+          <div>
+            <button
+              mat-button
+              (click)="picker.open()"
+              class="calendar__datepicker"
+            >
+              <mat-icon>event</mat-icon>&nbsp;Jump to date
+            </button>
+            <input
+              type="date"
+              class="calendar__datepicker-input"
+              [matDatepicker]="picker"
+              (dateInput)="onDateSelection($event.value)"
+            />
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
         </ng-template>
 
         <h1 class="calendar__view-date">

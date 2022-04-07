@@ -9,7 +9,7 @@ import { SetDisplayNameDialogComponent } from '../../components/set-display-name
 
 export class SetDisplayNameButton extends ApiActionButton<RuntimeParticipantTableData> {
   icon = 'badge';
-  name = 'Set display name';
+  name = $localize`:button name:Set display name`;
 
   constructor(
     public resReqService: ReservationRequestService,
@@ -36,10 +36,12 @@ export class SetDisplayNameButton extends ApiActionButton<RuntimeParticipantTabl
               tap(() => {
                 this.removeFromLoading(row);
               }),
-              mapTo($localize`Display name updated`),
+              mapTo($localize`:success message:Display name updated`),
               catchError(() => {
                 this.removeFromLoading(row);
-                return throwError($localize`Failed to update display name`);
+                return throwError(
+                  $localize`:error message:Failed to update display name`
+                );
               })
             );
         } else {

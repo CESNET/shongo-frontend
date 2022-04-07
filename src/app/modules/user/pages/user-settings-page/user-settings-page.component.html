@@ -1,6 +1,6 @@
 <div class="settings">
   <header class="settings__header">
-    <h1>User settings</h1>
+    <h1 i18b="heading">User settings</h1>
   </header>
 
   <main class="settings__main">
@@ -11,7 +11,7 @@
       *ngIf="(settings.userSettingsLoading$ | async) === false; else loading"
     >
       <mat-form-field appearance="outline">
-        <mat-label>Preferred language</mat-label>
+        <mat-label i18n="field label">Preferred language</mat-label>
         <mat-select formControlName="locale">
           <mat-option *ngFor="let opt of languageOptions" [value]="opt.value">
             {{ opt.displayName }}
@@ -20,7 +20,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Home time zone</mat-label>
+        <mat-label i18n="field label">Home time zone</mat-label>
         <mat-select formControlName="homeTimeZone">
           <mat-option>
             <ngx-mat-select-search
@@ -44,7 +44,7 @@
           [formControl]="useCurrentTimeZoneCtrl"
         ></mat-checkbox>
         <mat-form-field appearance="outline" class="checkbox-form-field__field">
-          <mat-label>Current time zone</mat-label>
+          <mat-label i18n="field label">Current time zone</mat-label>
           <mat-select formControlName="currentTimeZone">
             <mat-option>
               <ngx-mat-select-search
@@ -65,7 +65,10 @@
       </div>
 
       <div class="settings__row settings__row--perun">
-        <mat-checkbox color="primary" [formControl]="usePerunSettingsCtrl"
+        <mat-checkbox
+          color="primary"
+          [formControl]="usePerunSettingsCtrl"
+          i18n="checkbox label"
           >Use perun settings</mat-checkbox
         >
         <a
@@ -73,6 +76,7 @@
           target="_blank"
           mat-flat-button
           color="primary"
+          i18n="button name"
           >Edit perun settings</a
         >
       </div>
@@ -80,13 +84,21 @@
       <mat-checkbox
         *ngIf="settings.isAdmin"
         color="primary"
+        i18n="checkbox label"
         [formControl]="administrationModeCtrl"
         >Administration mode</mat-checkbox
       >
 
       <div class="settings__row settings__row--submit">
-        <a mat-button type="button" routerLink="/">Cancel</a>
-        <button mat-flat-button type="submit" color="primary">Submit</button>
+        <a mat-button type="button" routerLink="/" i18n="button name">Cancel</a>
+        <button
+          mat-flat-button
+          type="submit"
+          color="primary"
+          i18n="button name"
+        >
+          Submit
+        </button>
       </div>
     </form>
 

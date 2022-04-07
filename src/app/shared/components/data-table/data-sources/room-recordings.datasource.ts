@@ -24,23 +24,27 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
     this.displayedColumns = [
       {
         name: 'beginDate',
-        displayName: 'Recorded at',
+        displayName: $localize`:table column:Recorded at`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'duration',
-        displayName: 'Duration',
+        displayName: $localize`:table column:Duration`,
         pipeFunc: this.formatDuration,
       },
       {
         name: 'url',
-        displayName: 'URL',
+        displayName: $localize`:table column:URL`,
         component: RecordingViewUrlColumnComponent,
       },
     ];
 
     this.buttons = [
-      new CustomActionButton('Download', 'download', this.downloadRecording),
+      new CustomActionButton(
+        $localize`:button name:Download`,
+        'download',
+        this.downloadRecording
+      ),
       new DeleteButton(
         this._resReqService,
         this._dialog,
@@ -78,7 +82,7 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
       const hours = Math.floor(milliseconds / 3600000);
 
       if (hours > 23) {
-        return '> day';
+        return $localize`:more than a day:> day`;
       }
 
       milliseconds = milliseconds % 3600000;

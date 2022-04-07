@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="form">
   <div class="form__left">
-    <h2>Reservation data</h2>
+    <h2 i18n="heading">Reservation data</h2>
 
     <!-- Room name field -->
     <mat-form-field
@@ -8,7 +8,7 @@
       class="form__field"
       *ngIf="!editingMode"
     >
-      <mat-label>Room name</mat-label>
+      <mat-label i18n="field label">Room name</mat-label>
       <input type="text" matInput formControlName="roomName" />
       <mat-error
         *ngIf="
@@ -20,7 +20,7 @@
 
     <!-- Description field -->
     <mat-form-field appearance="outline" class="form__field">
-      <mat-label>Description</mat-label>
+      <mat-label i18n="field label">Description</mat-label>
       <input type="text" matInput formControlName="description" />
       <mat-error
         *ngIf="
@@ -35,7 +35,7 @@
 
     <!-- Participant count field -->
     <mat-form-field appearance="outline" class="form__field">
-      <mat-label>Participant count</mat-label>
+      <mat-label i18n="field label">Participant count</mat-label>
       <input type="number" matInput formControlName="participantCount" />
       <mat-error *ngIf="getFormError(form.get('participantCount')!) as error">{{
         error
@@ -44,7 +44,7 @@
 
     <!-- Admin pin field -->
     <mat-form-field appearance="outline" class="form__field">
-      <mat-label>Admin PIN</mat-label>
+      <mat-label i18n="field label">Admin PIN</mat-label>
       <input type="text" matInput formControlName="adminPin" />
       <mat-error
         *ngIf="getFormError(form.get('adminPin')!, pinErrorHandler) as error"
@@ -54,7 +54,7 @@
 
     <!-- Time zone field -->
     <mat-form-field appearance="outline" class="form__field">
-      <mat-label>Time zone</mat-label>
+      <mat-label i18n="field label">Time zone</mat-label>
       <mat-select formControlName="timezone">
         <mat-option>
           <ngx-mat-select-search
@@ -76,12 +76,18 @@
 
     <div class="form__checkbox-group">
       <!-- Allow guests checkbox -->
-      <mat-checkbox color="primary" formControlName="allowGuests"
+      <mat-checkbox
+        color="primary"
+        formControlName="allowGuests"
+        i18n="checkbox label"
         >Allow guests</mat-checkbox
       >
 
       <!-- Record checkbox -->
-      <mat-checkbox color="primary" formControlName="record"
+      <mat-checkbox
+        color="primary"
+        formControlName="record"
+        i18n="checkbox label"
         >Record</mat-checkbox
       >
     </div>
@@ -90,7 +96,7 @@
   <mat-divider vertical class="form__divider"></mat-divider>
 
   <div class="form__right">
-    <h2>Periodicity</h2>
+    <h2 i18n="heading">Periodicity</h2>
     <app-periodicity-selection-form
       [periodicity]="editedRequest?.roomCapacityData?.periodicity"
     ></app-periodicity-selection-form>

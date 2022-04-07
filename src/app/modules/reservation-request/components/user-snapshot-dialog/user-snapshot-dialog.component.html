@@ -1,5 +1,5 @@
 <header mat-dialog-title>
-  <h1>Snapshot of:</h1>
+  <h1 i18n="heading">Snapshot of:</h1>
   <span>{{ data.participant.participant }}</span>
 </header>
 
@@ -10,12 +10,18 @@
     height="100%"
     [src]="snapshotUrl"
     alt="Participant snapshot"
+    i18n-alt="image alt|Alt text of participant snapshot image"
   />
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <a mat-flat-button color="primary" [href]="snapshotUrl" download="snapshot"
+  <a
+    mat-flat-button
+    color="primary"
+    [href]="snapshotUrl"
+    download="snapshot"
+    i18n="button name"
     >Download</a
   >
-  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button mat-dialog-close i18n="button name">Close</button>
 </mat-dialog-actions>

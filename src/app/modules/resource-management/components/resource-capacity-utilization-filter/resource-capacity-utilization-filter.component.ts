@@ -35,10 +35,10 @@ export class ResourceCapacityUtilizationFilterComponent
   useAbsoluteValues = new FormControl(false);
 
   units: Option[] = [
-    { value: 'day', displayName: 'Days' },
-    { value: 'week', displayName: 'Weeks' },
-    { value: 'month', displayName: 'Months' },
-    { value: 'year', displayName: 'Years' },
+    { value: 'day', displayName: $localize`:unit option:Days` },
+    { value: 'week', displayName: $localize`:unit option:Weeks` },
+    { value: 'month', displayName: $localize`:unit option:Months` },
+    { value: 'year', displayName: $localize`:unit option:Years` },
   ];
 
   private _destroy$ = new Subject<void>();

@@ -24,13 +24,13 @@ export class ParticipantsDataSource extends DataTableDataSource<ParticipantsTabl
     super();
 
     this.displayedColumns = [
-      { name: 'identity', displayName: 'User' },
+      { name: 'identity', displayName: $localize`:table column:User` },
       {
         name: 'role',
-        displayName: 'Role',
+        displayName: $localize`:table column:Role`,
         pipeFunc: (value: unknown) => toTitleCase(value as ParticipantRole),
       },
-      { name: 'email', displayName: 'E-mail' },
+      { name: 'email', displayName: $localize`:table column:E-mail` },
     ];
 
     this.buttons = [

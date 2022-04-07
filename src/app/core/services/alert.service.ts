@@ -12,14 +12,17 @@ export class AlertService {
   constructor(private _snackBar: MatSnackBar) {}
 
   showError(msg: string): void {
+    this._checkMessage(msg);
     this._showSnackbar(msg, AlertType.ERROR);
   }
 
   showWarning(msg: string): void {
+    this._checkMessage(msg);
     this._showSnackbar(msg, AlertType.WARNING);
   }
 
   showSuccess(msg: string): void {
+    this._checkMessage(msg);
     this._showSnackbar(msg, AlertType.SUCCESS);
   }
 
@@ -30,5 +33,11 @@ export class AlertService {
       panelClass: ['snackbar--' + type],
       duration: SNACKBAR_DURATION,
     });
+  }
+
+  private _checkMessage(msg: string): void {
+    if (!msg) {
+      throw new Error('Snackbar alert must contain an ');
+    }
   }
 }

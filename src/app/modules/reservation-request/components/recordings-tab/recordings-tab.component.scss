@@ -17,8 +17,9 @@ header {
   white-space: nowrap;
 }
 .red-circle {
-  height: 1em;
-  width: 1em;
+  --circle-size: 0.8em;
+  height: var(--circle-size);
+  width: var(--circle-size);
   background-color: var(--red-500);
   border-radius: 50%;
   display: inline-block;

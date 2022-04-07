@@ -21,8 +21,8 @@ export class TimezoneSearchDirective implements OnInit, OnDestroy {
     this._initTimeZoneFilter(this._filterCtrl);
 
     this._host._formControl = this._filterCtrl;
-    this._host.placeholderLabel = 'Select timezone...';
-    this._host.noEntriesFoundLabel = 'No timezones found';
+    this._host.placeholderLabel = $localize`:placeholder:Select timezone...`;
+    this._host.noEntriesFoundLabel = $localize`:fallback text:No timezones found`;
   }
 
   ngOnDestroy(): void {

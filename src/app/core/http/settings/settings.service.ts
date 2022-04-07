@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -125,7 +125,9 @@ export class SettingsService {
       catchError((err) => {
         this._userSettingsLoading$.next(false);
         console.error('Failed to fetch user settings, reason: ', err);
-        return throwError(() => new Error('Failed to fetch user settings.'));
+        throw new Error(
+          $localize`:error message:Failed to fetch user settings`
+        );
       })
     );
   }

@@ -85,11 +85,15 @@ export class CreateParticipantPageComponent {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Participant created`);
+          this._alert.showSuccess(
+            $localize`:success message:Participant created`
+          );
           this._router.navigate(['../../'], { relativeTo: this._route });
         },
         error: () => {
-          this._alert.showError($localize`Failed to create participant`);
+          this._alert.showError(
+            $localize`:error message:Failed to create participant`
+          );
         },
       });
   }

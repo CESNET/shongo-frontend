@@ -1,9 +1,10 @@
 <form [formGroup]="form" class="resource-selection">
   <mat-form-field appearance="outline">
-    <mat-label>Select resource type</mat-label>
+    <mat-label i18n="field label">Select resource type</mat-label>
     <mat-select
       placeholder="Select resource type"
       formControlName="type"
+      i18n-placeholder="placeholder"
       (valueChange)="handleResourceTypeChange($event)"
     >
       <mat-option *ngFor="let opt of resourceTypes" [value]="opt.value">{{
@@ -13,7 +14,7 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Select resource</mat-label>
+    <mat-label i18n="field label">Select resource</mat-label>
     <mat-select
       formControlName="resource"
       (valueChange)="emitSelectedResource($event)"
@@ -23,6 +24,8 @@
           [formControl]="resourceFilterCtrl"
           placeholderLabel="Search..."
           noEntriesFoundLabel="No resources found"
+          i18n-placeholderLabel="placeholder"
+          i18n-noEntriesFoundLabel="no results text"
         ></ngx-mat-select-search>
       </mat-option>
       <mat-option

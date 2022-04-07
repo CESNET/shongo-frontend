@@ -34,25 +34,28 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
     this.displayedColumns = [
       {
         name: 'slotStart',
-        displayName: 'Slot start',
+        displayName: $localize`:table column:Slot start`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'slotEnd',
-        displayName: 'Slot end',
+        displayName: $localize`:table column:Slot end`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'participantCount', displayName: 'Participant count' },
+      {
+        name: 'participantCount',
+        displayName: $localize`:table column:Participant count`,
+      },
       {
         name: 'state',
-        displayName: 'State',
+        displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
       },
     ];
 
     this.buttons = [
       new LinkButton(
-        'View reservation request',
+        $localize`:button name:View reservation request`,
         'visibility',
         '/reservation-request/:id'
       ),

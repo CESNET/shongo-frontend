@@ -1,5 +1,5 @@
 <header mat-dialog-title>
-  <h1>Set microphone level</h1>
+  <h1 i18n="heading">Set microphone level</h1>
 </header>
 
 <mat-dialog-content>
@@ -17,8 +17,13 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-flat-button color="primary" [mat-dialog-close]="slider.value">
+  <button
+    mat-flat-button
+    color="primary"
+    [mat-dialog-close]="slider.value"
+    i18n="button name"
+  >
     Confirm
   </button>
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close i18n="button name">Cancel</button>
 </mat-dialog-actions>

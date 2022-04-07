@@ -36,8 +36,8 @@ export class GroupSearchDirective implements OnInit, OnDestroy {
     this._createUserFilterSub();
 
     this._host._formControl = this._filterCtrl;
-    this._host.placeholderLabel = 'Select group by name...';
-    this._host.noEntriesFoundLabel = 'No groups found';
+    this._host.placeholderLabel = $localize`:placeholder:Select group by name...`;
+    this._host.noEntriesFoundLabel = $localize`:fallback text:No groups found`;
   }
 
   ngOnDestroy(): void {

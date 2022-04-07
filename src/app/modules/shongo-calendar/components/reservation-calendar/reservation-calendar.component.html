@@ -77,11 +77,11 @@
   <div class="cal-tooltip" [ngClass]="'cal-tooltip-' + placement">
     <div class="cal-tooltip-arrow"></div>
     <div class="cal-tooltip-inner">
-      <b>Description: </b>
+      <b i18n="definition tag">Description:&nbsp;</b>
       <span [innerHtml]="contents"></span>
-      <b>Time slot: </b>
+      <b i18n="definition tag">Time slot:&nbsp;</b>
       <span [innerHtml]="getSlotString(event)"></span>
-      <b>Reserved by: </b>
+      <b i18n="definition tag">Reserved by:&nbsp;</b>
       <span [innerHtml]="event.meta.owner"></span>
       <a [href]="'mailto:' + event.meta.ownerEmail">{{
         event.meta.ownerEmail

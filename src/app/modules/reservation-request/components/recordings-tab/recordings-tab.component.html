@@ -1,11 +1,13 @@
 <header>
   <h2 class="mat-primary-color">
-    Room recordings
+    <span i18n="heading">Room recordings</span>
+    &nbsp;
     <span
       *ngIf="reservationRequest.roomCapacityData?.isRecordingActive"
       class="active-recording"
-      >(&nbsp;<span class="red-circle"></span>&nbsp;Recording
-      active&nbsp;)</span
+      >(&nbsp;<span class="red-circle"></span>&nbsp;<span i18n="text"
+        >Recording active</span
+      >&nbsp;)</span
     >
   </h2>
 
@@ -21,6 +23,7 @@
     [showDeleteButtons]="false"
     [dataSource]="roomRecordingDataSource"
     description="List of recordings for this room."
+    i18n-description="table description"
   ></app-data-table>
 </main>
 
@@ -30,6 +33,7 @@
   >
     <button
       mat-button
+      aria-labelledby="stop-recording-btn-name"
       (click)="setRecording(false)"
       [disabled]="
         reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
@@ -39,7 +43,11 @@
         else startRecord
       "
     >
-      <mat-icon color="primary">videocam_off</mat-icon>&nbsp;Stop recording
+      <mat-icon color="primary">videocam_off</mat-icon>&nbsp;<span
+        i18n="button name"
+        id="stop-recording-btn-name"
+        >Stop recording</span
+      >
     </button>
   </ng-container>
 </ng-template>
@@ -51,11 +59,16 @@
 <ng-template #startRecord>
   <button
     mat-button
+    aria-labelledby="start-recording-btn-name"
     (click)="setRecording(true)"
     [disabled]="
       reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
     "
   >
-    <mat-icon color="primary">videocam</mat-icon>&nbsp;Start recording
+    <mat-icon color="primary">videocam</mat-icon>&nbsp;<span
+      i18n="button name"
+      id="start-recording-btn-name"
+      >Start recording</span
+    >
   </button>
 </ng-template>

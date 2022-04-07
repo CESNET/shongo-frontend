@@ -7,7 +7,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoadingTextComponent {
-  @Input() message: string = $localize`loading...`;
+  @Input() message: string = $localize`:loading text:Loading...`;
 
   constructor() {}
 }

@@ -1,7 +1,15 @@
 <header>
-  <h2 class="mat-primary-color">Modification of user roles</h2>
-  <a mat-button routerLink="user-role/create">
-    <mat-icon color="primary">add_circle</mat-icon>&nbsp;Add user role
+  <h2 class="mat-primary-color" i18n="heading">Modification of user roles</h2>
+  <a
+    mat-button
+    routerLink="user-role/create"
+    aria-labelledby="add-user-role-btn-name"
+  >
+    <mat-icon color="primary">add_circle</mat-icon>&nbsp;<span
+      i18n="button name"
+      id="add-user-role-btn-name"
+      >Add user role</span
+    >
   </a>
 </header>
 
@@ -12,5 +20,6 @@
     [showDeleteButtons]="false"
     [showCheckboxes]="false"
     description="Configure roles for users whom you want to allow the access to the room in this system. This configuration can be used to define multiple owners to the room."
+    i18n-description="table description"
   ></app-data-table>
 </main>

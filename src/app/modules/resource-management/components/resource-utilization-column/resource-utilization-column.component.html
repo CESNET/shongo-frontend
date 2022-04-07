@@ -2,6 +2,7 @@
   <a
     *ngIf="useAbsoluteValue; else relativeValue"
     aria-label="Open resource utilization detail"
+    i18n-aria-label="button name"
     [routerLink]="['./detail']"
     [queryParams]="getQueryParams()"
   >
@@ -10,6 +11,7 @@
   <ng-template #relativeValue>
     <a
       aria-label="Open resource utilization detail"
+      i18n-aria-label="button name"
       [routerLink]="['./detail']"
       [queryParams]="getQueryParams()"
       >{{ percentage | percentage }}</a

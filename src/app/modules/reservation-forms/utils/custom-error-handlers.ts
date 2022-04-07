@@ -6,9 +6,9 @@ export const roomNameErrorHandler = (
   const errors = control.errors!;
 
   if (errors.pattern) {
-    return 'Field can contain only alphanumeric characters, dash or underscore.';
+    return $localize`:error message:Field can contain only alphanumeric characters, dash or underscore.`;
   } else if (errors.maxlength) {
-    return `Field can have max. ${errors.maxlength.requiredLength} characters.`;
+    return $localize`:error message:Field can have max. ${errors.maxlength.requiredLength} characters.`;
   }
   return null;
 };
@@ -19,7 +19,7 @@ export const descriptionErrorHandler = (
   const errors = control.errors!;
 
   if (errors.maxlength) {
-    return `Field can have max. ${errors.maxlength.requiredLength} characters.`;
+    return $localize`:error message:Field can have max. ${errors.maxlength.requiredLength} characters.`;
   }
   return null;
 };
@@ -28,9 +28,9 @@ export const pinErrorHandler = (control: AbstractControl): string | null => {
   const errors = control.errors!;
 
   if (errors.pattern) {
-    return `Field can contain only numbers.`;
+    return $localize`:error message:Field can contain only numbers.`;
   } else if (errors.minlength) {
-    return `PIN must consist of min. ${errors.minlength.requiredLength} digits.`;
+    return $localize`:error message:PIN must consist of min. ${errors.minlength.requiredLength} digits.`;
   }
   return null;
 };

@@ -30,31 +30,34 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
     super();
 
     this.displayedColumns = [
-      { name: 'name', displayName: 'Name' },
+      { name: 'name', displayName: $localize`:table column:Name` },
       {
         name: 'technology',
-        displayName: 'Technology',
+        displayName: $localize`:table column:Technology`,
         pipeFunc: (value) =>
           virtualRoomResourceConfig.technologyNameMap.get(
             value as Technology
-          ) ?? 'Unknown',
+          ) ?? `:fallback text:Unknown`,
       },
       {
         name: 'slotStart',
-        displayName: 'Slot start',
+        displayName: $localize`:table column:Slot start`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'slotEnd',
-        displayName: 'Slot end',
+        displayName: $localize`:table column:Slot end`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'state',
-        displayName: 'State',
+        displayName: $localize`:table column:State`,
         component: RoomStateColumnComponent,
       },
-      { name: 'description', displayName: 'Description' },
+      {
+        name: 'description',
+        displayName: $localize`:table column:Description`,
+      },
     ];
 
     this.buttons = [];

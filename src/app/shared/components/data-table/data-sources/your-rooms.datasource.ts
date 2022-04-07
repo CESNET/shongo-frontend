@@ -38,46 +38,46 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
     super();
 
     this.displayedColumns = [
-      { name: 'ownerName', displayName: 'Owner' },
+      { name: 'ownerName', displayName: $localize`:table column:Owner` },
       {
         name: 'createdAt',
-        displayName: 'Created at',
+        displayName: $localize`:table column:Created at`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
-      { name: 'roomName', displayName: 'Name' },
+      { name: 'roomName', displayName: $localize`:table column:Name` },
       {
         name: 'technology',
-        displayName: 'Technology',
+        displayName: $localize`:table column:Technology`,
         pipeFunc: (value) =>
           virtualRoomResourceConfig.technologyNameMap.get(
             value as Technology
-          ) ?? 'Unknown',
+          ) ?? $localize`:fallback text:Unknown`,
       },
       {
         name: 'slotStart',
-        displayName: 'Slot start',
+        displayName: $localize`:table column:Slot start`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'slotEnd',
-        displayName: 'Slot end',
+        displayName: $localize`:table column:Slot end`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'state',
-        displayName: 'State',
+        displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
       },
     ];
 
     this.buttons = [
       new LinkButton(
-        'View reservation request',
+        $localize`:button name:View reservation request`,
         'visibility',
         '/reservation-request/:id'
       ),
       new LinkButton(
-        'Edit reservation request',
+        $localize`:button name:Edit reservation request`,
         'settings',
         '/reservation-request/:id/edit',
         (row: YourRoomsTableData) =>
@@ -129,8 +129,11 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
               state,
               slotStart: slot.start,
               slotEnd: slot.end,
-              roomName: virtualRoomData?.roomName ?? 'unknown',
-              technology: virtualRoomData?.technology ?? 'unknown',
+              roomName:
+                virtualRoomData?.roomName ?? $localize`:fallback text:Unknown`,
+              technology:
+                virtualRoomData?.technology ??
+                $localize`:fallback text:Unknown`,
               isWritable: isWritable,
             };
           });

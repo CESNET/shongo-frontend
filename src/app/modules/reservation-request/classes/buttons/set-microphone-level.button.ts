@@ -1,5 +1,5 @@
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ApiActionButton } from 'src/app/shared/components/data-table/buttons/api-action-button';
@@ -9,7 +9,7 @@ import { SetMictophoneLevelDialogComponent } from '../../components/set-mictopho
 
 export class SetMicrophoneLevelButton extends ApiActionButton<RuntimeParticipantTableData> {
   icon = 'volume_down';
-  name = 'Set microphone level';
+  name = $localize`:button name:Set microphone level`;
 
   constructor(
     public resReqService: ReservationRequestService,
@@ -36,10 +36,12 @@ export class SetMicrophoneLevelButton extends ApiActionButton<RuntimeParticipant
               tap(() => {
                 this.removeFromLoading(row);
               }),
-              mapTo($localize`Microphone level adjusted`),
+              mapTo($localize`:success message:Microphone level adjusted`),
               catchError(() => {
                 this.removeFromLoading(row);
-                return throwError($localize`Failed to adjust microphone level`);
+                throw new Error(
+                  $localize`:error message:Failed to adjust microphone level`
+                );
               })
             );
         } else {

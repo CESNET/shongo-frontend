@@ -12,17 +12,22 @@
           mat-icon-button
           (click)="drawer.toggle()"
           aria-label="Toggle side drawer"
+          i18n-aria-label="button name"
         >
           <mat-icon>menu</mat-icon>
         </button>
 
         <a
           mat-stroked-button
-          aria-label="Go back to app"
+          aria-labelledby="go-back-btn-name"
           routerLink="/"
           class="reservation__back reservation__back--navbar"
         >
-          <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
+          <mat-icon>arrow_back</mat-icon>&nbsp;<span
+            i18n="button name"
+            id="go-back-btn-name"
+            >Back to app</span
+          >
         </a>
 
         <app-calendar-view-selection
@@ -67,20 +72,29 @@
         <section class="sidebar__section sidebar__section--mobile">
           <a
             mat-stroked-button
-            aria-label="Go back to app"
+            aria-labelledby="sidebar-go-back-btn-name"
             routerLink="/"
             class="reservation__back reservation__back--sidebar"
           >
-            <mat-icon>arrow_back</mat-icon>&nbsp;Back to app
+            <mat-icon>arrow_back</mat-icon>&nbsp;<span
+              i18n="button name"
+              id="sidebar-go-back-btn-name"
+              >Back to app</span
+            >
           </a>
 
           <div class="jump-to-date">
             <button
               mat-stroked-button
-              (click)="picker.open()"
               class="jump-to-date__button"
+              aria-labelledby="jump-to-date-btn-name"
+              (click)="picker.open()"
             >
-              <mat-icon>event</mat-icon>&nbsp;Jump to date
+              <mat-icon>event</mat-icon>&nbsp;<span
+                i18n="button name"
+                id="jump-to-date-btn-name"
+                >Jump to date</span
+              >
             </button>
             <input
               type="date"
@@ -96,7 +110,7 @@
           class="sidebar__section sidebar__section--form-field-padded"
           *ngIf="!capacityBookingMode; else capacityBookingSection"
         >
-          <b class="sidebar__heading">Resource selection</b>
+          <b class="sidebar__heading" i18n="heading">Resource selection</b>
           <app-resource-selection-form
             (resourceChange)="selectedResource = $event"
           ></app-resource-selection-form>
@@ -107,7 +121,9 @@
             <ng-container
               *ngIf="parentReservationRequest; else loadingParentOrError"
             >
-              <b class="sidebar__heading">Reserving capacity for</b>
+              <b class="sidebar__heading" i18n="heading"
+                >Reserving capacity for</b
+              >
               <div>
                 <a
                   class="mat-primary-color"
@@ -140,7 +156,7 @@
                 mode="indeterminate"
                 color="primary"
               ></mat-progress-spinner>
-              <span>Loading parent request</span>
+              <span i18n="loading text">Loading parent request</span>
             </div>
           </ng-template>
 
@@ -160,8 +176,9 @@
             <div class="sidebar__loading-error">
               <div class="sidebar__error-container">
                 <app-alert
-                  [type]="AlertType.ERROR"
                   message="Failed to load parent request"
+                  i18n-message="error message"
+                  [type]="AlertType.ERROR"
                   [showCloseButton]="false"
                   [isActive]="true"
                 ></app-alert>
@@ -169,6 +186,7 @@
               <button
                 mat-flat-button
                 color="primary"
+                i18n="button name"
                 (click)="retryLoadingParentRequest()"
               >
                 Try again
@@ -191,9 +209,10 @@
         </ng-template>
 
         <section class="sidebar__section">
-          <b class="sidebar__heading">Calendar settings</b>
+          <b class="sidebar__heading" i18n="heading">Calendar settings</b>
           <mat-checkbox
             color="primary"
+            i18n="checkbox label"
             (change)="calendar.highlightUsersReservations = $event.checked"
             >Highlight mine</mat-checkbox
           >
@@ -203,14 +222,18 @@
           class="sidebar__section"
           *ngIf="selectedResource && selectedSlot"
         >
-          <b class="sidebar__heading">Reservation slot</b>
+          <b class="sidebar__heading" i18n="heading">Reservation slot</b>
 
           <div class="sidebar__slot">
             <div
               class="sidebar__slot-part"
               *ngIf="selectedSlot && selectedSlot.start"
             >
-              <div><b class="sidebar__slot-part-name">Slot start:</b></div>
+              <div>
+                <b class="sidebar__slot-part-name" i18n="item name"
+                  >Slot start:</b
+                >
+              </div>
               <div class="sidebar__slot-part-value">
                 {{ selectedSlot.start | momentDate: "LLL" }}
               </div>
@@ -220,7 +243,11 @@
               class="sidebar__slot-part"
               *ngIf="selectedSlot && selectedSlot.end"
             >
-              <div><b class="sidebar__slot-part-name">Slot end:</b></div>
+              <div>
+                <b class="sidebar__slot-part-name" i18n="item name"
+                  >Slot end:</b
+                >
+              </div>
               <div class="sidebar__slot-part-value">
                 {{ selectedSlot.end | momentDate: "LLL" }}
               </div>
@@ -232,6 +259,7 @@
               mat-flat-button
               color="primary"
               class="sidebar__button"
+              i18n="button name"
               (click)="openReservationDialog()"
             >
               Create reservation
@@ -241,6 +269,7 @@
               mat-flat-button
               class="sidebar__button"
               color="warn"
+              i18n="button name"
               (click)="calendar.clearSelectedSlot()"
             >
               Cancel selection
@@ -263,7 +292,7 @@
 
 <ng-template #loadingResources>
   <div class="loading loading--fullscreen">
-    <h1>Loading resources</h1>
+    <h1 i18n="loading text">Loading resources</h1>
     <mat-progress-spinner
       color="primary"
       mode="indeterminate"

@@ -22,30 +22,30 @@ export class ReservationsDataSource extends StaticDataSource<
     this.displayedColumns = [
       {
         name: 'id',
-        displayName: 'Identifier',
+        displayName: $localize`:table column:Identifier`,
       },
       {
         name: 'licenceCount',
-        displayName: 'Licences',
+        displayName: $localize`:table column:Licences`,
       },
       {
         name: 'slotStart',
-        displayName: 'Slot start',
+        displayName: $localize`:table column:Slot start`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'slotEnd',
-        displayName: 'Slot end',
+        displayName: $localize`:table column:Slot end`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
       },
       {
         name: 'requestId',
-        displayName: 'Reservation request',
+        displayName: $localize`:table column:Reservation request`,
         component: RequestIdColumnComponent,
       },
       {
         name: 'owner',
-        displayName: 'Owner',
+        displayName: $localize`:table column:Owner`,
         component: ReservationOwnerColumnComponent,
       },
     ];

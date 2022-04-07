@@ -39,7 +39,7 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
     super();
 
     this.displayedColumns = [
-      { name: 'interval', displayName: 'Interval' },
+      { name: 'interval', displayName: $localize`:Table column:Interval` },
       {
         name: 'Pexip',
         displayName: 'Pexip',

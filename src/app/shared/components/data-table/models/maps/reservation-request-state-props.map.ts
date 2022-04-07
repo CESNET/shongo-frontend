@@ -2,62 +2,68 @@ import { ReservationRequestState } from 'src/app/shared/models/enums/reservation
 import { StateProps } from '../../column-components/state-chip-column/state-chip-column.component';
 
 export default new Map<ReservationRequestState, StateProps>([
-  [ReservationRequestState.FAILED, { color: 'error', displayName: 'Error' }],
-  [ReservationRequestState.DENIED, { color: 'error', displayName: 'Error' }],
+  [
+    ReservationRequestState.FAILED,
+    { color: 'error', displayName: $localize`:state:Error` },
+  ],
+  [
+    ReservationRequestState.DENIED,
+    { color: 'error', displayName: $localize`:state:Error` },
+  ],
   [
     ReservationRequestState.NOT_ALLOCATED,
     {
       color: 'success',
-      displayName: 'Created',
+      displayName: $localize`:state:Created`,
     },
   ],
   [
     ReservationRequestState.CONFIRM_AWAITING,
     {
       color: 'success',
-      displayName: 'Created',
+      displayName: $localize`:state:Created`,
     },
   ],
   [
     ReservationRequestState.ALLOCATED_STARTED_NOT_AVAILABLE,
     {
       color: 'info',
-      displayName: 'Prepared',
+      displayName: $localize`:state:Prepared`,
     },
   ],
   [
     ReservationRequestState.ALLOCATED_STARTED_AVAILABLE,
     {
       color: 'success',
-      displayName: 'Open',
+      displayName: $localize`:state:Open`,
     },
   ],
   [
     ReservationRequestState.ALLOCATED_STARTED,
     {
       color: 'success',
-      displayName: 'Open',
+      displayName: $localize`:state:Open`,
     },
   ],
   [
     ReservationRequestState.ALLOCATED_FINISHED,
     {
       color: 'ready',
-      displayName: 'Stopped',
+      displayName: $localize`:state:Stopped`,
     },
   ],
   [
     ReservationRequestState.ALLOCATED,
     {
       color: 'success',
-      displayName: 'Created',
+      displayName: $localize`:state:Created`,
     },
   ],
   [
     ReservationRequestState.MODIFICATION_FAILED,
     {
       color: 'error',
-      displayName: 'Modification failed',
+      displayName: $localize`:state:Modification failed`,
     },
   ],
 ]);

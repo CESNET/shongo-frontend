@@ -210,16 +210,16 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   deleteSelectedRows(): void {
     if (!this.dataSource.apiService) {
-      console.error($localize`No api service defined in table's datasource`);
+      console.error(`No api service defined in table's datasource`);
       return this._alert.showError(
-        $localize`Mass deletion is not available for this table`
+        $localize`:error message:Mass deletion is not available for this table`
       );
     } else if (!this.selection || this.selection.isEmpty()) {
-      return this._alert.showWarning('No rows were selected');
+      return this._alert.showWarning(`:warning message:No rows were selected`);
     } else if (!this.selection.selected.every((item) => 'id' in item)) {
-      console.error($localize`All selected rows must have an id`);
+      console.error(`All selected rows must have an id`);
       return this._alert.showError(
-        $localize`All selected rows must have an id`
+        $localize`:error message:All selected rows must have an id`
       );
     }
 
@@ -239,13 +239,15 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
             .pipe(first())
             .subscribe({
               next: () => {
-                this._alert.showSuccess($localize`Items deleted`);
+                this._alert.showSuccess(
+                  $localize`:success message:Items deleted`
+                );
                 this.dataSource.refreshData();
               },
               error: (err) => {
                 console.error(err);
                 this._alert.showError(
-                  $localize`Failed to delete selected rows`
+                  $localize`:error message:Failed to delete selected rows`
                 );
               },
             });
@@ -257,10 +259,12 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     if (!this.dataSource.apiService) {
       console.error($localize`No api service defined in table's datasource`);
       return this._alert.showError(
-        $localize`Mass deletion is not available for this table`
+        $localize`:error message:Mass deletion is not available for this table`
       );
     } else if (this.dataSource.data.count === 0) {
-      return this._alert.showWarning($localize`Table is empty`);
+      return this._alert.showWarning(
+        $localize`:warning message:Table is empty`
+      );
     }
 
     this._dialog
@@ -276,12 +280,16 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
             .pipe(first())
             .subscribe({
               next: () => {
-                this._alert.showSuccess($localize`Rows deleted`);
+                this._alert.showSuccess(
+                  $localize`:success message:Rows deleted`
+                );
                 this.dataSource.refreshData();
               },
               error: (err) => {
                 console.error(err);
-                this._alert.showError($localize`Failed to delete all rows`);
+                this._alert.showError(
+                  $localize`:error message:Failed to delete all rows`
+                );
               },
             });
         }

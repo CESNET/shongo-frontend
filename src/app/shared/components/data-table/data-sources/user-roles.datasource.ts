@@ -28,12 +28,12 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
     this.displayedColumns = [
       {
         name: 'identity',
-        displayName: 'For user/group',
+        displayName: $localize`:table column:For user/group`,
       },
-      { name: 'role', displayName: 'Role' },
+      { name: 'role', displayName: $localize`:table column:Role` },
       {
         name: 'email',
-        displayName: 'E-mail',
+        displayName: $localize`:table column:E-mail`,
       },
     ];
 

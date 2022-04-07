@@ -122,7 +122,10 @@ export class ReservationRequestFilterComponent
           virtualRoomResourceConfig.technologyNameMap.get(technology),
       }))
       .filter((opt) => opt.displayName) as Option[];
-    technologyOpts.unshift({ value: '-1', displayName: $localize`All` });
+    technologyOpts.unshift({
+      value: '-1',
+      displayName: $localize`:selection option|All available options:All`,
+    });
 
     return technologyOpts;
   }

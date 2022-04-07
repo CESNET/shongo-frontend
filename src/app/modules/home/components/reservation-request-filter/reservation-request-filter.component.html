@@ -3,7 +3,7 @@
     <div class="filter__field-group">
       <!-- Technology -->
       <mat-form-field appearance="outline" class="filter__field">
-        <mat-label>Technology</mat-label>
+        <mat-label i18n="field label">Technology</mat-label>
         <mat-select formControlName="technology">
           <mat-option
             *ngFor="let option of technologyOptions"
@@ -19,7 +19,7 @@
         *ngIf="showAdvancedFilter"
         class="filter__field"
       >
-        <mat-label>Search</mat-label>
+        <mat-label i18n="field label">Search</mat-label>
         <input type="text" matInput formControlName="search" />
       </mat-form-field>
     </div>
@@ -31,7 +31,7 @@
         *ngIf="showAdvancedFilter"
         class="filter__field"
       >
-        <mat-label>From</mat-label>
+        <mat-label i18n="field label:From date">From</mat-label>
         <input
           matInput
           [matDatepicker]="dateFromPicker"
@@ -50,7 +50,7 @@
         *ngIf="showAdvancedFilter"
         class="filter__field"
       >
-        <mat-label>To</mat-label>
+        <mat-label i18n="field label:To date">To</mat-label>
         <input
           matInput
           [matDatepicker]="dateToPicker"
@@ -70,6 +70,7 @@
         formControlName="showFailedRooms"
         color="primary"
         class="filter__checkbox"
+        i18n="checkbox label"
         >Show failed rooms</mat-checkbox
       >
 
@@ -78,6 +79,7 @@
         formControlName="showCapacity"
         color="primary"
         class="filter__checkbox"
+        i18n="checkbox label"
         >Show capacities</mat-checkbox
       >
     </div>
@@ -90,7 +92,14 @@
       (click)="toggleAdvancedFilter()"
       class="buttons__button"
     >
-      {{ showAdvancedFilter ? "Hide advanced filter" : "Show advanced filter" }}
+      <span
+        *ngIf="showAdvancedFilter; else hiddenAdvancedFilter"
+        i18n="button name"
+        >Hide advanced filter</span
+      >
+      <ng-template #hiddenAdvancedFilter>
+        <span i18n="button name">Show advanced filter</span>
+      </ng-template>
     </button>
   </div>
 </div>

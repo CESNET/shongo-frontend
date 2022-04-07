@@ -64,9 +64,18 @@ export class WebconferenceReservationFormComponent
   });
 
   readonly accessModeOpts: Option[] = [
-    { value: WebconferenceAccessMode.CONTROLLED, displayName: 'Controlled' },
-    { value: WebconferenceAccessMode.PUBLIC, displayName: 'Public' },
-    { value: WebconferenceAccessMode.PRIVATE, displayName: 'Private' },
+    {
+      value: WebconferenceAccessMode.CONTROLLED,
+      displayName: $localize`:option name: Adobe connect access mode:Controlled`,
+    },
+    {
+      value: WebconferenceAccessMode.PUBLIC,
+      displayName: $localize`:option name: Adobe connect access mode:Public`,
+    },
+    {
+      value: WebconferenceAccessMode.PRIVATE,
+      displayName: $localize`:option name: Adobe connect access mode:Private`,
+    },
   ];
 
   readonly descriptionErrorHandler = descriptionErrorHandler;

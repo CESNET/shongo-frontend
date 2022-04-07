@@ -20,6 +20,7 @@ import {
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
+import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
@@ -41,6 +42,7 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
   readonly ReservationType = ReservationType;
   readonly AllocationState = AllocationState;
   readonly RoomState = RoomState;
+  readonly AlertType = AlertType;
   readonly ReservationRequestState = ReservationRequestState;
 
   private readonly _destroy$ = new Subject<void>();
@@ -141,12 +143,14 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Item deleted`);
+          this._alert.showSuccess($localize`:success message:Item deleted`);
           this._router.navigateByUrl('/');
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError($localize`Failed to delete item`);
+          this._alert.showError(
+            $localize`:error message:Failed to delete item`
+          );
         },
       });
   }

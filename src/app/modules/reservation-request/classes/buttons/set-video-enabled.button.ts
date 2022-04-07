@@ -20,10 +20,10 @@ export class SetVideoEnabledButton extends ApiActionButton<RuntimeParticipantTab
 
     if (enableCamera) {
       this.icon = 'videocam';
-      this.name = 'Enable camera';
+      this.name = $localize`:button name:Enable camera`;
     } else {
       this.icon = 'videocam_off';
-      this.name = 'Disable camera';
+      this.name = $localize`:button name:Disable camera`;
     }
   }
 
@@ -36,14 +36,19 @@ export class SetVideoEnabledButton extends ApiActionButton<RuntimeParticipantTab
         tap(() => {
           this.removeFromLoading(row);
         }),
-        mapTo($localize`Camera ${this.enableCamera ? 'enabled' : 'disabled'}`),
+        mapTo(
+          this.enableCamera
+            ? $localize`:success message:Camera enabled`
+            : $localize`:success message:Camera disabled`
+        ),
         catchError(() => {
           this.removeFromLoading(row);
-          return throwError(
-            $localize`Failed to ${
-              this.enableCamera ? 'enable' : 'disable'
-            } camera`
-          );
+
+          if (this.enableCamera) {
+            throw new Error($localize`:error message:Failed to enable camera`);
+          } else {
+            throw new Error($localize`:error message:Failed to disable camera`);
+          }
         })
       );
   }

@@ -114,7 +114,9 @@ export class ReservationRequestService extends ApiService {
     microphoneLevel: number
   ): Observable<string> {
     if (microphoneLevel < 0 || microphoneLevel > 100) {
-      throw new Error('Microphone level must be a number between 0 and 100');
+      throw new Error(
+        $localize`:error message:Microphone level must be a number between 0 and 100`
+      );
     }
 
     const url = `${this.endpointURL}/${requestId}/runtime_management/participants/${participantId}`;

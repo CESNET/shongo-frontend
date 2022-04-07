@@ -163,7 +163,7 @@ export class ReservationPageComponent
             !resReq.virtualRoomData?.technology
           ) {
             throw new ParentRequestPropertyError(
-              $localize`Parent reservation request must be of type virtual room.`
+              $localize`:error message:Parent reservation request must be of type virtual room.`
             );
           }
           const virtualRoomResource =
@@ -175,7 +175,7 @@ export class ReservationPageComponent
             this.selectedResource = virtualRoomResource;
           } else {
             throw new ParentRequestPropertyError(
-              $localize`No resource found using room's technology (${resReq.virtualRoomData.technology}).`
+              $localize`:error message:No resource found using room's technology (${resReq.virtualRoomData.technology}).`
             );
           }
         }),

@@ -56,15 +56,28 @@ export class RecordingsTabComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess(
-            $localize`Recording ${record ? 'started' : 'stopped'}`
-          );
+          if (record) {
+            this._alert.showSuccess(
+              $localize`:success message:Recording started`
+            );
+          } else {
+            this._alert.showSuccess(
+              $localize`:success message:Recording stopped`
+            );
+          }
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError(
-            $localize`Failed to ${record ? 'start' : 'stop'} recording`
-          );
+
+          if (record) {
+            this._alert.showError(
+              $localize`:error message:Failed to start recording`
+            );
+          } else {
+            this._alert.showError(
+              $localize`:error message:Failed to stop recording`
+            );
+          }
         },
       });
   }

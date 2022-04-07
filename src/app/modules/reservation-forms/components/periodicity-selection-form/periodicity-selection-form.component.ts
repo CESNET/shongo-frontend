@@ -83,17 +83,17 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     { value: 2, displayName: '2.' },
     { value: 3, displayName: '3.' },
     { value: 4, displayName: '4.' },
-    { value: -1, displayName: 'last' },
+    { value: -1, displayName: $localize`:text:last {day}:last` },
   ];
 
   monthlyDayOpts: Option[] = [
-    { value: Days.MONDAY, displayName: 'Monday' },
-    { value: Days.TUESDAY, displayName: 'Tuesday' },
-    { value: Days.WEDNESDAY, displayName: 'Wednesday' },
-    { value: Days.THURSDAY, displayName: 'Thursday' },
-    { value: Days.FRIDAY, displayName: 'Friday' },
-    { value: Days.SATURDAY, displayName: 'Saturday' },
-    { value: Days.SUNDAY, displayName: 'Sunday' },
+    { value: Days.MONDAY, displayName: $localize`:day:Monday` },
+    { value: Days.TUESDAY, displayName: $localize`:day:Tuesday` },
+    { value: Days.WEDNESDAY, displayName: $localize`:day:Wednesday` },
+    { value: Days.THURSDAY, displayName: $localize`:day:Thursday` },
+    { value: Days.FRIDAY, displayName: $localize`:day:Friday` },
+    { value: Days.SATURDAY, displayName: $localize`:day:Saturday` },
+    { value: Days.SUNDAY, displayName: $localize`:day:Sunday` },
   ];
 
   MonthlyPeriodicityType = MonthlyPeriodicityType;
@@ -304,57 +304,6 @@ export class PeriodicitySelectionFormComponent implements OnInit {
       irregularForm.enable();
       regularForm.disable();
     }
-  }
-
-  getPeriodicityString(): string {
-    const { periodicity, repeatUntil } = this.periodicityForm.value;
-    let periodicityString;
-
-    switch (periodicity) {
-      case 'none':
-        return 'None';
-      case 'daily':
-        periodicityString = 'Repeat daily';
-        break;
-      case 'weekly':
-        const { nthWeek, ...days } =
-          this.periodicityForm.get('weeklyForm')!.value;
-        const selectedDays = Object.entries(days)
-          .filter(([_, isSelected]) => isSelected)
-          .map(([day, _]) => day);
-
-        periodicityString = `Repeat every ${nthWeek}. week at ${selectedDays.join(
-          ', '
-        )}`;
-        break;
-      case 'monthly':
-        const { regularForm, irregularForm, periodicityType } =
-          this.periodicityForm.get('monthlyForm')!.value;
-
-        if (periodicityType === 'irregular') {
-          const { nthDay, day, nthMonth } = irregularForm;
-          periodicityString = `Repeat every ${nthDay} ${day} in every ${nthMonth} month`;
-        } else {
-          const { nthMonth } = regularForm;
-          periodicityString = `Repeat every ${nthMonth}. month`;
-        }
-        break;
-      default:
-        return '';
-    }
-
-    const res =
-      `${periodicityString} until ${this._datePipe.transform(
-        repeatUntil,
-        'LLL'
-      )}` +
-      (this.excludedDays.size !== 0
-        ? ` except for ${Array.from(this.excludedDays)
-            .map((date: Date) => moment(date).format('LL'))
-            .join(', ')}.`
-        : '.');
-
-    return res;
   }
 
   private _weeklyFormValidator =

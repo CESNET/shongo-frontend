@@ -1,20 +1,20 @@
 <header>
-  <h1>Add participant</h1>
+  <h1 i18n="heading">Add participant</h1>
 </header>
 
 <main>
   <form *ngIf="form" [formGroup]="form">
     <div class="participant-type-selection">
-      <label>Participant type:</label>
+      <label i18n="label">Participant type:</label>
       <mat-radio-group
         aria-label="Select participant type"
         formControlName="participantType"
         color="primary"
       >
-        <mat-radio-button [value]="ParticipantType.USER"
+        <mat-radio-button [value]="ParticipantType.USER" i18n="option"
           >With user account</mat-radio-button
         >
-        <mat-radio-button [value]="ParticipantType.ANONYMOUS"
+        <mat-radio-button [value]="ParticipantType.ANONYMOUS" i18n="option"
           >Without user account</mat-radio-button
         >
       </mat-radio-group>
@@ -28,7 +28,7 @@
       formGroupName="userForm"
     >
       <mat-form-field appearance="outline">
-        <mat-label>User</mat-label>
+        <mat-label i18n="field label">User</mat-label>
         <mat-select formControlName="userId">
           <mat-option>
             <ngx-mat-select-search
@@ -43,7 +43,7 @@
             {{ opt.user }}
           </mat-option>
         </mat-select>
-        <mat-hint>Type at least 2 characters</mat-hint>
+        <mat-hint i18n="field hint">Type at least 2 characters</mat-hint>
         <mat-error
           *ngIf="getFormError(form!.get('userForm')!.get('userId')!) as error"
           >{{ error }}</mat-error
@@ -51,7 +51,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Role</mat-label>
+        <mat-label i18n="field label">Role</mat-label>
         <mat-select formControlName="role">
           <mat-option *ngFor="let role of participantRoles" [value]="role">{{
             role | titlecase
@@ -67,7 +67,7 @@
     <ng-template #anonymousForm>
       <form formGroupName="anonymousForm">
         <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
+          <mat-label i18n="field label">Name</mat-label>
           <input type="text" matInput formControlName="name" />
           <mat-error
             *ngIf="
@@ -78,7 +78,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>E-mail</mat-label>
+          <mat-label i18n="field label">E-mail</mat-label>
           <input type="text" matInput formControlName="email" />
           <mat-error
             *ngIf="
@@ -89,9 +89,9 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Role</mat-label>
+          <mat-label i18n="field label">Role</mat-label>
           <mat-select value="guest" [disabled]="true">
-            <mat-option value="guest">Guest</mat-option>
+            <mat-option value="guest" i18n="role">Guest</mat-option>
           </mat-select>
         </mat-form-field>
       </form>
@@ -101,6 +101,7 @@
       <button
         mat-flat-button
         color="primary"
+        i18n="button name"
         [disabled]="!isValid()"
         (click)="postParticipant()"
       >
@@ -108,11 +109,14 @@
       </button>
 
       <ng-container *ngIf="posting$ | async; else cancelButton">
-        <app-loading-text message="Creating participant..."></app-loading-text>
+        <app-loading-text
+          message="Creating participant..."
+          i18n-message="loading text"
+        ></app-loading-text>
       </ng-container>
 
       <ng-template #cancelButton>
-        <a mat-button [routerLink]="'../../'">Cancel</a>
+        <a mat-button [routerLink]="'../../'" i18n="button name">Cancel</a>
       </ng-template>
     </div>
   </form>

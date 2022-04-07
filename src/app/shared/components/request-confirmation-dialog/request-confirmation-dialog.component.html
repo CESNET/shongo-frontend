@@ -1,5 +1,5 @@
 <header>
-  <h1 mat-dialog-title>Request confirmation</h1>
+  <h1 mat-dialog-title i18n="heading">Request confirmation</h1>
 </header>
 
 <mat-dialog-content>
@@ -13,12 +13,12 @@
         mode="indeterminate"
         color="primary"
       ></mat-progress-spinner>
-      <b>Processing</b>
+      <b i18n="loading text">Processing</b>
     </div>
 
     <ng-template #requestDetail>
       <dl class="definition-list--flex">
-        <dt>Created by</dt>
+        <dt i18n="definition tag">Created by</dt>
         <dd>
           {{
             reservationRequest.ownerName +
@@ -28,7 +28,7 @@
           }}
         </dd>
 
-        <dt>Requested slot</dt>
+        <dt i18n="definition tag">Requested slot</dt>
         <dd>
           {{
             (reservationRequest.slot.start | momentDate: "LLL") +
@@ -37,7 +37,7 @@
           }}
         </dd>
 
-        <dt>Request description</dt>
+        <dt i18n="definition tag">Request description</dt>
         <dd>{{ reservationRequest.description }}</dd>
 
         <ng-container
@@ -46,7 +46,7 @@
             else physicalResource
           "
         >
-          <dt>Requested technology</dt>
+          <dt i18n="definition tag">Requested technology</dt>
           <dd>
             {{
               getTechnologyTitle(reservationRequest.virtualRoomData?.technology)
@@ -55,11 +55,20 @@
         </ng-container>
 
         <ng-template #physicalResource>
-          <dt>Requested resource</dt>
+          <dt i18n="definition tag">Requested resource</dt>
           <dd>
-            {{
-              reservationRequest.physicalResourceData?.resourceName ?? "Unknown"
-            }}
+            <span
+              *ngIf="
+                reservationRequest.physicalResourceData
+                  ?.resourceName as resourceName;
+                else unknownResourceName
+              "
+            >
+              {{ resourceName }}
+            </span>
+            <ng-template #unknownResourceName>
+              <span i18n="fallback text">Unknown</span>
+            </ng-template>
           </dd>
         </ng-template>
       </dl>
@@ -71,12 +80,21 @@
   <div class="dialog-actions__left">
     <a
       mat-button
-      aria-label="View request"
+      aria-labelledby="view-request-btn-name"
       [routerLink]="'/reservation-request/' + reservationRequest.id"
       [disabled]="loading$ | async"
-      ><mat-icon>visibility</mat-icon>&nbsp;View request</a
+      ><mat-icon>visibility</mat-icon>&nbsp;<span
+        i18n="button name"
+        id="view-request-btn-name"
+        >View request</span
+      ></a
     >
-    <button mat-button mat-dialog-close [disabled]="loading$ | async">
+    <button
+      mat-button
+      mat-dialog-close
+      i18n="button name"
+      [disabled]="loading$ | async"
+    >
       Close
     </button>
   </div>
@@ -84,6 +102,7 @@
     <button
       mat-flat-button
       color="primary"
+      i18n="button name"
       [disabled]="loading$ | async"
       (click)="accept()"
     >
@@ -92,6 +111,7 @@
     <button
       mat-flat-button
       color="warn"
+      i18n="button name"
       [disabled]="loading$ | async"
       (click)="reject()"
     >

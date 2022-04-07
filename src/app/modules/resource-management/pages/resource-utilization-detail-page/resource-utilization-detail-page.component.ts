@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ReservationsDataSource } from 'src/app/shared/components/data-table/data-sources/reservations.datasource';
+import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
@@ -17,6 +18,8 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
   reservationsDataSource: ReservationsDataSource | undefined;
   data$: Observable<ResourceUtilizationDetail> | undefined;
   loading$ = new BehaviorSubject(false);
+
+  readonly AlertType = AlertType;
 
   constructor(
     private _route: ActivatedRoute,

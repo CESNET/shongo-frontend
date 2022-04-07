@@ -26,6 +26,9 @@ export abstract class StateChipColumnComponent<T> extends ColumnComponent<T> {
   }
 
   getStateDisplayName(state: string): string {
-    return this.statePropsMap.get(state)?.displayName ?? 'Unknown';
+    return (
+      this.statePropsMap.get(state)?.displayName ??
+      $localize`:fallback text:Unknown`
+    );
   }
 }
