@@ -48,6 +48,12 @@ export class SettingsService {
     );
   }
 
+  get canReserve(): boolean {
+    return (
+      this.userSettings?.permissions?.includes(Permission.RESERVATION) ?? false
+    );
+  }
+
   /**
    * Returns first available timezone setting in this order:
    *

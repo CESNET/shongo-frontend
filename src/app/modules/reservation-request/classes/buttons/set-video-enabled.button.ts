@@ -36,13 +36,13 @@ export class SetVideoEnabledButton extends ApiActionButton<RuntimeParticipantTab
         tap(() => {
           this.removeFromLoading(row);
         }),
-        mapTo(
-          `Camera ${this.enableCamera ? 'enabled' : 'disabled'} successfully.`
-        ),
+        mapTo($localize`Camera ${this.enableCamera ? 'enabled' : 'disabled'}`),
         catchError(() => {
           this.removeFromLoading(row);
           return throwError(
-            `Failed to ${this.enableCamera ? 'enable' : 'disable'} camera.`
+            $localize`Failed to ${
+              this.enableCamera ? 'enable' : 'disable'
+            } camera`
           );
         })
       );

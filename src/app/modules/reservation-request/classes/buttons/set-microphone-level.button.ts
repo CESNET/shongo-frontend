@@ -36,10 +36,10 @@ export class SetMicrophoneLevelButton extends ApiActionButton<RuntimeParticipant
               tap(() => {
                 this.removeFromLoading(row);
               }),
-              mapTo('Successfully adjusted microphone level.'),
+              mapTo($localize`Microphone level adjusted`),
               catchError(() => {
                 this.removeFromLoading(row);
-                return throwError('Failed to adjust microphone level.');
+                return throwError($localize`Failed to adjust microphone level`);
               })
             );
         } else {

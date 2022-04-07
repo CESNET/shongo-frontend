@@ -60,6 +60,7 @@
       td.mat-column-select {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
         padding: 1rem;
 
         & > button {

@@ -36,10 +36,10 @@ export class SetDisplayNameButton extends ApiActionButton<RuntimeParticipantTabl
               tap(() => {
                 this.removeFromLoading(row);
               }),
-              mapTo('Display name updated successfully.'),
+              mapTo($localize`Display name updated`),
               catchError(() => {
                 this.removeFromLoading(row);
-                return throwError('Failed to update display name.');
+                return throwError($localize`Failed to update display name`);
               })
             );
         } else {

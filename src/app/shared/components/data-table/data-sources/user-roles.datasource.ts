@@ -41,7 +41,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
       new DeleteButton(
         this.resReqService,
         this.dialog,
-        `/${this.requestId}/role/:id`,
+        `/${this.requestId}/roles/:id`,
         (row: UserRolesTableData) => row.deletable
       ),
     ];

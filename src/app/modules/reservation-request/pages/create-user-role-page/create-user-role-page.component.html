@@ -89,10 +89,7 @@
       </button>
 
       <ng-container *ngIf="posting$ | async; else cancelButton">
-        <div class="posting-loader">
-          <mat-spinner diameter="20"></mat-spinner>
-          <span>Creating participant...</span>
-        </div>
+        <app-loading-text message="Creating participant..."></app-loading-text>
       </ng-container>
 
       <ng-template #cancelButton>
@@ -100,8 +97,4 @@
       </ng-template>
     </div>
   </form>
-
-  <div class="alert">
-    <app-alert message="An error occured" [type]="AlertType.ERROR"></app-alert>
-  </div>
 </main>

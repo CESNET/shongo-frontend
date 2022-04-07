@@ -75,22 +75,24 @@
     </mat-form-field>
 
     <!-- Access mode radio group -->
-    <label id="access-mode-group-label" class="form__label"
-      >Room access mode</label
-    >
-    <mat-radio-group
-      aria-labelledby="access-mode-group-label"
-      formControlName="accessMode"
-      class="form__radio-group"
-    >
-      <mat-radio-button
-        *ngFor="let opt of accessModeOpts"
-        [value]="opt.value"
-        color="primary"
+    <ng-container *ngIf="!editedRequest">
+      <label id="access-mode-group-label" class="form__label"
+        >Room access mode</label
       >
-        {{ opt.displayName }}
-      </mat-radio-button>
-    </mat-radio-group>
+      <mat-radio-group
+        aria-labelledby="access-mode-group-label"
+        formControlName="accessMode"
+        class="form__radio-group"
+      >
+        <mat-radio-button
+          *ngFor="let opt of accessModeOpts"
+          [value]="opt.value"
+          color="primary"
+        >
+          {{ opt.displayName }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </ng-container>
   </div>
 
   <mat-divider vertical class="form__divider"></mat-divider>

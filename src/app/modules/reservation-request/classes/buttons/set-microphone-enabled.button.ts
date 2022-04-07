@@ -30,7 +30,7 @@ export class SetMicrophoneEnabledButton extends ApiActionButton<RuntimeParticipa
   executeAction(row: RuntimeParticipantTableData): Observable<string> {
     this.addToLoading(row);
 
-    const action = this.enableMicrophone ? 'unmuted' : 'muted';
+    const action = this.enableMicrophone ? 'unmute' : 'mute';
 
     return this.resReqService
       .setParticipantMicrophoneEnabled(
@@ -42,7 +42,7 @@ export class SetMicrophoneEnabledButton extends ApiActionButton<RuntimeParticipa
         tap(() => {
           this.removeFromLoading(row);
         }),
-        mapTo(`User ${action} successfully.`),
+        mapTo(`User ${action}d`),
         catchError(() => {
           this.removeFromLoading(row);
           return throwError(`Failed to ${action} user.`);

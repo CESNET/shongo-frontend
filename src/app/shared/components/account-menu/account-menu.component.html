@@ -6,7 +6,16 @@
     class="account"
   >
     <span class="account__body">
-      <mat-icon class="account__icon icon-s">account_circle</mat-icon>
+      <mat-icon
+        class="account__icon icon-s"
+        *ngIf="settings.canReserve; else cannotReserve"
+        >account_circle</mat-icon
+      >
+
+      <ng-template #cannotReserve>
+        <mat-icon class="account__icon icon-s" color="warn">warning</mat-icon>
+      </ng-template>
+
       <span class="account__username">{{
         getUsername() | appShortString: 15
       }}</span>

@@ -26,10 +26,10 @@ export class DisconnectUserButton extends ApiActionButton<RuntimeParticipantTabl
         this.removeFromLoading(row);
         this._deleted$.next();
       }),
-      mapTo(`User disconnected successfully.`),
+      mapTo($localize`User disconnected`),
       catchError(() => {
         this.removeFromLoading(row);
-        return throwError(`Failed to disconnect user.`);
+        return throwError($localize`Failed to disconnect user`);
       })
     );
   }

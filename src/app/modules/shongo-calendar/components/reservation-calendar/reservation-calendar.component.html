@@ -58,7 +58,7 @@
     [class.cal-after-hour-start]="!segment.isStart"
     [ngClass]="segment.cssClass"
     (mousedown)="
-      allowSlotSelection && startDragToCreate(segment, $event, segmentElement)
+      allowSlotSelection && startDragToCreate(segment, segmentElement)
     "
   >
     <div class="cal-time" *ngIf="isTimeLabel">

@@ -6,14 +6,13 @@ import { Observable } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Role } from 'src/app/shared/models/rest-api/role.interface';
 import {
-  GuestParticipantPostBody,
   RequestParticipant,
   RoleBody,
-  UserParticipantPostBody,
 } from 'src/app/shared/models/rest-api/request-participant.interface';
 import { RuntimeParticipant } from 'src/app/shared/models/rest-api/runtime-participant.interface';
 import { SortDirection } from '@angular/material/sort';
 import { Recording } from 'src/app/shared/models/rest-api/recording';
+import { ParticipantPostBody } from 'src/app/shared/models/types/participant-post-body.type';
 
 @Injectable({
   providedIn: 'root',
@@ -47,26 +46,15 @@ export class ReservationRequestService extends ApiService {
     return this.fetchItems(httpParams, participantsEndpoint);
   }
 
-  postUserParticipant(
-    body: UserParticipantPostBody,
+  postParticipant(
+    body: ParticipantPostBody,
     requestId: string
-  ): Observable<UserParticipantPostBody> {
-    const url = `${this.endpointURL}/${requestId}/user_participants`;
-    return this.postItem<UserParticipantPostBody>(
+  ): Observable<ParticipantPostBody> {
+    const url = `${this.endpointURL}/${requestId}/participants`;
+    return this.postItem<ParticipantPostBody>(
       body,
       url
-    ) as Observable<UserParticipantPostBody>;
-  }
-
-  postGuestParticipant(
-    body: GuestParticipantPostBody,
-    requestId: string
-  ): Observable<GuestParticipantPostBody> {
-    const url = `${this.endpointURL}/${requestId}/guest_participants`;
-    return this.postItem<GuestParticipantPostBody>(
-      body,
-      url
-    ) as Observable<GuestParticipantPostBody>;
+    ) as Observable<ParticipantPostBody>;
   }
 
   postRole(body: RoleBody, requestId: string): Observable<RoleBody> {

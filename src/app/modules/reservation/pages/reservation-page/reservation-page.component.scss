@@ -39,9 +39,7 @@ $section-margin: 1.34375em + 0.25em;
   }
 
   &__date-header {
-    &--mobile {
-      font-size: var(--font-size-medium);
-    }
+    font-size: var(--font-size-medium);
   }
 }
 

@@ -238,11 +238,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.view = CalendarView.Day;
   }
 
-  startDragToCreate(
-    segment: WeekViewHourSegment,
-    _: MouseEvent,
-    segmentElement: HTMLElement
-  ) {
+  startDragToCreate(segment: WeekViewHourSegment, segmentElement: HTMLElement) {
     const prevCreatedEvent = this._createdEvent;
     this._createdEvent = this._createSelectionEvent(
       this._auth.identityClaims!,
@@ -331,7 +327,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     const { reservationRequest } = event.meta as CalendarEventMeta;
 
     if (
-      reservationRequest.state === ReservationRequestState.CONFIRM_AWAITING &&
+      reservationRequest?.state === ReservationRequestState.CONFIRM_AWAITING &&
       this._settings.isAdmin
     ) {
       const dialogRef = this._dialog.open(RequestConfirmationDialogComponent, {

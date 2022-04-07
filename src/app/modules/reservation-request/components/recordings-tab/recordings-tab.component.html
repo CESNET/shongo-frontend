@@ -4,35 +4,15 @@
     <span
       *ngIf="reservationRequest.roomCapacityData?.isRecordingActive"
       class="active-recording"
-      >( <span class="red-circle"></span> Recording active )</span
+      >(&nbsp;<span class="red-circle"></span>&nbsp;Recording
+      active&nbsp;)</span
     >
   </h2>
 
-  <button
-    mat-button
-    (click)="setRecording(false)"
-    [disabled]="
-      reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
-    "
-    *ngIf="
-      reservationRequest.roomCapacityData?.isRecordingActive;
-      else startRecord
-    "
-  >
-    <mat-icon color="primary">videocam_off</mat-icon>&nbsp;Stop recording
-  </button>
-
-  <ng-template #startRecord>
-    <button
-      mat-button
-      (click)="setRecording(true)"
-      [disabled]="
-        reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
-      "
-    >
-      <mat-icon color="primary">videocam</mat-icon>&nbsp;Start recording
-    </button>
-  </ng-template>
+  <ng-container
+    *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
+    [ngTemplateOutlet]="recordingButton"
+  ></ng-container>
 </header>
 
 <main>
@@ -43,3 +23,39 @@
     description="List of recordings for this room."
   ></app-data-table>
 </main>
+
+<ng-template #recordingButton>
+  <ng-container
+    *ngIf="(settingRecording$ | async) === false; else settingRecording"
+  >
+    <button
+      mat-button
+      (click)="setRecording(false)"
+      [disabled]="
+        reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
+      "
+      *ngIf="
+        reservationRequest.roomCapacityData?.isRecordingActive;
+        else startRecord
+      "
+    >
+      <mat-icon color="primary">videocam_off</mat-icon>&nbsp;Stop recording
+    </button>
+  </ng-container>
+</ng-template>
+
+<ng-template #settingRecording>
+  <app-loading-text></app-loading-text>
+</ng-template>
+
+<ng-template #startRecord>
+  <button
+    mat-button
+    (click)="setRecording(true)"
+    [disabled]="
+      reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
+    "
+  >
+    <mat-icon color="primary">videocam</mat-icon>&nbsp;Start recording
+  </button>
+</ng-template>

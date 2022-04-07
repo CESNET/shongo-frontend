@@ -34,6 +34,10 @@ nav {
 }
 
 /* Images */
+.image-row {
+  display: flex;
+  gap: 1em;
+}
 .labeled-img {
   width: fit-content;
   display: flex;
