@@ -35,9 +35,20 @@
         <mat-icon>settings</mat-icon>&nbsp;Edit
       </a>
       <!-- Delete button -->
-      <button mat-flat-button color="warn" class="buttons__button">
+      <button
+        mat-flat-button
+        color="warn"
+        class="buttons__button"
+        aria-label="Delete"
+        *ngIf="(deleting$ | async) === false; else deleting"
+        (click)="delete()"
+      >
         <mat-icon>delete_forever</mat-icon>&nbsp;Delete
       </button>
+
+      <ng-template #deleting>
+        <app-loading-text message="Deleting..."></app-loading-text>
+      </ng-template>
     </ng-container>
   </div>
 </header>
