@@ -5,6 +5,7 @@ import { IsAuthGuard } from './core/guards/is-auth.guard';
 import { UnauthorizedPageComponent } from './core/components/unauthorized-page/unauthorized-page.component';
 import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
 import { MainLayoutComponent } from './core/components/main-layout/main-layout.component';
+import { CanReserveGuard } from './core/guards/can-reserve.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
       import('./modules/reservation/reservation.module').then(
         (m) => m.ReservationModule
       ),
-    canLoad: [IsAuthGuard],
+    canLoad: [IsAuthGuard, CanReserveGuard],
   },
   {
     path: '',
