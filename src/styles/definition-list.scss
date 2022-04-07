@@ -3,15 +3,16 @@ dl {
 }
 dt,
 dd {
-  padding-bottom: 0.7em;
+  padding-bottom: 1em;
   word-break: break-all;
 }
 dt {
-  color: var(--gray-200);
-  font-weight: bold;
+  color: var(--black);
+  font-weight: 500;
 }
 dd {
   margin-left: 3ch;
+  color: var(--gray-200);
 }
 
 .definition-list--flex {

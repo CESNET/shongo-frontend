@@ -141,12 +141,12 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Item deleted successfully.`);
+          this._alert.showSuccess($localize`Item deleted`);
           this._router.navigateByUrl('/');
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError($localize`Failed to delete item.`);
+          this._alert.showError($localize`Failed to delete item`);
         },
       });
   }

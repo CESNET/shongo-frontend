@@ -41,7 +41,7 @@ export class DeleteButton<T>
               this.removeFromLoading(row);
               this._deleted$.next();
             }),
-            mapTo('Item deleted successfully'),
+            mapTo('Item deleted'),
             catchError(() => {
               this.removeFromLoading(row);
               return throwError('Item deletion failed');

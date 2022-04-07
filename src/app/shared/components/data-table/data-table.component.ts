@@ -239,13 +239,13 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
             .pipe(first())
             .subscribe({
               next: () => {
-                this._alert.showSuccess($localize`Items deleted successfully.`);
+                this._alert.showSuccess($localize`Items deleted`);
                 this.dataSource.refreshData();
               },
               error: (err) => {
                 console.error(err);
                 this._alert.showError(
-                  $localize`Failed to delete selected rows.`
+                  $localize`Failed to delete selected rows`
                 );
               },
             });
@@ -276,12 +276,12 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
             .pipe(first())
             .subscribe({
               next: () => {
-                this._alert.showSuccess($localize`Rows deleted successfully.`);
+                this._alert.showSuccess($localize`Rows deleted`);
                 this.dataSource.refreshData();
               },
               error: (err) => {
                 console.error(err);
-                this._alert.showError($localize`Failed to delete all rows.`);
+                this._alert.showError($localize`Failed to delete all rows`);
               },
             });
         }

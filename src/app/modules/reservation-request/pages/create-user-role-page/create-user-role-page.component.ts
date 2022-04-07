@@ -64,11 +64,11 @@ export class CreateUserRolePageComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Role created successfully.`);
+          this._alert.showSuccess($localize`Role created`);
           this._router.navigate(['../../'], { relativeTo: this._route });
         },
         error: () => {
-          this._alert.showError($localize`Failed to create role.`);
+          this._alert.showError($localize`Failed to create role`);
         },
       });
   }

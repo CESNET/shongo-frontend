@@ -13,20 +13,6 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { finalize, first, takeUntil } from 'rxjs/operators';
-import {
-  addDays,
-  addMinutes,
-  endOfDay,
-  endOfMonth,
-  endOfWeek,
-  isSaturday,
-  isSunday,
-  nextSaturday,
-  previousSunday,
-  startOfDay,
-  startOfMonth,
-  startOfWeek,
-} from 'date-fns';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -42,6 +28,7 @@ import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { ReservationRequestState } from '../../../../shared/models/enums/reservation-request-state.enum';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
+import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -194,6 +181,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this._loading$.next(true);
 
     const interval = this._getInterval(this.viewDate);
+
     let filter = new HttpParams()
       .set('interval_from', moment(interval.start).unix() * 1000)
       .set('interval_to', moment(interval.end).unix() * 1000);
@@ -251,9 +239,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.slotSelected.emit(this.selectedSlot);
 
     const segmentPosition = segmentElement.getBoundingClientRect();
-    const endOfView = endOfWeek(this.viewDate, {
-      weekStartsOn: this.weekStartsOn,
-    });
+    const endOfView = moment(this.viewDate).endOf('week').toDate();
 
     (fromEvent(document, 'mousemove') as Observable<MouseEvent>)
       .pipe(
@@ -275,7 +261,10 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
             segmentPosition.width
           ) / segmentPosition.width;
 
-        const newEnd = addDays(addMinutes(segment.date, minutesDiff), daysDiff);
+        const newEnd = moment(segment.date)
+          .add(minutesDiff, 'minute')
+          .add(daysDiff, 'day')
+          .toDate();
         if (
           newEnd > segment.date &&
           newEnd < endOfView &&
@@ -351,21 +340,34 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     let intervalTo: Date;
 
     if (this.view === CalendarView.Day) {
-      intervalFrom = startOfDay(viewDate);
-      intervalTo = endOfDay(viewDate);
+      intervalFrom = moment(viewDate).startOf('day').toDate();
+      intervalTo = moment(viewDate).endOf('day').toDate();
     } else if (this.view === CalendarView.Week) {
-      intervalFrom = startOfWeek(viewDate);
-      intervalTo = endOfWeek(viewDate);
+      intervalFrom = moment(viewDate).startOf('week').toDate();
+      intervalTo = moment(viewDate).endOf('week').toDate();
     } else {
-      const monthStart = startOfMonth(viewDate);
-      const monthEnd = endOfMonth(viewDate);
+      const monthStart = moment(viewDate).startOf('month').toDate();
+      const monthEnd = moment(viewDate).endOf('month').toDate();
 
-      intervalFrom = isSunday(monthStart)
-        ? monthStart
-        : startOfDay(previousSunday(monthStart));
-      intervalTo = isSaturday(monthEnd)
-        ? endOfDay(monthEnd)
-        : endOfDay(nextSaturday(monthEnd));
+      // If date is sunday return start of date, else return start of last sunday (month view starts on sunday).
+      const intervalFromDay = moment(monthStart).day();
+      intervalFrom =
+        intervalFromDay === 7
+          ? moment(monthStart).startOf('day').toDate()
+          : moment(monthStart)
+              .subtract(intervalFromDay, 'day')
+              .startOf('day')
+              .toDate();
+
+      // If date is saturday return end saturday, else return end of next saturday (month view ends on saturday).
+      const indervalToDay = moment(monthEnd).day();
+      intervalTo =
+        indervalToDay === 6
+          ? moment(monthEnd).endOf('day').toDate()
+          : moment(monthEnd)
+              .add(6 - indervalToDay, 'day')
+              .endOf('day')
+              .toDate();
     }
 
     return { start: intervalFrom, end: intervalTo };

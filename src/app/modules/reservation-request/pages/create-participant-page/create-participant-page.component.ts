@@ -85,7 +85,7 @@ export class CreateParticipantPageComponent {
       )
       .subscribe({
         next: () => {
-          this._alert.showSuccess($localize`Participant created successfully`);
+          this._alert.showSuccess($localize`Participant created`);
           this._router.navigate(['../../'], { relativeTo: this._route });
         },
         error: () => {

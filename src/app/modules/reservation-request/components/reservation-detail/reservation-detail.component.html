@@ -99,7 +99,9 @@
               periodicity.type !== PeriodicityType.NONE
             "
           >
-            <i class="gray">(until {{ periodicity.periodicityEnd | date }})</i>
+            <i class="grayed-text"
+              >(until {{ periodicity.periodicityEnd | date }})</i
+            >
           </span>
         </dd>
         <ng-container
@@ -195,7 +197,7 @@
           <dd>{{ participantCount }}</dd>
         </ng-container>
 
-        <!-- Recourd -->
+        <!-- Record -->
         <ng-container
           *ngIf="
             currentRequest.virtualRoomData?.technology !==
