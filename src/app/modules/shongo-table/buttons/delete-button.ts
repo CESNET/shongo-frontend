@@ -2,7 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api.service';
-import { CertainityCheckComponent } from '../../certainity-check/certainity-check.component';
+import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
 import { WithPathTemplate } from '../models/interfaces/with-path-template.interface';
 import { ApiActionButton } from './api-action-button';
 import { RowPredicate } from './table-button';

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { StateColor } from '../../../state-chip/state-chip.component';
+import { StateColor } from 'src/app/shared/components/state-chip/state-chip.component';
 import { TableSettings } from '../../filter/data-table-filter';
 import { ColumnData } from '../../models/interfaces/column-data.interface';
 import { ColumnComponent } from '../column.component';

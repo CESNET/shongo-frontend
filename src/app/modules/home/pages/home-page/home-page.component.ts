@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RoomService } from 'src/app/core/http/room/room.service';
-import { ParticipationInRoomsDataSource } from 'src/app/shared/components/data-table/data-sources/participation-in-rooms.datasource';
-import { PhysicalReservationsDataSource } from 'src/app/shared/components/data-table/data-sources/physical-reservations.datasource';
-import { YourRoomsDataSource } from 'src/app/shared/components/data-table/data-sources/your-rooms.datasource';
+import { ParticipationInRoomsDataSource } from 'src/app/modules/shongo-table/data-sources/participation-in-rooms.datasource';
+import { PhysicalReservationsDataSource } from 'src/app/modules/shongo-table/data-sources/physical-reservations.datasource';
+import { YourRoomsDataSource } from 'src/app/modules/shongo-table/data-sources/your-rooms.datasource';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({

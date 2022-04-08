@@ -13,9 +13,6 @@ import {
   RequestModification,
   ReservationRequestDetail,
 } from 'src/app/shared/models/rest-api/reservation-request.interface';
-import resReqPropsMap from 'src/app/shared/components/data-table/models/maps/reservation-request-state-props.map';
-import { StateProps } from 'src/app/shared/components/data-table/column-components/state-chip-column/state-chip-column.component';
-import { ModificationHistoryDataSource } from 'src/app/shared/components/data-table/data-sources/modification-history.datasource';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { first } from 'rxjs/operators';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
@@ -26,6 +23,9 @@ import { AliasType } from 'src/app/shared/models/enums/alias-type.enum';
 import { aliasTypeMap } from 'src/app/shared/models/maps/alias-type.map';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
+import { StateProps } from 'src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component';
+import { ModificationHistoryDataSource } from 'src/app/modules/shongo-table/data-sources/modification-history.datasource';
+import resReqPropsMap from 'src/app/modules/shongo-table/models/maps/reservation-request-state-props.map';
 
 @Component({
   selector: 'app-reservation-detail',

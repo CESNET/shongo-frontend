@@ -11,11 +11,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import {
   DataTableFilter,
   TableSettings,
-} from '../../../../shared/components/data-table/filter/data-table-filter';
-import { Option } from 'src/app/shared/models/interfaces/option.interface';
+} from 'src/app/modules/shongo-table/filter/data-table-filter';
 
 @Component({
   selector: 'app-reservation-request-filter',

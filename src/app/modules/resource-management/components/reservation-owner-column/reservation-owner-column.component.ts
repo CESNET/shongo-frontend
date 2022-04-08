@@ -2,11 +2,11 @@ import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   ColumnComponent,
-  SETTINGS_PROVIDER,
   COL_DATA_PROVIDER,
-} from 'src/app/shared/components/data-table/column-components/column.component';
-import { TableSettings } from 'src/app/shared/components/data-table/filter/data-table-filter';
-import { ColumnData } from 'src/app/shared/components/data-table/models/interfaces/column-data.interface';
+  SETTINGS_PROVIDER,
+} from 'src/app/modules/shongo-table/column-components/column.component';
+import { TableSettings } from 'src/app/modules/shongo-table/filter/data-table-filter';
+import { ColumnData } from 'src/app/modules/shongo-table/models/interfaces/column-data.interface';
 import {
   ResourceOwner,
   ResourceReservationTableData,

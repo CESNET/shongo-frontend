@@ -8,6 +8,8 @@ import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interfa
 import { TableButton } from '../buttons/table-button';
 import { HttpParams } from '@angular/common/http';
 import { ApiService } from 'src/app/core/http/api.service';
+import { DataTableFilter } from '../filter/data-table-filter';
+import { Type } from '@angular/core';
 
 export const REFRESH_TIMEOUT = 200;
 
@@ -19,6 +21,7 @@ export const REFRESH_TIMEOUT = 200;
 export abstract class DataTableDataSource<T> extends DataSource<T> {
   readonly apiService?: ApiService;
 
+  filterComponent?: Type<DataTableFilter>;
   displayedColumns: TableColumn<T>[] = [];
   buttons: TableButton<T>[] = [];
   paginator: MatPaginator | undefined;

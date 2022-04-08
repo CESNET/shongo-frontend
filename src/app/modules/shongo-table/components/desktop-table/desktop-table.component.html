@@ -1,4 +1,5 @@
-<div class="table-container" appMatTableResponsive>
+<!-- Desktop template -->
+<mat-card>
   <header *ngIf="showRefreshButton || showDeleteButtons || description">
     <section class="top-header-section">
       <span>{{ description }}</span>
@@ -41,41 +42,9 @@
       </div>
     </section>
     <mat-divider></mat-divider>
-    <ng-content></ng-content>
+    <ng-template appComponentHost></ng-template>
     <mat-divider *ngIf="filter"></mat-divider>
   </header>
-
-  <div class="mobile-table-sort">
-    <span class="mobile-table-sort__heading" i18n="heading"
-      >Table sort options</span
-    >
-
-    <form class="mobile-table-sort__form" [formGroup]="sortForm">
-      <mat-form-field appearance="outline">
-        <mat-label i18n="field label|Table sorting form on mobile view"
-          >Field</mat-label
-        >
-        <mat-select formControlName="field">
-          <mat-option
-            *ngFor="let column of dataSource.displayedColumns"
-            [value]="column.name"
-          >
-            {{ column.displayName }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label i18n="field label|Table sorting form on mobile view"
-          >Order</mat-label
-        >
-        <mat-select formControlName="order">
-          <mat-option value="desc" i18n="sort order">Descending</mat-option>
-          <mat-option value="asc" i18n="sort order">Ascending</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
-  </div>
 
   <table
     [hidden]="(dataSource.loading$ | async) || dataSource.data.count === 0"
@@ -98,7 +67,7 @@
         <td
           mat-cell
           *matCellDef="let row"
-          [matTooltip]="getTooltip(row[column.name])"
+          [matTooltip]="getTooltipText(row[column.name])"
         >
           <ng-container *ngIf="row[column.name] as cellData; else noCellData">
             {{ cellData | appShortString: maxCellTextLength }}
@@ -250,4 +219,4 @@
     "
   >
   </mat-paginator>
-</div>
+</mat-card>

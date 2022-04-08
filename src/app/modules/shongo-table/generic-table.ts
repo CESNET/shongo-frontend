@@ -1,78 +1,66 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
-  ViewChild,
-  ChangeDetectionStrategy,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
-  ContentChild,
-  Injector,
-  ChangeDetectorRef,
+  ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter, first, takeUntil } from 'rxjs/operators';
-import { DataTableDataSource } from './data-sources/data-table-datasource';
-import { DataTableFilter } from './filter/data-table-filter';
-import { TableButton } from './buttons/table-button';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
+import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
+import { TableButtonType } from 'src/app/shared/models/enums/table-button-type.enum';
+import { ActionButton } from './buttons/action-button';
 import { ApiActionButton } from './buttons/api-action-button';
 import { LinkButton } from './buttons/link-button';
-import { TableButtonType } from '../../models/enums/table-button-type.enum';
-import { ActionButton } from './buttons/action-button';
+import { TableButton } from './buttons/table-button';
 import {
-  SETTINGS_PROVIDER,
   COL_DATA_PROVIDER,
+  SETTINGS_PROVIDER,
 } from './column-components/column.component';
-import { FormControl, FormGroup } from '@angular/forms';
+import { DataTableDataSource } from './data-sources/data-table-datasource';
 import { StaticDataSource } from './data-sources/static-datasource';
-import { AlertService } from 'src/app/core/services/alert.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CertainityCheckComponent } from '../certainity-check/certainity-check.component';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { DataTableFilter } from './filter/data-table-filter';
 
 @Component({
-  selector: 'app-data-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '',
 })
-export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
-  @ContentChild('tableFilter') filter: DataTableFilter | undefined;
+export abstract class GenericTableComponent<T>
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<T>;
+  @ViewChild(ComponentHostDirective) filterHost?: ComponentHostDirective;
   @Input() dataSource!: DataTableDataSource<T>;
   @Input() showCheckboxes = true;
   @Input() description: string = '';
   @Input() showDeleteButtons = true;
   @Input() fixedLayout = false;
 
-  TableButtonType = TableButtonType;
-  selection = new SelectionModel<T>(true, []);
-  maxCellTextLength = 21;
-  displayedColumns: Observable<string[]>;
+  filter?: DataTableFilter;
 
-  sortForm = new FormGroup({
-    field: new FormControl(''),
-    order: new FormControl('asc'),
-  });
+  abstract maxCellTextLength?: number;
 
-  private _displayedColumns = new BehaviorSubject<string[]>([]);
-  private _destroy$ = new Subject<void>();
+  readonly TableButtonType = TableButtonType;
+  readonly selection = new SelectionModel<T>(true, []);
+  readonly displayedColumns: Observable<string[]>;
 
-  // Prevents infinite loops of changing sort in the form and the header.
-  private _sortChangeMutex = true;
+  protected _displayedColumns = new BehaviorSubject<string[]>([]);
+  protected _destroy$ = new Subject<void>();
 
   constructor(
-    private _injector: Injector,
-    private _cd: ChangeDetectorRef,
-    private _alert: AlertService,
-    private _dialog: MatDialog,
-    private _br: BreakpointObserver
+    protected _cd: ChangeDetectorRef,
+    protected _injector: Injector,
+    protected _alert: AlertService,
+    protected _dialog: MatDialog
   ) {
     this.displayedColumns = this._displayedColumns.asObservable();
   }
@@ -84,38 +72,23 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this._displayedColumns.next(this._buildDisplayedColumnsArray());
     this._observeLoading();
-    this._observeSortForm();
-    this._observeTabletBreakpoint();
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.filter$ = this.filter?.httpQuery$;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
 
-    this.sort.sortChange
-      .pipe(
-        takeUntil(this._destroy$),
-        filter(() => this._sortChangeMutex)
-      )
-      .subscribe(({ active, direction }) => {
-        this._sortChangeMutex = false;
-        const { field, order } = this.sortForm.value as Record<string, string>;
+    // Try rendering filter
+    this._renderFilterComponent();
 
-        if (field !== active) {
-          this.sortForm.get('field')!.setValue(active);
-        }
-        if (order !== direction) {
-          this.sortForm.get('order')!.setValue(direction);
-        }
-        this._sortChangeMutex = true;
-      });
+    if (this.filter) {
+      this.dataSource.filter$ = this.filter.httpQuery$;
 
-    // Needed to detect changes in custom components.
-    this.filter?.settings$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(() => this._cd.detectChanges());
+      // Needed to detect changes in custom components.
+      this.filter.settings$
+        .pipe(takeUntil(this._destroy$))
+        .subscribe(() => this._cd.detectChanges());
+    }
   }
 
   ngOnDestroy(): void {
@@ -152,7 +125,10 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
    * @returns Tooltip text.
    */
   getTooltipText(text: string): string {
-    if (text.length > this.maxCellTextLength) {
+    if (
+      this.maxCellTextLength !== undefined &&
+      text.length > this.maxCellTextLength
+    ) {
       return text;
     }
     return '';
@@ -167,24 +143,6 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     return TableButtonType.ACTION;
   }
 
-  handleButtonClick(button: TableButton<T>, row: T): void {
-    if (button instanceof ActionButton) {
-      button
-        .executeAction(row)
-        .pipe(first())
-        .subscribe({
-          next: (msg) => {
-            if (msg) {
-              this._alert.showSuccess(msg);
-            }
-          },
-          error: (msg) => {
-            this._alert.showError(msg);
-          },
-        });
-    }
-  }
-
   createColComponentValueInjector(row: T, columnName: string): Injector {
     const tableSettings = this.filter?.settings$;
     return Injector.create({
@@ -194,12 +152,6 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
       ],
       parent: this._injector,
     });
-  }
-
-  getTooltip(cellData: string): string {
-    return (cellData && cellData.length) > this.maxCellTextLength
-      ? cellData
-      : '';
   }
 
   filterDisplayedButtons(row: T): TableButton<T>[] {
@@ -296,6 +248,33 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+  handleButtonClick(button: TableButton<T>, row: T): void {
+    if (button instanceof ActionButton) {
+      button
+        .executeAction(row)
+        .pipe(first())
+        .subscribe({
+          next: (msg) => {
+            if (msg) {
+              this._alert.showSuccess(msg);
+            }
+          },
+          error: (msg) => {
+            this._alert.showError(msg);
+          },
+        });
+    }
+  }
+
+  private _renderFilterComponent(): void {
+    if (this.filterHost && this.dataSource.filterComponent) {
+      this.filterHost.viewContainerRef.clear();
+      this.filter = this.filterHost.viewContainerRef.createComponent(
+        this.dataSource.filterComponent
+      ).instance;
+    }
+  }
+
   private _buildDisplayedColumnsArray(): string[] {
     const displayedColumns = [...this.dataSource.getColumnNames()];
 
@@ -317,46 +296,5 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit, OnDestroy {
         filter((loading) => !loading)
       )
       .subscribe(() => this.selection.clear());
-  }
-
-  private _observeTabletBreakpoint(): void {
-    this._br
-      .observe('(max-width: 768px)')
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((hit) => {
-        if (hit.matches) {
-          this.maxCellTextLength = 200;
-        } else {
-          this.maxCellTextLength = this._calcMaxCellLength();
-        }
-        this._cd.detectChanges();
-      });
-  }
-
-  private _calcMaxCellLength(): number {
-    return Math.round(150 / this._displayedColumns.value.length);
-  }
-
-  private _observeSortForm(): void {
-    this.sortForm.valueChanges
-      .pipe(
-        takeUntil(this._destroy$),
-        filter(() => this._sortChangeMutex)
-      )
-      .subscribe(({ field, order }) => {
-        if (field) {
-          this._sortChangeMutex = false;
-          const sortable = this.sort.sortables.get(field)!;
-          sortable.start = order;
-          const dir = this.sort.getNextSortDirection(sortable);
-          this.sort.sort(sortable);
-
-          // Skip the no direction option
-          if (dir === '') {
-            this.sort.sort(sortable);
-          }
-          this._sortChangeMutex = true;
-        }
-      });
   }
 }

@@ -4,9 +4,9 @@ import {
   ColumnComponent,
   COL_DATA_PROVIDER,
   SETTINGS_PROVIDER,
-} from 'src/app/shared/components/data-table/column-components/column.component';
-import { TableSettings } from 'src/app/shared/components/data-table/filter/data-table-filter';
-import { ColumnData } from 'src/app/shared/components/data-table/models/interfaces/column-data.interface';
+} from 'src/app/modules/shongo-table/column-components/column.component';
+import { TableSettings } from 'src/app/modules/shongo-table/filter/data-table-filter';
+import { ColumnData } from 'src/app/modules/shongo-table/models/interfaces/column-data.interface';
 import { Recording } from 'src/app/shared/models/rest-api/recording';
 
 @Component({

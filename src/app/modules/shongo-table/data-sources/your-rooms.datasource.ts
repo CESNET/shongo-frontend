@@ -12,6 +12,7 @@ import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-r
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
+import { ReservationRequestFilterComponent } from '../../home/components/reservation-request-filter/reservation-request-filter.component';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
@@ -30,6 +31,8 @@ export interface YourRoomsTableData {
 }
 
 export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData> {
+  filterComponent = ReservationRequestFilterComponent;
+
   constructor(
     public apiService: ReservationRequestService,
     private _datePipe: MomentDatePipe,

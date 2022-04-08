@@ -18,6 +18,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RequestIdColumnComponent } from './components/request-id-column/request-id-column.component';
+import { ShongoTableModule } from '../shongo-table/shongo-table.module';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { RequestIdColumnComponent } from './components/request-id-column/request
     MatMomentDateModule,
     MatInputModule,
     MatSlideToggleModule,
+    ShongoTableModule,
   ],
   declarations: [
     ResourceCapacityUtilizationPageComponent,
