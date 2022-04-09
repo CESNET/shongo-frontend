@@ -54,7 +54,16 @@
 </ng-container>
 
 <ng-template #loggedOutFallback>
-  <button mat-button (click)="auth.login()" i18n="button name|Log in button">
+  <button
+    mat-button
+    (click)="auth.login()"
+    i18n="button name|Log in button"
+    *ngIf="auth.isDoneLoading$ | async; else loggingIn"
+  >
     Log in
   </button>
+</ng-template>
+
+<ng-template #loggingIn>
+  <app-loading-text message=""></app-loading-text>
 </ng-template>
