@@ -2,7 +2,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   OnDestroy,
-  ContentChild,
   Input,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';

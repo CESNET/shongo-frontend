@@ -31,6 +31,9 @@
 mat-spinner.button-loading {
   margin: 0 1em;
 }
+td {
+  font-size: var(--font-size-small);
+}
 
 /* Loading display */
 .loading {

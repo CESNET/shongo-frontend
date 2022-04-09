@@ -10,6 +10,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { GenericTableComponent } from '../../generic-table';
@@ -25,9 +26,10 @@ export class DesktopTableComponent<T>
   implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild(MatTable) table!: MatTable<T>;
+  @ViewChild(MatSort) sort!: MatSort;
   @Input() fixedLayout = false;
 
-  maxCellTextLength = 21;
+  maxCellTextLength = 50;
 
   constructor(
     protected _cd: ChangeDetectorRef,
@@ -44,6 +46,7 @@ export class DesktopTableComponent<T>
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
+    this.dataSource.sort = this.sort;
     this.table.dataSource = this.dataSource;
     this.maxCellTextLength = this._calcMaxCellLength();
   }
@@ -53,6 +56,6 @@ export class DesktopTableComponent<T>
   }
 
   private _calcMaxCellLength(): number {
-    return Math.round(150 / this._displayedColumns.value.length);
+    return Math.round(300 / this._displayedColumns.value.length);
   }
 }

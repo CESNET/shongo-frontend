@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter, first, takeUntil } from 'rxjs/operators';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -37,17 +36,14 @@ export abstract class GenericTableComponent<T>
   implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(ComponentHostDirective) filterHost?: ComponentHostDirective;
   @Input() dataSource!: DataTableDataSource<T>;
   @Input() showCheckboxes = true;
   @Input() description: string = '';
   @Input() showDeleteButtons = true;
-  @Input() fixedLayout = false;
 
   filter?: DataTableFilter;
-
-  abstract maxCellTextLength?: number;
+  maxCellTextLength?: number;
 
   readonly TableButtonType = TableButtonType;
   readonly selection = new SelectionModel<T>(true, []);
@@ -75,7 +71,6 @@ export abstract class GenericTableComponent<T>
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 
     // Try rendering filter
@@ -167,7 +162,9 @@ export abstract class GenericTableComponent<T>
         $localize`:error message:Mass deletion is not available for this table`
       );
     } else if (!this.selection || this.selection.isEmpty()) {
-      return this._alert.showWarning(`:warning message:No rows were selected`);
+      return this._alert.showWarning(
+        $localize`:warning message:No rows were selected`
+      );
     } else if (!this.selection.selected.every((item) => 'id' in item)) {
       console.error(`All selected rows must have an id`);
       return this._alert.showError(

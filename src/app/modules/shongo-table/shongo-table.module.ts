@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { DesktopTableComponent } from './components/desktop-table/desktop-table.component';
 import { MobileTableComponent } from './components/mobile-table/mobile-table.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { MobileTableComponent } from './components/mobile-table/mobile-table.com
     SharedModule,
     MatButtonModule,
     MatCardModule,
+    NgxSkeletonLoaderModule,
   ],
   exports: [
     DataTableComponent,

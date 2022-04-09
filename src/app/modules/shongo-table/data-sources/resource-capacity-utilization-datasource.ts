@@ -1,4 +1,5 @@
 import { HttpParams } from '@angular/common/http';
+import { Type } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,7 +9,9 @@ import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interfa
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { ResourceCapacityUtilizationFilterComponent } from '../../resource-management/components/resource-capacity-utilization-filter/resource-capacity-utilization-filter.component';
 import { TableButton } from '../buttons/table-button';
+import { DataTableFilter } from '../filter/data-table-filter';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
@@ -29,8 +32,7 @@ export interface ResourceCapacityUtilizationTableData extends Utilization {
 }
 
 export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<ResourceCapacityUtilizationTableData> {
-  displayedColumns: TableColumn<ResourceCapacityUtilizationTableData>[];
-  buttons: TableButton<ResourceCapacityUtilizationTableData>[] = [];
+  filterComponent = ResourceCapacityUtilizationFilterComponent;
 
   constructor(
     private _resourceService: ResourceService,
