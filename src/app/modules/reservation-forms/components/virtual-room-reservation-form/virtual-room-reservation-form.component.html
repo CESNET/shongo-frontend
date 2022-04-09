@@ -1,0 +1,153 @@
+<form [formGroup]="form" class="form">
+  <!-- Technology field -->
+  <mat-form-field appearance="outline" class="form__field">
+    <mat-label i18n="field label">Technology</mat-label>
+    <mat-select
+      formControlName="resource"
+      (valueChange)="onTechnologyChange($event)"
+    >
+      <mat-option *ngFor="let opt of technologyOpts" [value]="opt.value">{{
+        opt.displayName
+      }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="getFormError(form.get('resource')!) as error">{{
+      error
+    }}</mat-error>
+  </mat-form-field>
+
+  <!-- Description field -->
+  <mat-form-field appearance="outline" class="form__field">
+    <mat-label i18n="field label">Description</mat-label>
+    <input type="text" matInput formControlName="description" />
+    <mat-error
+      *ngIf="
+        getFormError(form.get('description')!, descriptionErrorHandler) as error
+      "
+      >{{ error }}</mat-error
+    >
+  </mat-form-field>
+
+  <!-- Room name field -->
+  <mat-form-field appearance="outline" class="form__field">
+    <mat-label i18n="field label">Room name</mat-label>
+    <input type="text" matInput formControlName="roomName" />
+    <mat-error
+      *ngIf="getFormError(form.get('roomName')!, roomNameErrorHandler) as error"
+      >{{ error }}</mat-error
+    >
+  </mat-form-field>
+
+  <!-- Time zone field -->
+  <mat-form-field appearance="outline" class="form__field">
+    <mat-label i18n="field label">Time zone</mat-label>
+    <mat-select formControlName="timezone">
+      <mat-option>
+        <ngx-mat-select-search
+          appTimezoneSearch
+          #timezoneSarch="timezoneSearch"
+        ></ngx-mat-select-search>
+      </mat-option>
+      <mat-option
+        *ngFor="let opt of timezoneSarch.filteredTimezones | async"
+        [value]="opt.timezone"
+      >
+        {{ opt.label }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="getFormError(form.get('timezone')!) as error">{{
+      error
+    }}</mat-error>
+  </mat-form-field>
+
+  <div [ngSwitch]="getSelectedTechnology()">
+    <div *ngSwitchCase="Technology.PEXIP">
+      <ng-container *ngTemplateOutlet="videoconferenceFields"></ng-container>
+    </div>
+    <div *ngSwitchCase="Technology.H323_SIP">
+      <ng-container *ngTemplateOutlet="videoconferenceFields"></ng-container>
+    </div>
+    <div
+      *ngSwitchCase="Technology.ADOBE_CONNECT"
+      formGroupName="webconferenceFields"
+      class="form"
+    >
+      <!-- User pin field -->
+      <mat-form-field appearance="outline" class="form__field--pin">
+        <mat-label i18n="field label">User PIN</mat-label>
+        <input type="text" matInput formControlName="userPin" />
+        <mat-error
+          *ngIf="
+            getFormError(
+              webconferenceFieldsForm.get('userPin')!,
+              pinErrorHandler
+            ) as error
+          "
+          >{{ error }}</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div
+      *ngSwitchCase="Technology.FREEPBX"
+      formGroupName="teleconferenceFields"
+      class="form"
+    >
+      <!-- Admin pin field -->
+      <mat-form-field appearance="outline" class="form__field--pin">
+        <mat-label i18n="field label">Admin PIN</mat-label>
+        <input type="text" matInput formControlName="adminPin" />
+        <mat-error
+          *ngIf="
+            getFormError(
+              teleconferenceFieldsForm.get('adminPin')!,
+              pinErrorHandler
+            ) as error
+          "
+          >{{ error }}</mat-error
+        >
+      </mat-form-field>
+
+      <!-- User pin field -->
+      <mat-form-field appearance="outline" class="form__field--pin">
+        <mat-label i18n="field label">User PIN</mat-label>
+        <input type="text" matInput formControlName="userPin" />
+        <mat-error
+          *ngIf="
+            getFormError(
+              teleconferenceFieldsForm.get('userPin')!,
+              pinErrorHandler
+            ) as error
+          "
+          >{{ error }}</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div *ngSwitchDefault></div>
+  </div>
+</form>
+
+<ng-template #videoconferenceFields>
+  <div [formGroup]="videoconferenceFieldsForm" class="form">
+    <!-- Admin pin field -->
+    <mat-form-field appearance="outline" class="form__field--pin">
+      <mat-label i18n="field label">Admin PIN</mat-label>
+      <input type="text" matInput formControlName="adminPin" />
+      <mat-error
+        *ngIf="
+          getFormError(
+            videoconferenceFieldsForm.get('adminPin')!,
+            pinErrorHandler
+          ) as error
+        "
+        >{{ error }}</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Allow guests checkbox -->
+    <mat-checkbox
+      color="primary"
+      formControlName="allowGuests"
+      i18n="checkbox label"
+      >Allow guests</mat-checkbox
+    >
+  </div>
+</ng-template>

@@ -1,5 +1,5 @@
 <header mat-dialog-title>
-  <h1>Create reservation</h1>
+  <h1 i18n="page header">Create reservation</h1>
 </header>
 
 <mat-dialog-content class="custom-scrollbar">
@@ -12,17 +12,18 @@
       mode="indeterminate"
       color="primary"
     ></mat-progress-spinner>
-    <b>Creating reservation request</b>
+    <b i18n="loading text">Creating reservation request</b>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button mat-dialog-close i18n="button name">Close</button>
   <button
     mat-flat-button
     color="primary"
     (click)="createReservationRequest()"
     [disabled]="!formComponent || !formComponent.valid"
+    i18n="button name"
   >
     Create
   </button>

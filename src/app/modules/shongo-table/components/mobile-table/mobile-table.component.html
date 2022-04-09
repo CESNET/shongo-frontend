@@ -1,0 +1,259 @@
+<div class="mobile-table">
+  <header
+    class="mobile-table__header"
+    *ngIf="showRefreshButton || showDeleteButtons || description"
+  >
+    <mat-card>
+      <section class="mobile-table__header-main">
+        <span>{{ description }}</span>
+
+        <div class="mobile-table__header-actions">
+          <button
+            *ngIf="showRefreshButton"
+            mat-icon-button
+            matTooltip="Refresh"
+            aria-label="Refresh"
+            i18n-matTooltip="button name"
+            i18n-aria-label="button name"
+            (click)="dataSource.refreshData()"
+          >
+            <mat-icon>refresh</mat-icon>
+          </button>
+
+          <ng-container *ngIf="showDeleteButtons">
+            <button
+              mat-icon-button
+              matTooltip="Delete selected"
+              aria-label="Delete selected"
+              i18n-matTooltip="button name"
+              i18n-aria-label="button name"
+              (click)="deleteSelectedRows()"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Delete all"
+              aria-label="Delete all"
+              i18n-matTooltip="button name"
+              i18n-aria-label="button name"
+              (click)="deleteAllRows()"
+            >
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </ng-container>
+        </div>
+      </section>
+
+      <mat-divider></mat-divider>
+      <ng-template appComponentHost></ng-template>
+      <mat-divider *ngIf="filter"></mat-divider>
+
+      <div class="sort-header">
+        <span class="sort-header__heading" i18n="heading"
+          >Table sort options</span
+        >
+
+        <form class="sort-header__form" [formGroup]="sortForm">
+          <mat-form-field appearance="outline" class="sort-header__field">
+            <mat-label i18n="field label|Table sorting form on mobile view"
+              >Column</mat-label
+            >
+            <mat-select formControlName="active">
+              <mat-option *ngFor="let column of columns" [value]="column.name">
+                {{ column.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="sort-header__field">
+            <mat-label i18n="field label|Table sorting form on mobile view"
+              >Direction</mat-label
+            >
+            <mat-select formControlName="direction">
+              <mat-option value="" i18n="sort direction">None</mat-option>
+              <mat-option value="desc" i18n="sort direction"
+                >Descending</mat-option
+              >
+              <mat-option value="asc" i18n="sort direction"
+                >Ascending</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </div>
+    </mat-card>
+  </header>
+
+  <div class="mobile-table__body">
+    <ng-container *ngIf="(loadingData$ | async) === false; else loading">
+      <mat-card class="cell" *ngFor="let item of items$ | async">
+        <div class="cell__rows">
+          <ng-container *ngFor="let column of columns">
+            <div class="cell__row">
+              <!-- Row name -->
+              <div class="cell__row-name">{{ column.displayName }}</div>
+
+              <!-- Row data-->
+              <div class="cell__row-data">
+                <!-- Default row -->
+                <ng-container *ngIf="!column.component; else customRow">
+                  {{ getRowData(item, column.name) }}
+                </ng-container>
+
+                <!-- Custom row-->
+                <ng-template #customRow>
+                  <ng-container
+                    *ngComponentOutlet="
+                      column.component!;
+                      injector: createColComponentValueInjector(
+                        item,
+                        column.name
+                      )
+                    "
+                  ></ng-container>
+                </ng-template>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+          </ng-container>
+        </div>
+
+        <div class="cell__footer">
+          <div
+            class="cell__actions"
+            *ngIf="filterDisplayedButtons(item)?.length"
+          >
+            <!-- Buttons -->
+            <ng-container>
+              <ng-container *ngFor="let button of filterDisplayedButtons(item)">
+                <div [ngSwitch]="getButtonType(button)">
+                  <div *ngSwitchCase="TableButtonType.ACTION">
+                    <button
+                      mat-icon-button
+                      onclick="this.blur()"
+                      (click)="handleButtonClick(button, item)"
+                      [matTooltip]="button.name"
+                      [attr.aria-label]="button.name"
+                      [disabled]="
+                        button.isDisabledFunc
+                          ? button.isDisabledFunc(item)
+                          : false
+                      "
+                    >
+                      <mat-icon>{{ button.icon }}</mat-icon>
+                    </button>
+                  </div>
+                  <div *ngSwitchCase="TableButtonType.API_ACTION">
+                    <button
+                      mat-icon-button
+                      onclick="this.blur()"
+                      (click)="handleButtonClick(button, item)"
+                      [matTooltip]="button.name"
+                      [attr.aria-label]="button.name"
+                      [disabled]="
+                        button.isDisabledFunc
+                          ? button.isDisabledFunc(item)
+                          : false
+                      "
+                      *ngIf="
+                        !(asApiActionButton(button).loading$ | async)!.includes(
+                          item
+                        );
+                        else buttonLoading
+                      "
+                    >
+                      <mat-icon>{{ button.icon }}</mat-icon>
+                    </button>
+                    <ng-template #buttonLoading>
+                      <mat-spinner
+                        diameter="20"
+                        strokeWidth="3"
+                        color="accent"
+                        class="button-loading"
+                      ></mat-spinner>
+                    </ng-template>
+                  </div>
+                  <div *ngSwitchCase="TableButtonType.LINK">
+                    <a
+                      *ngIf="asLinkButton(button) as linkButton"
+                      mat-icon-button
+                      onclick="this.blur()"
+                      [routerLink]="
+                        linkButton.constructPath(item, linkButton.pathTemplate)
+                      "
+                      [matTooltip]="button.name"
+                      [attr.aria-label]="button.name"
+                      [disabled]="
+                        button.isDisabledFunc
+                          ? button.isDisabledFunc(item)
+                          : false
+                      "
+                    >
+                      <mat-icon>{{ button.icon }}</mat-icon>
+                    </a>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <div class="cell__select" *ngIf="showCheckboxes">
+            <mat-checkbox
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(item) : null"
+              [checked]="selection.isSelected(item)"
+            >
+            </mat-checkbox>
+          </div>
+        </div>
+      </mat-card>
+    </ng-container>
+
+    <!-- Loading skeleton -->
+    <ng-template #loading>
+      <ngx-skeleton-loader
+        count="3"
+        [theme]="{
+          'border-radius': '5px',
+          height: '30vh',
+          width: '100%',
+          border: '1px solid white'
+        }"
+      ></ngx-skeleton-loader>
+    </ng-template>
+
+    <!-- No data or error -->
+    <mat-card
+      *ngIf="(loadingData$ | async) === false && data?.items?.length === 0"
+    >
+      <div class="cell cell--message">
+        <b *ngIf="data?.error; else noEntries" i18n="error message"
+          >An error occured</b
+        >
+
+        <ng-template #noEntries>
+          <b *ngIf="!data?.error" i18n="error message">No entries found</b>
+        </ng-template>
+      </div>
+    </mat-card>
+  </div>
+
+  <footer class="mobile-table__footer">
+    <mat-card *ngIf="data">
+      <mat-paginator
+        #paginator
+        [length]="data.count"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]"
+        [class.extra-gap]="
+          !dataSource || !dataSource.data || !dataSource.data.count
+        "
+      >
+      </mat-paginator>
+    </mat-card>
+  </footer>
+</div>

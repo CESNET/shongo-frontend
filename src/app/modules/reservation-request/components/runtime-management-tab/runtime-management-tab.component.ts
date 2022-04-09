@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { RuntimeManagementDataSource } from 'src/app/shared/components/data-table/data-sources/runtime-management.datasource';
+import { RuntimeManagementDataSource } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';
 
 @Component({
   selector: 'app-runtime-management-tab',

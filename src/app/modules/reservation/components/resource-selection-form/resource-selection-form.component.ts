@@ -9,7 +9,10 @@ import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
-import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
+import {
+  PhysicalResource,
+  Resource,
+} from 'src/app/shared/models/rest-api/resource.interface';
 import { physicalResourceConfig } from 'src/config/physical-resource.config';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 
@@ -56,8 +59,8 @@ export class ResourceSelectionFormComponent {
       this.resourceOpts = resources
         .map((res) => ({
           value: res,
-          displayName: virtualRoomResourceConfig.tagNameMap.get(
-            res.tag as Technology
+          displayName: virtualRoomResourceConfig.technologyNameMap.get(
+            res.technology as Technology
           ),
         }))
         .filter((opt) => opt.displayName) as Option[];
@@ -83,8 +86,8 @@ export class ResourceSelectionFormComponent {
         (res) => res.type === typeOrTag
       );
     } else {
-      return this._resourceService.resources.filter(
-        (res) => res.tag === typeOrTag
+      return this._resourceService.resources.filter((res) =>
+        res.tags?.includes(typeOrTag)
       );
     }
   }

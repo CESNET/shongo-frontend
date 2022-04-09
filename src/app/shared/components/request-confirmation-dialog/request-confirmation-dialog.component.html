@@ -1,0 +1,121 @@
+<header>
+  <h1 mat-dialog-title i18n="heading">Request confirmation</h1>
+</header>
+
+<mat-dialog-content>
+  <div class="request-detail">
+    <div
+      class="request-detail__loading"
+      *ngIf="loading$ | async; else requestDetail"
+    >
+      <mat-progress-spinner
+        diameter="60"
+        mode="indeterminate"
+        color="primary"
+      ></mat-progress-spinner>
+      <b i18n="loading text">Processing</b>
+    </div>
+
+    <ng-template #requestDetail>
+      <dl class="definition-list--flex">
+        <dt i18n="definition tag">Created by</dt>
+        <dd>
+          {{
+            reservationRequest.ownerName +
+              (reservationRequest.ownerEmail
+                ? " (" + reservationRequest.ownerEmail + ")"
+                : "")
+          }}
+        </dd>
+
+        <dt i18n="definition tag">Requested slot</dt>
+        <dd>
+          {{
+            (reservationRequest.slot.start | momentDate: "LLL") +
+              " - " +
+              (reservationRequest.slot.end | momentDate: "LLL")
+          }}
+        </dd>
+
+        <dt i18n="definition tag">Request description</dt>
+        <dd>{{ reservationRequest.description }}</dd>
+
+        <ng-container
+          *ngIf="
+            reservationRequest.type === ReservationType.VIRTUAL_ROOM;
+            else physicalResource
+          "
+        >
+          <dt i18n="definition tag">Requested technology</dt>
+          <dd>
+            {{
+              getTechnologyTitle(reservationRequest.virtualRoomData?.technology)
+            }}
+          </dd>
+        </ng-container>
+
+        <ng-template #physicalResource>
+          <dt i18n="definition tag">Requested resource</dt>
+          <dd>
+            <span
+              *ngIf="
+                reservationRequest.physicalResourceData
+                  ?.resourceName as resourceName;
+                else unknownResourceName
+              "
+            >
+              {{ resourceName }}
+            </span>
+            <ng-template #unknownResourceName>
+              <span i18n="fallback text">Unknown</span>
+            </ng-template>
+          </dd>
+        </ng-template>
+      </dl>
+    </ng-template>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <div class="dialog-actions__left">
+    <a
+      mat-button
+      aria-labelledby="view-request-btn-name"
+      [routerLink]="'/reservation-request/' + reservationRequest.id"
+      [disabled]="loading$ | async"
+      ><mat-icon>visibility</mat-icon>&nbsp;<span
+        i18n="button name"
+        id="view-request-btn-name"
+        >View request</span
+      ></a
+    >
+    <button
+      mat-button
+      mat-dialog-close
+      i18n="button name"
+      [disabled]="loading$ | async"
+    >
+      Close
+    </button>
+  </div>
+  <div class="dialog-actions__right">
+    <button
+      mat-flat-button
+      color="primary"
+      i18n="button name"
+      [disabled]="loading$ | async"
+      (click)="accept()"
+    >
+      Accept
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      i18n="button name"
+      [disabled]="loading$ | async"
+      (click)="reject()"
+    >
+      Reject
+    </button>
+  </div>
+</mat-dialog-actions>

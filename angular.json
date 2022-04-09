@@ -19,7 +19,7 @@
       "i18n": {
         "sourceLocale": "en",
         "locales": {
-          "cs": "src/locales/messages.cz.xlf"
+          "cs": "src/locales/messages.cs.xlf"
         }
       },
       "architect": {
@@ -41,8 +41,8 @@
             "allowedCommonJsDependencies": ["moment-timezone"]
           },
           "configurations": {
-            "en-GB": {
-              "localize": ["en-GB"]
+            "en": {
+              "localize": ["en"]
             },
             "production": {
               "budgets": [
@@ -85,8 +85,8 @@
             "development": {
               "browserTarget": "shongo-frontend:build:development"
             },
-            "en-GB": {
-              "browserTarget": "shongo-frontend:build:en-GB"
+            "en": {
+              "browserTarget": "shongo-frontend:build:en"
             }
           },
           "defaultConfiguration": "development"

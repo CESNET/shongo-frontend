@@ -3,27 +3,43 @@ $section-margin: 1.34375em + 0.25em;
 
 .reservation {
   height: 100vh;
-  font-size: 1em;
-  min-width: 1024px;
 
-  &__toolbar {
-    display: flex;
-    justify-content: space-between;
+  &__toolbar-row {
+    &--main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     &-left,
     &-right {
+      height: 100%;
       display: flex;
       align-items: center;
       gap: 1em;
     }
   }
 
+  &__toolbar-row--mobile {
+    display: none;
+  }
+
   &__main {
-    height: calc(100vh - var(--toolbar-height));
+    height: calc(100vh - var(--toolbar-row-height));
   }
 
   &__calendar {
     height: 100%;
+  }
+
+  &__back {
+    &--sidebar {
+      display: none;
+    }
+  }
+
+  &__date-header {
+    font-size: var(--font-size-medium);
   }
 }
 
@@ -33,6 +49,8 @@ $section-margin: 1.34375em + 0.25em;
 
   &__heading {
     font-size: var(--font-size-regular);
+    display: block;
+    margin-bottom: 0.5em;
   }
 
   &__section {
@@ -40,6 +58,10 @@ $section-margin: 1.34375em + 0.25em;
 
     &--form-field-padded {
       margin-bottom: 0;
+    }
+
+    &--mobile {
+      display: none;
     }
   }
 
@@ -54,6 +76,10 @@ $section-margin: 1.34375em + 0.25em;
     &-part {
       margin-bottom: 0.5em;
       line-height: 1.5em;
+
+      &-name {
+        font-weight: 500;
+      }
     }
   }
 
@@ -85,8 +111,55 @@ mat-drawer {
   border: 0;
 }
 
+.jump-to-date {
+  display: none;
+
+  &__input {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .reservation {
-    font-size: 0.8em;
+    &__back {
+      &--sidebar {
+        display: block;
+      }
+      &--navbar {
+        display: none;
+      }
+    }
+  }
+  .jump-to-date {
+    display: block;
+
+    &__button {
+      width: 100%;
+    }
+  }
+  .sidebar {
+    &__section {
+      &--mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .reservation {
+    &__date-header--main {
+      display: none;
+    }
+    &__main {
+      height: calc(100vh - 2 * var(--toolbar-row-height));
+    }
+    &__toolbar-row--mobile {
+      display: flex;
+    }
   }
 }

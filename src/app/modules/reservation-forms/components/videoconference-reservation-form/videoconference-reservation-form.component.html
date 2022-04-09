@@ -1,0 +1,104 @@
+<form [formGroup]="form" class="form">
+  <div class="form__left">
+    <h2 i18n="heading">Reservation data</h2>
+
+    <!-- Room name field -->
+    <mat-form-field
+      appearance="outline"
+      class="form__field"
+      *ngIf="!editingMode"
+    >
+      <mat-label i18n="field label">Room name</mat-label>
+      <input type="text" matInput formControlName="roomName" />
+      <mat-error
+        *ngIf="
+          getFormError(form.get('roomName')!, roomNameErrorHandler) as error
+        "
+        >{{ error }}</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Description field -->
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label i18n="field label">Description</mat-label>
+      <input type="text" matInput formControlName="description" />
+      <mat-error
+        *ngIf="
+          getFormError(
+            form.get('description')!,
+            descriptionErrorHandler
+          ) as error
+        "
+        >{{ error }}</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Participant count field -->
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label i18n="field label">Participant count</mat-label>
+      <input type="number" matInput formControlName="participantCount" />
+      <mat-error *ngIf="getFormError(form.get('participantCount')!) as error">{{
+        error
+      }}</mat-error>
+    </mat-form-field>
+
+    <!-- Admin pin field -->
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label i18n="field label">Admin PIN</mat-label>
+      <input type="text" matInput formControlName="adminPin" />
+      <mat-error
+        *ngIf="getFormError(form.get('adminPin')!, pinErrorHandler) as error"
+        >{{ error }}</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Time zone field -->
+    <mat-form-field appearance="outline" class="form__field">
+      <mat-label i18n="field label">Time zone</mat-label>
+      <mat-select formControlName="timezone">
+        <mat-option>
+          <ngx-mat-select-search
+            appTimezoneSearch
+            #timezoneSarch="timezoneSearch"
+          ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option
+          *ngFor="let opt of timezoneSarch.filteredTimezones | async"
+          [value]="opt.timezone"
+        >
+          {{ opt.label }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="getFormError(form.get('timezone')!) as error">{{
+        error
+      }}</mat-error>
+    </mat-form-field>
+
+    <div class="form__checkbox-group">
+      <!-- Allow guests checkbox -->
+      <mat-checkbox
+        color="primary"
+        formControlName="allowGuests"
+        i18n="checkbox label"
+        >Allow guests</mat-checkbox
+      >
+
+      <!-- Record checkbox -->
+      <mat-checkbox
+        color="primary"
+        formControlName="record"
+        i18n="checkbox label"
+        >Record</mat-checkbox
+      >
+    </div>
+  </div>
+
+  <mat-divider vertical class="form__divider"></mat-divider>
+
+  <div class="form__right">
+    <h2 i18n="heading">Periodicity</h2>
+    <app-periodicity-selection-form
+      [periodicity]="editedRequest?.roomCapacityData?.periodicity"
+    ></app-periodicity-selection-form>
+  </div>
+</form>

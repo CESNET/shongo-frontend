@@ -15,7 +15,10 @@ export function datePipeFunc(
     typeof value === 'number' ||
     value instanceof Date
   ) {
-    return this.datePipe.transform(value, 'LLL') ?? 'Not a date';
+    return (
+      this.datePipe.transform(value, 'LLL') ??
+      $localize`:fallback text:Not a date`
+    );
   } else {
     throw new Error('Invalid column data type for date pipe.');
   }

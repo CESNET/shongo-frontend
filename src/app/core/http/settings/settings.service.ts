@@ -1,17 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
   filter,
+  finalize,
   switchMapTo,
+  tap,
 } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { AlertService } from '../../services/alert.service';
 import { ApiService } from '../api.service';
 
 const SETTINGS_LOCALSTORAGE_KEY = 'userSettings';
@@ -26,7 +29,11 @@ export class SettingsService {
   private _userSettings$ = new BehaviorSubject<UserSettings | null>(null);
   private _userSettingsLoading$ = new BehaviorSubject(false);
 
-  constructor(private _http: HttpClient, private _auth: AuthenticationService) {
+  constructor(
+    private _http: HttpClient,
+    private _auth: AuthenticationService,
+    private _alert: AlertService
+  ) {
     this._loadSettingsFromStorage();
 
     this.userSettingsLoading$ = this._userSettingsLoading$.asObservable();
@@ -47,10 +54,36 @@ export class SettingsService {
     );
   }
 
+  get canReserve(): boolean {
+    return (
+      this.userSettings?.permissions?.includes(Permission.RESERVATION) ?? false
+    );
+  }
+
+  /**
+   * Returns first available timezone setting in this order:
+   *
+   * Current > Home > OS
+   */
   get timeZone(): string | undefined {
     return (
-      this.userSettings?.currentTimeZone ?? this.userSettings?.homeTimeZone
+      this.userSettings?.currentTimeZone ??
+      this.userSettings?.homeTimeZone ??
+      moment.tz.guess()
     );
+  }
+
+  get timeZoneOffset(): string | undefined {
+    const timezone = this.timeZone;
+
+    if (timezone) {
+      return moment.tz(timezone).format('Z');
+    }
+    return undefined;
+  }
+
+  clearSettings(): void {
+    this._userSettings$.next(null);
   }
 
   updateSettings(settings: UserSettings): void {
@@ -61,15 +94,15 @@ export class SettingsService {
       .put<UserSettings>(url, settings)
       .pipe(
         catchError((err) => {
-          this._userSettings$.next(settings);
-          this._userSettingsLoading$.next(false);
           console.error('Failed to update user settings, reason: ', err);
-          return throwError(() => new Error('Failed to update user settings.'));
-        })
+          this._alert.showError($localize`Failed to update settings`);
+          throw err;
+        }),
+        finalize(() => this._userSettingsLoading$.next(false))
       )
       .subscribe((userSettings) => {
         this._userSettings$.next(userSettings);
-        this._userSettingsLoading$.next(false);
+        this._alert.showSuccess($localize`Settings updated`);
       });
   }
 
@@ -92,7 +125,9 @@ export class SettingsService {
       catchError((err) => {
         this._userSettingsLoading$.next(false);
         console.error('Failed to fetch user settings, reason: ', err);
-        return throwError(() => new Error('Failed to fetch user settings.'));
+        throw new Error(
+          $localize`:error message:Failed to fetch user settings`
+        );
       })
     );
   }
@@ -101,6 +136,11 @@ export class SettingsService {
     this._auth.isAuthenticated$
       .pipe(
         distinctUntilChanged(),
+        tap((isAuth) => {
+          if (!isAuth) {
+            this.clearSettings();
+          }
+        }),
         filter((isAuth) => isAuth),
         switchMapTo(this._fetchUserSettings())
       )
@@ -116,17 +156,21 @@ export class SettingsService {
       .subscribe((settings) => this._handleSettingsChange(settings!));
   }
 
-  private _handleSettingsChange(settings: UserSettings): void {
-    localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
+  private _handleSettingsChange(settings: UserSettings | null): void {
+    if (settings) {
+      localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
 
-    if (settings.currentTimeZone) {
-      this._handleTimezoneChange(settings.currentTimeZone);
-    } else if (settings.homeTimeZone) {
-      this._handleTimezoneChange(settings.homeTimeZone);
-    }
+      if (settings.currentTimeZone) {
+        this._handleTimezoneChange(settings.currentTimeZone);
+      } else if (settings.homeTimeZone) {
+        this._handleTimezoneChange(settings.homeTimeZone);
+      }
 
-    if (settings.locale) {
-      this._handleLocaleChange(settings.locale);
+      if (settings.locale) {
+        this._handleLocaleChange(settings.locale);
+      }
+    } else {
+      localStorage.removeItem(SETTINGS_LOCALSTORAGE_KEY);
     }
   }
 

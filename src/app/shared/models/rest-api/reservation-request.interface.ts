@@ -42,6 +42,7 @@ export interface ReservationRequestDetail extends ReservationRequest {
 }
 
 export interface VirtualRoomData {
+  roomResourceId: string;
   state: RoomState;
   technology: Technology;
   roomName: string;
@@ -55,7 +56,7 @@ export interface PhysicalResourceData {
   periodicity: Periodicity;
 }
 
-export interface RoomCapacityData extends VirtualRoomData {
+export interface RoomCapacityData {
   roomReservationRequestId: string;
   capacityParticipantCount: number;
   capacityHasRecordingService: boolean;
@@ -77,7 +78,7 @@ export interface Periodicity {
 export interface AuthorizedData {
   pin: string;
   adminPin: string;
-  guestPin: string;
+  userPin: string;
   allowGuests: boolean;
   aliases: Alias[];
 }

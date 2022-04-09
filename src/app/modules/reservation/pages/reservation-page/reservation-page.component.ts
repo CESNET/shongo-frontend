@@ -1,17 +1,21 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
   Component,
   ChangeDetectionStrategy,
   ViewChild,
   OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarView } from 'angular-calendar';
-import { BehaviorSubject } from 'rxjs';
-import { finalize, first, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { finalize, first, takeUntil, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ReservationCalendarComponent } from 'src/app/shared/components/reservation-calendar/reservation-calendar.component';
+import { ReservationCalendarComponent } from 'src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -32,10 +36,13 @@ class ParentRequestPropertyError extends Error {
   styleUrls: ['./reservation-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReservationPageComponent implements OnInit {
+export class ReservationPageComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild(ReservationCalendarComponent)
   calendar!: ReservationCalendarComponent;
 
+  readonly tabletSizeHit$: Observable<BreakpointState>;
   CalendarView = CalendarView;
   selectedResource?: Resource | null;
   selectedSlot?: CalendarSlot | null;
@@ -46,17 +53,31 @@ export class ReservationPageComponent implements OnInit {
   AlertType = AlertType;
 
   readonly loadingParentRequest$ = new BehaviorSubject<boolean>(false);
+  private readonly _destroy$ = new Subject<void>();
 
   constructor(
     private _dialog: MatDialog,
     private _route: ActivatedRoute,
     private _resReqService: ReservationRequestService,
     private _resourceService: ResourceService,
+    private _br: BreakpointObserver,
+    private _cd: ChangeDetectorRef,
     public resourceService: ResourceService
-  ) {}
+  ) {
+    this.tabletSizeHit$ = this._createTabletSizeObservable();
+  }
 
   ngOnInit(): void {
     this._checkRouteForId();
+  }
+
+  ngAfterViewInit(): void {
+    this._observeTabletSize(this.tabletSizeHit$);
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   openReservationDialog(): void {
@@ -97,6 +118,25 @@ export class ReservationPageComponent implements OnInit {
     this._loadParentRequest(this.parentReservationRequest!.id);
   }
 
+  onDateSelection(moment: moment.Moment): void {
+    this.calendar.viewDate = moment.toDate();
+  }
+
+  private _observeTabletSize(state$: Observable<BreakpointState>): void {
+    state$.subscribe((state) => {
+      if (state.matches) {
+        this.calendar.view = CalendarView.Day;
+        this._cd.detectChanges();
+      }
+    });
+  }
+
+  private _createTabletSizeObservable(): Observable<BreakpointState> {
+    return this._br
+      .observe('(max-width: 768px)')
+      .pipe(takeUntil(this._destroy$));
+  }
+
   private _checkRouteForId(): void {
     const requestId = this._route.snapshot.params.id;
 
@@ -123,7 +163,7 @@ export class ReservationPageComponent implements OnInit {
             !resReq.virtualRoomData?.technology
           ) {
             throw new ParentRequestPropertyError(
-              $localize`Parent reservation request must be of type virtual room.`
+              $localize`:error message:Parent reservation request must be of type virtual room.`
             );
           }
           const virtualRoomResource =
@@ -135,7 +175,7 @@ export class ReservationPageComponent implements OnInit {
             this.selectedResource = virtualRoomResource;
           } else {
             throw new ParentRequestPropertyError(
-              $localize`No resource found using room's technology (${resReq.virtualRoomData.technology}).`
+              $localize`:error message:No resource found using room's technology (${resReq.virtualRoomData.technology}).`
             );
           }
         }),

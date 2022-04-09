@@ -2,7 +2,9 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin-bottom: 0.5rem;
+  gap: 1em;
 
   h2 {
     margin: 0;
@@ -10,13 +12,15 @@ header {
 }
 
 .active-recording {
-  color: gray;
+  color: var(--gray-300);
   font-size: 0.7em;
+  white-space: nowrap;
 }
 .red-circle {
-  height: 1em;
-  width: 1em;
-  background-color: red;
+  --circle-size: 0.8em;
+  height: var(--circle-size);
+  width: var(--circle-size);
+  background-color: var(--red-500);
   border-radius: 50%;
   display: inline-block;
   vertical-align: middle;

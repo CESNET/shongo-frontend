@@ -11,10 +11,10 @@ import {
   ColumnComponent,
   COL_DATA_PROVIDER,
   SETTINGS_PROVIDER,
-} from 'src/app/shared/components/data-table/column-components/column.component';
-import { ResourceCapacityUtilizationTableData } from 'src/app/shared/components/data-table/data-sources/resource-capacity-utilization-datasource';
-import { TableSettings } from 'src/app/shared/components/data-table/filter/data-table-filter';
-import { ColumnData } from 'src/app/shared/components/data-table/models/interfaces/column-data.interface';
+} from 'src/app/modules/shongo-table/column-components/column.component';
+import { ResourceCapacityUtilizationTableData } from 'src/app/modules/shongo-table/data-sources/resource-capacity-utilization-datasource';
+import { TableSettings } from 'src/app/modules/shongo-table/filter/data-table-filter';
+import { ColumnData } from 'src/app/modules/shongo-table/models/interfaces/column-data.interface';
 
 const BG_OPACITY = 0.6;
 

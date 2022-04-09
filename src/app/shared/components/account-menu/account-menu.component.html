@@ -1,9 +1,25 @@
 <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOutFallback">
-  <button mat-button [matMenuTriggerFor]="accountSubMenu" fxHide.lt-sm>
-    <span class="fx-center-vert">
-      <mat-icon class="icon-xs">account_circle</mat-icon>
-      {{ "&nbsp;" + (getUsername() | appShortString: 15) + "&nbsp;" }}
-      <mat-icon>arrow_drop_down</mat-icon>
+  <button
+    mat-button
+    [matMenuTriggerFor]="accountSubMenu"
+    fxHide.lt-sm
+    class="account"
+  >
+    <span class="account__body">
+      <mat-icon
+        class="account__icon icon-s"
+        *ngIf="settings.canReserve; else cannotReserve"
+        >account_circle</mat-icon
+      >
+
+      <ng-template #cannotReserve>
+        <mat-icon class="account__icon icon-s" color="warn">warning</mat-icon>
+      </ng-template>
+
+      <span class="account__username">{{
+        getUsername() | appShortString: 15
+      }}</span>
+      <span class="account__timezone">{{ settings.timeZoneOffset }}</span>
     </span>
   </button>
 
@@ -38,7 +54,16 @@
 </ng-container>
 
 <ng-template #loggedOutFallback>
-  <button mat-button (click)="auth.login()" i18n="navbar button|Log in button">
+  <button
+    mat-button
+    (click)="auth.login()"
+    i18n="button name|Log in button"
+    *ngIf="auth.isDoneLoading$ | async; else loggingIn"
+  >
     Log in
   </button>
+</ng-template>
+
+<ng-template #loggingIn>
+  <app-loading-text message=""></app-loading-text>
 </ng-template>

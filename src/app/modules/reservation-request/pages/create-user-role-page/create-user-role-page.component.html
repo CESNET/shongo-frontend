@@ -1,15 +1,15 @@
 <header>
-  <h1>Add user role</h1>
+  <h1 i18n="heading">Add user role</h1>
 </header>
 
 <main>
   <form *ngIf="form" [formGroup]="form">
     <mat-form-field appearance="outline">
-      <mat-label>Reservation request</mat-label>
+      <mat-label i18n="field label">Reservation request</mat-label>
       <input type="text" matInput formControlName="reservationRequest" />
     </mat-form-field>
 
-    <label>Identity type:</label>
+    <label i18n="label">Identity type:</label>
     <mat-radio-group
       aria-label="Select identity type"
       formControlName="identityType"
@@ -26,7 +26,7 @@
         else groupSearch
       "
     >
-      <mat-label>User</mat-label>
+      <mat-label i18n="field label">User</mat-label>
       <mat-select formControlName="identityId">
         <mat-option>
           <ngx-mat-select-search
@@ -41,7 +41,7 @@
           {{ opt.user }}
         </mat-option>
       </mat-select>
-      <mat-hint>Type at least 2 characters</mat-hint>
+      <mat-hint i18n="field hint">Type at least 2 characters</mat-hint>
       <mat-error *ngIf="getFormError(form.get('identityId')!) as error">{{
         error
       }}</mat-error>
@@ -49,7 +49,7 @@
 
     <ng-template #groupSearch>
       <mat-form-field appearance="outline">
-        <mat-label>Group</mat-label>
+        <mat-label i18n="field label">Group</mat-label>
         <mat-select formControlName="identityId">
           <mat-option>
             <ngx-mat-select-search
@@ -82,6 +82,7 @@
       <button
         mat-flat-button
         color="primary"
+        i18n="button name"
         [disabled]="!isValid()"
         (click)="postUserRole()"
       >
@@ -89,19 +90,15 @@
       </button>
 
       <ng-container *ngIf="posting$ | async; else cancelButton">
-        <div class="posting-loader">
-          <mat-spinner diameter="20"></mat-spinner>
-          <span>Creating participant...</span>
-        </div>
+        <app-loading-text
+          message="Creating participant..."
+          i18n="loading text"
+        ></app-loading-text>
       </ng-container>
 
       <ng-template #cancelButton>
-        <a mat-button [routerLink]="'../../'">Cancel</a>
+        <a mat-button [routerLink]="'../../'" i18n="button name">Cancel</a>
       </ng-template>
     </div>
   </form>
-
-  <div class="alert">
-    <app-alert message="An error occured" [type]="AlertType.ERROR"></app-alert>
-  </div>
 </main>

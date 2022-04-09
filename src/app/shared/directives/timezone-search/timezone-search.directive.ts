@@ -3,15 +3,13 @@ import { FormControl } from '@angular/forms';
 import { MatSelectSearchComponent } from 'ngx-mat-select-search';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IanaTimezone, IANA_TIMEZONES } from '../../models/data/timezones';
+import { Timezone, IANA_TIMEZONES } from '../../models/data/timezones';
 
 @Directive({ selector: '[appTimezoneSearch]', exportAs: 'timezoneSearch' })
 export class TimezoneSearchDirective implements OnInit, OnDestroy {
-  filteredTimezones: Observable<IanaTimezone[]>;
+  filteredTimezones: Observable<Timezone[]>;
 
-  private _filteredTimezones$ = new BehaviorSubject<IanaTimezone[]>(
-    IANA_TIMEZONES
-  );
+  private _filteredTimezones$ = new BehaviorSubject<Timezone[]>(IANA_TIMEZONES);
   private _filterCtrl = new FormControl();
   private _destroy$ = new Subject<void>();
 
@@ -23,8 +21,8 @@ export class TimezoneSearchDirective implements OnInit, OnDestroy {
     this._initTimeZoneFilter(this._filterCtrl);
 
     this._host._formControl = this._filterCtrl;
-    this._host.placeholderLabel = 'Select timezone...';
-    this._host.noEntriesFoundLabel = 'No timezones found';
+    this._host.placeholderLabel = $localize`:placeholder:Select timezone...`;
+    this._host.noEntriesFoundLabel = $localize`:fallback text:No timezones found`;
   }
 
   ngOnDestroy(): void {
@@ -40,7 +38,7 @@ export class TimezoneSearchDirective implements OnInit, OnDestroy {
       });
   }
 
-  private _filterTimeZones(filter: string): IanaTimezone[] {
+  private _filterTimeZones(filter: string): Timezone[] {
     if (!filter) {
       return IANA_TIMEZONES;
     }

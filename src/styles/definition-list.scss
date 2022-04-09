@@ -3,19 +3,20 @@ dl {
 }
 dt,
 dd {
-  font-size: 1em;
-  padding-bottom: 0.7em;
+  padding-bottom: 1em;
+  word-break: break-all;
 }
 dt {
-  color: rgb(90, 90, 90);
-  font-weight: bold;
+  color: var(--black);
+  font-weight: 500;
 }
 dd {
   margin-left: 3ch;
+  color: var(--gray-200);
 }
 
 .definition-list--flex {
-  --dt-min-width: 15ch;
+  --dt-min-width: 17ch;
   --dt-max-width: 25ch;
   --dt-width: 30%;
 
@@ -24,7 +25,6 @@ dd {
   width: 100%;
   min-width: 21em;
   overflow: visible;
-  font-size: 1em;
 
   > dt {
     text-overflow: ellipsis;
@@ -41,5 +41,23 @@ dd {
     text-align: left;
     text-overflow: ellipsis;
     overflow: hidden;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .definition-list--flex {
+    display: inline;
+    min-width: none;
+
+    > dt,
+    > dd {
+      width: auto;
+      min-width: none;
+      max-width: none;
+    }
+
+    > dd {
+      padding-left: 2ch;
+    }
   }
 }

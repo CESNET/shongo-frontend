@@ -1,20 +1,21 @@
 <header>
-  <h1>Main page</h1>
-  <p>
+  <h1 i18n="page header">Main page</h1>
+  <p i18n="paragraph">
     Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms.
   </p>
-  <p>
+  <p i18n="paragraph">
     You can send your suggestions to
     <a href="mailto:vidcon@cesnet.cz" class="mat-primary-color"
       >vidcon@cesnet.cz</a
     >.
   </p>
-  <p>
+  <p i18n="paragraph">
     Terms and conditions under which personal data collated in providing the
     CESNET e-infrastructure services are processed you can find
     <a
       href="https://www.cesnet.cz/cesnet/documents/privacy/?lang=en"
       target="_blank"
+      class="mat-primary-color"
       >here</a
     >.
   </p>
@@ -26,17 +27,15 @@
       <!-- Reservation requests -->
       <mat-tab
         label="Your rooms"
-        i18n-label="Home page tab label|Label for your rooms table component"
+        i18n-label="tab label|Label for your rooms table component"
       >
         <ng-template matTabContent>
           <div class="tab-content">
             <app-data-table
               [dataSource]="yourRoomsDataSource"
               description="List of rooms which you own or which have been made accessible to you by other users."
+              i18n-description="table description"
             >
-              <app-reservation-request-filter
-                #tableFilter
-              ></app-reservation-request-filter>
             </app-data-table>
           </div>
         </ng-template>
@@ -45,9 +44,7 @@
       <!-- Room participations -->
       <mat-tab
         label="Your participation in rooms"
-        i18n-label="
-          Home page tab label|Label for your participation table component
-        "
+        i18n-label="tab label|Label for your participation table component"
       >
         <ng-template matTabContent>
           <div class="tab-content">
@@ -56,6 +53,7 @@
               [showCheckboxes]="false"
               [showDeleteButtons]="false"
               description="List of rooms in which you are configured as participant and which you can join."
+              i18n-description="table description"
             ></app-data-table>
           </div>
         </ng-template>
@@ -65,8 +63,7 @@
       <mat-tab
         label="Your phys. resources reservations"
         i18n-label="
-          Home page tab label|Label for your resource reservations table
-          component
+          tab label|Label for your resource reservations table component
         "
       >
         <ng-template matTabContent>
@@ -74,6 +71,7 @@
             <app-data-table
               [dataSource]="physicalReservationsDataSource"
               description="All reservations of physical resources."
+              i18n-description="table description"
             ></app-data-table>
           </div>
         </ng-template>
@@ -82,9 +80,7 @@
       <!-- Reservation calendar -->
       <mat-tab
         label="Reservations calendar"
-        i18n-label="
-          Home page tab label|Label for reservation calendar component
-        "
+        i18n-label="tab label|Label for reservation calendar component"
       >
         <ng-template matTabContent>
           <div class="tab-content">

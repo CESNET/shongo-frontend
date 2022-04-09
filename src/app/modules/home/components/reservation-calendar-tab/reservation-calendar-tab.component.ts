@@ -1,15 +1,19 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
   OnDestroy,
+  ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
+import { ReservationCalendarComponent } from 'src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { PhysicalResource } from 'src/app/shared/models/rest-api/resource.interface';
 
@@ -19,10 +23,15 @@ import { PhysicalResource } from 'src/app/shared/models/rest-api/resource.interf
   styleUrls: ['./reservation-calendar-tab.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
-  selectedResourceId?: string;
+export class ReservationCalendarTabComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
+  @ViewChild(ReservationCalendarComponent)
+  calendar!: ReservationCalendarComponent;
+
   filteredResources: PhysicalResource[];
 
+  readonly tabletSizeHit$: Observable<BreakpointState>;
   readonly filterGroup = new FormGroup({
     resource: new FormControl(null),
     highlightMine: new FormControl(false),
@@ -33,7 +42,11 @@ export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
   private readonly _destroy$ = new Subject<void>();
   private readonly _physicalResources: PhysicalResource[];
 
-  constructor(private _resourceService: ResourceService) {
+  constructor(
+    private _resourceService: ResourceService,
+    private _br: BreakpointObserver
+  ) {
+    this.tabletSizeHit$ = this._createTabletSizeObservable();
     this._physicalResources = this._getPhysicalResources();
     this.filteredResources = this._physicalResources;
   }
@@ -49,6 +62,10 @@ export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
       });
   }
 
+  ngAfterViewInit(): void {
+    this._observeTabletSize(this.tabletSizeHit$);
+  }
+
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
@@ -60,9 +77,27 @@ export class ReservationCalendarTabComponent implements OnInit, OnDestroy {
 
   getNextDate(viewDate: Date, increment: 0 | 1 | -1): Date {
     if (increment === 0) {
-      return new Date();
+      return moment().toDate();
     }
     return moment(viewDate).add(increment, 'days').toDate();
+  }
+
+  onDateSelection(moment: moment.Moment): void {
+    this.calendar.viewDate = moment.toDate();
+  }
+
+  private _createTabletSizeObservable(): Observable<BreakpointState> {
+    return this._br
+      .observe('(max-width: 768px)')
+      .pipe(takeUntil(this._destroy$));
+  }
+
+  private _observeTabletSize(state$: Observable<BreakpointState>): void {
+    state$.subscribe((state) => {
+      if (state.matches) {
+        this.calendar.view = CalendarView.Day;
+      }
+    });
   }
 
   private _filterResources(filter: string): void {

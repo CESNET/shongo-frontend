@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="7715859782125136400" datatype="html">
+        <source>Links</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <note priority="1" from="description">Header for quick links</note>
+        <note priority="1" from="meaning">footer item group header</note>
+      </trans-unit>
+      <trans-unit id="8430405983381542654" datatype="html">
+        <source>Contact</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <note priority="1" from="description">Header for contact</note>
+        <note priority="1" from="meaning">footer item group header</note>
+      </trans-unit>
+      <trans-unit id="5939341193440850729" datatype="html">
+        <source>T: +420 234 680 222</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <note priority="1" from="description">Cesnet contact telephone number</note>
+        <note priority="1" from="meaning">Telephone number</note>
+      </trans-unit>
+      <trans-unit id="5898971593112169776" datatype="html">
+        <source>F: +420 224 320 269</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <note priority="1" from="description">Cesnet contact fax number</note>
+        <note priority="1" from="meaning">Telephone number</note>
+      </trans-unit>
+      <trans-unit id="6647927572496230167" datatype="html">
+        <source>Helpdesk</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <note priority="1" from="description">Header for helpdesk</note>
+        <note priority="1" from="meaning">footer item group header</note>
+      </trans-unit>
+      <trans-unit id="7493957166158017914" datatype="html">
+        <source>M: +420 602 252 531</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <note priority="1" from="description">Helpdesk contact GSM number</note>
+        <note priority="1" from="meaning">Telephone number</note>
+      </trans-unit>
+      <trans-unit id="2284463810845993897" datatype="html">
+        <source>F: +420 224 313 211</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <note priority="1" from="description">Helpdesk contact fax number</note>
+        <note priority="1" from="meaning">Telephone number</note>
+      </trans-unit>
+      <trans-unit id="8262161564522787320" datatype="html">
+        <source>Used system <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+          href=&quot;https://shongo.cesnet.cz/&quot;
+          target=&quot;_blank&quot;
+          class=&quot;mat-theme--footer-link mat-primary-color&quot;
+          &gt;"/>Shongo<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/> with version <x id="START_LINK_1" equiv-text="&lt;a href=&quot;&quot; class=&quot;mat-theme--footer-link mat-primary-color&quot;
+          &gt;"/>0.9.2<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/footer/footer.component.html</context>
+          <context context-type="linenumber">89,99</context>
+        </context-group>
+        <note priority="1" from="description">Shongo credit</note>
+      </trans-unit>
+      <trans-unit id="1449448588245469453" datatype="html">
+        <source>Help</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Link to help page</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="4640640505828673087" datatype="html">
+        <source>Documentation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="description">Link to documentation page</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="5103920169357321721" datatype="html">
+        <source>Report a problem</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <note priority="1" from="description">Link to report page</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="5160392588075404686" datatype="html">
+        <source>Resource management</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">Link to resource management</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="1088989456502283016" datatype="html">
+        <source>Resource capacity utilization</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="description">Sublink in resource management</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="7957639300720326912" datatype="html">
+        <source>Resource reservations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <note priority="1" from="description">Sublink in resource management</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="599837039147170275" datatype="html">
+        <source>Reserve</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="description">Link to reservations</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="2048732016787879203" datatype="html">
+        <source>Czech language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="description">CZ language in locale picker</note>
+        <note priority="1" from="meaning">cz language</note>
+      </trans-unit>
+      <trans-unit id="5099642227476176771" datatype="html">
+        <source>English language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/header/header-items.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <note priority="1" from="description">EN language in locale picker</note>
+        <note priority="1" from="meaning">en language</note>
+      </trans-unit>
+      <trans-unit id="1036002404170575782" datatype="html">
+        <source>Failed to update settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/http/settings/settings.service.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2264352383042646653" datatype="html">
+        <source>Settings updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/http/settings/settings.service.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8024771681438000413" datatype="html">
+        <source>out of</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Used in paginator for saying x items &quot;out of&quot; n</note>
+        <note priority="1" from="meaning">out of</note>
+      </trans-unit>
+      <trans-unit id="865811650515062457" datatype="html">
+        <source>Items per page:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">Items per page label in paginator</note>
+        <note priority="1" from="meaning">items per page</note>
+      </trans-unit>
+      <trans-unit id="7646371512202810268" datatype="html">
+        <source>Next page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Next page label in paginator</note>
+        <note priority="1" from="meaning">next page</note>
+      </trans-unit>
+      <trans-unit id="7999057173895253831" datatype="html">
+        <source>Previous page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/mat-paginator-intl.service.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">Previous page label in paginator</note>
+        <note priority="1" from="meaning">previous page</note>
+      </trans-unit>
+      <trans-unit id="1616102757855967475" datatype="html">
+        <source>All</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/components/reservation-request-filter/reservation-request-filter.component.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="326281569793279925" datatype="html">
+        <source>Main page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6206470068389592052" datatype="html">
+        <source> Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6652081233503370854" datatype="html">
+        <source> You can send your suggestions to <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vidcon@cesnet.cz&quot; class=&quot;mat-primary-color&quot;
+      &gt;"/>vidcon@cesnet.cz<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+    &gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">7,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5259288281316256019" datatype="html">
+        <source> Terms and conditions under which personal data collated in providing the CESNET e-infrastructure services are processed you can find <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+      href=&quot;https://www.cesnet.cz/cesnet/documents/privacy/?lang=en&quot;
+      target=&quot;_blank&quot;
+      class=&quot;mat-primary-color&quot;
+      &gt;"/>here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+    &gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">13,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3085404393516211300" datatype="html">
+        <source>Your rooms</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+        <note priority="1" from="description">Label for your rooms table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="7392516839323221633" datatype="html">
+        <source>List of rooms which you own or which have been made accessible to you by other users.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+        <note priority="1" from="description">Your rooms table description</note>
+      </trans-unit>
+      <trans-unit id="36171157734617178" datatype="html">
+        <source>Your participation in rooms</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+        <note priority="1" from="description">Label for your participation table component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="9057469573852527294" datatype="html">
+        <source>List of rooms in which you are configured as participant and which you can join.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+        <note priority="1" from="description">Your participation in rooms table description</note>
+      </trans-unit>
+      <trans-unit id="1736215436526839701" datatype="html">
+        <source>Your phys. resources reservations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+        <note priority="1" from="description">Label for your resource reservations table
+          component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="8303872525000058893" datatype="html">
+        <source>All reservations of physical resources.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">79,81</context>
+        </context-group>
+        <note priority="1" from="description">Your phys. resources reservations table description</note>
+      </trans-unit>
+      <trans-unit id="4608445059057464934" datatype="html">
+        <source>Reservations calendar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">90,92</context>
+        </context-group>
+        <note priority="1" from="description">Label for reservation calendar component</note>
+        <note priority="1" from="meaning">Home page tab label</note>
+      </trans-unit>
+      <trans-unit id="7074287734249185144" datatype="html">
+        <source>Unsupported technology.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/virtual-room-reservation-form/virtual-room-reservation-form.component.ts</context>
+          <context context-type="linenumber">192</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6645019327307369713" datatype="html">
+        <source>User disconnected</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/disconnect-user.button.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="102604011810053669" datatype="html">
+        <source>Failed to disconnect user</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/disconnect-user.button.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6184452628143241815" datatype="html">
+        <source>Display name updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/set-display-name.button.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3223215458220892314" datatype="html">
+        <source>Failed to update display name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/set-display-name.button.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3243866754098400325" datatype="html">
+        <source>Microphone level adjusted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/set-microphone-level.button.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="959657087348936264" datatype="html">
+        <source>Failed to adjust microphone level</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/set-microphone-level.button.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6424926325469205327" datatype="html">
+        <source>Camera <x id="PH" equiv-text="this.enableCamera ? &apos;enabled&apos; : &apos;disabled&apos;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/set-video-enabled.button.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4778671154357779646" datatype="html">
+        <source>Failed to <x id="PH" equiv-text="this.enableCamera ? &apos;enable&apos; : &apos;disable&apos;"/> camera</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/classes/buttons/set-video-enabled.button.ts</context>
+          <context context-type="linenumber">43,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8329107003302690657" datatype="html">
+        <source>Recording <x id="PH" equiv-text="record ? &apos;started&apos; : &apos;stopped&apos;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/components/recordings-tab/recordings-tab.component.ts</context>
+          <context context-type="linenumber">60,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3260206810369415236" datatype="html">
+        <source>Failed to <x id="PH" equiv-text="record ? &apos;start&apos; : &apos;stop&apos;"/> recording</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/components/recordings-tab/recordings-tab.component.ts</context>
+          <context context-type="linenumber">66,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1565960911739777489" datatype="html">
+        <source>Participant created</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/create-participant-page/create-participant-page.component.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3816613070141438236" datatype="html">
+        <source>Failed to create participant</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/create-participant-page/create-participant-page.component.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="179039621286903169" datatype="html">
+        <source>Role created</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/create-user-role-page/create-user-role-page.component.ts</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6298249308118362331" datatype="html">
+        <source>Failed to create role</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/create-user-role-page/create-user-role-page.component.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2941188048864687269" datatype="html">
+        <source>Reservation request edited</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/edit-reservation-request-page/edit-reservation-request-page.component.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5741291631223599991" datatype="html">
+        <source>Failed to edit reservation request</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/edit-reservation-request-page/edit-reservation-request-page.component.ts</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2266632902717318423" datatype="html">
+        <source>Reservation request is not editable.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/edit-reservation-request-page/errors/request-not-editable.error.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1673766020838180509" datatype="html">
+        <source>Item deleted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2088074212121314728" datatype="html">
+        <source>Failed to delete item</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="78702006596777528" datatype="html">
+        <source>Virtual room</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.ts</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4362329526808025590" datatype="html">
+        <source>Parent reservation request must be of type virtual room.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.ts</context>
+          <context context-type="linenumber">166,165</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6685995183342189308" datatype="html">
+        <source>No resource found using room&apos;s technology (<x id="PH" equiv-text="resReq.virtualRoomData.technology"/>).</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.ts</context>
+          <context context-type="linenumber">178,177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1286983255645370171" datatype="html">
+        <source>Day</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-view-selection/calendar-view-selection.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5141352019990967744" datatype="html">
+        <source>Week</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-view-selection/calendar-view-selection.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5403684285319082289" datatype="html">
+        <source>Month</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-view-selection/calendar-view-selection.component.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4711001061937175527" datatype="html">
+        <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/account-menu/account-menu-items.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">Sublink in account</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="642513528939684517" datatype="html">
+        <source>Log out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/account-menu/account-menu-items.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Sublink in account</note>
+        <note priority="1" from="meaning">navbar link</note>
+      </trans-unit>
+      <trans-unit id="5922919213929052544" datatype="html">
+        <source> Log in </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/account-menu/account-menu.component.html</context>
+          <context context-type="linenumber">58,61</context>
+        </context-group>
+        <note priority="1" from="description">Log in button</note>
+        <note priority="1" from="meaning">navbar button</note>
+      </trans-unit>
+      <trans-unit id="1077064790912167887" datatype="html">
+        <source>No api service defined in table&apos;s datasource</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">213</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">258</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="790131145660684841" datatype="html">
+        <source>Mass deletion is not available for this table</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">215,214</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">260,259</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7880339958360974563" datatype="html">
+        <source>All selected rows must have an id</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">220</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">222,221</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5049501957106029768" datatype="html">
+        <source>Are you sure you want to delete selected rows?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">229</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4154226610190752383" datatype="html">
+        <source>Items deleted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">242</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6036269292479495005" datatype="html">
+        <source>Failed to delete selected rows</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">248,247</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2577112278966193800" datatype="html">
+        <source>Table is empty</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">263</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7774398218561056663" datatype="html">
+        <source>Are you sure you want to delete all rows?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">268</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4554885228799321698" datatype="html">
+        <source>Rows deleted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">279</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="248718161342815452" datatype="html">
+        <source>Failed to delete all rows</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/data-table/data-table.component.ts</context>
+          <context context-type="linenumber">284</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2849064100927111571" datatype="html">
+        <source>loading...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/loading-text/loading-text.component.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4467323362722952678" datatype="html">
+        <source>Unknown</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1838886653478608907" datatype="html">
+        <source>Reservation request accepted.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3948717051962902865" datatype="html">
+        <source>Failed to accept reservation request.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">61,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6058191377470004535" datatype="html">
+        <source>Reservation request rejected.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5831731182067841082" datatype="html">
+        <source>Failed to reject reservation request.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">84,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4254657538579885561" datatype="html">
+        <source>Meeting room</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/physical-resource.config.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7029074246787437246" datatype="html">
+        <source>Parking place</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/physical-resource.config.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1891377425734264138" datatype="html">
+        <source>Videoconference (Pexip)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/virtual-room-resource.config.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8888264923955751142" datatype="html">
+        <source>Webconference (Adobe connect)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/virtual-room-resource.config.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1291560953089321968" datatype="html">
+        <source>Teleconference</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/virtual-room-resource.config.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5079909396983864805" datatype="html">
+        <source>Videoconference (MCU)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/virtual-room-resource.config.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

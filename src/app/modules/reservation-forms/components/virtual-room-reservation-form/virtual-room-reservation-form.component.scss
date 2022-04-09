@@ -1,0 +1,12 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &__field {
+    max-width: 100ch;
+
+    &--pin {
+      max-width: 30ch;
+    }
+  }
+}

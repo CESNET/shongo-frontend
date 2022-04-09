@@ -1,0 +1,193 @@
+<header>
+  <h1 i18n="heading">Edit reservation request</h1>
+</header>
+
+<ng-container *ngIf="reservationRequest; else loadingOrError">
+  <main>
+    <div
+      [ngSwitch]="reservationRequest.type"
+      class="reservation-form-container"
+    >
+      <div *ngSwitchCase="ReservationType.VIRTUAL_ROOM">
+        <app-virtual-room-reservation-form
+          [editedRequest]="reservationRequest"
+          #reservationForm
+        ></app-virtual-room-reservation-form>
+      </div>
+      <div *ngSwitchCase="ReservationType.PHYSICAL_RESOURCE">
+        <app-physical-resource-reservation-form
+          [editedRequest]="reservationRequest"
+          #reservationForm
+        ></app-physical-resource-reservation-form>
+      </div>
+      <div *ngSwitchCase="ReservationType.ROOM_CAPACITY">
+        <div [ngSwitch]="reservationRequest.virtualRoomData!.technology">
+          <div *ngSwitchCase="Technology.PEXIP">
+            <app-videoconference-reservation-form
+              [editedRequest]="reservationRequest"
+              [editingMode]="true"
+              #reservationForm
+            ></app-videoconference-reservation-form>
+          </div>
+          <div *ngSwitchCase="Technology.H323_SIP">
+            <app-videoconference-reservation-form
+              [editedRequest]="reservationRequest"
+              [editingMode]="true"
+              #reservationForm
+            ></app-videoconference-reservation-form>
+          </div>
+          <div *ngSwitchCase="Technology.FREEPBX">
+            <app-teleconference-reservation-form
+              [editedRequest]="reservationRequest"
+              [editingMode]="true"
+              #reservationForm
+            ></app-teleconference-reservation-form>
+          </div>
+          <div *ngSwitchCase="Technology.ADOBE_CONNECT">
+            <app-webconference-reservation-form
+              [editedRequest]="reservationRequest"
+              [editingMode]="true"
+              #reservationForm
+            ></app-webconference-reservation-form>
+          </div>
+          <div *ngSwitchDefault>
+            <app-alert
+              message="Unknown technology"
+              i18n-message="error message"
+              [type]="AlertType.ERROR"
+              [showCloseButton]="false"
+            ></app-alert>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchDefault>
+        <app-alert
+          message="Unknown reservation request type"
+          i18n-message="error message"
+          [type]="AlertType.ERROR"
+          [showCloseButton]="false"
+        ></app-alert>
+      </div>
+    </div>
+
+    <h2 i18n="heading">Slot selection</h2>
+
+    <form [formGroup]="slotForm" class="slot-selection">
+      <div>
+        <label class="slot-selection__label" i18n="label">Slot start</label>
+      </div>
+
+      <section class="slot-selection__section">
+        <mat-form-field appearance="outline" class="slot-selection__field">
+          <mat-label i18n="field label">Start date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="startDatePicker"
+            formControlName="startDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="startDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <mat-error
+            *ngIf="getFormError(slotForm.get('startDate')!) as error"
+            >{{ error }}</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="slot-selection__field">
+          <mat-label i18n="field label">Start time</mat-label>
+          <input matInput type="time" formControlName="startTime" />
+          <mat-error
+            *ngIf="getFormError(slotForm.get('startTime')!) as error"
+            >{{ error }}</mat-error
+          >
+        </mat-form-field>
+      </section>
+
+      <div>
+        <label class="slot-selection__label" i18n="label">Slot end</label>
+      </div>
+
+      <section class="slot-selection__section">
+        <mat-form-field appearance="outline" class="slot-selection__field">
+          <mat-label i18n="field label">End date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="endDatePicker"
+            formControlName="endDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="endDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+          <mat-error *ngIf="getFormError(slotForm.get('endDate')!) as error">{{
+            error
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="slot-selection__field">
+          <mat-label i18n="field label">End time</mat-label>
+          <input matInput type="time" formControlName="endTime" />
+          <mat-error *ngIf="getFormError(slotForm.get('endTime')!) as error">{{
+            error
+          }}</mat-error>
+        </mat-form-field>
+      </section>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__buttons">
+      <button
+        mat-flat-button
+        color="primary"
+        i18n="button name"
+        [disabled]="!isValid()"
+        (click)="editRequest()"
+      >
+        Edit request
+      </button>
+      <a
+        mat-button
+        routerLink="../"
+        i18n="button name"
+        *ngIf="(editing$ | async) === false; else editing"
+        >Cancel</a
+      >
+
+      <ng-template #editing>
+        <app-loading-text
+          message="Editing..."
+          i18n-message="loading text"
+        ></app-loading-text>
+      </ng-template>
+    </div>
+  </footer>
+</ng-container>
+
+<ng-template #loadingOrError>
+  <ng-container
+    *ngTemplateOutlet="(loading$ | async) ? loading : errorOccured"
+  ></ng-container>
+</ng-template>
+
+<ng-template #loading>
+  <div class="loading">
+    <ngx-skeleton-loader
+      count="4"
+      [theme]="{ height: '50px' }"
+    ></ngx-skeleton-loader>
+  </div>
+</ng-template>
+<ng-template #errorOccured>
+  <app-alert
+    message="Failed to load reservation request"
+    i18n-message="error message"
+    [type]="AlertType.ERROR"
+    [isActive]="true"
+    [showCloseButton]="false"
+  ></app-alert>
+</ng-template>

@@ -1,29 +1,20 @@
 <header>
   <h2 class="mat-primary-color">
-    Room recordings
+    <span i18n="heading">Room recordings</span>
+    &nbsp;
     <span
       *ngIf="reservationRequest.roomCapacityData?.isRecordingActive"
       class="active-recording"
-      >( <span class="red-circle"></span> Recording active )</span
+      >(&nbsp;<span class="red-circle"></span>&nbsp;<span i18n="text"
+        >Recording active</span
+      >&nbsp;)</span
     >
   </h2>
 
-  <button
-    mat-button
-    (click)="setRecording(false)"
-    *ngIf="
-      reservationRequest.roomCapacityData?.isRecordingActive;
-      else startRecord
-    "
-  >
-    <mat-icon color="primary">videocam_off</mat-icon>&nbsp;Stop recording
-  </button>
-
-  <ng-template #startRecord>
-    <button mat-button (click)="setRecording(true)">
-      <mat-icon color="primary">videocam</mat-icon>&nbsp;Start recording
-    </button>
-  </ng-template>
+  <ng-container
+    *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
+    [ngTemplateOutlet]="recordingButton"
+  ></ng-container>
 </header>
 
 <main>
@@ -32,5 +23,52 @@
     [showDeleteButtons]="false"
     [dataSource]="roomRecordingDataSource"
     description="List of recordings for this room."
+    i18n-description="table description"
   ></app-data-table>
 </main>
+
+<ng-template #recordingButton>
+  <ng-container
+    *ngIf="(settingRecording$ | async) === false; else settingRecording"
+  >
+    <button
+      mat-button
+      aria-labelledby="stop-recording-btn-name"
+      (click)="setRecording(false)"
+      [disabled]="
+        reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
+      "
+      *ngIf="
+        reservationRequest.roomCapacityData?.isRecordingActive;
+        else startRecord
+      "
+    >
+      <mat-icon color="primary">videocam_off</mat-icon>&nbsp;<span
+        i18n="button name"
+        id="stop-recording-btn-name"
+        >Stop recording</span
+      >
+    </button>
+  </ng-container>
+</ng-template>
+
+<ng-template #settingRecording>
+  <app-loading-text></app-loading-text>
+</ng-template>
+
+<ng-template #startRecord>
+  <button
+    mat-button
+    aria-labelledby="start-recording-btn-name"
+    (click)="setRecording(true)"
+    [disabled]="
+      reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
+    "
+  >
+    <mat-icon color="primary">videocam</mat-icon>&nbsp;<span
+      i18n="button name"
+      id="start-recording-btn-name"
+      >Start recording</span
+    >
+  </button>
+</ng-template>

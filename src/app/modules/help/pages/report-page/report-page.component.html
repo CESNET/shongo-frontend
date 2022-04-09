@@ -1,23 +1,80 @@
 <header>
-  <h1>Report a problem</h1>
-  <h3>
+  <h1 i18n="header text">Report a problem</h1>
+  <span i18n="page description">
     The following form allows you to send a message to system administrators
     about your problem.
-  </h3>
+  </span>
 </header>
 
 <main>
-  <form>
+  <form class="form" [formGroup]="form" (submit)="report()">
     <mat-form-field appearance="outline">
-      <mat-label>Your e-mail</mat-label>
-      <input matInput type="text" />
+      <mat-label i18n="report field label">Your e-mail</mat-label>
+      <input matInput type="text" formControlName="email" />
+      <mat-error
+        *ngIf="getFormError(form.get('email')!, emailErrorHandler) as error"
+        >{{ error }}</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Message</mat-label>
-      <textarea matInput cols="30" rows="10"></textarea>
+      <mat-label i18n="report field label">Message</mat-label>
+      <textarea
+        matInput
+        cols="30"
+        rows="10"
+        formControlName="message"
+      ></textarea>
+      <mat-error
+        *ngIf="
+          getFormError(form.get('message')!, minLengthErrorHandler) as error
+        "
+        >{{ error }}</mat-error
+      >
     </mat-form-field>
 
-    <button mat-flat-button type="submit" color="primary">Submit</button>
+    <div class="form__buttons">
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+        class="form__button"
+        i18n="button name"
+        [disabled]="!form.valid"
+        *ngIf="(loading$ | async) === false; else loading"
+      >
+        Submit
+      </button>
+      <ng-template #loading>
+        <app-loading-text message="sending..."></app-loading-text>
+      </ng-template>
+
+      <button
+        mat-button
+        type="button"
+        class="form__button"
+        aria-labelledby="metadata-btn-name"
+        (click)="toggleMetadata()"
+      >
+        <ng-container *ngIf="!showMetadata; else hideMetadata">
+          <mat-icon>expand_more</mat-icon>&nbsp;<span
+            i18n="button name"
+            id="metadata-btn-name"
+            >Show metadata</span
+          >
+        </ng-container>
+        <ng-template #hideMetadata>
+          <mat-icon>expand_less</mat-icon>&nbsp;<span
+            i18n="button name"
+            id="metadata-btn-name"
+            >Hide metadata</span
+          >
+        </ng-template>
+      </button>
+    </div>
   </form>
+
+  <div class="metadata" *ngIf="showMetadata">
+    <pre>{{ reportService.reportMetadata | json }}</pre>
+  </div>
 </main>

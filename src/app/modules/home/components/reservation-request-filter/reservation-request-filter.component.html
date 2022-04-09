@@ -1,9 +1,9 @@
-<div class="table-filter">
-  <form [formGroup]="filterForm">
-    <div class="field-group">
+<div class="filter">
+  <form [formGroup]="filterForm" class="filter__form">
+    <div class="filter__field-group">
       <!-- Technology -->
-      <mat-form-field appearance="outline">
-        <mat-label>Technology</mat-label>
+      <mat-form-field appearance="outline" class="filter__field">
+        <mat-label i18n="field label">Technology</mat-label>
         <mat-select formControlName="technology">
           <mat-option
             *ngFor="let option of technologyOptions"
@@ -14,16 +14,24 @@
       </mat-form-field>
 
       <!-- Search -->
-      <mat-form-field appearance="outline" *ngIf="showAdvancedFilter">
-        <mat-label>Search</mat-label>
+      <mat-form-field
+        appearance="outline"
+        *ngIf="showAdvancedFilter"
+        class="filter__field"
+      >
+        <mat-label i18n="field label">Search</mat-label>
         <input type="text" matInput formControlName="search" />
       </mat-form-field>
     </div>
 
-    <div class="field-group">
+    <div class="filter__field-group">
       <!-- Date from -->
-      <mat-form-field appearance="outline" *ngIf="showAdvancedFilter">
-        <mat-label>From</mat-label>
+      <mat-form-field
+        appearance="outline"
+        *ngIf="showAdvancedFilter"
+        class="filter__field"
+      >
+        <mat-label i18n="field label:From date">From</mat-label>
         <input
           matInput
           [matDatepicker]="dateFromPicker"
@@ -37,8 +45,12 @@
       </mat-form-field>
 
       <!-- Date to -->
-      <mat-form-field appearance="outline" *ngIf="showAdvancedFilter">
-        <mat-label>To</mat-label>
+      <mat-form-field
+        appearance="outline"
+        *ngIf="showAdvancedFilter"
+        class="filter__field"
+      >
+        <mat-label i18n="field label:To date">To</mat-label>
         <input
           matInput
           [matDatepicker]="dateToPicker"
@@ -52,22 +64,42 @@
       </mat-form-field>
     </div>
 
-    <div class="field-group">
+    <div class="filter__field-group">
       <!-- Show failed rooms -->
-      <mat-checkbox formControlName="showFailedRooms" color="primary"
+      <mat-checkbox
+        formControlName="showFailedRooms"
+        color="primary"
+        class="filter__checkbox"
+        i18n="checkbox label"
         >Show failed rooms</mat-checkbox
       >
 
       <!-- Show capacities -->
-      <mat-checkbox formControlName="showCapacity" color="primary"
+      <mat-checkbox
+        formControlName="showCapacity"
+        color="primary"
+        class="filter__checkbox"
+        i18n="checkbox label"
         >Show capacities</mat-checkbox
       >
     </div>
   </form>
 
   <div class="buttons">
-    <button mat-stroked-button color="primary" (click)="toggleAdvancedFilter()">
-      {{ showAdvancedFilter ? "Hide advanced filter" : "Show advanced filter" }}
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="toggleAdvancedFilter()"
+      class="buttons__button"
+    >
+      <span
+        *ngIf="showAdvancedFilter; else hiddenAdvancedFilter"
+        i18n="button name"
+        >Hide advanced filter</span
+      >
+      <ng-template #hiddenAdvancedFilter>
+        <span i18n="button name">Show advanced filter</span>
+      </ng-template>
     </button>
   </div>
 </div>

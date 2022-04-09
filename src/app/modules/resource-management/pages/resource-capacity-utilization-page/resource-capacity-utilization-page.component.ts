@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ResourceCapacityUtilizationDataSource } from 'src/app/shared/components/data-table/data-sources/resource-capacity-utilization-datasource';
+import { ResourceCapacityUtilizationDataSource } from 'src/app/modules/shongo-table/data-sources/resource-capacity-utilization-datasource';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({

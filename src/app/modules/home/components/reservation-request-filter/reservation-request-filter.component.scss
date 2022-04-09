@@ -1,51 +1,69 @@
-$form-field-padding-bottom: 1.34375em;
-$form-field-margin: 0.25em 0;
-
-// Layout
-.table-filter {
+.filter {
   display: flex;
   justify-content: space-between;
-  padding-top: $form-field-padding-bottom;
+  padding-top: var(--form-field-padding-bottom);
+
+  &__form,
+  &__field-group {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+  }
+
+  &__form {
+    flex-wrap: wrap;
+  }
+
+  &__field {
+    width: 10em;
+  }
+
+  &__checkbox {
+    margin: var(--form-field-margin);
+    padding-bottom: var(--form-field-padding-bottom);
+  }
 }
-form,
-.field-group {
-  display: flex;
-  gap: 13px;
-  align-items: center;
-}
-form {
-  flex-wrap: wrap;
-}
+
 .buttons {
   display: flex;
   align-items: center;
-  margin-bottom: $form-field-padding-bottom;
-}
-
-// Fields
-mat-checkbox {
-  margin: $form-field-margin;
-  padding-bottom: $form-field-padding-bottom;
-}
-mat-form-field {
-  width: 180px;
+  margin-bottom: var(--form-field-padding-bottom);
 }
 
 // Media queries
 @media only screen and (max-width: 1035px) {
-  form {
+  .filter__form {
     gap: 0;
     flex-direction: column;
     align-items: flex-start;
   }
 }
 @media only screen and (max-width: 600px) {
-  .table-filter {
+  .filter {
     flex-direction: column-reverse;
   }
 }
 @media only screen and (max-width: 435px) {
-  .field-group {
-    flex-wrap: wrap;
+  .filter {
+    &__field-group {
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+
+    &__field {
+      width: 100%;
+    }
+
+    &__checkbox {
+      margin: 0 1em 1em 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .buttons {
+    &__button {
+      flex: 1;
+    }
   }
 }

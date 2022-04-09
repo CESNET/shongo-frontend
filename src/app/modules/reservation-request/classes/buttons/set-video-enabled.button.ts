@@ -1,9 +1,9 @@
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ApiActionButton } from 'src/app/shared/components/data-table/buttons/api-action-button';
-import { RowPredicate } from 'src/app/shared/components/data-table/buttons/table-button';
-import { RuntimeParticipantTableData } from 'src/app/shared/components/data-table/data-sources/runtime-management.datasource';
+import { ApiActionButton } from 'src/app/modules/shongo-table/buttons/api-action-button';
+import { RowPredicate } from 'src/app/modules/shongo-table/buttons/table-button';
+import { RuntimeParticipantTableData } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';
 
 export class SetVideoEnabledButton extends ApiActionButton<RuntimeParticipantTableData> {
   icon: string;
@@ -20,10 +20,10 @@ export class SetVideoEnabledButton extends ApiActionButton<RuntimeParticipantTab
 
     if (enableCamera) {
       this.icon = 'videocam';
-      this.name = 'Enable camera';
+      this.name = $localize`:button name:Enable camera`;
     } else {
       this.icon = 'videocam_off';
-      this.name = 'Disable camera';
+      this.name = $localize`:button name:Disable camera`;
     }
   }
 
@@ -37,13 +37,18 @@ export class SetVideoEnabledButton extends ApiActionButton<RuntimeParticipantTab
           this.removeFromLoading(row);
         }),
         mapTo(
-          `Camera ${this.enableCamera ? 'enabled' : 'disabled'} successfully.`
+          this.enableCamera
+            ? $localize`:success message:Camera enabled`
+            : $localize`:success message:Camera disabled`
         ),
         catchError(() => {
           this.removeFromLoading(row);
-          return throwError(
-            `Failed to ${this.enableCamera ? 'enable' : 'disable'} camera.`
-          );
+
+          if (this.enableCamera) {
+            throw new Error($localize`:error message:Failed to enable camera`);
+          } else {
+            throw new Error($localize`:error message:Failed to disable camera`);
+          }
         })
       );
   }

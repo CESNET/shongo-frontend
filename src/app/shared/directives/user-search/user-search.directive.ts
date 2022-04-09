@@ -36,8 +36,8 @@ export class UserSearchDirective implements OnInit, OnDestroy {
     this._createUserFilterSub();
 
     this._host._formControl = this._filterCtrl;
-    this._host.placeholderLabel = 'Select user by name/e-mail...';
-    this._host.noEntriesFoundLabel = 'No users found';
+    this._host.placeholderLabel = $localize`:placeholder:Select user by name/e-mail...`;
+    this._host.noEntriesFoundLabel = $localize`:fallback text:No users found`;
   }
 
   ngOnDestroy(): void {

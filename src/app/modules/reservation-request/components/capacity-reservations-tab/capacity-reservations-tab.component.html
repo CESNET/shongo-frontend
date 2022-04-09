@@ -1,5 +1,5 @@
 <header>
-  <h2 class="mat-primary-color">List of capacity requests</h2>
+  <h2 class="mat-primary-color" i18n="heading">List of capacity requests</h2>
 </header>
 
 <main>
@@ -7,5 +7,6 @@
     *ngIf="capacityRequestsDataSource"
     [dataSource]="capacityRequestsDataSource"
     description="Room capacity reservations for this reservation request"
+    i18n-description="table description"
   ></app-data-table>
 </main>

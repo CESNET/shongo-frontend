@@ -1,0 +1,33 @@
+<div class="calendar-paginator">
+  <button
+    mat-icon-button
+    aria-label="Previous"
+    i18n-aria-label="button name"
+    mwlCalendarPreviousView
+    [view]="view"
+    [viewDate]="viewDate"
+    (viewDateChange)="onViewDateChange($event)"
+  >
+    <mat-icon>navigate_before</mat-icon>
+  </button>
+  <button
+    mat-button
+    mwlCalendarToday
+    i18n="button name"
+    [viewDate]="viewDate"
+    (viewDateChange)="onViewDateChange($event)"
+  >
+    Today
+  </button>
+  <button
+    mat-icon-button
+    aria-label="Previous"
+    i18n-aria-label="button name"
+    mwlCalendarNextView
+    [view]="view"
+    [viewDate]="viewDate"
+    (viewDateChange)="onViewDateChange($event)"
+  >
+    <mat-icon>navigate_next</mat-icon>
+  </button>
+</div>

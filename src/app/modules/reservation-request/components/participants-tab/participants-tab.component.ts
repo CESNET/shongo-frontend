@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ParticipantsDataSource } from 'src/app/shared/components/data-table/data-sources/participants.datasource';
+import { ParticipantsDataSource } from 'src/app/modules/shongo-table/data-sources/participants.datasource';
 
 @Component({
   selector: 'app-participants-tab',

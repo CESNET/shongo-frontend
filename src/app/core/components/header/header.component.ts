@@ -5,12 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';
@@ -33,7 +28,7 @@ import { locales, menuItems } from './header-items';
     ]),
   ],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnDestroy {
   menuItems = menuItems;
   locales = locales;
   defaultLocale = this.locales[0];
@@ -46,15 +41,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public settings: SettingsService
   ) {}
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
   }
 
   getUsername(): string {
-    return this.auth.identityClaims?.name ?? 'Unknown user';
+    return (
+      this.auth.identityClaims?.name ??
+      $localize`:user name fallback:Unknown user`
+    );
   }
 
   toggleDropdown(): void {

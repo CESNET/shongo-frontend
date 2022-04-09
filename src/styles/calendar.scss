@@ -1,14 +1,16 @@
+// Sizes calendar cells to take up whole screen.
 .fullscreen-calendar .cal-day-cell {
   --cal-header-cell-height: 30px;
   --cal-border-height-total: 6px;
   height: calc(
     (
-        100vh - var(--toolbar-height) - var(--cal-header-cell-height) -
+        100vh - var(--toolbar-row-height) - var(--cal-header-cell-height) -
           var(--cal-border-height-total)
       ) / 5
   );
 }
 
+// White text color for events.
 .cal-event-color {
   &--white {
     .cal-event-title {
@@ -17,6 +19,13 @@
   }
 }
 
+// Disables touch actions for event element, used to preven errors when resizing/dragging event on mobile.
+.cal-event-container,
+.cal-resize-handle {
+  touch-action: none;
+}
+
+// Prevents selection of times in calendar, avoids selecting times when creating event with mousemove.
 .cal-time {
   user-select: none;
 }

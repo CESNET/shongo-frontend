@@ -1,68 +1,108 @@
 /* Layout */
-header {
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.calendar-options {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.room-options {
-  text-align: right;
+.calendar {
+  font-size: 1rem;
 
-  :not(:last-child) {
-    margin-right: 15px;
-  }
-}
-
-/* Loading */
-.calendar-container {
-  position: relative;
-
-  .loading-overlay {
+  &__header {
+    padding-bottom: 1.5em;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  &__navigation,
+  &__options {
+    display: flex;
     align-items: center;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(245, 245, 245, 0.6);
-    background: linear-gradient(
-      0deg,
-      rgba(245, 245, 245, 0.6) 0%,
-      rgba(255, 255, 255, 0.6) 100%
-    );
-    top: 0;
-    left: 0;
-    z-index: 1;
+    flex-wrap: wrap;
+  }
+
+  &__options {
+    justify-content: flex-end;
+    gap: 1em;
+
+    &-left {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+  }
+
+  &__navigation {
+    justify-content: space-between;
+  }
+
+  &__datepicker-input {
+    visibility: hidden;
+    width: 0;
+    height: 0;
   }
 }
 
-@media only screen and (max-width: 600px) {
-  .calendar-options {
-    h1 {
+@media only screen and (max-width: 768px) {
+  .calendar {
+    &__view-date {
+      font-size: var(--font-size-large);
       order: 3;
       width: 100%;
       text-align: center;
-      margin-top: 20px;
+      margin-top: 1.5em;
+    }
+
+    &__options {
+      justify-content: space-between;
     }
   }
 }
 
-@media only screen and (max-width: 420px) {
-  .room-options {
-    display: flex;
-    text-align: center;
-  }
-  .calendar-options,
-  .room-options {
-    flex-direction: column;
-    align-items: center;
-
-    > * {
-      margin-top: 15px;
+@media only screen and (max-width: 500px) {
+  .calendar {
+    &__options {
+      flex-direction: column-reverse;
     }
+
+    &__options-left,
+    &__options-right {
+      width: 100%;
+    }
+
+    &__options-left {
+      justify-content: space-between;
+    }
+
+    &__resource-selection {
+      width: 100%;
+    }
+
+    &__navigation {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas:
+        "datepicker paginator"
+        "date date";
+    }
+
+    &__datepicker {
+      grid-area: datepicker;
+      justify-self: start;
+    }
+
+    &__paginator {
+      grid-area: paginator;
+      justify-self: end;
+    }
+
+    &__view-date {
+      grid-area: date;
+      justify-self: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .calendar__navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
