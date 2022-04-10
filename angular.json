@@ -44,6 +44,9 @@
             "en": {
               "localize": ["en"]
             },
+            "cs": {
+              "localize": ["cs"]
+            },
             "production": {
               "budgets": [
                 {
@@ -87,6 +90,9 @@
             },
             "en": {
               "browserTarget": "shongo-frontend:build:en"
+            },
+            "cs": {
+              "browserTarget": "shongo-frontend:build:cs"
             }
           },
           "defaultConfiguration": "development"
