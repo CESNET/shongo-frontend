@@ -1,5 +1,5 @@
 @use "./styles/mat-theme-colors" as mat-theme-colors;
-@use "~@angular/material" as mat;
+@use "@angular/material" as mat;
 
 @include mat.core();
 
