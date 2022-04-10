@@ -40,6 +40,10 @@ You can configure app's environment in `src/environments`. Modify **environment.
 
 Use `npm start` to run development server, app will refresh automatically on file updates.
 
+### Pre-commit hooks
+
+App uses Husky and Lint-staged to run tests and eslint before every commit.
+
 ### Mocking backend services
 
 Application needs an Oauth2 authentication server and backend implementation to function properly. Here we describe technologies we use for development, you can however substitute them with other technologies of your choice.
