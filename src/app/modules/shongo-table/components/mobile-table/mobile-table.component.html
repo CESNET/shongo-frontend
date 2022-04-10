@@ -95,11 +95,12 @@
               <div class="cell__row-name">
                 <span>{{ column.displayName }} </span>
                 <button
-                  mat-icon-button
                   *ngIf="column.helpComponent"
+                  mat-icon-button
+                  class="help-icon-button"
                   (click)="openHelp(column)"
                 >
-                  <mat-icon class="cell__help-icon icon-xs">help</mat-icon>
+                  <mat-icon>help</mat-icon>
                 </button>
               </div>
 

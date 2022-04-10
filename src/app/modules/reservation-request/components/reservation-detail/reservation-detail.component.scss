@@ -4,32 +4,20 @@
   flex-wrap: wrap;
   gap: 1.5rem;
 
-  main,
-  aside {
+  &__main,
+  &__aside {
     flex: 1;
   }
-}
 
-aside {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-
-  button {
-    width: fit-content;
+  &__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
   }
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.help-icon {
+  margin-bottom: 3px;
 }
 
 @media only screen and (max-width: 1024px) {

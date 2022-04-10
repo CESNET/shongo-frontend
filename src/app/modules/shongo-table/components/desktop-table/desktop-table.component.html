@@ -61,11 +61,12 @@
       <th mat-header-cell *matHeaderCellDef>
         <div class="table-header-wrapper">
           <button
-            mat-icon-button
             *ngIf="column.helpComponent"
+            mat-icon-button
+            class="help-icon-button"
             (click)="openHelp(column)"
           >
-            <mat-icon class="help-icon icon-xs">help</mat-icon>
+            <mat-icon>help</mat-icon>
           </button>
           <span mat-sort-header>{{ column.displayName }}</span>
         </div>
