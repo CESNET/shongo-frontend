@@ -4,6 +4,7 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -70,6 +71,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         name: 'state',
         displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
+        helpComponent: ReservationRequestStateHelpComponent,
       },
     ];
 

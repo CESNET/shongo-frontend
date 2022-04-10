@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { GenericTableComponent } from '../../generic-table';
+import { GenericTableComponent } from '../generic-table';
 
 @Component({
   selector: 'app-desktop-table',

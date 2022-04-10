@@ -7,6 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Type,
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,17 +18,18 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
 import { TableButtonType } from 'src/app/shared/models/enums/table-button-type.enum';
-import { ActionButton } from './buttons/action-button';
-import { ApiActionButton } from './buttons/api-action-button';
-import { LinkButton } from './buttons/link-button';
-import { TableButton } from './buttons/table-button';
+import { ActionButton } from '../buttons/action-button';
+import { ApiActionButton } from '../buttons/api-action-button';
+import { LinkButton } from '../buttons/link-button';
+import { TableButton } from '../buttons/table-button';
 import {
   COL_DATA_PROVIDER,
   SETTINGS_PROVIDER,
-} from './column-components/column.component';
-import { DataTableDataSource } from './data-sources/data-table-datasource';
-import { StaticDataSource } from './data-sources/static-datasource';
-import { DataTableFilter } from './filter/data-table-filter';
+} from '../column-components/column.component';
+import { DataTableDataSource } from '../data-sources/data-table-datasource';
+import { StaticDataSource } from '../data-sources/static-datasource';
+import { DataTableFilter } from '../filter/data-table-filter';
+import { TableColumn } from '../models/table-column.interface';
 
 @Component({
   template: '',
@@ -261,6 +263,10 @@ export abstract class GenericTableComponent<T>
           },
         });
     }
+  }
+
+  openHelp(column: TableColumn<T>): void {
+    this._dialog.open(column.helpComponent as Type<Component>);
   }
 
   private _renderFilterComponent(): void {

@@ -111,9 +111,6 @@ export class AuthenticationService {
       .then(() => this._isDoneLoading$.next(true))
       .catch((error) => {
         this._isDoneLoading$.next(true);
-        this._alert.showError(
-          $localize`:error message:Authentication process failed`
-        );
         console.error('An error appeared during the log in process: ', error);
       });
   }
@@ -133,6 +130,9 @@ export class AuthenticationService {
         case 'discovery_document_load_error':
         case 'discovery_document_validation_error':
           this._discoveryDocumentLoaded = false;
+          this._alert.showError(
+            $localize`:error message:Authentication process failed`
+          );
           break;
         case 'discovery_document_loaded':
           this._discoveryDocumentLoaded = true;

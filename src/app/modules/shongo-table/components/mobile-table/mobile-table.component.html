@@ -92,7 +92,16 @@
           <ng-container *ngFor="let column of columns">
             <div class="cell__row">
               <!-- Row name -->
-              <div class="cell__row-name">{{ column.displayName }}</div>
+              <div class="cell__row-name">
+                <span>{{ column.displayName }} </span>
+                <button
+                  mat-icon-button
+                  *ngIf="column.helpComponent"
+                  (click)="openHelp(column)"
+                >
+                  <mat-icon class="cell__help-icon icon-xs">help</mat-icon>
+                </button>
+              </div>
 
               <!-- Row data-->
               <div class="cell__row-data">

@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable, of } from 'rxjs';
+import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { RequestModification } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
@@ -38,6 +39,7 @@ export class ModificationHistoryDataSource extends StaticDataSource<
         name: 'state',
         displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
+        helpComponent: ReservationRequestStateHelpComponent,
       },
     ];
 

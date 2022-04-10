@@ -25,23 +25,23 @@ export class RoomStateColumnComponent<T> extends StateChipColumnComponent<T> {
     ],
     [
       RoomState.STARTED,
-      { color: 'success', displayName: $localize`:room state:Opened` },
+      { color: 'success', displayName: $localize`:room state:Open` },
     ],
     [
       RoomState.STARTED_AVAILABLE,
-      { color: 'success', displayName: $localize`:room state:Opened` },
+      { color: 'success', displayName: $localize`:room state:Open` },
     ],
     [
       RoomState.STARTED_NOT_AVAILABLE,
       {
-        color: 'success',
+        color: 'ready',
         displayName: $localize`:room state:Prepared`,
       },
     ],
     [
       RoomState.STOPPED,
       {
-        color: 'success',
+        color: 'ready',
         displayName: $localize`:room state:Stopped`,
       },
     ],

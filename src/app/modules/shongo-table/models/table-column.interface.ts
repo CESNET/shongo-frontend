@@ -7,5 +7,6 @@ export interface TableColumn<T> {
   name: string;
   displayName: string;
   component?: Type<ColumnComponent<T>>;
+  helpComponent?: Type<unknown>;
   pipeFunc?: PipeFunction;
 }

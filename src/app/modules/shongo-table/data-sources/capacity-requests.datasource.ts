@@ -4,6 +4,7 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
@@ -50,6 +51,7 @@ export class CapacityRequestsDataSource extends DataTableDataSource<CapacityRequ
         name: 'state',
         displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
+        helpComponent: ReservationRequestStateHelpComponent,
       },
     ];
 
