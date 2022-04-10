@@ -83,7 +83,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     { value: 2, displayName: '2.' },
     { value: 3, displayName: '3.' },
     { value: 4, displayName: '4.' },
-    { value: -1, displayName: $localize`:text:last {day}:last` },
+    { value: -1, displayName: $localize`:text|last {day}:last` },
   ];
 
   monthlyDayOpts: Option[] = [

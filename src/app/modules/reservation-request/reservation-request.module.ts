@@ -33,6 +33,8 @@ import { RecordingViewUrlColumnComponent } from './components/recording-view-url
 import { EditReservationRequestPageComponent } from './pages/edit-reservation-request-page/edit-reservation-request-page.component';
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ShongoTableModule } from '../shongo-table/shongo-table.module';
 
 @NgModule({
   imports: [
@@ -56,6 +58,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatSliderModule,
     ReservationFormsModule,
     MatDatepickerModule,
+    ShongoTableModule,
+    MatTooltipModule,
   ],
   declarations: [
     ReservationRequestDetailPageComponent,

@@ -1,9 +1,9 @@
 import { Observable, throwError } from 'rxjs';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ApiActionButton } from 'src/app/shared/components/data-table/buttons/api-action-button';
-import { RowPredicate } from 'src/app/shared/components/data-table/buttons/table-button';
-import { RuntimeParticipantTableData } from 'src/app/shared/components/data-table/data-sources/runtime-management.datasource';
+import { ApiActionButton } from 'src/app/modules/shongo-table/buttons/api-action-button';
+import { RowPredicate } from 'src/app/modules/shongo-table/buttons/table-button';
+import { RuntimeParticipantTableData } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';
 
 export class DisconnectUserButton extends ApiActionButton<RuntimeParticipantTableData> {
   icon = 'person_off';

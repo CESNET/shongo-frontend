@@ -4,6 +4,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { httpClientStub } from 'src/app/test/stubs/http-client.stub';
+import { HttpClient } from '@angular/common/http';
 
 describe('ReservationRequestFilterComponent', () => {
   let component: ReservationRequestFilterComponent;
@@ -19,6 +21,7 @@ describe('ReservationRequestFilterComponent', () => {
         MatSelectModule,
         MatCheckboxModule,
       ],
+      providers: [{ provide: HttpClient, useValue: httpClientStub }],
     }).compileComponents();
   });
 

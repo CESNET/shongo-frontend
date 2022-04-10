@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataTableComponent } from './components/data-table/data-table.component';
-import { MatTableResponsiveDirective } from './directives/mat-table-responsive/mat-table-responsive.directive';
 import { ShortStringPipe } from './pipes/short-string.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CertainityCheckComponent } from './components/certainity-check/certainity-check.component';
 import { StateChipComponent } from './components/state-chip/state-chip.component';
-import { ReservationRequestStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/reservation-request-state-column.component';
-import { RoomStateColumnComponent } from './components/data-table/column-components/state-chip-column/components/room-state-column.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AlertComponent } from './components/alert/alert.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -18,13 +14,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSortModule } from '@angular/material/sort';
 import { UserSearchDirective } from './directives/user-search/user-search.directive';
 import { GroupSearchDirective } from './directives/group-search/group-search.directive';
 import { SessionEndedDialogComponent } from './components/session-ended-dialog/session-ended-dialog.component';
@@ -38,16 +32,15 @@ import { SnackbarAlertComponent } from './components/snackbar-alert/snackbar-ale
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RequestConfirmationDialogComponent } from './components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { LoadingTextComponent } from './components/loading-text/loading-text.component';
+import { StateHelpComponent } from './components/state-help/state-help.component';
+import { RoomStateHelpComponent } from './components/state-help/wrapper-components/room-state-help.component';
+import { ReservationRequestStateHelpComponent } from './components/state-help/wrapper-components/reservation-request-state-help.component';
 
 @NgModule({
   declarations: [
-    DataTableComponent,
-    MatTableResponsiveDirective,
     ShortStringPipe,
     CertainityCheckComponent,
     StateChipComponent,
-    ReservationRequestStateColumnComponent,
-    RoomStateColumnComponent,
     AlertComponent,
     UserSearchDirective,
     GroupSearchDirective,
@@ -59,6 +52,9 @@ import { LoadingTextComponent } from './components/loading-text/loading-text.com
     SnackbarAlertComponent,
     RequestConfirmationDialogComponent,
     LoadingTextComponent,
+    RoomStateHelpComponent,
+    ReservationRequestStateHelpComponent,
+    StateHelpComponent,
   ],
   imports: [
     CommonModule,
@@ -73,19 +69,16 @@ import { LoadingTextComponent } from './components/loading-text/loading-text.com
     MatButtonToggleModule,
     MatSelectModule,
     MatCardModule,
-    MatPaginatorModule,
     MatCheckboxModule,
     MatTooltipModule,
     MatTableModule,
     MatDividerModule,
     MatDialogModule,
-    MatSortModule,
     MatMenuModule,
     FlexLayoutModule,
     MatSnackBarModule,
   ],
   exports: [
-    DataTableComponent,
     ShortStringPipe,
     MomentDatePipe,
     CertainityCheckComponent,
@@ -97,6 +90,8 @@ import { LoadingTextComponent } from './components/loading-text/loading-text.com
     AccountMenuComponent,
     ComponentHostDirective,
     LoadingTextComponent,
+    RoomStateHelpComponent,
+    ReservationRequestStateHelpComponent,
   ],
   providers: [MomentDatePipe],
 })

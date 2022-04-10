@@ -1,9 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HeaderComponent } from './header.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { of } from 'rxjs';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DummyComponent } from 'src/app/test/components/dummy.component';
@@ -12,15 +10,16 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatRippleModule } from '@angular/material/core';
+import { SettingsServiceStub } from 'src/app/test/stubs/settings-service.stub';
+import { SettingsService } from '../../http/settings/settings.service';
+import { AuthServiceStub } from 'src/app/test/stubs/auth-service.stub';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
-  const authStub = jasmine.createSpyObj('AuthenticationService', ['login'], {
-    isAuthenticated$: of(true),
-  });
-  authStub.login.and.returnValue(Promise.resolve());
+  const authStub = new AuthServiceStub();
+  const settingsServiceStub = new SettingsServiceStub();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -43,7 +42,11 @@ describe('HeaderComponent', () => {
       providers: [
         {
           provide: AuthenticationService,
-          useValue: authStub as AuthenticationService,
+          useValue: authStub,
+        },
+        {
+          provide: SettingsService,
+          useValue: settingsServiceStub,
         },
       ],
     }).compileComponents();

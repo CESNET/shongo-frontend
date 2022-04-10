@@ -201,9 +201,11 @@
   <!-- Error -->
   <ng-template #error>
     <app-alert
-      message="An error occured"
+      message="Failed to load reservation request, try refreshing the page."
       i18n-message="error message"
       [type]="AlertType.ERROR"
+      [isActive]="true"
+      [showCloseButton]="false"
     ></app-alert>
   </ng-template>
 </main>

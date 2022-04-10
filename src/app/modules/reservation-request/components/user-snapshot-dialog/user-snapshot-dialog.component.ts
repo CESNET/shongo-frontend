@@ -5,7 +5,7 @@ import {
   Inject,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RuntimeParticipantTableData } from 'src/app/shared/components/data-table/data-sources/runtime-management.datasource';
+import { RuntimeParticipantTableData } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { environment } from 'src/environments/environment';
 

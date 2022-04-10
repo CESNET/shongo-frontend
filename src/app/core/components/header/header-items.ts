@@ -32,11 +32,6 @@ export const menuItems: MenuItem[] = [
         route: '/resource-management/capacity-utilization',
         itemAuth: ItemAuthorization.ADMIN,
       },
-      {
-        label: $localize`:navbar link|Sublink in resource management:Resource reservations`,
-        route: '/resource-management/resource-reservations',
-        itemAuth: ItemAuthorization.ADMIN,
-      },
     ],
   },
   {

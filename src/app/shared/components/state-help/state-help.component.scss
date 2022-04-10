@@ -1,0 +1,22 @@
+.states {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  &__state {
+    display: flex;
+    align-items: center;
+
+    &-left {
+      width: 20ch;
+    }
+
+    &-right {
+      flex: 1;
+    }
+  }
+}
+
+.actions {
+  justify-content: flex-end;
+}

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { mockReservationRequest } from 'src/app/test/mocks/reservation-request.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ShongoTableModule } from 'src/app/modules/shongo-table/shongo-table.module';
 
 describe('RecordingsTabComponent', () => {
   let component: RecordingsTabComponent;
@@ -25,6 +26,7 @@ describe('RecordingsTabComponent', () => {
         MatIconModule,
         SharedModule,
         NoopAnimationsModule,
+        ShongoTableModule,
       ],
       providers: [
         DatePipe,

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { UserRolesDataSource } from 'src/app/shared/components/data-table/data-sources/user-roles.datasource';
+import { UserRolesDataSource } from 'src/app/modules/shongo-table/data-sources/user-roles.datasource';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
 @Component({

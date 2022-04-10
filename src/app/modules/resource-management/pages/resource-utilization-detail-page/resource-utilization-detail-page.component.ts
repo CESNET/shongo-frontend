@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ReservationsDataSource } from 'src/app/shared/components/data-table/data-sources/reservations.datasource';
+import { ReservationsDataSource } from 'src/app/modules/shongo-table/data-sources/reservations.datasource';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';

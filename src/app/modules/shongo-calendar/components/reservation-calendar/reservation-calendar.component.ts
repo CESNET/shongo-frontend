@@ -6,6 +6,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   CalendarEvent,
@@ -29,6 +30,7 @@ import { ReservationRequestState } from '../../../../shared/models/enums/reserva
 import { MatDialog } from '@angular/material/dialog';
 import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
+import { AlertService } from 'src/app/core/services/alert.service';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -90,7 +92,10 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
    */
   @Input() set selectedResourceId(id: string | undefined) {
     this._selectedResourceId = id;
-    this.fetchReservations();
+
+    if (id) {
+      this.fetchReservations();
+    }
   }
 
   /**
@@ -106,7 +111,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
    */
   @Input() set viewDate(value: Date) {
     this._viewDate = value;
-    this.fetchReservations();
+    this.handleViewOrDateChange();
+    this._cd.detectChanges();
   }
 
   /**
@@ -114,7 +120,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
    */
   @Input() set view(value: CalendarView) {
     this._view = value;
-    this.fetchReservations();
+    this.handleViewOrDateChange();
+    this._cd.detectChanges();
   }
 
   readonly refresh$ = new Subject<void>();
@@ -128,6 +135,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   private _selectedResourceId?: string | null;
   private _viewDate = moment().toDate();
   private _view = CalendarView.Month;
+  private _lastFetchedInterval?: Interval;
 
   private _destroy$ = new Subject<void>();
   private _loading$ = new BehaviorSubject<boolean>(true);
@@ -136,7 +144,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     private _resReqService: ReservationRequestService,
     private _auth: AuthenticationService,
     private _settings: SettingsService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _alert: AlertService,
+    private _cd: ChangeDetectorRef
   ) {
     this.loading$ = this._loading$.asObservable();
   }
@@ -177,6 +187,20 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  handleViewOrDateChange(): void {
+    const interval = this._getInterval(this.viewDate);
+
+    console.log('Fetched interval: ', this._lastFetchedInterval);
+    console.log('New interval: ', interval);
+
+    if (
+      !this._lastFetchedInterval ||
+      !this._isSubInterval(this._lastFetchedInterval, interval)
+    ) {
+      this.fetchReservations();
+    }
+  }
+
   fetchReservations(): void {
     this._loading$.next(true);
 
@@ -199,6 +223,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (reservations) => {
           this._events = this._createEvents(reservations);
+          this._lastFetchedInterval = interval;
 
           if (this._createdEvent) {
             if (
@@ -213,6 +238,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
             }
           }
         },
+        error: (err) => {
+          console.error(err);
+          this._alert.showError(
+            $localize`:error message:Failed to fetch reservations`
+          );
+        },
       });
   }
 
@@ -222,8 +253,10 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   openDate(date: Date): void {
-    this.viewDate = date;
-    this.view = CalendarView.Day;
+    this._viewDate = date;
+    this._view = CalendarView.Day;
+    this.handleViewOrDateChange();
+    this._cd.detectChanges();
   }
 
   startDragToCreate(segment: WeekViewHourSegment, segmentElement: HTMLElement) {
@@ -335,6 +368,16 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _isSubInterval(
+    superInterval: Interval,
+    subInterval: Interval
+  ): boolean {
+    return (
+      subInterval.start >= superInterval.start &&
+      subInterval.end <= superInterval.end
+    );
+  }
+
   private _getInterval(viewDate: Date): Interval {
     let intervalFrom: Date;
     let intervalTo: Date;
@@ -414,7 +457,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   ): CalendarEvent {
     return {
       id: this._events.length,
-      title: $localize`:event name:Name of calendar event that user just selected:Selected time slot`,
+      title: $localize`:event name|Name of calendar event that user just selected:Selected time slot`,
       start,
       end: moment(start).add(30, 'minutes').toDate(),
       color: COLORS.created,

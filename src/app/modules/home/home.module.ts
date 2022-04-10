@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ShongoCalendarModule } from '../shongo-calendar/shongo-calendar.module';
+import { ShongoTableModule } from '../shongo-table/shongo-table.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ShongoCalendarModule } from '../shongo-calendar/shongo-calendar.module'
     MatButtonToggleModule,
     NgxMatSelectSearchModule,
     ShongoCalendarModule,
+    ShongoTableModule,
   ],
 })
 export class HomeModule {}

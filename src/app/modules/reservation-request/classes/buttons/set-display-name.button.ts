@@ -2,9 +2,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { ApiActionButton } from 'src/app/shared/components/data-table/buttons/api-action-button';
-import { RowPredicate } from 'src/app/shared/components/data-table/buttons/table-button';
-import { RuntimeParticipantTableData } from 'src/app/shared/components/data-table/data-sources/runtime-management.datasource';
+import { ApiActionButton } from 'src/app/modules/shongo-table/buttons/api-action-button';
+import { RowPredicate } from 'src/app/modules/shongo-table/buttons/table-button';
+import { RuntimeParticipantTableData } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';
 import { SetDisplayNameDialogComponent } from '../../components/set-display-name-dialog/set-display-name-dialog.component';
 
 export class SetDisplayNameButton extends ApiActionButton<RuntimeParticipantTableData> {

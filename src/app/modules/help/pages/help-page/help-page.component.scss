@@ -36,6 +36,7 @@ nav {
 /* Images */
 .image-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 1em;
 }
 .labeled-img {

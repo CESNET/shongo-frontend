@@ -11,11 +11,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import {
   DataTableFilter,
   TableSettings,
-} from '../../../../shared/components/data-table/filter/data-table-filter';
-import { Option } from 'src/app/shared/models/interfaces/option.interface';
+} from 'src/app/modules/shongo-table/filter/data-table-filter';
 
 @Component({
   selector: 'app-reservation-request-filter',
@@ -37,7 +37,6 @@ export class ReservationRequestFilterComponent
     participant: new FormControl(null),
     search: new FormControl(null),
     showFailedRooms: new FormControl(true),
-    showCapacity: new FormControl(true),
   });
 
   readonly technologyOptions: Option[];
@@ -75,7 +74,6 @@ export class ReservationRequestFilterComponent
       participant,
       search,
       showFailedRooms,
-      showCapacity,
     } = this.filterForm.value;
 
     if (technology && technology !== -1) {
@@ -100,9 +98,6 @@ export class ReservationRequestFilterComponent
     }
     if (!showFailedRooms) {
       httpParams = httpParams.append('no_failed', true);
-    }
-    if (showCapacity) {
-      httpParams = httpParams.append('with_capacity', true);
     }
 
     return httpParams;

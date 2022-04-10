@@ -3,8 +3,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { Spied } from 'src/app/test/models/spied.type';
-import { authServiceStub } from 'src/app/test/stubs/auth-service.stub';
+import { AuthServiceStub } from 'src/app/test/stubs/auth-service.stub';
+import { SettingsServiceStub } from 'src/app/test/stubs/settings-service.stub';
 import { HomeModule } from '../../../home/home.module';
 import { ReservationCalendarComponent } from './reservation-calendar.component';
 
@@ -23,6 +25,10 @@ describe('ReservationCalendarComponent', () => {
     })
   );
 
+  const authServiceStub = new AuthServiceStub();
+
+  const settingsServiceStub = new SettingsServiceStub();
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ReservationCalendarComponent],
@@ -30,6 +36,7 @@ describe('ReservationCalendarComponent', () => {
       providers: [
         { provide: ReservationRequestService, useValue: resReqServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
       ],
     }).compileComponents();
   });
