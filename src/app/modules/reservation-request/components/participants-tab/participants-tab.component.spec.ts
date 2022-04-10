@@ -6,9 +6,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ShongoTableModule } from 'src/app/modules/shongo-table/shongo-table.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CertainityDialogStub } from 'src/app/test/stubs/certainity-dialog.stub';
-
 import { ParticipantsTabComponent } from './participants-tab.component';
 
 describe('ParticipantsTabComponent', () => {
@@ -25,7 +25,12 @@ describe('ParticipantsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule, NoopAnimationsModule, MatIconModule],
+      imports: [
+        SharedModule,
+        NoopAnimationsModule,
+        MatIconModule,
+        ShongoTableModule,
+      ],
       declarations: [ParticipantsTabComponent],
       providers: [
         { provide: ReservationRequestService, useValue: resReqServiceStub },

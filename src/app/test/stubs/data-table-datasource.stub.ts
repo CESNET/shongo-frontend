@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { DataTableDataSource } from 'src/app/shared/components/data-table/data-sources/data-table-datasource';
+import { DataTableDataSource } from 'src/app/modules/shongo-table/data-sources/data-table-datasource';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 
 export interface DataTableDataStub {

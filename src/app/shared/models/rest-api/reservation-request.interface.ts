@@ -16,7 +16,7 @@ import { Slot } from './slot.interface';
 export interface ReservationRequest {
   id: string;
   description: string;
-  createdAt: string;
+  createdAt: number;
   parentRequestId?: string;
   lastReservationId?: string;
   state: ReservationRequestState;

@@ -5,6 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ShongoTableModule } from 'src/app/modules/shongo-table/shongo-table.module';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -34,7 +35,7 @@ describe('CapacityReservationsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule, NoopAnimationsModule],
+      imports: [SharedModule, NoopAnimationsModule, ShongoTableModule],
       declarations: [CapacityReservationsTabComponent],
       providers: [
         { provide: ActivatedRoute, useValue: mockRoute },

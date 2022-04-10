@@ -8,15 +8,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
-import {
-  catchError,
-  finalize,
-  first,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { finalize, first, takeUntil } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
@@ -54,26 +47,7 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
     private _router: Router,
     private _dialog: MatDialog
   ) {
-    this._route.params
-      .pipe(
-        tap(() => this.loading$.next(true)),
-        switchMap((params) =>
-          this._resReqService.fetchItem<ReservationRequestDetail>(params.id)
-        ),
-        tap(() => {
-          this.loading$.next(false);
-
-          if (this.tabGroup) {
-            this.tabGroup.selectedIndex = 0;
-          }
-        }),
-        catchError((err) => {
-          this.loading$.next(false);
-          return throwError(err);
-        }),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((req) => (this.reservationRequest = req));
+    this._observeRouteRequestId();
   }
 
   ngOnDestroy(): void {
@@ -130,6 +104,29 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
       .afterClosed()
       .pipe(first())
       .subscribe((shouldDelete) => shouldDelete && this._delete());
+  }
+
+  private _observeRouteRequestId(): void {
+    this._route.params
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((params) => this._fetchReservationRequest(params.id));
+  }
+
+  private _fetchReservationRequest(id: string): void {
+    this.loading$.next(true);
+
+    this._resReqService
+      .fetchItem<ReservationRequestDetail>(id)
+      .pipe(
+        first(),
+        finalize(() => this.loading$.next(false))
+      )
+      .subscribe((req) => {
+        if (this.tabGroup) {
+          this.tabGroup.selectedIndex = 0;
+        }
+        this.reservationRequest = req;
+      });
   }
 
   private _delete(): void {

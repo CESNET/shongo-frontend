@@ -23,7 +23,7 @@ import { DataTableDataSource } from './data-table-datasource';
 export interface YourRoomsTableData {
   id: string;
   ownerName: string;
-  createdAt: string;
+  createdAt: number;
   roomName: string;
   technology: string;
   slotStart: number;
