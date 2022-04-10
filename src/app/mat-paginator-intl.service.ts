@@ -5,7 +5,7 @@ const OUT_OF = $localize`:out of|Used in paginator for saying x items "out of" n
 
 @Injectable()
 export class MatPaginatorI18nService extends MatPaginatorIntl {
-  itemsPerPageLabel = $localize`:items per page|Items per page label in paginator:Items per page:`;
+  itemsPerPageLabel = $localize`:items per page|Items per page label in paginator:Items per page`;
   nextPageLabel = $localize`:next page|Next page label in paginator:Next page`;
   previousPageLabel = $localize`:previous page|Previous page label in paginator:Previous page`;
 
