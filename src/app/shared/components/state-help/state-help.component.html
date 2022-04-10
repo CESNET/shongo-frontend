@@ -1,0 +1,25 @@
+<h1 mat-dialog-title i18n="heading">State descriptions</h1>
+
+<mat-dialog-content>
+  <div class="states">
+    <ng-container *ngFor="let state of stateHelpMap | keyvalue; index as i">
+      <div class="states__state">
+        <div class="states__state-left">
+          <app-state-chip
+            [state]="state.key"
+            [color]="state.value.color"
+          ></app-state-chip>
+        </div>
+        <div class="states__state-right">
+          <span class="state__state-message">{{ state.value.message }}</span>
+        </div>
+      </div>
+
+      <mat-divider *ngIf="i < stateHelpMap.size - 1"></mat-divider>
+    </ng-container>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

@@ -13,8 +13,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { GenericTableComponent } from '../../generic-table';
 import { TableColumn } from '../../models/table-column.interface';
+import { GenericTableComponent } from '../generic-table';
 import { MobileSort } from './mobile-sort';
 
 @Component({

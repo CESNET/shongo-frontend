@@ -3,6 +3,7 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RoomService } from 'src/app/core/http/room/room.service';
+import { RoomStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/room-state-help.component';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
@@ -53,6 +54,7 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
         name: 'state',
         displayName: $localize`:table column:State`,
         component: RoomStateColumnComponent,
+        helpComponent: RoomStateHelpComponent,
       },
       {
         name: 'description',

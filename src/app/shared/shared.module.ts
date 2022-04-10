@@ -32,6 +32,9 @@ import { SnackbarAlertComponent } from './components/snackbar-alert/snackbar-ale
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RequestConfirmationDialogComponent } from './components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { LoadingTextComponent } from './components/loading-text/loading-text.component';
+import { StateHelpComponent } from './components/state-help/state-help.component';
+import { RoomStateHelpComponent } from './components/state-help/wrapper-components/room-state-help.component';
+import { ReservationRequestStateHelpComponent } from './components/state-help/wrapper-components/reservation-request-state-help.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { LoadingTextComponent } from './components/loading-text/loading-text.com
     SnackbarAlertComponent,
     RequestConfirmationDialogComponent,
     LoadingTextComponent,
+    RoomStateHelpComponent,
+    ReservationRequestStateHelpComponent,
+    StateHelpComponent,
   ],
   imports: [
     CommonModule,
@@ -84,6 +90,8 @@ import { LoadingTextComponent } from './components/loading-text/loading-text.com
     AccountMenuComponent,
     ComponentHostDirective,
     LoadingTextComponent,
+    RoomStateHelpComponent,
+    ReservationRequestStateHelpComponent,
   ],
   providers: [MomentDatePipe],
 })

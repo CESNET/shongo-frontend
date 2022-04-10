@@ -58,8 +58,18 @@
       *ngFor="let column of dataSource.displayedColumns"
       [matColumnDef]="column.name"
     >
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ column.displayName }}
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="table-header-wrapper">
+          <button
+            *ngIf="column.helpComponent"
+            mat-icon-button
+            class="help-icon-button"
+            (click)="openHelp(column)"
+          >
+            <mat-icon>help</mat-icon>
+          </button>
+          <span mat-sort-header>{{ column.displayName }}</span>
+        </div>
       </th>
 
       <!-- Default row -->

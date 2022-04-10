@@ -7,7 +7,7 @@ import {
   distinctUntilChanged,
   filter,
   finalize,
-  switchMapTo,
+  switchMap,
   tap,
 } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
@@ -142,7 +142,7 @@ export class SettingsService {
           }
         }),
         filter((isAuth) => isAuth),
-        switchMapTo(this._fetchUserSettings())
+        switchMap(() => this._fetchUserSettings())
       )
       .subscribe((userSettings) => {
         this._userSettings$.next(userSettings);

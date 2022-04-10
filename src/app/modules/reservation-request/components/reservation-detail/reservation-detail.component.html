@@ -1,9 +1,10 @@
 <div class="reservation-detail">
-  <main>
+  <main class="reservation-detail__main">
     <header>
       <h2 class="mat-primary-color" i18n="heading">Detail</h2>
     </header>
-    <dl class="definition-list--flex">
+
+    <dl class="definition-list definition-list--flex">
       <!-- Type -->
       <ng-container *ngIf="currentRequest.type as type">
         <dt i18n="definition tag">Type:</dt>
@@ -54,7 +55,18 @@
 
       <!-- State -->
       <ng-container *ngIf="currentRequest.state as state">
-        <dt i18n="definition tag">State:</dt>
+        <dt>
+          <span i18n="definition tag">State:</span
+          ><button
+            mat-icon-button
+            aria-label="Open help"
+            i18n-aria-label="button name"
+            class="help-icon-button"
+            (click)="openStateHelp()"
+          >
+            <mat-icon>help</mat-icon>
+          </button>
+        </dt>
         <dd>
           <app-state-chip
             *ngIf="getStateProps(state) as props"
@@ -76,7 +88,22 @@
           currentRequest.notifyParticipants !== undefined
         "
       >
-        <dt i18n="definition tag">Notify participants:</dt>
+        <dt>
+          <span i18n="definition tag">Notify participants:</span
+          ><button
+            #tooltip="matTooltip"
+            mat-icon-button
+            aria-label="Open help"
+            i18n-aria-label="button name"
+            class="help-icon-button"
+            matTooltip="Specifies whether participants receive e-mail notification to the meeting in the room, notifications about room changes and notification when room becomes available to join."
+            i18n-matTooltip="help message"
+            matTooltipPosition="right"
+            (click)="tooltip.toggle()"
+          >
+            <mat-icon>help</mat-icon>
+          </button>
+        </dt>
         <dd>
           <span *ngIf="currentRequest.notifyParticipants; else no" i18n
             >Yes</span
@@ -292,7 +319,8 @@
       </ng-container>
     </dl>
   </main>
-  <aside>
+
+  <aside class="reservation-detail__aside">
     <section *ngIf="reservationRequest.history">
       <h2 class="mat-primary-color" i18n="heading">History of modifications</h2>
       <app-data-table

@@ -7,6 +7,7 @@ import {
 } from 'src/app/modules/shongo-table/column-components/column.component';
 import { TableSettings } from 'src/app/modules/shongo-table/filter/data-table-filter';
 import { ColumnData } from 'src/app/modules/shongo-table/models/interfaces/column-data.interface';
+
 import {
   ResourceOwner,
   ResourceReservationTableData,

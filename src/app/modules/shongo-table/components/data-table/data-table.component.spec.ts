@@ -11,30 +11,30 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { ShongoTableModule } from '../../shongo-table.module';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent<unknown>;
   let fixture: ComponentFixture<DataTableComponent<unknown>>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DataTableComponent],
-        imports: [
-          ReactiveFormsModule,
-          MatPaginatorModule,
-          MatSortModule,
-          MatTableModule,
-          NoopAnimationsModule,
-          MatDividerModule,
-          MatFormFieldModule,
-          MatSelectModule,
-          MatCheckboxModule,
-          MatIconModule,
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [DataTableComponent],
+      imports: [
+        ReactiveFormsModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatTableModule,
+        NoopAnimationsModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatIconModule,
+        ShongoTableModule,
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DataTableComponent);

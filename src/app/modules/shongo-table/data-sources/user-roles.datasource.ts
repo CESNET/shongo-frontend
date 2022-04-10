@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { StringBool } from 'src/app/shared/models/types/string-bool.type';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { toTitleCase } from 'src/app/utils/toTitleCase';
 import { DeleteButton } from '../buttons/delete-button';
@@ -12,7 +13,7 @@ interface UserRolesTableData {
   identity: string;
   id: string;
   role: string;
-  deletable: boolean;
+  deletable: StringBool;
   email?: string;
 }
 
@@ -42,7 +43,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
         this.resReqService,
         this.dialog,
         `/${this.requestId}/roles/:id`,
-        (row: UserRolesTableData) => row.deletable
+        (row: UserRolesTableData) => String(row.deletable) === 'true'
       ),
     ];
   }
@@ -60,7 +61,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
             id: item.identityPrincipalId,
             identity: `${item.identityName} (${item.identityDescription})`,
             role: toTitleCase(item.role),
-            deletable: item.deletable,
+            deletable: String(item.deletable) as StringBool,
             email: item.email ?? '',
           }));
           return { count, items: mappedItems };

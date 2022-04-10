@@ -57,3 +57,10 @@ td {
     color: var(--gray-300);
   }
 }
+
+/* Table header */
+.table-header-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.1em;
+}

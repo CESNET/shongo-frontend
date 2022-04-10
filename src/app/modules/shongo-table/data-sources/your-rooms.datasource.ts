@@ -4,11 +4,13 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import { StringBool } from 'src/app/shared/models/types/string-bool.type';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
@@ -21,13 +23,14 @@ import { DataTableDataSource } from './data-table-datasource';
 export interface YourRoomsTableData {
   id: string;
   ownerName: string;
-  createdAt: string;
+  createdAt: number;
   roomName: string;
   technology: string;
   slotStart: number;
   slotEnd: number;
   state: string;
-  isWritable: boolean;
+  isWritable: StringBool;
+  isProvidable: StringBool;
 }
 
 export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData> {
@@ -70,6 +73,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         name: 'state',
         displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
+        helpComponent: ReservationRequestStateHelpComponent,
       },
     ];
 
@@ -80,18 +84,26 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         '/reservation-request/:id'
       ),
       new LinkButton(
+        $localize`:button name:Book capacity`,
+        'group_add',
+        '/reserve/:id',
+        (row: YourRoomsTableData) =>
+          String(row.isProvidable) === 'false' ||
+          row.state === ReservationRequestState.ALLOCATED_FINISHED
+      ),
+      new LinkButton(
         $localize`:button name:Edit reservation request`,
         'settings',
         '/reservation-request/:id/edit',
         (row: YourRoomsTableData) =>
-          !Boolean(row.isWritable) ||
+          String(row.isWritable) === 'false' ||
           row.state === ReservationRequestState.ALLOCATED_FINISHED
       ),
       new DeleteButton(
         this.apiService,
         this._dialog,
         '/:id',
-        (row: YourRoomsTableData) => !Boolean(row.isWritable)
+        (row: YourRoomsTableData) => String(row.isWritable) === 'false'
       ),
     ];
   }
@@ -124,6 +136,7 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
               virtualRoomData,
               state,
               isWritable,
+              isProvidable,
             } = item;
             return {
               id,
@@ -137,7 +150,8 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
               technology:
                 virtualRoomData?.technology ??
                 $localize`:fallback text:Unknown`,
-              isWritable: isWritable,
+              isWritable: String(isWritable) as StringBool,
+              isProvidable: String(isProvidable) as StringBool,
             };
           });
           return { count, items: mappedItems };
