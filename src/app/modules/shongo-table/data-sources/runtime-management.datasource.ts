@@ -11,12 +11,12 @@ import { SetMicrophoneLevelButton } from 'src/app/modules/reservation-request/cl
 import { SetVideoEnabledButton } from 'src/app/modules/reservation-request/classes/buttons/set-video-enabled.button';
 import { UserSnapshotDialogComponent } from 'src/app/modules/reservation-request/components/user-snapshot-dialog/user-snapshot-dialog.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { StringBool } from 'src/app/shared/models/types/string-bool.type';
 import { toTitleCase } from 'src/app/utils/toTitleCase';
 import { CustomActionButton } from '../buttons/custom-action-button';
 import { DataTableDataSource } from './data-table-datasource';
 
 // MatTable automatically converts all data to type string, consequently we have to compare boolean types as strings.
-type StringBool = 'true' | 'false';
 
 export interface RuntimeParticipantTableData {
   id: string;
