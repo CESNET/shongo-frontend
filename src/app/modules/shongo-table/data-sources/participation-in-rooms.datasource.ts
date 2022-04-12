@@ -17,8 +17,8 @@ interface ParticipationInRoomsTableData {
   id: string;
   name: string;
   technology: string;
-  slotStart: number;
-  slotEnd: number;
+  slotStart: string;
+  slotEnd: string;
   description: string;
   state: string;
 }

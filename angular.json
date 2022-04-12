@@ -44,6 +44,9 @@
             "en": {
               "localize": ["en"]
             },
+            "cs": {
+              "localize": ["cs"]
+            },
             "production": {
               "budgets": [
                 {
@@ -63,7 +66,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "localize": ["en", "cs"]
             },
             "development": {
               "buildOptimizer": false,
@@ -82,11 +86,17 @@
             "production": {
               "browserTarget": "shongo-frontend:build:production"
             },
+            "production-test": {
+              "browserTarget": "shongo-frontend:build:en"
+            },
             "development": {
               "browserTarget": "shongo-frontend:build:development"
             },
             "en": {
               "browserTarget": "shongo-frontend:build:en"
+            },
+            "cs": {
+              "browserTarget": "shongo-frontend:build:cs"
             }
           },
           "defaultConfiguration": "development"

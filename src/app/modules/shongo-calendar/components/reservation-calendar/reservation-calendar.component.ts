@@ -190,9 +190,6 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   handleViewOrDateChange(): void {
     const interval = this._getInterval(this.viewDate);
 
-    console.log('Fetched interval: ', this._lastFetchedInterval);
-    console.log('New interval: ', interval);
-
     if (
       !this._lastFetchedInterval ||
       !this._isSubInterval(this._lastFetchedInterval, interval)
@@ -207,8 +204,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     const interval = this._getInterval(this.viewDate);
 
     let filter = new HttpParams()
-      .set('interval_from', moment(interval.start).unix() * 1000)
-      .set('interval_to', moment(interval.end).unix() * 1000);
+      .set('interval_from', moment(interval.start).toISOString())
+      .set('interval_to', moment(interval.end).toISOString());
 
     if (this._selectedResourceId) {
       filter = filter.set('resource', this._selectedResourceId);
