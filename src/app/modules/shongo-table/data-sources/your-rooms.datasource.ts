@@ -23,11 +23,11 @@ import { DataTableDataSource } from './data-table-datasource';
 export interface YourRoomsTableData {
   id: string;
   ownerName: string;
-  createdAt: number;
+  createdAt: string;
   roomName: string;
   technology: string;
-  slotStart: number;
-  slotEnd: number;
+  slotStart: string;
+  slotEnd: string;
   state: string;
   isWritable: StringBool;
   isProvidable: StringBool;

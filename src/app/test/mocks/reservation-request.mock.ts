@@ -11,7 +11,7 @@ import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reserva
 export const mockReservationRequest: ReservationRequestDetail = {
   id: 'shongo:meetings.cesnet.cz:req:1',
   description: 'A virtual room reservation.',
-  createdAt: 1635964689546,
+  createdAt: '2021-11-03T18:38:09.546Z',
   state: ReservationRequestState.FAILED,
   allocationState: AllocationState.NOT_ALLOCATED,
   executableState: ExecutableState.NOT_STARTED,
@@ -21,8 +21,8 @@ export const mockReservationRequest: ReservationRequestDetail = {
   ownerName: 'Michal Drobnak',
   ownerEmail: '493239@muni.cz',
   slot: {
-    start: 1636039800000,
-    end: 1636043400000,
+    start: '2021-11-04T15:30:00.000Z',
+    end: '2021-11-04T16:30:00.000Z',
   },
   futureSlotCount: 5,
   isDeprecated: false,

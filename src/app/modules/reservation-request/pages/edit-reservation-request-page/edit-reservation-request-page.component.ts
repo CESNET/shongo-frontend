@@ -101,18 +101,18 @@ export class EditReservationRequestPageComponent implements OnInit {
     const { timezone, ...reservationFormValue } =
       this.reservationForm!.getFormValue();
 
-    const start = this._getSlotPartTimestamp(startDate, startTime, timezone);
-    const end = this._getSlotPartTimestamp(endDate, endTime, timezone);
+    const start = this._getSlotPart(startDate, startTime, timezone);
+    const end = this._getSlotPart(endDate, endTime, timezone);
     const slot = { start, end } as Slot;
 
     return { slot, ...reservationFormValue };
   }
 
-  private _getSlotPartTimestamp(
+  private _getSlotPart(
     partDate: string,
     partTime: string,
     timezone?: string
-  ): number {
+  ): string {
     const [hours, minutes] = partTime.split(':') as [string, string];
     let momentDate = moment(partDate).set({
       hours: Number(hours),
@@ -123,7 +123,7 @@ export class EditReservationRequestPageComponent implements OnInit {
       momentDate = momentDate.tz(timezone);
     }
 
-    return momentDate.unix() * 1000;
+    return momentDate.toISOString();
   }
 
   private _fetchReservationRequest(requestId: string): void {

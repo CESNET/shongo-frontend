@@ -16,7 +16,7 @@ import { Slot } from './slot.interface';
 export interface ReservationRequest {
   id: string;
   description: string;
-  createdAt: number;
+  createdAt: string;
   parentRequestId?: string;
   lastReservationId?: string;
   state: ReservationRequestState;
@@ -70,10 +70,10 @@ export interface Periodicity {
   monthlyPeriodicityType?: MonthlyPeriodicityType;
   periodicDayInMonth?: Days;
   periodicityDayOrder?: number;
-  periodicityEnd?: number;
+  periodicityEnd?: string;
   periodicDaysInWeek?: Days[];
   periodicityCycle?: number;
-  excludeDates?: number[];
+  excludeDates?: string[];
 }
 export interface AuthorizedData {
   pin: string;

@@ -90,8 +90,8 @@ export class ResourceCapacityUtilizationFilterComponent
     >;
     const params = new HttpParams()
       .set('unit', unit)
-      .set('interval_from', moment(dateFrom).unix() * 1000)
-      .set('interval_to', moment(dateTo).unix() * 1000);
+      .set('interval_from', moment(dateFrom).toISOString())
+      .set('interval_to', moment(dateTo).toISOString());
     return params;
   }
 

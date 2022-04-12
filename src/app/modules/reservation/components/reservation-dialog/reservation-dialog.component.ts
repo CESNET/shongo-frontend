@@ -126,8 +126,8 @@ export class ReservationDialogComponent implements OnInit {
 
     const reservationRequest = {
       slot: {
-        start: moment(this._data.slot.start).unix() * 1000,
-        end: moment(this._data.slot.end).unix() * 1000,
+        start: moment(this._data.slot.start).toISOString(),
+        end: moment(this._data.slot.end).toISOString(),
       },
       ...reservationRequestBase,
       ...request,
