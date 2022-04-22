@@ -8,6 +8,7 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { IdentityType } from 'src/app/shared/models/enums/identity-type.enum';
 import { RoleType } from 'src/app/shared/models/enums/role-type.enum';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { getFormError } from 'src/app/utils/getFormError';
 
 @Component({
@@ -19,8 +20,13 @@ import { getFormError } from 'src/app/utils/getFormError';
 export class CreateUserRolePageComponent implements OnInit {
   form?: FormGroup;
   IdentityType = IdentityType;
-  roleTypes = Object.values(RoleType);
   posting$ = new BehaviorSubject(false);
+
+  roleTypes: Option[] = [
+    { value: RoleType.OWNER, displayName: $localize`:role type:Owner` },
+    { value: RoleType.USER, displayName: $localize`:role type:User` },
+    { value: RoleType.READER, displayName: $localize`:role type:Reader` },
+  ];
 
   AlertType = AlertType;
 
