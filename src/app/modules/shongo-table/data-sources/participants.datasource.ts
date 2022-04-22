@@ -37,7 +37,7 @@ export class ParticipantsDataSource extends DataTableDataSource<ParticipantsTabl
       new DeleteButton(
         this._resReqService,
         this._dialog,
-        `/${requestId}/participant/:id`
+        `/${requestId}/participants/:id`
       ),
     ];
   }
