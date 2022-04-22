@@ -1,5 +1,6 @@
 export enum RoleType {
   OWNER = 'OWNER',
-  USER = 'USER',
+  USER = 'RESERVATION_REQUEST_USER',
   READER = 'READER',
+  RESERVATION = 'RESERVATION',
 }
