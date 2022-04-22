@@ -209,7 +209,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
 
     const periodicity: Periodicity = {
       type,
-      periodicityEnd: moment(repeatUntil).toISOString(),
+      periodicityEnd: this._toISODateString(repeatUntil),
       excludeDates: this.getExcludedDays(),
     };
 
@@ -242,7 +242,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
 
   getExcludedDays(): string[] {
     return Array.from(this.excludedDays).map((date) =>
-      moment(date).toISOString()
+      this._toISODateString(date)
     );
   }
 
@@ -344,5 +344,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
 
     return days;
+  }
+
+  private _toISODateString(date: Date): string {
+    return moment(date).format('YYYY-MM-DD');
   }
 }
