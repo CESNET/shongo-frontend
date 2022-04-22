@@ -12,14 +12,17 @@ export interface RequestParticipant {
   type: ParticipantType;
 }
 
-export interface UserParticipantPostBody {
+export interface UserParticipantPostBody extends ParticipantPostBody {
   userId: string;
-  role: ParticipantRole;
 }
 
-export interface GuestParticipantPostBody {
+export interface GuestParticipantPostBody extends ParticipantPostBody {
   name: string;
   email: string;
+}
+
+export interface ParticipantPostBody {
+  type: ParticipantType;
   role: ParticipantRole;
 }
 

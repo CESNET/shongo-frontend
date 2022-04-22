@@ -103,6 +103,7 @@ export class CreateParticipantPageComponent {
     const { userId, role } = userForm.value;
 
     return {
+      type: ParticipantType.USER,
       userId,
       role,
     };
@@ -113,9 +114,10 @@ export class CreateParticipantPageComponent {
     const { name, email } = anonymousForm.value;
 
     return {
+      type: ParticipantType.ANONYMOUS,
+      role: ParticipantRole.PARTICIPANT,
       name,
       email,
-      role: ParticipantRole.PARTICIPANT,
     };
   }
 }
