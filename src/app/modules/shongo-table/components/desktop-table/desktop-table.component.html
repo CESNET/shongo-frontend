@@ -162,6 +162,9 @@
                   "
                   [matTooltip]="button.name"
                   [attr.aria-label]="button.name"
+                  [class.disabled-link]="
+                    button.isDisabledFunc ? button.isDisabledFunc(row) : false
+                  "
                   [disabled]="
                     button.isDisabledFunc ? button.isDisabledFunc(row) : false
                   "

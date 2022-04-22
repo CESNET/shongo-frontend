@@ -43,7 +43,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
         this.resReqService,
         this.dialog,
         `/${this.requestId}/roles/:id`,
-        (row: UserRolesTableData) => String(row.deletable) === 'true'
+        (row: UserRolesTableData) => row.deletable === 'true'
       ),
     ];
   }
