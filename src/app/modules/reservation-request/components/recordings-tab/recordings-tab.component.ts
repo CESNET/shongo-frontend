@@ -10,6 +10,7 @@ import { finalize, first } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { RoomRecordingsDataSource } from 'src/app/modules/shongo-table/data-sources/room-recordings.datasource';
+import { ExecutableState } from 'src/app/shared/models/enums/executable-state.enum';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -28,6 +29,7 @@ export class RecordingsTabComponent implements OnInit {
   readonly settingRecording$ = new BehaviorSubject(false);
   readonly ReservationRequestState = ReservationRequestState;
   readonly ReservationType = ReservationType;
+  readonly ExecutableState = ExecutableState;
 
   constructor(
     private _resReqService: ReservationRequestService,

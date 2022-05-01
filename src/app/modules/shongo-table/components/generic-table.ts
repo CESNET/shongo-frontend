@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { filter, first, takeUntil } from 'rxjs/operators';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
@@ -70,6 +70,7 @@ export abstract class GenericTableComponent<T>
   ngOnInit(): void {
     this._displayedColumns.next(this._buildDisplayedColumnsArray());
     this._observeLoading();
+    this._observeDeletions();
   }
 
   ngAfterViewInit(): void {
@@ -104,7 +105,7 @@ export abstract class GenericTableComponent<T>
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.count;
+    const numRows = this.dataSource.data.items.length;
     return numSelected === numRows;
   }
 
@@ -206,47 +207,6 @@ export abstract class GenericTableComponent<T>
       });
   }
 
-  deleteAllRows(): void {
-    if (!this.dataSource.apiService) {
-      console.error($localize`No api service defined in table's datasource`);
-      return this._alert.showError(
-        $localize`:error message:Mass deletion is not available for this table`
-      );
-    } else if (this.dataSource.data.count === 0) {
-      return this._alert.showWarning(
-        $localize`:warning message:Table is empty`
-      );
-    }
-
-    this._dialog
-      .open(CertainityCheckComponent, {
-        data: { message: $localize`Are you sure you want to delete all rows?` },
-      })
-      .afterClosed()
-      .pipe(first())
-      .subscribe((shouldDelete) => {
-        if (shouldDelete) {
-          this.dataSource
-            .apiService!.deleteItems()
-            .pipe(first())
-            .subscribe({
-              next: () => {
-                this._alert.showSuccess(
-                  $localize`:success message:Rows deleted`
-                );
-                this.dataSource.refreshData();
-              },
-              error: (err) => {
-                console.error(err);
-                this._alert.showError(
-                  $localize`:error message:Failed to delete all rows`
-                );
-              },
-            });
-        }
-      });
-  }
-
   handleButtonClick(button: TableButton<T>, row: T): void {
     if (button instanceof ActionButton) {
       button
@@ -267,6 +227,20 @@ export abstract class GenericTableComponent<T>
 
   openHelp(column: TableColumn<T>): void {
     this._dialog.open(column.helpComponent as Type<Component>);
+  }
+
+  private _handleRowDelete(row: T): void {
+    this.dataSource.deleteItem(row);
+  }
+
+  private _observeDeletions(): void {
+    const deleteSubjects = this.dataSource.buttons
+      .filter((button) => button instanceof ApiActionButton)
+      .map((button) => (button as ApiActionButton<T>).deleted$);
+
+    merge(...deleteSubjects)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((row) => this._handleRowDelete(row));
   }
 
   private _renderFilterComponent(): void {

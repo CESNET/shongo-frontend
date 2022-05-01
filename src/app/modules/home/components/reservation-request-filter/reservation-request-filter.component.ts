@@ -30,7 +30,7 @@ export class ReservationRequestFilterComponent
   showAdvancedFilter = false;
 
   filterForm = new FormGroup({
-    technology: new FormControl(-1),
+    technology: new FormControl(null),
     dateFrom: new FormControl(null),
     dateTo: new FormControl(null),
     user: new FormControl(null),
@@ -76,7 +76,7 @@ export class ReservationRequestFilterComponent
       showFailedRooms,
     } = this.filterForm.value;
 
-    if (technology && technology !== -1) {
+    if (technology) {
       httpParams = httpParams.append('technology', technology);
     }
     if (dateFrom) {
@@ -118,7 +118,7 @@ export class ReservationRequestFilterComponent
       }))
       .filter((opt) => opt.displayName) as Option[];
     technologyOpts.unshift({
-      value: '-1',
+      value: null,
       displayName: $localize`:selection option|All available options:All`,
     });
 

@@ -125,7 +125,7 @@ export class VirtualRoomReservationFormComponent
         resource = this._resourceService.findResourceById(roomResourceId);
 
         if (resource) {
-          this.form.get('technology')!.setValue(resource);
+          this.form.get('resource')!.setValue(roomResourceId);
         }
       }
       if (roomName) {
@@ -232,7 +232,7 @@ export class VirtualRoomReservationFormComponent
 
     return resources
       .map((res) => ({
-        value: res,
+        value: res.id,
         displayName: virtualRoomResourceConfig.technologyNameMap.get(
           res.technology
         ),

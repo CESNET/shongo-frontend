@@ -46,7 +46,7 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
       }),
       catchError((err) => {
         this.loading$.next(false);
-        return throwError(err);
+        throw err;
       }),
       first()
     );
@@ -54,12 +54,12 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
 
   getInterval(intervalFrom: string, intervalTo: string): string {
     if (intervalFrom === intervalTo) {
-      return this._datePipe.transform(Number(intervalFrom));
+      return this._datePipe.transform(intervalFrom);
     }
     return (
-      this._datePipe.transform(Number(intervalFrom), 'LLL') +
+      this._datePipe.transform(intervalFrom, 'LLL') +
       ' - ' +
-      this._datePipe.transform(Number(intervalTo), 'LLL')
+      this._datePipe.transform(intervalTo, 'LLL')
     );
   }
 

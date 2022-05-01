@@ -3,6 +3,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { Spied } from 'src/app/test/models/spied.type';
 import { AuthServiceStub } from 'src/app/test/stubs/auth-service.stub';
@@ -25,6 +26,10 @@ describe('ReservationCalendarComponent', () => {
     })
   );
 
+  const resourceServiceStub = jasmine.createSpyObj('ResourceService', [
+    'findResourceById',
+  ]);
+
   const authServiceStub = new AuthServiceStub();
 
   const settingsServiceStub = new SettingsServiceStub();
@@ -37,6 +42,7 @@ describe('ReservationCalendarComponent', () => {
         { provide: ReservationRequestService, useValue: resReqServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: ResourceService, useValue: resourceServiceStub },
       ],
     }).compileComponents();
   });

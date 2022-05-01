@@ -82,8 +82,9 @@ export class ReportPageComponent implements OnDestroy {
     const email = this.form.get('email')!;
 
     if (isAuthenticated) {
-      email.setValue(this._auth.identityClaims?.email);
-      email.disable();
+      const userEmail = this._auth.identityClaims?.email;
+      email.setValue(userEmail);
+      userEmail && email.disable();
     } else {
       email.reset();
       email.enable();

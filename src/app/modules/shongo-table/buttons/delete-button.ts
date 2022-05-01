@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, mapTo, mergeMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api.service';
 import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
 import { WithPathTemplate } from '../models/interfaces/with-path-template.interface';
@@ -41,12 +41,12 @@ export class DeleteButton<T>
           return this.apiService.deleteByUrl(url).pipe(
             tap(() => {
               this.removeFromLoading(row);
-              this._deleted$.next();
+              this._deleted$.next(row);
             }),
-            mapTo($localize`:success message:Item deleted`),
+            map(() => $localize`:success message:Item deleted`),
             catchError(() => {
               this.removeFromLoading(row);
-              return throwError($localize`:error message:Item deletion failed`);
+              throw new Error($localize`:error message:Item deletion failed`);
             })
           );
         } else {

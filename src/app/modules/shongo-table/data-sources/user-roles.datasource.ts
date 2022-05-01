@@ -43,7 +43,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
         this.resReqService,
         this.dialog,
         `/${this.requestId}/roles/:id`,
-        (row: UserRolesTableData) => row.deletable === 'true'
+        (row: UserRolesTableData) => row.deletable === 'false'
       ),
     ];
   }
@@ -59,7 +59,11 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
           const { count, items } = tableData;
           const mappedItems = items.map((item) => ({
             id: item.identityPrincipalId,
-            identity: `${item.identityName} (${item.identityDescription})`,
+            identity:
+              item.identityName +
+              (item.identityDescription
+                ? ` (${item.identityDescription})`
+                : ''),
             role: toTitleCase(item.role),
             deletable: String(item.deletable) as StringBool,
             email: item.email ?? '',
