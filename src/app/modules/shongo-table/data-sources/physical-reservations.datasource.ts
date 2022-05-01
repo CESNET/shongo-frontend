@@ -102,8 +102,7 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
             slotEnd: item.slot.end,
             state: item.state,
             resourceDescription:
-              item?.physicalResourceData?.resourceDescription ??
-              $localize`:fallback text:Unknown`,
+              item?.description ?? $localize`:fallback text:Unknown`,
           }));
 
           return { count, items: mappedItems };

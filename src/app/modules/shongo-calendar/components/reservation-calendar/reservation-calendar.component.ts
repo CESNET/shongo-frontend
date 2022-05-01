@@ -31,6 +31,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
+import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -142,6 +145,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
   constructor(
     private _resReqService: ReservationRequestService,
+    private _resourceService: ResourceService,
     private _auth: AuthenticationService,
     private _settings: SettingsService,
     private _dialog: MatDialog,
@@ -209,6 +213,17 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
     if (this._selectedResourceId) {
       filter = filter.set('resource', this._selectedResourceId);
+
+      const resource = this._resourceService.findResourceById(
+        this._selectedResourceId
+      );
+      if (resource) {
+        const type =
+          resource.type === ResourceType.VIRTUAL_ROOM
+            ? ReservationType.ROOM_CAPACITY
+            : ReservationType.PHYSICAL_RESOURCE;
+        filter = filter.set('type', type);
+      }
     }
 
     this._resReqService

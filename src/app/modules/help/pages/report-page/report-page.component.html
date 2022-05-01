@@ -10,7 +10,13 @@
   <form class="form" [formGroup]="form" (submit)="report()">
     <mat-form-field appearance="outline">
       <mat-label i18n="report field label">Your e-mail</mat-label>
-      <input matInput type="text" formControlName="email" />
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        placeholder="Your e-mail..."
+        i18n-placeholder="input placeholder"
+      />
       <mat-error
         *ngIf="getFormError(form.get('email')!, emailErrorHandler) as error"
         >{{ error }}</mat-error
@@ -24,6 +30,8 @@
         cols="30"
         rows="10"
         formControlName="message"
+        placeholder="Message about the problem..."
+        i18n-placeholder="input placeholder"
       ></textarea>
       <mat-error
         *ngIf="

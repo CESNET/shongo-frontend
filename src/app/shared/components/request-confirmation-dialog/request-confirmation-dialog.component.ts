@@ -1,13 +1,20 @@
-import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReservationType } from '../../models/enums/reservation-type.enum';
 import { ReservationRequest } from '../../models/rest-api/reservation-request.interface';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { Technology } from '../../models/enums/technology.enum';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { finalize, first } from 'rxjs/operators';
+import { finalize, first, takeUntil } from 'rxjs/operators';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-request-confirmation-dialog',
@@ -15,21 +22,32 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./request-confirmation-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestConfirmationDialogComponent {
+export class RequestConfirmationDialogComponent implements OnInit, OnDestroy {
   readonly loading$ = new BehaviorSubject(false);
+  readonly ReservationType = ReservationType;
 
-  ReservationType = ReservationType;
+  private readonly _destroy$ = new Subject<void>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { reservationRequest: ReservationRequest },
     private _resReqService: ReservationRequestService,
     private _dialogRef: MatDialogRef<RequestConfirmationDialogComponent>,
-    private _alert: AlertService
+    private _alert: AlertService,
+    private _router: Router
   ) {}
 
   get reservationRequest(): ReservationRequest {
     return this.data.reservationRequest;
+  }
+
+  ngOnInit(): void {
+    this._observeRouterEvents();
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   getTechnologyTitle(technology?: Technology): string {
@@ -89,5 +107,11 @@ export class RequestConfirmationDialogComponent {
           );
         },
       });
+  }
+
+  private _observeRouterEvents(): void {
+    this._router.events
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(() => this._dialogRef.close());
   }
 }

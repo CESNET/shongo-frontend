@@ -5,11 +5,11 @@ import { RowPredicate } from './table-button';
 export abstract class ApiActionButton<T> extends ActionButton<T> {
   loading$: Observable<T[]>;
   rowUpdate$: Observable<T>;
-  deleted$: Observable<void>;
+  deleted$: Observable<T>;
 
   protected _loading$ = new BehaviorSubject<T[]>([]);
   protected _rowUpdate$ = new Subject<T>();
-  protected _deleted$ = new Subject<void>();
+  protected _deleted$ = new Subject<T>();
 
   constructor(
     public isDisabledFunc?: RowPredicate<T>,
