@@ -171,12 +171,18 @@ export class VirtualRoomReservationFormComponent
 
   getFormValue(): VirtualRoomReservationRequest {
     const {
-      resource,
+      resource: resourceId,
       videoconferenceFields,
       teleconferenceFields,
       webconferenceFields,
       ...rest
     } = this.form.value;
+
+    const resource = this._resourceService.findResourceById(resourceId);
+
+    if (!resource) {
+      throw new Error('Resource not found.');
+    }
 
     if (
       resource.technology === Technology.PEXIP ||

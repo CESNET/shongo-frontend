@@ -114,14 +114,12 @@ export class EditReservationRequestPageComponent implements OnInit {
     timezone?: string
   ): string {
     const [hours, minutes] = partTime.split(':') as [string, string];
-    let momentDate = moment(partDate).set({
-      hours: Number(hours),
-      minutes: Number(minutes),
-    });
-
-    if (timezone) {
-      momentDate = momentDate.tz(timezone);
-    }
+    const momentDate = moment(partDate)
+      .set({
+        hours: Number(hours),
+        minutes: Number(minutes),
+      })
+      .tz(timezone ?? moment.tz.guess());
 
     return momentDate.toISOString();
   }

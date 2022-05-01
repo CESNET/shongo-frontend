@@ -113,7 +113,7 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   private _createReservationRequest(): Observable<unknown> {
-    const request = this.formComponent.getFormValue();
+    const { timezone, ...rest } = this.formComponent.getFormValue();
     let reservationRequestBase;
 
     if (this._data.parentRequest) {
@@ -126,12 +126,25 @@ export class ReservationDialogComponent implements OnInit {
 
     const reservationRequest = {
       slot: {
-        start: moment(this._data.slot.start).toISOString(),
-        end: moment(this._data.slot.end).toISOString(),
+        start: this._changeTimeZone(
+          moment(this._data.slot.start),
+          timezone
+        ).toISOString(),
+        end: this._changeTimeZone(
+          moment(this._data.slot.end),
+          timezone
+        ).toISOString(),
       },
       ...reservationRequestBase,
-      ...request,
+      ...rest,
     };
     return this._resReqService.postItem(reservationRequest).pipe(first());
+  }
+
+  private _changeTimeZone(
+    date: moment.Moment,
+    timezone: string
+  ): moment.Moment {
+    return moment.tz(date.format('YYYY-MM-DDTHH:mm:ss'), timezone);
   }
 }
