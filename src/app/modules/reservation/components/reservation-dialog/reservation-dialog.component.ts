@@ -18,6 +18,7 @@ import { VideoconferenceReservationFormComponent } from 'src/app/modules/reserva
 import { WebconferenceReservationFormComponent } from 'src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component';
 import { VirtualRoomReservationForm } from 'src/app/modules/reservation-forms/interfaces/virtual-room-reservation-form.interface';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -119,9 +120,14 @@ export class ReservationDialogComponent implements OnInit {
     if (this._data.parentRequest) {
       reservationRequestBase = {
         roomReservationRequestId: this._data.parentRequest.id,
+        type: ReservationType.ROOM_CAPACITY,
       };
     } else {
-      reservationRequestBase = { resource: this._data.resource.id };
+      const type =
+        this._data.resource.type === ResourceType.PHYSICAL_RESOURCE
+          ? ReservationType.PHYSICAL_RESOURCE
+          : ReservationType.VIRTUAL_ROOM;
+      reservationRequestBase = { resource: this._data.resource.id, type };
     }
 
     const reservationRequest = {
