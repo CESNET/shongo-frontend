@@ -1,8 +1,9 @@
 import { IdentityType } from '../enums/identity-type.enum';
 
 export interface Role {
+  id: string;
   identityType: IdentityType;
-  identityPrincipalId: string;
+  entityId: string;
   identityName: string;
   identityDescription: string;
   role: string;

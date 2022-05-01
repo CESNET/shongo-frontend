@@ -42,9 +42,7 @@ export class ReportService {
     message: string;
   }): Observable<unknown> {
     const meta = this.reportMetadata;
-
     const report: Report = { email, meta, message };
-    console.log(report);
 
     return this._http.post<unknown>(this.endpointUrl, report);
   }

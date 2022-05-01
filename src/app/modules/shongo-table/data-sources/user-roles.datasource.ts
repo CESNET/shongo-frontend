@@ -58,7 +58,7 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
         map((tableData) => {
           const { count, items } = tableData;
           const mappedItems = items.map((item) => ({
-            id: item.identityPrincipalId,
+            id: item.id,
             identity:
               item.identityName +
               (item.identityDescription

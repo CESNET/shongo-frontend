@@ -18,6 +18,7 @@ import { VideoconferenceReservationFormComponent } from 'src/app/modules/reserva
 import { WebconferenceReservationFormComponent } from 'src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component';
 import { VirtualRoomReservationForm } from 'src/app/modules/reservation-forms/interfaces/virtual-room-reservation-form.interface';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -113,25 +114,43 @@ export class ReservationDialogComponent implements OnInit {
   }
 
   private _createReservationRequest(): Observable<unknown> {
-    const request = this.formComponent.getFormValue();
+    const { timezone, ...rest } = this.formComponent.getFormValue();
     let reservationRequestBase;
 
     if (this._data.parentRequest) {
       reservationRequestBase = {
         roomReservationRequestId: this._data.parentRequest.id,
+        type: ReservationType.ROOM_CAPACITY,
       };
     } else {
-      reservationRequestBase = { resource: this._data.resource.id };
+      const type =
+        this._data.resource.type === ResourceType.PHYSICAL_RESOURCE
+          ? ReservationType.PHYSICAL_RESOURCE
+          : ReservationType.VIRTUAL_ROOM;
+      reservationRequestBase = { resource: this._data.resource.id, type };
     }
 
     const reservationRequest = {
       slot: {
-        start: moment(this._data.slot.start).toISOString(),
-        end: moment(this._data.slot.end).toISOString(),
+        start: this._changeTimeZone(
+          moment(this._data.slot.start),
+          timezone
+        ).toISOString(),
+        end: this._changeTimeZone(
+          moment(this._data.slot.end),
+          timezone
+        ).toISOString(),
       },
       ...reservationRequestBase,
-      ...request,
+      ...rest,
     };
     return this._resReqService.postItem(reservationRequest).pipe(first());
+  }
+
+  private _changeTimeZone(
+    date: moment.Moment,
+    timezone: string
+  ): moment.Moment {
+    return moment.tz(date.format('YYYY-MM-DDTHH:mm:ss'), timezone);
   }
 }
