@@ -218,8 +218,8 @@ export abstract class GenericTableComponent<T>
               this._alert.showSuccess(msg);
             }
           },
-          error: (msg) => {
-            this._alert.showError(msg);
+          error: (err) => {
+            this._alert.showError(err.message);
           },
         });
     }

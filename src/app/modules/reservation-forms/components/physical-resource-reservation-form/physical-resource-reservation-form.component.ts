@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   Input,
-  OnInit,
+  AfterViewInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
@@ -25,7 +25,7 @@ import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhysicalResourceReservationFormComponent
-  implements ReservationForm, OnInit
+  implements ReservationForm, AfterViewInit
 {
   @ViewChild(PeriodicitySelectionFormComponent)
   periodicityForm!: PeriodicitySelectionFormComponent;
@@ -53,15 +53,18 @@ export class PhysicalResourceReservationFormComponent
     );
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     if (this.editedRequest) {
       this.fill(this.editedRequest);
     }
   }
 
-  fill({ description }: ReservationRequestDetail): void {
+  fill({ description, physicalResourceData }: ReservationRequestDetail): void {
     if (description) {
       this.form.get('description')!.setValue(description);
+    }
+    if (physicalResourceData?.periodicity) {
+      this.periodicityForm.fill(physicalResourceData.periodicity);
     }
   }
 

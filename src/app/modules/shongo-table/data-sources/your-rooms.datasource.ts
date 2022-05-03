@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
@@ -103,7 +103,9 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         this.apiService,
         this._dialog,
         '/:id',
-        (row: YourRoomsTableData) => String(row.isWritable) === 'false'
+        (row: YourRoomsTableData) => String(row.isWritable) === 'false',
+        undefined,
+        this._deleteErrorHandler
       ),
     ];
   }
@@ -157,5 +159,13 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
           return { count, items: mappedItems };
         })
       );
+  }
+
+  private _deleteErrorHandler(err: Error): void {
+    if (err instanceof HttpErrorResponse && err.status === 403) {
+      throw Error(
+        $localize`:error message:Can't delete a virtual room with reserved capacity`
+      );
+    }
   }
 }

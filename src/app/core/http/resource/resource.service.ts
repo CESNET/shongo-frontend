@@ -44,11 +44,11 @@ export class ResourceService extends ApiService {
   }
 
   fetchCapacityUtilization(
-    pageSize: number,
-    pageIndex: number,
-    sortedColumn: string,
-    sortDirection: SortDirection,
-    filter: HttpParams
+    pageSize?: number,
+    pageIndex?: number,
+    sortedColumn?: string,
+    sortDirection?: SortDirection,
+    filter?: HttpParams
   ): Observable<ApiResponse<ResourceCapacityUtilization>> {
     return this.fetchTableItems(
       pageSize,

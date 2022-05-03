@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   ChangeDetectionStrategy,
@@ -145,9 +146,20 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError(
-            $localize`:error message:Failed to delete item`
-          );
+
+          if (
+            err instanceof HttpErrorResponse &&
+            err.status === 403 &&
+            this.reservationRequest?.type === ReservationType.VIRTUAL_ROOM
+          ) {
+            this._alert.showError(
+              $localize`:error message:Can't delete a virtual room with reserved capacity`
+            );
+          } else {
+            this._alert.showError(
+              $localize`:error message:Failed to delete item`
+            );
+          }
         },
       });
   }

@@ -5,9 +5,9 @@ import {
   COL_DATA_PROVIDER,
   SETTINGS_PROVIDER,
 } from 'src/app/modules/shongo-table/column-components/column.component';
+import { ResourceReservationTableData } from 'src/app/modules/shongo-table/data-sources/reservations.datasource';
 import { TableSettings } from 'src/app/modules/shongo-table/filter/data-table-filter';
 import { ColumnData } from 'src/app/modules/shongo-table/models/interfaces/column-data.interface';
-import { ResourceReservationTableData } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 
 @Component({
   selector: 'app-request-id-column',

@@ -89,8 +89,6 @@ export class AuthenticationService {
   }
 
   initializeOauthService(): Promise<void> {
-    console.log('initialize');
-
     this._isDoneLoading$.next(false);
 
     return this._oauthService

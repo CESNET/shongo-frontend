@@ -13,6 +13,7 @@ import { RuntimeParticipant } from 'src/app/shared/models/rest-api/runtime-parti
 import { SortDirection } from '@angular/material/sort';
 import { Recording } from 'src/app/shared/models/rest-api/recording';
 import { ParticipantPostBody } from 'src/app/shared/models/types/participant-post-body.type';
+import { EditReservationRequestBody } from 'src/app/shared/models/types/edit-reservation-request-body.type';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,10 @@ import { ParticipantPostBody } from 'src/app/shared/models/types/participant-pos
 export class ReservationRequestService extends ApiService {
   constructor(protected _http: HttpClient) {
     super(_http, Endpoint.RES_REQUEST, 'v1');
+  }
+
+  edit(id: string, body: EditReservationRequestBody): Observable<{}> {
+    return this._http.patch(`${this.endpointURL}/${id}`, body);
   }
 
   fetchUserRoles(

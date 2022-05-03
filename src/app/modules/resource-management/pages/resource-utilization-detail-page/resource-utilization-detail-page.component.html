@@ -6,7 +6,7 @@
       <dd>{{ data.name + " (" + data.id + ")" }}</dd>
       <dt i18b="definition tag">Interval:</dt>
       <dd>
-        {{ this.getInterval(data.intervalFrom, data.intervalTo) }}
+        {{ this.getInterval(data.interval.start, data.interval.end) }}
       </dd>
       <dt i18b="definition tag">Usage:</dt>
       <dd>{{ getUsage(data.totalCapacity, data.usedCapacity) }}</dd>

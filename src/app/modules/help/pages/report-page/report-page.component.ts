@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -71,9 +72,16 @@ export class ReportPageComponent implements OnDestroy {
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError(
-            $localize`:alert message|Alert message on fauled report submission:Failed to send report.`
-          );
+
+          if (err instanceof HttpErrorResponse && err.status === 503) {
+            this._alert.showError(
+              $localize`:alert message|Alert message on failed report submission:Mailing service unavailable`
+            );
+          } else {
+            this._alert.showError(
+              $localize`:alert message|Alert message on failed report submission:Failed to send report`
+            );
+          }
         },
       });
   }

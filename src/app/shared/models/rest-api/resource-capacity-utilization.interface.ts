@@ -1,6 +1,7 @@
+import { Slot } from './slot.interface';
+
 export interface ResourceCapacityUtilization {
-  intervalFrom: string;
-  intervalTo: string;
+  interval: Slot;
   resources: Resource[];
 }
 

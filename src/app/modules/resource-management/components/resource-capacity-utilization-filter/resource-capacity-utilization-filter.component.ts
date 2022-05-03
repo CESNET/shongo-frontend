@@ -14,6 +14,7 @@ import {
   DataTableFilter,
   TableSettings,
 } from 'src/app/modules/shongo-table/filter/data-table-filter';
+import { TimeUnit } from 'src/app/shared/models/enums/time-unit.enum';
 
 const DEFAULT_UNIT_DIST = 5;
 
@@ -28,17 +29,17 @@ export class ResourceCapacityUtilizationFilterComponent
   implements OnInit, OnDestroy
 {
   filterForm = new FormGroup({
-    unit: new FormControl('day'),
+    unit: new FormControl(TimeUnit.DAY),
     dateFrom: new FormControl(),
     dateTo: new FormControl(),
   });
   useAbsoluteValues = new FormControl(false);
 
   units: Option[] = [
-    { value: 'day', displayName: $localize`:unit option:Days` },
-    { value: 'week', displayName: $localize`:unit option:Weeks` },
-    { value: 'month', displayName: $localize`:unit option:Months` },
-    { value: 'year', displayName: $localize`:unit option:Years` },
+    { value: TimeUnit.DAY, displayName: $localize`:unit option:Days` },
+    { value: TimeUnit.WEEK, displayName: $localize`:unit option:Weeks` },
+    { value: TimeUnit.MONTH, displayName: $localize`:unit option:Months` },
+    { value: TimeUnit.YEAR, displayName: $localize`:unit option:Years` },
   ];
 
   private _destroy$ = new Subject<void>();

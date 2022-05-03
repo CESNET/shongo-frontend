@@ -18,13 +18,10 @@ import { ReservationType } from 'src/app/shared/models/enums/reservation-type.en
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Slot } from 'src/app/shared/models/rest-api/slot.interface';
+import { EditReservationRequestBody } from 'src/app/shared/models/types/edit-reservation-request-body.type';
 import { ReservationRequestPostBody } from 'src/app/shared/models/types/reservation-request-post-body.type';
 import { getFormError } from 'src/app/utils/getFormError';
 import { RequestNotEditableError } from './errors/request-not-editable.error';
-
-type EditRequestBody = Omit<ReservationRequestPostBody, 'timezone'> & {
-  slot: Slot;
-};
 
 @Component({
   selector: 'app-edit-reservation-request-page',
@@ -75,7 +72,7 @@ export class EditReservationRequestPageComponent implements OnInit {
     this.editing$.next(true);
 
     this._resReqService
-      .putItem(this.reservationRequest!.id, request)
+      .edit(this.reservationRequest!.id, request)
       .pipe(
         first(),
         finalize(() => this.editing$.next(false))
@@ -96,7 +93,7 @@ export class EditReservationRequestPageComponent implements OnInit {
       });
   }
 
-  private _createEditRequestBody(): EditRequestBody {
+  private _createEditRequestBody(): EditReservationRequestBody {
     const { startDate, startTime, endDate, endTime } = this.slotForm.value;
     const { timezone, ...reservationFormValue } =
       this.reservationForm!.getFormValue();
