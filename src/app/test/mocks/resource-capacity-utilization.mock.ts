@@ -1,8 +1,10 @@
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 
 export const resourceCapacityUtilizationMock: ResourceCapacityUtilization = {
-  intervalFrom: '2022-27-01T00:00:00.000Z',
-  intervalTo: '2022-27-01T00:00:00.000Z',
+  interval: {
+    start: '2022-27-01T00:00:00.000Z',
+    end: '2022-27-01T00:00:00.000Z',
+  },
   resources: [
     {
       id: 'shongo:meetings.cesnet.cz:res:42',

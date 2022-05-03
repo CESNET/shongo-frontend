@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -43,7 +44,9 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
         this.resReqService,
         this.dialog,
         `/${this.requestId}/roles/:id`,
-        (row: UserRolesTableData) => row.deletable === 'false'
+        (row: UserRolesTableData) => row.deletable === 'false',
+        undefined,
+        this._deleteErrorHandler
       ),
     ];
   }
@@ -71,5 +74,13 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
           return { count, items: mappedItems };
         })
       );
+  }
+
+  private _deleteErrorHandler(err: Error): void {
+    if (err instanceof HttpErrorResponse && err.status === 403) {
+      throw Error(
+        $localize`:error message:Reservation must have at least 1 owner`
+      );
+    }
   }
 }

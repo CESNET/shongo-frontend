@@ -1,4 +1,10 @@
-import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ModuleWithProviders,
+  NgModule,
+  Optional,
+  SkipSelf,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -25,12 +31,14 @@ import { environment } from 'src/environments/environment';
 import { authConfig as prodAuthConfig } from './authentication/auth-prod.config';
 import { authConfig as devAuthConfig } from './authentication/auth-dev.config';
 import { authModuleConfig } from './authentication/auth-module.config';
-import { authAppInitializerFactory } from './authentication/auth-app-initializer.factory';
 import { AuthenticationService } from './authentication/authentication.service';
 import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { AdminTokenInterceptor } from './interceptors/admin-token.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { authAppInitializerFactory } from './authentication/auth-app-initializer.factory';
+import { resourceInitializerFactory } from './http/resource/resource-initializer-factory';
+import { ResourceService } from './http/resource/resource.service';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -61,27 +69,34 @@ export function storageFactory(): OAuthStorage {
     MatProgressSpinnerModule,
     OAuthModule.forRoot(),
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: authAppInitializerFactory,
-      deps: [AuthenticationService],
-      multi: true,
-    },
-    { provide: OAuthStorage, useFactory: storageFactory },
-    {
-      provide: AuthConfig,
-      useValue: environment.production ? prodAuthConfig : devAuthConfig,
-    },
-    { provide: OAuthModuleConfig, useValue: authModuleConfig },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AdminTokenInterceptor,
-      multi: true,
-    },
-  ],
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {
+  static forRoot(): ModuleWithProviders<CoreModule> {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        {
+          provide: APP_INITIALIZER,
+          useFactory: authAppInitializerFactory,
+          deps: [AuthenticationService],
+          multi: true,
+        },
+        {
+          provide: APP_INITIALIZER,
+          useFactory: resourceInitializerFactory,
+          deps: [ResourceService],
+          multi: true,
+        },
+        { provide: OAuthStorage, useFactory: storageFactory },
+        {
+          provide: AuthConfig,
+          useValue: environment.production ? prodAuthConfig : devAuthConfig,
+        },
+        { provide: OAuthModuleConfig, useValue: authModuleConfig },
+      ],
+    };
+  }
+
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     super(parentModule);
   }

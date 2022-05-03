@@ -9,19 +9,10 @@ import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/reso
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/datePipeFunc';
 import { ResourceCapacityUtilizationFilterComponent } from '../../resource-management/components/resource-capacity-utilization-filter/resource-capacity-utilization-filter.component';
+import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
 
-export interface Utilization {
-  pexip: string;
-  tcs2: string;
-  'connect-cesnet-new': string;
-  'mcu-cesnet': string;
-  'mcu-muni': string;
-  'connect-cesnet-old': string;
-  'freepbx-uvt': string;
-}
-
-export interface ResourceCapacityUtilizationTableData extends Utilization {
+export interface ResourceCapacityUtilizationTableData {
   intervalFrom: string;
   intervalTo: string;
   interval: string;
@@ -29,51 +20,15 @@ export interface ResourceCapacityUtilizationTableData extends Utilization {
 
 export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<ResourceCapacityUtilizationTableData> {
   filterComponent = ResourceCapacityUtilizationFilterComponent;
+  useHttpRefreshParam = true;
 
   constructor(
     private _resourceService: ResourceService,
-    private _datePipe: MomentDatePipe
+    private _datePipe: MomentDatePipe,
+    private _resourceNames: string[]
   ) {
     super();
-
-    this.displayedColumns = [
-      { name: 'interval', displayName: $localize`:Table column:Interval` },
-      {
-        name: 'Pexip',
-        displayName: 'Pexip',
-        component: ResourceUtilizationColumnComponent,
-      },
-      {
-        name: 'tcs2',
-        displayName: 'tcs2',
-        component: ResourceUtilizationColumnComponent,
-      },
-      {
-        name: 'connect-cesnet-new',
-        displayName: 'connect-cesnet-new',
-        component: ResourceUtilizationColumnComponent,
-      },
-      {
-        name: 'mcu-cesnet',
-        displayName: 'mcu-cesnet',
-        component: ResourceUtilizationColumnComponent,
-      },
-      {
-        name: 'mcu-muni',
-        displayName: 'mcu-muni',
-        component: ResourceUtilizationColumnComponent,
-      },
-      {
-        name: 'connect-cesnet-old',
-        displayName: 'connect-cesnet-old',
-        component: ResourceUtilizationColumnComponent,
-      },
-      {
-        name: 'FreePBX-UVT',
-        displayName: 'FreePBX-UVT',
-        component: ResourceUtilizationColumnComponent,
-      },
-    ];
+    this.displayedColumns = this._buildDisplayedColumns();
   }
 
   getData(
@@ -95,7 +50,7 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
         map((data) => {
           const items = data.items.map((item: ResourceCapacityUtilization) => {
             const interval = this.getInterval(item);
-            const { intervalFrom, intervalTo } = item;
+            const { start: intervalFrom, end: intervalTo } = item.interval;
             return {
               intervalFrom,
               intervalTo,
@@ -108,24 +63,32 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
       );
   }
 
-  getUtilization(item: ResourceCapacityUtilization): Utilization {
+  getUtilization(item: ResourceCapacityUtilization): Record<string, string> {
     const utilization: Record<string, string> = {};
 
     item.resources.forEach((resource) => {
       utilization[resource.name] = JSON.stringify(resource);
     });
 
-    return utilization as unknown as Utilization;
+    return utilization;
   }
 
   getInterval(item: ResourceCapacityUtilization): string {
-    if (item.intervalFrom === item.intervalTo) {
-      return this.datePipeFunc(item.intervalFrom);
+    if (item.interval.start === item.interval.end) {
+      return this.datePipeFunc(item.interval.start);
     }
-    return `${this.datePipeFunc(item.intervalFrom)} - ${this.datePipeFunc(
-      item.intervalTo
+    return `${this.datePipeFunc(item.interval.start)} - ${this.datePipeFunc(
+      item.interval.end
     )}`;
   }
 
   datePipeFunc = datePipeFunc.bind({ datePipe: this._datePipe });
+
+  private _buildDisplayedColumns(): TableColumn<ResourceCapacityUtilizationTableData>[] {
+    return this._resourceNames.map((resource) => ({
+      name: resource,
+      displayName: resource,
+      component: ResourceUtilizationColumnComponent,
+    }));
+  }
 }

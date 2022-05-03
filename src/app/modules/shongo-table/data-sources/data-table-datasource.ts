@@ -29,13 +29,14 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
   sort?: MatSort;
   mobileSort?: MobileSort;
   filter$?: Observable<HttpParams>;
+  useHttpRefreshParam = false;
 
   data: ApiResponse<T> = { count: 0, items: [] };
   loading$: Observable<boolean>;
 
   private _manualDataUpdate$ = new Subject<ApiResponse<T>>();
   private _loading$ = new Subject<boolean>();
-  private _refresh$ = new Subject<void>();
+  private _refresh$ = new Subject<{ refresh: boolean }>();
 
   constructor() {
     super();
@@ -123,7 +124,10 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     this._loading$.next(true);
 
     // Add a tiny timeout to simulate loading.
-    setTimeout(() => this._refresh$.next(), REFRESH_TIMEOUT);
+    setTimeout(
+      () => this._refresh$.next({ refresh: this.useHttpRefreshParam }),
+      REFRESH_TIMEOUT
+    );
   }
 
   deleteItem(item: T): void {
@@ -158,14 +162,14 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
         // Start loading
         this._loading$.next(true);
       }),
-      switchMap(() => this.filter$ ?? of(undefined)),
+      switchMap((update) => this._getFilter(update)),
       switchMap((filter) =>
         this.getData(
           this.paginator!.pageSize,
           this.paginator!.pageIndex,
           sort.active,
           sort.direction,
-          filter ?? new HttpParams()
+          filter
         ).pipe(
           first(),
           catchError(() => of({ count: 0, items: [], error: true }))
@@ -181,6 +185,28 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
         };
       })
     );
+  }
+
+  private _getFilter(update: unknown): Observable<HttpParams> {
+    if (!this.filter$) {
+      return of(this._setRefreshIfActive(new HttpParams(), update));
+    }
+    return this.filter$.pipe(
+      map((httpParams) => this._setRefreshIfActive(httpParams, update))
+    );
+  }
+
+  private _setRefreshIfActive(
+    httpParams: HttpParams,
+    update: unknown
+  ): HttpParams {
+    if (
+      update !== undefined &&
+      (update as { refresh: boolean }).refresh === true
+    ) {
+      return httpParams.set('refresh', true);
+    }
+    return httpParams;
   }
 
   abstract getData(

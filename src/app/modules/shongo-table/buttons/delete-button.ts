@@ -19,7 +19,8 @@ export class DeleteButton<T>
     public dialog: MatDialog,
     public pathTemplate: string,
     public isDisabledFunc?: RowPredicate<T>,
-    public displayButtonFunc?: RowPredicate<T>
+    public displayButtonFunc?: RowPredicate<T>,
+    public customErrorHandler?: (err: Error) => void
   ) {
     super(isDisabledFunc, displayButtonFunc);
   }
@@ -44,8 +45,11 @@ export class DeleteButton<T>
               this._deleted$.next(row);
             }),
             map(() => $localize`:success message:Item deleted`),
-            catchError(() => {
+            catchError((err) => {
               this.removeFromLoading(row);
+
+              // Try using custom error handler, if it doesn't exist or doesn't throw an error, throw generic error.
+              this.customErrorHandler && this.customErrorHandler(err);
               throw new Error($localize`:error message:Item deletion failed`);
             })
           );

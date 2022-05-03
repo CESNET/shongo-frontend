@@ -4,6 +4,7 @@ import {
   ViewChild,
   Input,
   OnInit,
+  AfterViewInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
@@ -41,7 +42,7 @@ type VideoconferenceReservationFormValue = Omit<
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoconferenceReservationFormComponent
-  implements VirtualRoomReservationForm, OnInit
+  implements VirtualRoomReservationForm, OnInit, AfterViewInit
 {
   @ViewChild(PeriodicitySelectionFormComponent)
   periodicityForm!: PeriodicitySelectionFormComponent;
@@ -90,7 +91,9 @@ export class VideoconferenceReservationFormComponent
         ])
       );
     }
+  }
 
+  ngAfterViewInit(): void {
     if (this.editedRequest) {
       this.fill(this.editedRequest);
     }
@@ -123,6 +126,9 @@ export class VideoconferenceReservationFormComponent
       }
       if (capacityHasRecordingService) {
         this.form.get('record')!.setValue(capacityHasRecordingService);
+      }
+      if (roomCapacityData.periodicity) {
+        this.periodicityForm.fill(roomCapacityData.periodicity);
       }
     }
   }

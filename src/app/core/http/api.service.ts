@@ -35,11 +35,11 @@ export abstract class ApiService {
   }
 
   fetchTableItems<T>(
-    pageSize: number,
-    pageIndex: number,
-    sortedColumn: string,
-    sortDirection: SortDirection,
-    filter: HttpParams,
+    pageSize?: number,
+    pageIndex?: number,
+    sortedColumn?: string,
+    sortDirection?: SortDirection,
+    filter?: HttpParams,
     url = this.endpointURL
   ): Observable<ApiResponse<T>> {
     let httpParams = filter ?? new HttpParams();

@@ -8,7 +8,10 @@
     <span class="account__body">
       <mat-icon
         class="account__icon icon-s"
-        *ngIf="settings.canReserve; else cannotReserve"
+        *ngIf="
+          (settings.userSettings$ | async) && settings.canReserve;
+          else cannotReserve
+        "
         >account_circle</mat-icon
       >
 

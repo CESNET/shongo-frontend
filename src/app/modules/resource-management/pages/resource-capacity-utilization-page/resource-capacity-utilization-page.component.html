@@ -4,6 +4,7 @@
 
 <main>
   <app-data-table
+    *ngIf="dataSource; else loadingOrNoData"
     description="Shows percentage of utilized resource capacity."
     i18n-description="table description"
     [dataSource]="dataSource"
@@ -11,4 +12,61 @@
     [showDeleteButtons]="false"
   >
   </app-data-table>
+
+  <ng-template #loadingOrNoData>
+    <ng-container
+      *ngIf="error; else noResourcesYet"
+      [ngTemplateOutlet]="errorDisplay"
+    ></ng-container>
+  </ng-template>
+
+  <ng-template #noResourcesYet>
+    <ng-container
+      *ngIf="noResources; else loadingDisplay"
+      [ngTemplateOutlet]="noResourcesDisplay"
+    ></ng-container>
+  </ng-template>
+
+  <ng-template #errorDisplay>
+    <app-alert
+      [type]="AlertType.ERROR"
+      [showCloseButton]="false"
+      [isActive]="true"
+      i18n-message="error message"
+      message="An error occured while loading resources"
+    ></app-alert>
+  </ng-template>
+
+  <ng-template #loadingDisplay>
+    <ngx-skeleton-loader
+      count="3"
+      [theme]="{
+        'border-radius': '5px',
+        height: '50px',
+        width: '25%',
+        'margin-right': '15px',
+        border: '1px solid white'
+      }"
+    ></ngx-skeleton-loader>
+    <ngx-skeleton-loader
+      count="4"
+      [theme]="{
+        'border-radius': '5px',
+        height: '50px',
+        width: '100%',
+        'margin-right': '15px',
+        border: '1px solid white'
+      }"
+    ></ngx-skeleton-loader>
+  </ng-template>
+
+  <ng-template #noResourcesDisplay>
+    <app-alert
+      [type]="AlertType.WARNING"
+      [showCloseButton]="false"
+      [isActive]="true"
+      i18n-message="error message"
+      message="No resources with capacity found"
+    ></app-alert>
+  </ng-template>
 </main>
