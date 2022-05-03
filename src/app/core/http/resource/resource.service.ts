@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { first, retry } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
@@ -41,7 +41,6 @@ export class ResourceService extends ApiService {
     super(_http, Endpoint.RESOURCE, 'v1');
 
     this.loading$ = this._loading$.asObservable();
-    this._loadResources();
   }
 
   fetchCapacityUtilization(
@@ -149,39 +148,41 @@ export class ResourceService extends ApiService {
     return this.resources.find((resource) => resource.id === id) ?? null;
   }
 
-  private _loadResources(): void {
+  loadResources(): Promise<void> {
     const resources = this._getFromLocalStorage();
 
     if (resources) {
       this.resources = resources;
+      return Promise.resolve();
     } else {
-      this._fetchResources();
+      return this._fetchResources();
     }
   }
 
-  private _fetchResources(): void {
+  private _fetchResources(): Promise<void> {
     this._loading$.next(true);
-    this._http
-      .get<Resource[]>(this.endpointURL)
-      .pipe(first(), retry(RESOURCE_FETCH_RETRY_COUNT))
-      .subscribe({
-        next: (resources) => {
-          this._loading$.next(false);
-          this.resources = this._filterSupportedResources(resources);
-          this._saveToLocalStorage(this.resources);
-        },
-        error: (err) => {
-          console.error(err);
-          this._loading$.next(false);
 
-          const resourcesInLocalStorage = this._getFromLocalStorage();
+    return lastValueFrom(
+      this._http
+        .get<Resource[]>(this.endpointURL)
+        .pipe(first(), retry(RESOURCE_FETCH_RETRY_COUNT))
+    )
+      .then((resources) => {
+        this._loading$.next(false);
+        this.resources = this._filterSupportedResources(resources);
+        this._saveToLocalStorage(this.resources);
+      })
+      .catch((err) => {
+        console.error(err);
+        this._loading$.next(false);
 
-          if (resourcesInLocalStorage) {
-            this.resources = resourcesInLocalStorage;
-          } else {
-            this.error = true;
-          }
-        },
+        const resourcesInLocalStorage = this._getFromLocalStorage();
+
+        if (resourcesInLocalStorage) {
+          this.resources = resourcesInLocalStorage;
+        } else {
+          this.error = true;
+        }
       });
   }
 

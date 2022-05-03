@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    CoreModule,
+    CoreModule.forRoot(),
     HomeModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorI18nService }],

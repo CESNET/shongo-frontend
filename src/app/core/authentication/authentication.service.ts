@@ -37,7 +37,6 @@ export class AuthenticationService {
     this._observeStorage();
     this._observeAuthEvents();
 
-    // Initialize silent refresh
     this._oauthService.setupAutomaticSilentRefresh();
   }
 
@@ -90,6 +89,8 @@ export class AuthenticationService {
   }
 
   initializeOauthService(): Promise<void> {
+    console.log('initialize');
+
     this._isDoneLoading$.next(false);
 
     return this._oauthService
