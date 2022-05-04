@@ -182,6 +182,24 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     return undefined;
   }
 
+  set selectedSlot(slot: CalendarSlot | undefined) {
+    if (!slot) {
+      this._events = this._events.filter((evt) => evt !== this._createdEvent);
+    } else if (this._createdEvent) {
+      this._createdEvent.start = slot.start;
+      this._createdEvent.end = slot.end;
+    } else {
+      this._createdEvent = this._createSelectionEvent(
+        this._auth.identityClaims!,
+        slot.start,
+        slot.end
+      );
+      this._events.push(this._createdEvent);
+    }
+
+    this.refresh$.next();
+  }
+
   ngOnInit(): void {
     this.fetchReservations();
   }
@@ -465,18 +483,19 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
   private _createSelectionEvent(
     owner: IdentityClaims,
-    start: Date
+    start: Date,
+    end?: Date
   ): CalendarEvent {
     return {
       id: this._events.length,
       title: $localize`:event name|Name of calendar event that user just selected:Selected time slot`,
       start,
-      end: moment(start).add(30, 'minutes').toDate(),
+      end: end ?? moment(start).add(30, 'minutes').toDate(),
       color: COLORS.created,
       meta: {
         tmpEvent: true,
-        owner: owner.name,
-        ownerEmail: owner.email,
+        owner: owner?.name ?? $localize`:fallback text:Unknown`,
+        ownerEmail: owner?.email ?? $localize`:fallback text:Unknown`,
       },
       resizable: {
         beforeStart: true,

@@ -24,6 +24,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
 import { ShongoCalendarModule } from '../shongo-calendar/shongo-calendar.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRippleModule } from '@angular/material/core';
+import { HoldClickDirective } from './directives/hold-click.directive';
 
 @NgModule({
   imports: [
@@ -49,11 +51,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ReservationFormsModule,
     ShongoCalendarModule,
     MatDatepickerModule,
+    MatRippleModule,
   ],
   declarations: [
     ReservationPageComponent,
     ResourceSelectionFormComponent,
     ReservationDialogComponent,
+    HoldClickDirective,
   ],
 })
 export class ReservationModule {}

@@ -229,10 +229,34 @@
               class="sidebar__slot-part"
               *ngIf="selectedSlot && selectedSlot.start"
             >
-              <div>
-                <b class="sidebar__slot-part-name" i18n="item name"
-                  >Slot start:</b
-                >
+              <b class="sidebar__slot-part-name" i18n="item name"
+                >Slot start:</b
+              >
+              <div class="sidebar__slot-part-value">
+                <span>{{ selectedSlot.start | momentDate: "LLL" }}</span>
+
+                <div class="time-setting">
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    (click)="incrementSlot('start', -1)"
+                    aria-label="decrement slot start by one minute"
+                    i18n-aria-label="button label"
+                    appHoldClick
+                  >
+                    <mat-icon class="icon-xs">arrow_left</mat-icon>
+                  </button>
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    appHoldClick
+                    (click)="incrementSlot('start', 1)"
+                    aria-label="increment slot start by one minute"
+                    i18n-aria-label="button label"
+                  >
+                    <mat-icon class="icon-xs">arrow_right</mat-icon>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -246,7 +270,30 @@
                 >
               </div>
               <div class="sidebar__slot-part-value">
-                {{ selectedSlot.end | momentDate: "LLL" }}
+                <span>{{ selectedSlot.end | momentDate: "LLL" }}</span>
+
+                <div class="time-setting">
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    (click)="incrementSlot('end', -1)"
+                    aria-label="decrement slot end by one minute"
+                    i18n-aria-label="button label"
+                    appHoldClick
+                  >
+                    <mat-icon class="icon-xs">arrow_left</mat-icon>
+                  </button>
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    (click)="incrementSlot('end', 1)"
+                    aria-label="increment slot end by one minute"
+                    i18n-aria-label="button label"
+                    appHoldClick
+                  >
+                    <mat-icon class="icon-xs">arrow_right</mat-icon>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

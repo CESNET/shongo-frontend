@@ -11,6 +11,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarView } from 'angular-calendar';
+import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, first, takeUntil, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
@@ -120,6 +121,28 @@ export class ReservationPageComponent
 
   onDateSelection(moment: moment.Moment): void {
     this.calendar.viewDate = moment.toDate();
+  }
+
+  /**
+   * Increments selected slot part by a given increment in minutes.
+   *
+   * @param part Start or end of slot.
+   * @param increment Value of minute increment.
+   */
+  incrementSlot(part: 'start' | 'end', increment: 1 | -1): void {
+    const slot = this.calendar.selectedSlot;
+
+    if (!slot) {
+      throw new Error('No slot has been selected yet.');
+    }
+
+    const incrementedSlot = Object.assign({}, slot);
+    incrementedSlot[part] = moment(incrementedSlot[part])
+      .add(increment, 'minutes')
+      .toDate();
+
+    this.selectedSlot = incrementedSlot;
+    this.calendar.selectedSlot = incrementedSlot;
   }
 
   private _observeTabletSize(state$: Observable<BreakpointState>): void {
