@@ -22,16 +22,55 @@ export const REFRESH_TIMEOUT = 200;
 export abstract class DataTableDataSource<T> extends DataSource<T> {
   readonly apiService?: ApiService;
 
+  /**
+   * Filter component which will get rendered inside the table.
+   */
   filterComponent?: Type<DataTableFilter>;
+
+  /**
+   * Array of displayed columns for the table.
+   */
   displayedColumns: TableColumn<T>[] = [];
+
+  /**
+   * Array of buttons displayed in each table row.
+   */
   buttons: TableButton<T>[] = [];
+
+  /**
+   * Material paginator.
+   */
   paginator?: MatPaginator;
+
+  /**
+   * Material sort.
+   */
   sort?: MatSort;
+
+  /**
+   * Mobile sort (for mobile table).
+   */
   mobileSort?: MobileSort;
+
+  /**
+   * Observable of http query parameters from filter component.
+   */
   filter$?: Observable<HttpParams>;
+
+  /**
+   * Whether query parameter 'refresh' should be used to force data refresh on the backend
+   * instead of using cached response.
+   */
   useHttpRefreshParam = false;
 
+  /**
+   * Loaded data.
+   */
   data: ApiResponse<T> = { count: 0, items: [] };
+
+  /**
+   * Observable of loading state.
+   */
   loading$: Observable<boolean>;
 
   private _manualDataUpdate$ = new Subject<ApiResponse<T>>();
@@ -43,10 +82,24 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     this.loading$ = this._loading$.asObservable();
   }
 
+  /**
+   * Transform column data with a specified pipe function.
+   *
+   * @param data Column data.
+   * @param pipeFunc Pipe function.
+   * @returns Transformed data.
+   */
   pipeData(data: unknown, pipeFunc?: PipeFunction): string {
     return pipeFunc ? pipeFunc(data) : String(data);
   }
 
+  /**
+   * Transforms the entire row with pipe functions
+   * specified for each column.
+   *
+   * @param row Table row.
+   * @returns Transformed row.
+   */
   pipeRow(row: T): T {
     const pipedRow: T & any = Object.assign({}, row);
 
@@ -60,6 +113,11 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     return pipedRow;
   }
 
+  /**
+   * Returns names of displayed table columns.
+   *
+   * @returns Array of column names.
+   */
   getColumnNames(): string[] {
     return this.displayedColumns.map((col) => col.name);
   }
@@ -118,7 +176,7 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
   }
 
   /**
-   * Refreshes table data.
+   * Refreshes table data. Adds a tiny arbitrary refresh delay for better UX.
    */
   refreshData(): void {
     this._loading$.next(true);
@@ -130,6 +188,12 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     );
   }
 
+  /**
+   * Manually deletes item from the table data and emits edited data from the
+   * data source output stream.
+   *
+   * @param item Item to be deleted.
+   */
   deleteItem(item: T): void {
     const newItems = this.data.items.filter(
       (currentItem) => currentItem !== item
@@ -141,6 +205,12 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     });
   }
 
+  /**
+   * Creates observable of sort changes, expects that
+   * only default sort or mobile sort property is defined.
+   *
+   * @returns Observable of table sort.
+   */
   private _createSortChangeObservable(): Observable<Sort> {
     if (this.sort && this.mobileSort) {
       throw new Error('Table cannot use both sort and mobile sort.');
@@ -152,6 +222,13 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     throw new Error('Table must have either sort or mobile sort.');
   }
 
+  /**
+   * Creates data source's output stream observable,
+   * which re-fetches data after every update stream emission.
+   *
+   * @param updateStream$ Stream of every events which should trigger data fetch.
+   * @returns Data source output stream.
+   */
   private _createDataFetchObservable(
     updateStream$: Observable<unknown>
   ): Observable<ApiResponse<T>> {
@@ -187,6 +264,16 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     );
   }
 
+  /**
+   * Gets observable of HTTP query parameters for querying API responses.
+   *
+   * Checks if data emitted from update stream contain refresh property
+   * and if so, tries to add refresh query parameter. This parameter
+   * forces backend not to use cache.
+   *
+   * @param update Data emitted from update stream.
+   * @returns Observable of HTTP query parameters.
+   */
   private _getFilter(update: unknown): Observable<HttpParams> {
     if (!this.filter$) {
       return of(this._setRefreshIfActive(new HttpParams(), update));
@@ -196,6 +283,15 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     );
   }
 
+  /**
+   * Sets refresh query parameter to HTTP parameters if
+   * update emission object contains refresh property and
+   * usage of refresh parameter is permitted by data source.
+   *
+   * @param httpParams HTTP query parameters.
+   * @param update Update emission object.
+   * @returns HTTP parameters.
+   */
   private _setRefreshIfActive(
     httpParams: HttpParams,
     update: unknown
@@ -209,6 +305,15 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     return httpParams;
   }
 
+  /**
+   * Gets table data, either from backend or by other means.
+   *
+   * @param pageSize Size of single page of response.
+   * @param pageIndex Index of page.
+   * @param sortedColumn Name of column to sort by.
+   * @param sortDirection Sort direction.
+   * @param filter HTTP query parameters.
+   */
   abstract getData(
     pageSize: number,
     pageIndex: number,

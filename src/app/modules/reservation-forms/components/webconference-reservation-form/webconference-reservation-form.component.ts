@@ -88,6 +88,9 @@ export class WebconferenceReservationFormComponent
     this.form.patchValue({ timezone: this._settings.timeZone });
   }
 
+  /**
+   * Form validity.
+   */
   get valid(): boolean {
     return (
       this.periodicityForm && this.periodicityForm.valid && this.form.valid
@@ -120,6 +123,11 @@ export class WebconferenceReservationFormComponent
     }
   }
 
+  /**
+   * Fills form with reservation request detail.
+   *
+   * @param param0 Reservation request detail.
+   */
   fill({
     description,
     roomCapacityData,
@@ -147,6 +155,11 @@ export class WebconferenceReservationFormComponent
     }
   }
 
+  /**
+   * Returns form value.
+   *
+   * @returns Form value.
+   */
   getFormValue(): WebconferenceReservationRequest {
     const periodicity = this.periodicityForm.getPeriodicity()!;
     const formValue: WebconferenceReservationFormValue = this.form.value;

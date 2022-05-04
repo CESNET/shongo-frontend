@@ -23,7 +23,7 @@ export class CalendarViewSelectionComponent {
   @Input() tabletSizeHit$?: Observable<BreakpointState>;
   @Output() viewSelected = new EventEmitter<CalendarView>();
 
-  calendarViewOpts: CalendarViewOption[] = [
+  readonly calendarViewOpts: CalendarViewOption[] = [
     { displayName: $localize`:time unit:Day`, value: CalendarView.Day },
     { displayName: $localize`:time unit:Week`, value: CalendarView.Week },
     { displayName: $localize`:time unit:Month`, value: CalendarView.Month },

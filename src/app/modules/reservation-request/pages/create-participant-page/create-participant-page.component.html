@@ -4,6 +4,7 @@
 
 <main>
   <form *ngIf="form" [formGroup]="form">
+    <!-- Participant type -->
     <div class="participant-type-selection">
       <label i18n="label">Participant type:</label>
       <mat-radio-group
@@ -20,6 +21,7 @@
       </mat-radio-group>
     </div>
 
+    <!-- User form -->
     <form
       *ngIf="
         form.get('participantType')!.value === ParticipantType.USER;
@@ -27,6 +29,7 @@
       "
       formGroupName="userForm"
     >
+      <!-- User field -->
       <mat-form-field appearance="outline">
         <mat-label i18n="field label">User</mat-label>
         <mat-select formControlName="userId">
@@ -50,6 +53,7 @@
         >
       </mat-form-field>
 
+      <!-- Role field -->
       <mat-form-field appearance="outline">
         <mat-label i18n="field label">Role</mat-label>
         <mat-select formControlName="role">
@@ -64,8 +68,10 @@
       </mat-form-field>
     </form>
 
+    <!-- Anonymous form -->
     <ng-template #anonymousForm>
       <form formGroupName="anonymousForm">
+        <!-- Name field -->
         <mat-form-field appearance="outline">
           <mat-label i18n="field label">Name</mat-label>
           <input type="text" matInput formControlName="name" />
@@ -88,6 +94,7 @@
           >
         </mat-form-field>
 
+        <!-- Role field -->
         <mat-form-field appearance="outline">
           <mat-label i18n="field label">Role</mat-label>
           <mat-select value="guest" [disabled]="true">

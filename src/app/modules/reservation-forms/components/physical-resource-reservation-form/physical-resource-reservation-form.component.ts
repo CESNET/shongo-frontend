@@ -47,6 +47,9 @@ export class PhysicalResourceReservationFormComponent
     this.form.patchValue({ timezone: this._settings.timeZone });
   }
 
+  /**
+   * Form validity.
+   */
   get valid(): boolean {
     return (
       this.periodicityForm && this.periodicityForm.valid && this.form.valid
@@ -59,6 +62,11 @@ export class PhysicalResourceReservationFormComponent
     }
   }
 
+  /**
+   * Fills form with reservation request detail.
+   *
+   * @param param0 Reservation request detail.
+   */
   fill({ description, physicalResourceData }: ReservationRequestDetail): void {
     if (description) {
       this.form.get('description')!.setValue(description);
@@ -68,6 +76,11 @@ export class PhysicalResourceReservationFormComponent
     }
   }
 
+  /**
+   * Returns form value.
+   *
+   * @returns Form value.
+   */
   getFormValue(): PhysicalResourceReservationRequest {
     const periodicity = this.periodicityForm.getPeriodicity();
     return { periodicity, ...this.form.value };

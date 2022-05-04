@@ -22,7 +22,6 @@ import {
 } from 'src/app/shared/models/enums/periodicity-type.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { Periodicity } from 'src/app/shared/models/rest-api/reservation-request.interface';
-import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { getFormError } from 'src/app/utils/getFormError';
 
 const daysMap = new Map<Days, string>([
@@ -44,7 +43,7 @@ const daysMap = new Map<Days, string>([
 export class PeriodicitySelectionFormComponent implements OnInit {
   @Input() periodicity?: Periodicity;
 
-  periodicityForm = new FormGroup({
+  readonly periodicityForm = new FormGroup({
     periodicity: new FormControl(PeriodicityType.NONE, [Validators.required]),
     repeatUntil: new FormControl(null, [Validators.required]),
     weeklyForm: new FormGroup({
@@ -78,7 +77,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }),
   });
 
-  monthlyDayOrderOpts: Option[] = [
+  readonly monthlyDayOrderOpts: Option[] = [
     { value: 1, displayName: '1.' },
     { value: 2, displayName: '2.' },
     { value: 3, displayName: '3.' },
@@ -86,7 +85,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     { value: -1, displayName: $localize`:text|last {day}:last` },
   ];
 
-  monthlyDayOpts: Option[] = [
+  readonly monthlyDayOpts: Option[] = [
     { value: Days.MONDAY, displayName: $localize`:day:Monday` },
     { value: Days.TUESDAY, displayName: $localize`:day:Tuesday` },
     { value: Days.WEDNESDAY, displayName: $localize`:day:Wednesday` },
@@ -96,14 +95,17 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     { value: Days.SUNDAY, displayName: $localize`:day:Sunday` },
   ];
 
-  MonthlyPeriodicityType = MonthlyPeriodicityType;
-  PeriodicityType = PeriodicityType;
-  excludedDays = new Set<Date>();
+  readonly MonthlyPeriodicityType = MonthlyPeriodicityType;
+  readonly PeriodicityType = PeriodicityType;
+  readonly excludedDays = new Set<Date>();
 
-  getFormError = getFormError;
+  readonly getFormError = getFormError;
 
-  constructor(private _datePipe: MomentDatePipe) {}
+  constructor() {}
 
+  /**
+   * Validity of form.
+   */
   get valid(): boolean {
     const { periodicity: type } = this.periodicityForm.value;
 
@@ -123,6 +125,11 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Fills form with periodicity object.
+   *
+   * @param periodicity Periodicity.
+   */
   fill(periodicity: Periodicity): void {
     if (!periodicity) {
       return;
@@ -193,6 +200,11 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns selected periodicity or undefined.
+   *
+   * @returns Selected periodicity.
+   */
   getPeriodicity(): Periodicity | undefined {
     const {
       periodicity: type,
@@ -210,7 +222,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     const periodicity: Periodicity = {
       type,
       periodicityEnd: this._toISODateString(repeatUntil),
-      excludeDates: this.getExcludedDays(),
+      excludeDates: this.getExcludedDates(),
     };
 
     switch (type) {
@@ -240,22 +252,42 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
   }
 
-  getExcludedDays(): string[] {
+  /**
+   * Returns excluded dates.
+   *
+   * @returns Array of excluded dates.
+   */
+  getExcludedDates(): string[] {
     return Array.from(this.excludedDays).map((date) =>
       this._toISODateString(date)
     );
   }
 
+  /**
+   * Adds excluded date created by MatDatepicker.
+   *
+   * @param dateInputEvent MatDatepicker input event.
+   */
   addExcludedDate(dateInputEvent: MatDatepickerInputEvent<any, any>): void {
     if (!this.excludedDays.has(dateInputEvent.value)) {
       this.excludedDays.add(dateInputEvent.value);
     }
   }
 
+  /**
+   * Removes excluded date.
+   *
+   * @param date Date to remove.
+   */
   removeExcludedDay(date: Date): void {
     this.excludedDays.delete(date);
   }
 
+  /**
+   * Enables/disables sub-forms based on periodicity type.
+   *
+   * @param changeEvent Periodicity group radio change event.
+   */
   handlePeriodicityRadioChange(changeEvent: MatRadioChange): void {
     const { weeklyForm, monthlyForm, repeatUntil } =
       this.periodicityForm.controls;
@@ -287,12 +319,22 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles monthly radio change event.
+   *
+   * @param changeEvent MatRadio change event.
+   */
   handleMonthlyRadioChange(changeEvent: MatRadioChange): void {
     if (changeEvent.value) {
       this.enableMonthlyForm(changeEvent.source.value);
     }
   }
 
+  /**
+   * Enables/disables monthly sub-forms based on selected periodicity type.
+   *
+   * @param formType Monthly periodicity type.
+   */
   enableMonthlyForm(formType: MonthlyPeriodicityType): void {
     const monthlyForm = this.periodicityForm.get('monthlyForm') as FormGroup;
     const { regularForm, irregularForm } = monthlyForm.controls;
@@ -306,6 +348,11 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Custom validator for monthly form, at least one of days must be selected.
+   *
+   * @returns Validation errors.
+   */
   private _weeklyFormValidator =
     (): ValidatorFn =>
     (control: AbstractControl): ValidationErrors => {
@@ -315,6 +362,11 @@ export class PeriodicitySelectionFormComponent implements OnInit {
         : { noneChecked: true };
     };
 
+  /**
+   * Gets selected days in week for weekly form.
+   *
+   * @returns Array of selected week days.
+   */
   private _getDaysInWeek(): Days[] {
     const { monday, tuesday, wednesday, thursday, friday, saturday, sunday } =
       this.periodicityForm.get('weeklyForm')!.value;
@@ -346,6 +398,12 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     return days;
   }
 
+  /**
+   * Converts date to ISO date string (without time part).
+   *
+   * @param date Date.
+   * @returns Date as ISO date string.
+   */
   private _toISODateString(date: Date): string {
     return moment(date).format('YYYY-MM-DD');
   }

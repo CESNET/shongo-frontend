@@ -1,5 +1,8 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
+/**
+ * Production configuration for OAuth service.
+ */
 export const authConfig: AuthConfig = {
   issuer: 'https://login.cesnet.cz/oidc/',
   redirectUri: window.location.origin + '/oauth2callback',

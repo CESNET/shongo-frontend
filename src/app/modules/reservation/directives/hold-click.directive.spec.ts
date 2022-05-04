@@ -1,5 +1,4 @@
 import { ElementRef } from '@angular/core';
-import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HoldClickDirective } from './hold-click.directive';
 
 class MockElementRef implements ElementRef {

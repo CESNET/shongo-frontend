@@ -1,3 +1,6 @@
+/**
+ * Ensures that a module gets loaded only once in the entire app.
+ */
 export class EnsureModuleLoadedOnceGuard {
   constructor(targetModule: any) {
     if (targetModule) {

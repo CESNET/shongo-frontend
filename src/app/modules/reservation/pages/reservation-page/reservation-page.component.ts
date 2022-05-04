@@ -40,18 +40,21 @@ class ParentRequestPropertyError extends Error {
 export class ReservationPageComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  /**
+   * Calendar component.
+   */
   @ViewChild(ReservationCalendarComponent)
   calendar!: ReservationCalendarComponent;
 
   readonly tabletSizeHit$: Observable<BreakpointState>;
-  CalendarView = CalendarView;
+  readonly CalendarView = CalendarView;
+  readonly AlertType = AlertType;
+
   selectedResource?: Resource | null;
   selectedSlot?: CalendarSlot | null;
   parentReservationRequest?: ReservationRequestDetail;
   parentRequestError?: Error;
   capacityBookingMode = false;
-
-  AlertType = AlertType;
 
   readonly loadingParentRequest$ = new BehaviorSubject<boolean>(false);
   private readonly _destroy$ = new Subject<void>();
@@ -81,6 +84,9 @@ export class ReservationPageComponent
     this._destroy$.complete();
   }
 
+  /**
+   * Opens reservation dialog with reservation data.
+   */
   openReservationDialog(): void {
     if (!this.selectedResource) {
       return;
@@ -107,6 +113,11 @@ export class ReservationPageComponent
       });
   }
 
+  /**
+   * Checks if an error with property of parent request for capacity booking occured.
+   *
+   * @returns True if parent propert error occured, else false.
+   */
   parentPropertyErrorOccured(): boolean {
     return (
       this.parentRequestError !== undefined &&
@@ -114,17 +125,26 @@ export class ReservationPageComponent
     );
   }
 
+  /**
+   * Treis loading parent request again after error.
+   */
   retryLoadingParentRequest(): void {
     this.parentRequestError = undefined;
     this._loadParentRequest(this.parentReservationRequest!.id);
   }
 
+  /**
+   * Sets calendar view date.
+   *
+   * @param moment Selected date as moment.
+   */
   onDateSelection(moment: moment.Moment): void {
     this.calendar.viewDate = moment.toDate();
   }
 
   /**
    * Increments selected slot part by a given increment in minutes.
+   * Prevents setting slot start and end to an equal date.
    *
    * @param part Start or end of slot.
    * @param increment Value of minute increment.
@@ -141,10 +161,20 @@ export class ReservationPageComponent
       .add(increment, 'minutes')
       .toDate();
 
+    if (moment(incrementedSlot.start).isSame(moment(incrementedSlot.end))) {
+      return;
+    }
+
     this.selectedSlot = incrementedSlot;
     this.calendar.selectedSlot = incrementedSlot;
   }
 
+  /**
+   * Observes tablet size hit (768px).
+   * Switches calendar view to day view for sizes < 768px.
+   *
+   * @param state$ Breakpoint state observable.
+   */
   private _observeTabletSize(state$: Observable<BreakpointState>): void {
     state$.subscribe((state) => {
       if (state.matches) {
@@ -154,12 +184,20 @@ export class ReservationPageComponent
     });
   }
 
+  /**
+   * Creates an observable for tablet size (768px) hit.
+   *
+   * @returns Observable for tablet size hit.
+   */
   private _createTabletSizeObservable(): Observable<BreakpointState> {
     return this._br
       .observe('(max-width: 768px)')
       .pipe(takeUntil(this._destroy$));
   }
 
+  /**
+   * Checks if route contains parent request ID. If yes, initializes capacity booking mode.
+   */
   private _checkRouteForId(): void {
     const requestId = this._route.snapshot.params.id;
 
@@ -168,11 +206,21 @@ export class ReservationPageComponent
     }
   }
 
+  /**
+   * Loads parent request and switches to capacity booking mode.
+   *
+   * @param requestId Parent reservation request ID.
+   */
   private _initCapacityBookingMode(requestId: string): void {
     this.capacityBookingMode = true;
     this._loadParentRequest(requestId);
   }
 
+  /**
+   * Fetches parent reservation request.
+   *
+   * @param requestId Parent reservation request ID.
+   */
   private _loadParentRequest(requestId: string): void {
     this.loadingParentRequest$.next(true);
 

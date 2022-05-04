@@ -28,14 +28,14 @@ export class ResourceCapacityUtilizationFilterComponent
   extends DataTableFilter
   implements OnInit, OnDestroy
 {
-  filterForm = new FormGroup({
+  readonly filterForm = new FormGroup({
     unit: new FormControl(TimeUnit.DAY),
     dateFrom: new FormControl(),
     dateTo: new FormControl(),
   });
-  useAbsoluteValues = new FormControl(false);
+  readonly useAbsoluteValues = new FormControl(false);
 
-  units: Option[] = [
+  readonly units: Option[] = [
     { value: TimeUnit.DAY, displayName: $localize`:unit option:Days` },
     { value: TimeUnit.WEEK, displayName: $localize`:unit option:Weeks` },
     { value: TimeUnit.MONTH, displayName: $localize`:unit option:Months` },
@@ -84,6 +84,11 @@ export class ResourceCapacityUtilizationFilterComponent
     this._destroy$.complete();
   }
 
+  /**
+   * Getts HTTP query params based on form state.
+   *
+   * @returns HTTP query parameters.
+   */
   getHttpQuery(): HttpParams {
     const { unit, dateFrom, dateTo } = this.filterForm.value as Record<
       string,
@@ -96,6 +101,11 @@ export class ResourceCapacityUtilizationFilterComponent
     return params;
   }
 
+  /**
+   * Returns table settings record.
+   *
+   * @returns Table settings.
+   */
   getTableSettings(): TableSettings {
     const useAbsoluteValues = this.useAbsoluteValues.value;
     return { useAbsoluteValues };

@@ -85,10 +85,21 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
   datePipeFunc = datePipeFunc.bind({ datePipe: this._datePipe });
 
   private _buildDisplayedColumns(): TableColumn<ResourceCapacityUtilizationTableData>[] {
-    return this._resourceNames.map((resource) => ({
-      name: resource,
-      displayName: resource,
-      component: ResourceUtilizationColumnComponent,
-    }));
+    const columns: TableColumn<ResourceCapacityUtilizationTableData>[] = [
+      {
+        name: 'interval',
+        displayName: $localize`:table column name:Interval`,
+      },
+    ];
+
+    this._resourceNames.forEach((resource) => {
+      columns.push({
+        name: resource,
+        displayName: resource,
+        component: ResourceUtilizationColumnComponent,
+      });
+    });
+
+    return columns;
   }
 }

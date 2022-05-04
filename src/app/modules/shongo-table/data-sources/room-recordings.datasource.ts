@@ -75,6 +75,12 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
     return of('');
   };
 
+  /**
+   * Formats recording duration to human readable form.
+   *
+   * @param value Recording duration in milliseconds.
+   * @returns Formatted duration.
+   */
   formatDuration = (value: unknown): string => {
     try {
       let milliseconds = Number(value);
@@ -100,7 +106,13 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
     }
   };
 
-  _toTwoIntegerPlaces(value: string): string {
+  /**
+   * Formats a number to 2 integer places.
+   *
+   * @param value Number to format.
+   * @returns Formatted number.
+   */
+  private _toTwoIntegerPlaces(value: string): string {
     return ('0' + value).slice(value.length - 1);
   }
 }

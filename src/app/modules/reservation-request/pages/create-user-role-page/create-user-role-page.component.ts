@@ -45,10 +45,18 @@ export class CreateUserRolePageComponent implements OnInit {
     });
   }
 
+  /**
+   * Returns form validity.
+   *
+   * @returns True if form is valid, else false.
+   */
   isValid(): boolean {
     return this.form ? this.form?.valid : false;
   }
 
+  /**
+   * Posts created user role.
+   */
   postUserRole(): void {
     this.posting$.next(true);
 
@@ -75,6 +83,11 @@ export class CreateUserRolePageComponent implements OnInit {
       });
   }
 
+  /**
+   * Creates role body.
+   *
+   * @returns Role body.
+   */
   private _createRoleBody(): any {
     const { identityType, identityId, role } = this.form?.value;
 
@@ -85,6 +98,12 @@ export class CreateUserRolePageComponent implements OnInit {
     };
   }
 
+  /**
+   * Creates user role form.
+   *
+   * @param requestId Reservation request ID.
+   * @returns Form group.
+   */
   private _createForm(requestId: string): FormGroup {
     return new FormGroup({
       reservationRequest: new FormControl(
