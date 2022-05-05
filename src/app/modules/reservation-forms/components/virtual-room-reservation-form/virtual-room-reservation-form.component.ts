@@ -15,7 +15,7 @@ import {
   VirtualRoomResource,
 } from 'src/app/shared/models/rest-api/resource.interface';
 import { VirtualRoomReservationRequest } from 'src/app/shared/models/rest-api/virtual-room-reservation-request.interfacet';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { ReservationForm } from '../../interfaces/reservation-form.interface';
 import {

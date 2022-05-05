@@ -7,7 +7,7 @@ import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interfa
 import { Recording } from 'src/app/shared/models/rest-api/recording';
 import { DeleteButton } from '../buttons/delete-button';
 import { DataTableDataSource } from './data-table-datasource';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { RecordingViewUrlColumnComponent } from 'src/app/modules/reservation-request/components/recording-view-url-column/recording-view-url-column.component';
 import { CustomActionButton } from '../buttons/custom-action-button';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';

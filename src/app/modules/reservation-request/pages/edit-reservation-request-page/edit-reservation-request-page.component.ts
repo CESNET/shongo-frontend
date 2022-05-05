@@ -19,7 +19,7 @@ import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Slot } from 'src/app/shared/models/rest-api/slot.interface';
 import { EditReservationRequestBody } from 'src/app/shared/models/types/edit-reservation-request-body.type';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { RequestNotEditableError } from './errors/request-not-editable.error';
 
 @Component({

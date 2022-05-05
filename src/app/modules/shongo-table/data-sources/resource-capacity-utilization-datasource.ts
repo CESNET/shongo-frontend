@@ -7,7 +7,7 @@ import { ResourceUtilizationColumnComponent } from 'src/app/modules/resource-man
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { ResourceCapacityUtilizationFilterComponent } from '../../resource-management/components/resource-capacity-utilization-filter/resource-capacity-utilization-filter.component';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';

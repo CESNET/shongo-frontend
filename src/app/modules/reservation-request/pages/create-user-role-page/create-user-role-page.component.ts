@@ -9,7 +9,7 @@ import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { IdentityType } from 'src/app/shared/models/enums/identity-type.enum';
 import { RoleType } from 'src/app/shared/models/enums/role-type.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 
 @Component({
   selector: 'app-create-user-role-page',

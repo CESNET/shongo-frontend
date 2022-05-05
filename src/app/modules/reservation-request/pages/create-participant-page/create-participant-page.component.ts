@@ -13,7 +13,7 @@ import {
   UserParticipantPostBody,
 } from 'src/app/shared/models/rest-api/request-participant.interface';
 import { User } from 'src/app/shared/models/rest-api/user.interface';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 
 @Component({
   selector: 'app-create-participant-page',

@@ -6,7 +6,7 @@ import { ReservationRequestService } from 'src/app/core/http/reservation-request
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { StringBool } from 'src/app/shared/models/types/string-bool.type';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { toTitleCase } from 'src/app/utils/toTitleCase';
+import { toTitleCase } from 'src/app/utils/to-title-case';
 import { DeleteButton } from '../buttons/delete-button';
 import { DataTableDataSource } from './data-table-datasource';
 

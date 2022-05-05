@@ -22,7 +22,7 @@ import {
 } from 'src/app/shared/models/enums/periodicity-type.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { Periodicity } from 'src/app/shared/models/rest-api/reservation-request.interface';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 
 const daysMap = new Map<Days, string>([
   [Days.MONDAY, 'monday'],

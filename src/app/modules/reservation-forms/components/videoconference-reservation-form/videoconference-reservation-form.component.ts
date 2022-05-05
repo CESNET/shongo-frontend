@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { VideoconferenceReservationRequest } from 'src/app/shared/models/rest-api/videoconference-reservation-request.interface';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,

@@ -12,7 +12,7 @@ import { WebconferenceAccessMode } from 'src/app/shared/models/enums/webconferen
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { WebconferenceReservationRequest } from 'src/app/shared/models/rest-api/webconference-reservation-request.interface';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
