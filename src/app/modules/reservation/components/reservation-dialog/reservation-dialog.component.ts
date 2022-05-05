@@ -72,21 +72,23 @@ export class ReservationDialogComponent implements OnInit {
   createReservationRequest(): void {
     this.creating$.next(true);
 
-    this._createReservationRequest().subscribe({
-      next: () => {
-        this.creating$.next(false);
-        this._alert.showSuccess(
-          $localize`:success message:Reservation request created`
-        );
-        this._dialogRef.close(true);
-      },
-      error: () => {
-        this.creating$.next(false);
-        this._alert.showError(
-          $localize`:error message:Failed to create reservation request`
-        );
-      },
-    });
+    this._createReservationRequest()
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.creating$.next(false);
+          this._alert.showSuccess(
+            $localize`:success message:Reservation request created`
+          );
+          this._dialogRef.close(true);
+        },
+        error: () => {
+          this.creating$.next(false);
+          this._alert.showError(
+            $localize`:error message:Failed to create reservation request`
+          );
+        },
+      });
   }
 
   /**
@@ -166,7 +168,7 @@ export class ReservationDialogComponent implements OnInit {
       ...reservationRequestBase,
       ...rest,
     };
-    return this._resReqService.postItem(reservationRequest).pipe(first());
+    return this._resReqService.postItem(reservationRequest);
   }
 
   /**

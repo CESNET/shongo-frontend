@@ -182,7 +182,7 @@ export class ResourceService extends ApiService {
    *
    * @returns Array of physical resources.
    */
-  getPhyisicalResources(): PhysicalResource[] {
+  getPhysicalResources(): PhysicalResource[] {
     return this._getResourcesByType(
       ResourceType.PHYSICAL_RESOURCE
     ) as PhysicalResource[];
