@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { VideoconferenceReservationRequest } from 'src/app/shared/models/rest-api/videoconference-reservation-request.interface';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
@@ -50,7 +50,7 @@ export class VideoconferenceReservationFormComponent
   @Input() editingMode = false;
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
-  form = new FormGroup({
+  readonly form = new FormGroup({
     description: new FormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
@@ -74,6 +74,9 @@ export class VideoconferenceReservationFormComponent
     this.form.patchValue({ timezone: this._settings.timeZone });
   }
 
+  /**
+   * Form validity.
+   */
   get valid(): boolean {
     return (
       this.periodicityForm && this.periodicityForm.valid && this.form.valid
@@ -99,6 +102,11 @@ export class VideoconferenceReservationFormComponent
     }
   }
 
+  /**
+   * Fills form with reservation request detail.
+   *
+   * @param param0 Reservation request detail.
+   */
   fill({
     description,
     authorizedData,
@@ -133,6 +141,11 @@ export class VideoconferenceReservationFormComponent
     }
   }
 
+  /**
+   * Returns form value.
+   *
+   * @returns Form value.
+   */
   getFormValue(): VideoconferenceReservationRequest {
     const periodicity = this.periodicityForm.getPeriodicity()!;
     const formValue: VideoconferenceReservationFormValue = this.form.value;

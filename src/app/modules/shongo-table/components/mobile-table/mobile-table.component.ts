@@ -72,11 +72,21 @@ export class MobileTableComponent<T>
     this.dataSource.disconnect();
   }
 
+  /**
+   * Returns data for a given row.
+   *
+   * @param item Table item.
+   * @param rowName Row name (column name in standard table).
+   * @returns Row data.
+   */
   getRowData(item: T, rowName: string): string | undefined {
     const rowData = (item as any)[rowName];
     return rowData ? String(rowData) : undefined;
   }
 
+  /**
+   * Connects data source to mobile table.
+   */
   private _connectDataSource(): void {
     this.dataSource
       .connect()
@@ -84,6 +94,9 @@ export class MobileTableComponent<T>
       .subscribe((items) => this.items$.next(items));
   }
 
+  /**
+   * Observes sort form value changes and updates mobile sort.
+   */
   private _observeMobileSort(): void {
     this.sortForm.valueChanges
       .pipe(takeUntil(this._destroy$))

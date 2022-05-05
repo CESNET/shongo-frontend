@@ -12,7 +12,7 @@ import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interfa
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { StringBool } from 'src/app/shared/models/types/string-bool.type';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { ReservationRequestFilterComponent } from '../../home/components/reservation-request-filter/reservation-request-filter.component';
 import { DeleteButton } from '../buttons/delete-button';

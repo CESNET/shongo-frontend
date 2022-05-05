@@ -4,9 +4,11 @@
 
 <mat-dialog-content class="custom-scrollbar">
   <div [hidden]="creating$ | async">
+    <!-- Reservation form component host -->
     <div appComponentHost></div>
   </div>
 
+  <!-- Creating display -->
   <div class="creating-container" *ngIf="creating$ | async">
     <mat-progress-spinner
       mode="indeterminate"

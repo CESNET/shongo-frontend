@@ -44,6 +44,10 @@ export function storageFactory(): OAuthStorage {
   return localStorage;
 }
 
+/**
+ * Core module takes on the role of root module, but is not the module
+ * which gets bootstrapped by Angular run-time.
+ */
 @NgModule({
   declarations: [
     HeaderComponent,

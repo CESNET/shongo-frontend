@@ -4,7 +4,7 @@ import { SortDirection } from '@angular/material/sort';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { RequestIdColumnComponent } from '../../resource-management/components/request-id-column/request-id-column.component';
 import { ReservationOwnerColumnComponent } from '../../resource-management/components/reservation-owner-column/reservation-owner-column.component';

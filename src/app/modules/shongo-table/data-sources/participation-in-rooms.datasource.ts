@@ -8,7 +8,7 @@ import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Room } from 'src/app/shared/models/rest-api/room.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { RoomStateColumnComponent } from '../column-components/state-chip-column/components/room-state-column.component';
 import { DataTableDataSource } from './data-table-datasource';

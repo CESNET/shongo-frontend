@@ -39,13 +39,15 @@ export class ReservationDetailComponent implements OnInit {
   @Input() reservationRequest!: ReservationRequestDetail;
 
   modificationHistoryDataSource?: ModificationHistoryDataSource;
-  ReservationType = ReservationType;
-  PeriodicityType = PeriodicityType;
-  Technology = Technology;
-  AllocationState = AllocationState;
-  technologyMap = virtualRoomResourceConfig.technologyNameMap;
+  currentRequest!: ReservationRequestDetail;
 
-  requestTypeMap = new Map([
+  readonly ReservationType = ReservationType;
+  readonly PeriodicityType = PeriodicityType;
+  readonly Technology = Technology;
+  readonly AllocationState = AllocationState;
+  readonly technologyMap = virtualRoomResourceConfig.technologyNameMap;
+
+  readonly requestTypeMap = new Map([
     [
       ReservationType.PHYSICAL_RESOURCE,
       $localize`:resource type:Physical resource`,
@@ -53,7 +55,6 @@ export class ReservationDetailComponent implements OnInit {
     [ReservationType.VIRTUAL_ROOM, $localize`:resource type:Virtual room`],
     [ReservationType.ROOM_CAPACITY, $localize`:resource type:Room capacity`],
   ]);
-  currentRequest!: ReservationRequestDetail;
 
   constructor(
     private _datePipe: MomentDatePipe,
@@ -71,6 +72,12 @@ export class ReservationDetailComponent implements OnInit {
     this.currentRequest = this.reservationRequest;
   }
 
+  /**
+   * Gets weekly periodicity in readable form.
+   *
+   * @param periodicity Weekly periodicity.
+   * @returns Periodicity string.
+   */
   getWeeklyPeriodicityString(periodicity: Periodicity): string {
     const daysString = periodicity.periodicDaysInWeek
       ?.map((day) => String(day).toLowerCase())
@@ -78,6 +85,12 @@ export class ReservationDetailComponent implements OnInit {
     return $localize`:periodicity:Every ${periodicity.periodicityCycle}. week on ${daysString}`;
   }
 
+  /**
+   * Gets monthly periodicity in readable form.
+   *
+   * @param periodicity Monthly periodicity.
+   * @returns Periodicity string.
+   */
   getMonthlyPeriodicityString(periodicity: Periodicity): string {
     if (
       periodicity.monthlyPeriodicityType === MonthlyPeriodicityType.STANDARD
@@ -93,14 +106,31 @@ export class ReservationDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Gets state properties.
+   *
+   * @param state Reservation request state.
+   * @returns State properties or null.
+   */
   getStateProps(state: ReservationRequestState): StateProps | undefined {
     return resReqPropsMap.get(state);
   }
 
+  /**
+   * Gets a readable display name for alias type.
+   *
+   * @param type Alias type.
+   * @returns Alias display name.
+   */
   getAliasDisplayType(type: AliasType): string {
     return aliasTypeMap.get(type) ?? $localize`:fallback text:Unknown`;
   }
 
+  /**
+   * Determines whether periodicity should be shown.
+   *
+   * @returns True if periodicity should be shown, else false.
+   */
   isPeriodicityShown(): boolean {
     if (this.reservationRequest.type === ReservationType.PHYSICAL_RESOURCE) {
       return (
@@ -117,10 +147,18 @@ export class ReservationDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Opens state help dialog.
+   */
   openStateHelp(): void {
     this._dialog.open(ReservationRequestStateHelpComponent);
   }
 
+  /**
+   * Loads reservation request modification.
+   *
+   * @param id ID of request modification.
+   */
   openModification = (id: string): void => {
     this._resReqService
       .fetchItem<ReservationRequestDetail>(id)
@@ -128,6 +166,12 @@ export class ReservationDetailComponent implements OnInit {
       .subscribe((request) => (this.currentRequest = request));
   };
 
+  /**
+   * Determines whether a request modification in request modification table is currently selected.
+   *
+   * @param row Request modification.
+   * @returns True if request modification is selected, else false.
+   */
   isRowSelected = (row: RequestModification): boolean => {
     return this.currentRequest.id === row.id;
   };

@@ -8,6 +8,9 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 import { ApiService } from '../api.service';
 import { SettingsService } from '../settings/settings.service';
 
+/**
+ * Service for interaction with report endpoint.
+ */
 @Injectable({
   providedIn: 'root',
 })

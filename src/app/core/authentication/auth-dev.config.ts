@@ -1,5 +1,8 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
+/**
+ * Configuration for OAuth service.
+ */
 export const authConfig: AuthConfig = {
   issuer: 'http://localhost:8080/default',
   redirectUri: window.location.origin + '/oauth2callback',

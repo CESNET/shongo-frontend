@@ -1,3 +1,4 @@
+<!-- Header -->
 <header>
   <h1 i18n="page header">Main page</h1>
   <p i18n="paragraph">
@@ -21,6 +22,7 @@
   </p>
 </header>
 
+<!-- Main content -->
 <main *ngIf="auth.isAuthenticated$ | async">
   <div>
     <mat-tab-group [animationDuration]="0">

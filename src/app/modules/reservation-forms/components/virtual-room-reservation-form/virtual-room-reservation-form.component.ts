@@ -15,7 +15,7 @@ import {
   VirtualRoomResource,
 } from 'src/app/shared/models/rest-api/resource.interface';
 import { VirtualRoomReservationRequest } from 'src/app/shared/models/rest-api/virtual-room-reservation-request.interfacet';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { ReservationForm } from '../../interfaces/reservation-form.interface';
 import {
@@ -97,6 +97,9 @@ export class VirtualRoomReservationFormComponent
     return this.form.get('teleconferenceFields') as FormGroup;
   }
 
+  /**
+   * Form validity.
+   */
   get valid(): boolean {
     return this.form.valid;
   }
@@ -107,6 +110,11 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Fills form with reservation request detail.
+   *
+   * @param param0 Reservation request detail.
+   */
   fill({
     description,
     virtualRoomData,
@@ -169,6 +177,11 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Returns form value.
+   *
+   * @returns Form value.
+   */
   getFormValue(): VirtualRoomReservationRequest {
     const {
       resource: resourceId,
@@ -198,6 +211,11 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Returns technology of selected resource.
+   *
+   * @returns Technology or null.
+   */
   getSelectedTechnology(): Technology | null {
     const selectedResource = this.form.get('technology')?.value;
 
@@ -208,6 +226,11 @@ export class VirtualRoomReservationFormComponent
     return selectedResource.technology;
   }
 
+  /**
+   * Enables/disables sub-forms based on selected resource technology.
+   *
+   * @param selectedResource Selected resource.
+   */
   onTechnologyChange(selectedResource: VirtualRoomResource): void {
     switch (selectedResource.technology) {
       case Technology.PEXIP:
@@ -233,6 +256,11 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Creates technology selection options based on available virtual room resources.
+   *
+   * @returns Array of technology options.
+   */
   private _createTechnologyOpts(): Option[] {
     const resources = this._resourceService.getVirtualRoomResources();
 

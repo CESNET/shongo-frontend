@@ -50,6 +50,12 @@ export class RequestConfirmationDialogComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Returns title for technology from virtual room resource configuration.
+   *
+   * @param technology Virtual room technology.
+   * @returns Technology title.
+   */
   getTechnologyTitle(technology?: Technology): string {
     if (!technology) {
       return $localize`:fallback text:Unknown`;
@@ -59,6 +65,9 @@ export class RequestConfirmationDialogComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Accepts reservation request.
+   */
   accept(): void {
     this.loading$.next(true);
 
@@ -84,6 +93,9 @@ export class RequestConfirmationDialogComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Rejects reservation request.
+   */
   reject(): void {
     this.loading$.next(true);
 
@@ -109,6 +121,10 @@ export class RequestConfirmationDialogComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Observes routing events and on any event closes the dialog.
+   * Otherwise dialog would stay open after navigating to another route.
+   */
   private _observeRouterEvents(): void {
     this._router.events
       .pipe(takeUntil(this._destroy$))

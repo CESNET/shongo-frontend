@@ -18,6 +18,12 @@ export class SnackbarAlertComponent {
     private _snackbarRef: MatSnackBarRef<SnackbarAlertComponent>
   ) {}
 
+  /**
+   * Returns alert icon based on alert type.
+   *
+   * @param alertType Alert type.
+   * @returns Material icon name.
+   */
   getAlertIcon(alertType: AlertType): string {
     switch (alertType) {
       case AlertType.ERROR:

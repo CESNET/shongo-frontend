@@ -5,6 +5,10 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Timezone, IANA_TIMEZONES } from '../../models/data/timezones';
 
+/**
+ * Sets up timezone search on NgxMatSelectSearch element.
+ * Uses moment timezone data.
+ */
 @Directive({ selector: '[appTimezoneSearch]', exportAs: 'timezoneSearch' })
 export class TimezoneSearchDirective implements OnInit, OnDestroy {
   filteredTimezones: Observable<Timezone[]>;
@@ -30,6 +34,9 @@ export class TimezoneSearchDirective implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Observes filter control value changes and returns timezones filtered by value.
+   */
   private _initTimeZoneFilter(filterControl: FormControl): void {
     filterControl.valueChanges
       .pipe(takeUntil(this._destroy$))
@@ -38,6 +45,12 @@ export class TimezoneSearchDirective implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Returns timezones filtered based on filter value.
+   *
+   * @param filter Filter value.
+   * @returns Filtered timezones.
+   */
   private _filterTimeZones(filter: string): Timezone[] {
     if (!filter) {
       return IANA_TIMEZONES;

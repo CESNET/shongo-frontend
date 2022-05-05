@@ -10,7 +10,7 @@ import {
   emailErrorHandler,
   minLengthErrorHandler,
 } from 'src/app/utils/error-handlers';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 
 @Component({
   selector: 'app-report-page',

@@ -8,20 +8,25 @@
       [ngSwitch]="reservationRequest.type"
       class="reservation-form-container"
     >
+      <!-- Virtual room form -->
       <div *ngSwitchCase="ReservationType.VIRTUAL_ROOM">
         <app-virtual-room-reservation-form
           [editedRequest]="reservationRequest"
           #reservationForm
         ></app-virtual-room-reservation-form>
       </div>
+
+      <!-- Physical resource form -->
       <div *ngSwitchCase="ReservationType.PHYSICAL_RESOURCE">
         <app-physical-resource-reservation-form
           [editedRequest]="reservationRequest"
           #reservationForm
         ></app-physical-resource-reservation-form>
       </div>
+
       <div *ngSwitchCase="ReservationType.ROOM_CAPACITY">
         <div [ngSwitch]="reservationRequest.virtualRoomData!.technology">
+          <!-- PEXIP form -->
           <div *ngSwitchCase="Technology.PEXIP">
             <app-videoconference-reservation-form
               [editedRequest]="reservationRequest"
@@ -29,6 +34,8 @@
               #reservationForm
             ></app-videoconference-reservation-form>
           </div>
+
+          <!-- H323.SIP form -->
           <div *ngSwitchCase="Technology.H323_SIP">
             <app-videoconference-reservation-form
               [editedRequest]="reservationRequest"
@@ -36,6 +43,8 @@
               #reservationForm
             ></app-videoconference-reservation-form>
           </div>
+
+          <!-- FREEPBX form -->
           <div *ngSwitchCase="Technology.FREEPBX">
             <app-teleconference-reservation-form
               [editedRequest]="reservationRequest"
@@ -43,6 +52,8 @@
               #reservationForm
             ></app-teleconference-reservation-form>
           </div>
+
+          <!-- Adobe Connect form -->
           <div *ngSwitchCase="Technology.ADOBE_CONNECT">
             <app-webconference-reservation-form
               [editedRequest]="reservationRequest"
@@ -50,6 +61,8 @@
               #reservationForm
             ></app-webconference-reservation-form>
           </div>
+
+          <!-- Unknown technology -->
           <div *ngSwitchDefault>
             <app-alert
               message="Unknown technology"
@@ -60,6 +73,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Unknown reservation request type -->
       <div *ngSwitchDefault>
         <app-alert
           message="Unknown reservation request type"
@@ -72,12 +87,14 @@
 
     <h2 i18n="heading">Slot selection</h2>
 
+    <!-- Slot selection form -->
     <form [formGroup]="slotForm" class="slot-selection">
       <div>
         <label class="slot-selection__label" i18n="label">Slot start</label>
       </div>
 
       <section class="slot-selection__section">
+        <!-- Slot start date field -->
         <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label i18n="field label">Start date</mat-label>
           <input
@@ -96,6 +113,7 @@
           >
         </mat-form-field>
 
+        <!-- Slot start time field -->
         <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label i18n="field label">Start time</mat-label>
           <input matInput type="time" formControlName="startTime" />
@@ -111,6 +129,7 @@
       </div>
 
       <section class="slot-selection__section">
+        <!-- Slot end date field -->
         <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label i18n="field label">End date</mat-label>
           <input
@@ -128,6 +147,7 @@
           }}</mat-error>
         </mat-form-field>
 
+        <!-- Slot end time field -->
         <mat-form-field appearance="outline" class="slot-selection__field">
           <mat-label i18n="field label">End time</mat-label>
           <input matInput type="time" formControlName="endTime" />

@@ -2,6 +2,9 @@ import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum'
 import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
 import { LocaleItem } from 'src/app/models/interfaces/locale-item.interface';
 
+/**
+ * Navigation items displayed inside header navigation.
+ */
 export const menuItems: MenuItem[] = [
   {
     label: $localize`:navbar link|Link to help page:Help`,
@@ -41,6 +44,9 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
+/**
+ * Items in locale selection.
+ */
 export const locales: LocaleItem[] = [
   {
     shortcut: 'cz',

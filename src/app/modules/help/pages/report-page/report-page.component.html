@@ -1,3 +1,4 @@
+<!-- Header -->
 <header>
   <h1 i18n="header text">Report a problem</h1>
   <span i18n="page description">
@@ -6,8 +7,10 @@
   </span>
 </header>
 
+<!-- Main content -->
 <main>
   <form class="form" [formGroup]="form" (submit)="report()">
+    <!-- E-mail field -->
     <mat-form-field appearance="outline">
       <mat-label i18n="report field label">Your e-mail</mat-label>
       <input
@@ -23,6 +26,7 @@
       >
     </mat-form-field>
 
+    <!-- Message field -->
     <mat-form-field appearance="outline">
       <mat-label i18n="report field label">Message</mat-label>
       <textarea
@@ -42,6 +46,7 @@
     </mat-form-field>
 
     <div class="form__buttons">
+      <!-- Submit button -->
       <button
         mat-flat-button
         type="submit"
@@ -57,6 +62,7 @@
         <app-loading-text message="sending..."></app-loading-text>
       </ng-template>
 
+      <!-- Show/hide metadata button -->
       <button
         mat-button
         type="button"
@@ -82,6 +88,7 @@
     </div>
   </form>
 
+  <!-- Metadata -->
   <div class="metadata" *ngIf="showMetadata">
     <pre>{{ reportService.reportMetadata | json }}</pre>
   </div>

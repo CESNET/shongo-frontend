@@ -34,6 +34,11 @@ export class DataTableComponent<T> implements OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Creates an observable for tablet size breakpoint hit (768px).
+   *
+   * @returns Observable for tablet size breakpoint hit.
+   */
   private _createTabletSizeHit$(): Observable<BreakpointState> {
     return this._br
       .observe('(max-width: 768px)')

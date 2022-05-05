@@ -26,6 +26,10 @@ import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
 import { ReservationForm } from '../../../reservation-forms/interfaces/reservation-form.interface';
 
+/**
+ * Dialog which creates reservtion form based on reserved resource
+ * and handles the reservation process.
+ */
 @Component({
   selector: 'app-reservation-dialog',
   templateUrl: './reservation-dialog.component.html',
@@ -33,8 +37,15 @@ import { ReservationForm } from '../../../reservation-forms/interfaces/reservati
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationDialogComponent implements OnInit {
+  /**
+   * Component into which the reservation form gets rendered.
+   */
   @ViewChild(ComponentHostDirective, { static: true })
   formHost!: ComponentHostDirective;
+
+  /**
+   * Reservation form component.
+   */
   formComponent!: ReservationForm;
 
   readonly creating$ = new BehaviorSubject<boolean>(false);
@@ -55,6 +66,9 @@ export class ReservationDialogComponent implements OnInit {
     this.renderFormComponent();
   }
 
+  /**
+   * Creates reservation request.
+   */
   createReservationRequest(): void {
     this.creating$.next(true);
 
@@ -75,6 +89,9 @@ export class ReservationDialogComponent implements OnInit {
     });
   }
 
+  /**
+   * Renders a form component based on reserved resource into the host element.
+   */
   renderFormComponent(): void {
     let component: Type<ReservationForm>;
 
@@ -113,6 +130,11 @@ export class ReservationDialogComponent implements OnInit {
     }
   }
 
+  /**
+   * Creates reservation request body and posts it to the backend.
+   *
+   * @returns Observable of API response.
+   */
   private _createReservationRequest(): Observable<unknown> {
     const { timezone, ...rest } = this.formComponent.getFormValue();
     let reservationRequestBase;
@@ -147,6 +169,13 @@ export class ReservationDialogComponent implements OnInit {
     return this._resReqService.postItem(reservationRequest).pipe(first());
   }
 
+  /**
+   * Changes timezone of a given date, but keeps date the same.
+   *
+   * @param date Date.
+   * @param timezone Timezone.
+   * @returns Date with changed timezone.
+   */
   private _changeTimeZone(
     date: moment.Moment,
     timezone: string

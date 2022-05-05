@@ -15,11 +15,11 @@ import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResourceUtilizationDetailPageComponent implements OnInit {
+  readonly AlertType = AlertType;
+  readonly loading$ = new BehaviorSubject(false);
+
   reservationsDataSource: ReservationsDataSource | undefined;
   data$: Observable<ResourceUtilizationDetail> | undefined;
-  loading$ = new BehaviorSubject(false);
-
-  readonly AlertType = AlertType;
 
   constructor(
     private _route: ActivatedRoute,
@@ -52,6 +52,13 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
     );
   }
 
+  /**
+   * Gets interval as a localized and delimited readable string.
+   *
+   * @param intervalFrom Interval start.
+   * @param intervalTo Interval end.
+   * @returns Interval string.
+   */
   getInterval(intervalFrom: string, intervalTo: string): string {
     if (intervalFrom === intervalTo) {
       return this._datePipe.transform(intervalFrom);
@@ -63,6 +70,13 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
     );
   }
 
+  /**
+   * Gets resource usage as a formatted string.
+   *
+   * @param totalCapacity Total capacity of resource.
+   * @param usedCapacity Used capacity of resource.
+   * @returns Resource usage string.
+   */
   getUsage(totalCapacity: number, usedCapacity: number): string {
     const percentage = Math.round((usedCapacity / totalCapacity) * 100);
     return `${usedCapacity}/${totalCapacity} (${percentage}%)`;

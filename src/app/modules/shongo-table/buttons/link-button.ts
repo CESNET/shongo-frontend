@@ -1,6 +1,9 @@
 import { WithPathTemplate } from '../models/interfaces/with-path-template.interface';
 import { RowPredicate, TableButton } from './table-button';
 
+/**
+ * Button for navigating to a defined route.
+ */
 export class LinkButton<T> extends TableButton<T> implements WithPathTemplate {
   constructor(
     public name: string,

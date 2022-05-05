@@ -4,6 +4,9 @@ import { Observable, of } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication/authentication.service';
 
+/**
+ * Checks if user is authenticated.
+ */
 @Injectable({
   providedIn: 'root',
 })

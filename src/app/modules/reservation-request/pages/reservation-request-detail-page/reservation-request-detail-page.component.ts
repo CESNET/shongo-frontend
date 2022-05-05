@@ -88,6 +88,11 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
     }
   }
 
+  /**
+   * Indicates whether runtime management tab should be disabled.
+   *
+   * @returns  True if should be disabled, else false.
+   */
   isRuntimeManagementDisabled(): boolean {
     return (
       this.reservationRequest?.allocationState !== AllocationState.ALLOCATED ||
@@ -98,6 +103,9 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
     );
   }
 
+  /**
+   * Checks user intention and deletes reservation request.
+   */
   delete(): void {
     const dialogRef = this._dialog.open(CertainityCheckComponent);
 
@@ -107,12 +115,20 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
       .subscribe((shouldDelete) => shouldDelete && this._delete());
   }
 
+  /**
+   * Observes reservation request ID from route and fetches given request on change.
+   */
   private _observeRouteRequestId(): void {
     this._route.params
       .pipe(takeUntil(this._destroy$))
       .subscribe((params) => this._fetchReservationRequest(params.id));
   }
 
+  /**
+   * Fetches reservation request by ID.
+   *
+   * @param id Reservation request ID.
+   */
   private _fetchReservationRequest(id: string): void {
     this.loading$.next(true);
 
@@ -130,6 +146,9 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
       });
   }
 
+  /**
+   * Deletes current reservation request.
+   */
   private _delete(): void {
     this.deleting$.next(true);
 
