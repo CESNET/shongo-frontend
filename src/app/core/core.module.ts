@@ -93,6 +93,11 @@ export class CoreModule extends EnsureModuleLoadedOnceGuard {
           useValue: environment.production ? prodAuthConfig : devAuthConfig,
         },
         { provide: OAuthModuleConfig, useValue: authModuleConfig },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: AdminTokenInterceptor,
+          multi: true,
+        },
       ],
     };
   }
