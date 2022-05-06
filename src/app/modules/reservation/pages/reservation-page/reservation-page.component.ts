@@ -176,7 +176,7 @@ export class ReservationPageComponent
    * @param state$ Breakpoint state observable.
    */
   private _observeTabletSize(state$: Observable<BreakpointState>): void {
-    state$.subscribe((state) => {
+    state$.pipe(takeUntil(this._destroy$)).subscribe((state) => {
       if (state.matches) {
         this.calendar.view = CalendarView.Day;
         this._cd.detectChanges();
@@ -190,9 +190,7 @@ export class ReservationPageComponent
    * @returns Observable for tablet size hit.
    */
   private _createTabletSizeObservable(): Observable<BreakpointState> {
-    return this._br
-      .observe('(max-width: 768px)')
-      .pipe(takeUntil(this._destroy$));
+    return this._br.observe('(max-width: 768px)');
   }
 
   /**

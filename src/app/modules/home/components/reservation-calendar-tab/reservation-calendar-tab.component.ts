@@ -87,13 +87,11 @@ export class ReservationCalendarTabComponent
   }
 
   private _createTabletSizeObservable(): Observable<BreakpointState> {
-    return this._br
-      .observe('(max-width: 768px)')
-      .pipe(takeUntil(this._destroy$));
+    return this._br.observe('(max-width: 768px)');
   }
 
   private _observeTabletSize(state$: Observable<BreakpointState>): void {
-    state$.subscribe((state) => {
+    state$.pipe(takeUntil(this._destroy$)).subscribe((state) => {
       if (state.matches) {
         this.calendar.view = CalendarView.Day;
       }
