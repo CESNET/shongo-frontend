@@ -189,6 +189,15 @@ export class ResourceService extends ApiService {
   }
 
   /**
+   * Gets resources that have a capacity.
+   *
+   * @returns Array of resources.
+   */
+  getResourcesWithCapacity(): Resource[] {
+    return this.resources?.filter((res) => res.hasCapacity) ?? [];
+  }
+
+  /**
    * Finds virtual room resource by technology.
    *
    * @param technology Virtual room technology.

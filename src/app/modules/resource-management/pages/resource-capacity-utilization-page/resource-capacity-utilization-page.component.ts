@@ -38,10 +38,7 @@ export class ResourceCapacityUtilizationPageComponent implements OnInit {
    * Creates data source with columns depending on available resources.
    */
   private async _initializeTable(): Promise<void> {
-    const resourceNames = await this._fetchResourceNames().catch(() => {
-      this.error = true;
-      return [];
-    });
+    const resourceNames = this._getResourceNames();
 
     if (!resourceNames || resourceNames.length === 0) {
       this.noResources = true;
@@ -55,16 +52,13 @@ export class ResourceCapacityUtilizationPageComponent implements OnInit {
   }
 
   /**
-   * Fetches capacity utilization and extracts resource names.
+   * Returns names of resources that have a capacity..
    *
-   * @returns Promise with resource names.
+   * @returns Array of resource names.
    */
-  private async _fetchResourceNames(): Promise<string[]> {
-    return lastValueFrom(
-      this._resourceService.fetchCapacityUtilization(1, 0)
-    ).then(
-      (capacityUtilization) =>
-        capacityUtilization?.items[0]?.resources.map((res) => res.name) ?? []
-    );
+  private _getResourceNames(): string[] {
+    return this._resourceService
+      .getResourcesWithCapacity()
+      .map((res) => res.name);
   }
 }

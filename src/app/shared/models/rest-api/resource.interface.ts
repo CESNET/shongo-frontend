@@ -6,6 +6,7 @@ export interface Resource {
   type: ResourceType;
   name: string;
   description: string;
+  hasCapacity: boolean;
   tags?: string[];
   technology?: Technology;
 }
