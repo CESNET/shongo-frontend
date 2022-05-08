@@ -141,7 +141,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   private _lastFetchedInterval?: Interval;
 
   private readonly _destroy$ = new Subject<void>();
-  private readonly _loading$ = new BehaviorSubject<boolean>(true);
+  private readonly _loading$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _resReqService: ReservationRequestService,
@@ -201,7 +201,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.fetchReservations();
+    this._selectedResourceId && this.fetchReservations();
   }
 
   ngOnDestroy(): void {
