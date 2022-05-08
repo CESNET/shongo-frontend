@@ -1,8 +1,8 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  OnInit,
   Input,
+  OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
@@ -134,6 +134,7 @@ export class VirtualRoomReservationFormComponent
 
         if (resource) {
           this.form.get('resource')!.setValue(roomResourceId);
+          this.onTechnologyChange(resource as VirtualRoomResource);
         }
       }
       if (roomName) {
@@ -158,18 +159,18 @@ export class VirtualRoomReservationFormComponent
         }
       } else if (resource.technology === Technology.FREEPBX) {
         if (authorizedData.adminPin) {
-          this.videoconferenceFieldsForm
+          this.teleconferenceFieldsForm
             .get('adminPin')!
             .setValue(authorizedData.adminPin);
         }
         if (authorizedData.userPin) {
-          this.videoconferenceFieldsForm
+          this.teleconferenceFieldsForm
             .get('userPin')!
             .setValue(authorizedData.userPin);
         }
       } else if (resource.technology === Technology.ADOBE_CONNECT) {
         if (authorizedData.userPin) {
-          this.videoconferenceFieldsForm
+          this.webconferenceFieldsForm
             .get('userPin')!
             .setValue(authorizedData.userPin);
         }
@@ -217,13 +218,15 @@ export class VirtualRoomReservationFormComponent
    * @returns Technology or null.
    */
   getSelectedTechnology(): Technology | null {
-    const selectedResource = this.form.get('technology')?.value;
+    const selectedResourceId = this.form.get('resource')?.value;
+    const selectedResource =
+      this._resourceService.findResourceById(selectedResourceId);
 
     if (!selectedResource) {
       return null;
     }
 
-    return selectedResource.technology;
+    return selectedResource.technology ?? null;
   }
 
   /**
