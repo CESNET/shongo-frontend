@@ -18,8 +18,8 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
   readonly AlertType = AlertType;
   readonly loading$ = new BehaviorSubject(false);
 
-  reservationsDataSource: ReservationsDataSource | undefined;
-  data$: Observable<ResourceUtilizationDetail> | undefined;
+  reservationsDataSource?: ReservationsDataSource;
+  data$?: Observable<ResourceUtilizationDetail>;
 
   constructor(
     private _route: ActivatedRoute,
