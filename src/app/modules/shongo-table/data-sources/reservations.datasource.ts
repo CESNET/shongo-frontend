@@ -14,7 +14,7 @@ export interface ResourceReservationTableData {
   requestId: string;
   slotStart: string;
   slotEnd: string;
-  licenceCount: number;
+  licenseCount: number;
   owner: string;
 }
 
@@ -31,7 +31,7 @@ export class ReservationsDataSource extends StaticDataSource<
         displayName: $localize`:table column:Identifier`,
       },
       {
-        name: 'licenceCount',
+        name: 'licenseCount',
         displayName: $localize`:table column:Licences`,
       },
       {
@@ -79,7 +79,7 @@ export class ReservationsDataSource extends StaticDataSource<
           requestId: item.requestId,
           slotStart: item.slot.start,
           slotEnd: item.slot.end,
-          licenceCount: item.licenceCount,
+          licenseCount: item.licenseCount,
         } as ResourceReservationTableData)
     );
 

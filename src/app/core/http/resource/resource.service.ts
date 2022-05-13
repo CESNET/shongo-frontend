@@ -84,7 +84,7 @@ export class ResourceService extends ApiService {
       sortedColumn,
       sortDirection,
       filter,
-      `${this.endpointURL}/capacity_utilizations`
+      `${this.endpointURL}/capacity_utilization`
     );
   }
 
@@ -101,7 +101,7 @@ export class ResourceService extends ApiService {
     intervalFrom: string,
     intervalTo: string
   ): Observable<ResourceUtilizationDetail> {
-    const detailUrl = `${this.endpointURL}/${resourceId}/capacity_utilizations`;
+    const detailUrl = `${this.endpointURL}/${resourceId}/capacity_utilization`;
 
     const httpParams = new HttpParams()
       .set('resource', resourceId)
