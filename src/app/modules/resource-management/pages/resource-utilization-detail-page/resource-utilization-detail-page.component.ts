@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, interval, Observable, throwError } from 'rxjs';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ReservationsDataSource } from 'src/app/modules/shongo-table/data-sources/reservations.datasource';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
+import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
 import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 
@@ -21,6 +22,8 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
   reservationsDataSource?: ReservationsDataSource;
   data$?: Observable<ResourceUtilizationDetail>;
 
+  private _interval?: Interval;
+
   constructor(
     private _route: ActivatedRoute,
     private _resourceService: ResourceService,
@@ -29,7 +32,14 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading$.next(true);
+
     this.data$ = this._route.queryParams.pipe(
+      tap((params) => {
+        this._interval = {
+          start: params.interval_from,
+          end: params.interval_to,
+        };
+      }),
       switchMap((params) =>
         this._resourceService.fetchResourceUtilization(
           params.resource_id,
@@ -53,20 +63,24 @@ export class ResourceUtilizationDetailPageComponent implements OnInit {
   }
 
   /**
-   * Gets interval as a localized and delimited readable string.
+   * Gets utilization interval as a localized and delimited readable string.
    *
-   * @param intervalFrom Interval start.
-   * @param intervalTo Interval end.
    * @returns Interval string.
    */
-  getInterval(intervalFrom: string, intervalTo: string): string {
-    if (intervalFrom === intervalTo) {
-      return this._datePipe.transform(intervalFrom);
+  getInterval(): string {
+    if (!this._interval) {
+      throw new Error('Interval not defined');
+    }
+
+    const { start, end } = this._interval;
+
+    if (start === end) {
+      return this._datePipe.transform(start);
     }
     return (
-      this._datePipe.transform(intervalFrom, 'LLL') +
+      this._datePipe.transform(start, 'LLL') +
       ' - ' +
-      this._datePipe.transform(intervalTo, 'LLL')
+      this._datePipe.transform(end, 'LLL')
     );
   }
 
