@@ -99,7 +99,11 @@
   <ng-template #data>
     <ng-container *ngIf="reservationRequest">
       <mat-divider></mat-divider>
-      <mat-tab-group [animationDuration]="0">
+      <mat-tab-group
+        [animationDuration]="0"
+        [(selectedIndex)]="tabIndex"
+        (selectedIndexChange)="onTabIndexChange($event)"
+      >
         <!-- Reservation -->
         <mat-tab label="Reservation" i18n-label="tab label">
           <ng-template matTabContent>

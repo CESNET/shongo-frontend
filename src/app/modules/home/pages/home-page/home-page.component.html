@@ -25,7 +25,11 @@
 <!-- Main content -->
 <main *ngIf="auth.isAuthenticated$ | async">
   <div>
-    <mat-tab-group [animationDuration]="0">
+    <mat-tab-group
+      [animationDuration]="0"
+      [(selectedIndex)]="tabIndex"
+      (selectedIndexChange)="onTabIndexChange($event)"
+    >
       <!-- Reservation requests -->
       <mat-tab
         label="Your rooms"
