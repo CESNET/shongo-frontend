@@ -5,6 +5,7 @@ import {
   OnDestroy,
   ViewChild,
   Input,
+  OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -27,7 +28,9 @@ import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reserva
   styleUrls: ['./reservation-request-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReservationRequestDetailPageComponent implements OnDestroy {
+export class ReservationRequestDetailPageComponent
+  implements OnInit, OnDestroy
+{
   @ViewChild(MatTabGroup) tabGroup?: MatTabGroup;
   @Input() reservationRequest?: ReservationRequestDetail;
 
@@ -38,6 +41,8 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
   readonly RoomState = RoomState;
   readonly AlertType = AlertType;
   readonly ReservationRequestState = ReservationRequestState;
+
+  tabIndex = 0;
 
   private readonly _destroy$ = new Subject<void>();
 
@@ -51,9 +56,33 @@ export class ReservationRequestDetailPageComponent implements OnDestroy {
     this._observeRouteRequestId();
   }
 
+  ngOnInit(): void {
+    // Try reading tab index from fragment and set it in mat tab group.
+    this._route.fragment
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((fragment) => {
+        if (fragment) {
+          const tabIndex = Number(fragment);
+
+          if (tabIndex !== NaN) {
+            this.tabIndex = tabIndex;
+          }
+        }
+      });
+  }
+
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
+  }
+
+  /**
+   * Sets tab index into the route's fragment.
+   *
+   * @param index Index of selected tab.
+   */
+  onTabIndexChange(index: number): void {
+    this._router.navigate([], { fragment: String(index) });
   }
 
   /**

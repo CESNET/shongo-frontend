@@ -3,10 +3,6 @@ import { ResourceUtilizationDetail } from 'src/app/shared/models/rest-api/resour
 export const resourceUtilizationDetailMock: ResourceUtilizationDetail = {
   id: 'shongo:maper-local:res:1',
   name: 'Pexip',
-  interval: {
-    start: '2021-11-03T18:38:09.546Z',
-    end: '2021-11-03T18:38:09.546Z',
-  },
   totalCapacity: 80,
   usedCapacity: 2,
   reservations: [
@@ -16,7 +12,7 @@ export const resourceUtilizationDetailMock: ResourceUtilizationDetail = {
         start: '2021-11-03T18:38:09.546Z',
         end: '2021-11-03T18:38:09.546Z',
       },
-      licenceCount: 2,
+      licenseCount: 2,
       requestId: 'shongo:meetings.cesnet.cz:req:2',
       user: {
         userId: '1430cff140c2ce0a0c6751f130af3224b80306b9@einfra.cesnet.cz',
