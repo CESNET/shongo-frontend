@@ -106,13 +106,11 @@
       >
         <!-- Reservation -->
         <mat-tab label="Reservation" i18n-label="tab label">
-          <ng-template matTabContent>
-            <div class="tab-content">
-              <app-reservation-detail
-                [reservationRequest]="reservationRequest"
-              ></app-reservation-detail>
-            </div>
-          </ng-template>
+          <div class="tab-content">
+            <app-reservation-detail
+              [reservationRequest]="reservationRequest"
+            ></app-reservation-detail>
+          </div>
         </mat-tab>
 
         <!-- Capacity reservations -->
@@ -126,20 +124,16 @@
               reservationRequest.roomCapacityData?.periodicity?.type !== 'NONE')
           "
         >
-          <ng-template matTabContent>
-            <div class="tab-content">
-              <app-capacity-reservations-tab></app-capacity-reservations-tab>
-            </div>
-          </ng-template>
+          <div class="tab-content">
+            <app-capacity-reservations-tab></app-capacity-reservations-tab>
+          </div>
         </mat-tab>
 
         <!-- User roles -->
         <mat-tab label="User roles" i18n-label="tab label">
-          <ng-template matTabContent>
-            <div class="tab-content">
-              <app-user-roles-tab></app-user-roles-tab>
-            </div>
-          </ng-template>
+          <div class="tab-content">
+            <app-user-roles-tab></app-user-roles-tab>
+          </div>
         </mat-tab>
 
         <ng-container
@@ -150,11 +144,9 @@
         >
           <!-- Participants -->
           <mat-tab label="Participants" i18n-label="tab label">
-            <ng-template matTabContent>
-              <div class="tab-content">
-                <app-participants-tab></app-participants-tab>
-              </div>
-            </ng-template>
+            <div class="tab-content">
+              <app-participants-tab></app-participants-tab>
+            </div>
           </mat-tab>
 
           <!-- Runtime management -->
@@ -172,11 +164,9 @@
                   RoomState.STARTED_AVAILABLE)
             "
           >
-            <ng-template matTabContent>
-              <div class="tab-content">
-                <app-runtime-management-tab></app-runtime-management-tab>
-              </div>
-            </ng-template>
+            <div class="tab-content">
+              <app-runtime-management-tab></app-runtime-management-tab>
+            </div>
           </mat-tab>
         </ng-container>
 
@@ -194,13 +184,11 @@
             !reservationRequest.futureSlotCount
           "
         >
-          <ng-template matTabContent>
-            <div class="tab-content">
-              <app-recordings-tab
-                [reservationRequest]="reservationRequest"
-              ></app-recordings-tab>
-            </div>
-          </ng-template>
+          <div class="tab-content">
+            <app-recordings-tab
+              [reservationRequest]="reservationRequest"
+            ></app-recordings-tab>
+          </div>
         </mat-tab>
       </mat-tab-group>
     </ng-container>
