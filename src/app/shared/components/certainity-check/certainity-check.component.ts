@@ -11,8 +11,4 @@ export class CertainityCheckComponent {
     public dialogRef: MatDialogRef<CertainityCheckComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { message?: string }
   ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
 }

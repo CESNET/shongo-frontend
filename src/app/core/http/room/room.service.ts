@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ApiService } from '../api.service';
 
+/**
+ * Service for interaction with room endpoint.
+ */
 @Injectable({
   providedIn: 'root',
 })

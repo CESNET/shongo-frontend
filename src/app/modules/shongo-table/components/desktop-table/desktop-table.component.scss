@@ -28,6 +28,9 @@
   box-sizing: content-box; // To keep the padding-right of the last cell.
   width: 3em;
 }
+.disabled-link {
+  pointer-events: none;
+}
 mat-spinner.button-loading {
   margin: 0 1em;
 }

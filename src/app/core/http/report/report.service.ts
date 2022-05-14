@@ -8,6 +8,9 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 import { ApiService } from '../api.service';
 import { SettingsService } from '../settings/settings.service';
 
+/**
+ * Service for interaction with report endpoint.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -25,22 +28,11 @@ export class ReportService {
   get reportMetadata(): ReportMetadata {
     const timezone = this._settings.timeZone;
     const settings = this._settings.userSettings;
-    let metadata: ReportMetadata = {};
-
-    if (this._auth.identityClaims) {
-      metadata = {
-        user: this._auth.identityClaims?.name,
-        userEmail: this._auth.identityClaims?.email,
-        ...metadata,
-      };
-    }
-    if (timezone) {
-      metadata.timezone = timezone;
-    }
-    if (settings) {
-      const { homeTimeZone, currentTimeZone, ...rest } = settings;
-      metadata = { ...rest, ...metadata };
-    }
+    let metadata: ReportMetadata = {
+      user: this._auth.identityClaims?.name,
+      timezone,
+      settings: settings ?? undefined,
+    };
 
     return metadata;
   }
@@ -49,16 +41,12 @@ export class ReportService {
     email,
     message,
   }: {
-    email?: string;
+    email: string;
     message: string;
   }): Observable<unknown> {
     const meta = this.reportMetadata;
+    const report: Report = { email, meta, message };
 
-    if (email) {
-      meta.userEmail = email;
-    }
-
-    const report: Report = { meta, message };
     return this._http.post<unknown>(this.endpointUrl, report);
   }
 }

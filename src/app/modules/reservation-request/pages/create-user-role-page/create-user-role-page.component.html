@@ -4,11 +4,13 @@
 
 <main>
   <form *ngIf="form" [formGroup]="form">
+    <!-- Reservation request field -->
     <mat-form-field appearance="outline">
       <mat-label i18n="field label">Reservation request</mat-label>
       <input type="text" matInput formControlName="reservationRequest" />
     </mat-form-field>
 
+    <!-- Identity type selection -->
     <label i18n="label">Identity type:</label>
     <mat-radio-group
       aria-label="Select identity type"
@@ -19,6 +21,7 @@
       <mat-radio-button [value]="IdentityType.GROUP">Group</mat-radio-button>
     </mat-radio-group>
 
+    <!-- User selection field -->
     <mat-form-field
       appearance="outline"
       *ngIf="
@@ -47,6 +50,7 @@
       }}</mat-error>
     </mat-form-field>
 
+    <!-- Group selection field -->
     <ng-template #groupSearch>
       <mat-form-field appearance="outline">
         <mat-label i18n="field label">Group</mat-label>
@@ -70,11 +74,14 @@
       </mat-form-field>
     </ng-template>
 
+    <!-- Role selection field -->
     <mat-form-field appearance="outline">
       <mat-select formControlName="role">
-        <mat-option *ngFor="let roleType of roleTypes" [value]="roleType">{{
-          roleType | titlecase
-        }}</mat-option>
+        <mat-option
+          *ngFor="let roleType of roleTypes"
+          [value]="roleType.value"
+          >{{ roleType.displayName }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
 

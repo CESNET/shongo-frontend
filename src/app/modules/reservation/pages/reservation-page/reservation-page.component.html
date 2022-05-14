@@ -8,6 +8,7 @@
     >
       <!-- Toolbar left -->
       <div class="reservation__toolbar-row-left">
+        <!-- Burger menu icon -->
         <button
           mat-icon-button
           (click)="drawer.toggle()"
@@ -17,6 +18,7 @@
           <mat-icon>menu</mat-icon>
         </button>
 
+        <!-- Link to home page  -->
         <a
           mat-stroked-button
           aria-labelledby="go-back-btn-name"
@@ -30,18 +32,21 @@
           >
         </a>
 
+        <!-- Calendar view selection -->
         <app-calendar-view-selection
           *ngIf="(tabletSizeHit$ | async)?.matches === false"
           [selectedView]="calendar.view"
           (viewSelected)="calendar.view = $event"
         ></app-calendar-view-selection>
 
+        <!-- Calendar paginator -->
         <app-calendar-paginator
           [view]="calendar.view"
           [viewDate]="calendar.viewDate"
           (viewDateChange)="calendar.viewDate = $event"
         ></app-calendar-paginator>
 
+        <!-- Current view date -->
         <h1 class="reservation__date-header reservation__date-header--main">
           {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
         </h1>
@@ -49,10 +54,12 @@
 
       <!-- Toolbar right -->
       <div class="reservation__toolbar-row-right">
+        <!-- Account menu -->
         <app-account-menu></app-account-menu>
       </div>
     </mat-toolbar-row>
 
+    <!-- Second toolbar row for mobile view -->
     <mat-toolbar-row
       class="reservation__toolbar-row reservation__toolbar-row--mobile"
     >
@@ -62,6 +69,7 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
+  <!-- Sidebar drawer -->
   <mat-drawer-container class="reservation__main" [autosize]="true">
     <mat-drawer
       #drawer
@@ -69,6 +77,7 @@
       opened
     >
       <div class="sidebar">
+        <!-- Mobile only section -->
         <section class="sidebar__section sidebar__section--mobile">
           <a
             mat-stroked-button
@@ -117,6 +126,7 @@
         </section>
 
         <ng-template #capacityBookingSection>
+          <!-- Parent capacity section (for capacity booking) -->
           <section class="sidebar__section">
             <ng-container
               *ngIf="parentReservationRequest; else loadingParentOrError"
@@ -160,7 +170,6 @@
             </div>
           </ng-template>
 
-          <!-- Error display -->
           <ng-template #parentError>
             <ng-container
               *ngTemplateOutlet="
@@ -172,6 +181,7 @@
             </ng-container>
           </ng-template>
 
+          <!-- Error when loading parent request -->
           <ng-template #loadingParentError>
             <div class="sidebar__loading-error">
               <div class="sidebar__error-container">
@@ -194,6 +204,7 @@
             </div>
           </ng-template>
 
+          <!-- Error with parent property -->
           <ng-template #parentPropertyError>
             <div class="sidebar__loading-error">
               <div class="sidebar__error-container">
@@ -208,8 +219,11 @@
           </ng-template>
         </ng-template>
 
+        <!-- Calendar settings -->
         <section class="sidebar__section">
           <b class="sidebar__heading" i18n="heading">Calendar settings</b>
+
+          <!-- Highlight mine checkbox -->
           <mat-checkbox
             color="primary"
             i18n="checkbox label"
@@ -225,36 +239,86 @@
           <b class="sidebar__heading" i18n="heading">Reservation slot</b>
 
           <div class="sidebar__slot">
+            <!-- Selected slot start -->
             <div
               class="sidebar__slot-part"
               *ngIf="selectedSlot && selectedSlot.start"
             >
-              <div>
-                <b class="sidebar__slot-part-name" i18n="item name"
-                  >Slot start:</b
-                >
-              </div>
+              <!-- Slot start heading -->
+              <b class="sidebar__slot-part-name" i18n="item name"
+                >Slot start:</b
+              >
+              <!-- Slot start value -->
               <div class="sidebar__slot-part-value">
-                {{ selectedSlot.start | momentDate: "LLL" }}
+                <span>{{ selectedSlot.start | momentDate: "LLL" }}</span>
+
+                <!-- Fine tuning buttons -->
+                <div class="time-setting">
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    (click)="incrementSlot('start', -1)"
+                    aria-label="decrement slot start by one minute"
+                    i18n-aria-label="button label"
+                    appHoldClick
+                  >
+                    <mat-icon class="icon-xs">arrow_left</mat-icon>
+                  </button>
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    appHoldClick
+                    (click)="incrementSlot('start', 1)"
+                    aria-label="increment slot start by one minute"
+                    i18n-aria-label="button label"
+                  >
+                    <mat-icon class="icon-xs">arrow_right</mat-icon>
+                  </button>
+                </div>
               </div>
             </div>
 
+            <!-- Selected slot end-->
             <div
               class="sidebar__slot-part"
               *ngIf="selectedSlot && selectedSlot.end"
             >
-              <div>
-                <b class="sidebar__slot-part-name" i18n="item name"
-                  >Slot end:</b
-                >
-              </div>
+              <!-- Slot end heading -->
+              <b class="sidebar__slot-part-name" i18n="item name">Slot end:</b>
+
+              <!-- Slot end value -->
               <div class="sidebar__slot-part-value">
-                {{ selectedSlot.end | momentDate: "LLL" }}
+                <span>{{ selectedSlot.end | momentDate: "LLL" }}</span>
+
+                <!-- Fine tuning buttons -->
+                <div class="time-setting">
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    (click)="incrementSlot('end', -1)"
+                    aria-label="decrement slot end by one minute"
+                    i18n-aria-label="button label"
+                    appHoldClick
+                  >
+                    <mat-icon class="icon-xs">arrow_left</mat-icon>
+                  </button>
+                  <button
+                    class="time-setting__button"
+                    matRipple
+                    (click)="incrementSlot('end', 1)"
+                    aria-label="increment slot end by one minute"
+                    i18n-aria-label="button label"
+                    appHoldClick
+                  >
+                    <mat-icon class="icon-xs">arrow_right</mat-icon>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="sidebar__buttons">
+            <!-- Create reservation button -->
             <button
               mat-flat-button
               color="primary"
@@ -265,6 +329,7 @@
               Create reservation
             </button>
 
+            <!-- Cancel reservation button -->
             <button
               mat-flat-button
               class="sidebar__button"
@@ -278,7 +343,10 @@
         </section>
       </div>
     </mat-drawer>
+
+    <!-- Main content -->
     <mat-drawer-content class="reservation__content">
+      <!-- Reservation alendar -->
       <app-reservation-calendar
         #calendar
         class="reservation__calendar fullscreen-calendar"
@@ -290,6 +358,7 @@
   </mat-drawer-container>
 </div>
 
+<!-- Loading display-->
 <ng-template #loadingResources>
   <div class="loading loading--fullscreen">
     <h1 i18n="loading text">Loading resources</h1>

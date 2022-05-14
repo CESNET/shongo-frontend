@@ -18,7 +18,7 @@ import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.inter
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserSettingsPageComponent implements OnInit, OnDestroy {
-  languageOptions: Option[] = [
+  readonly languageOptions: Option[] = [
     {
       displayName: $localize`:option name:Use your operating system's configuration`,
       value: 'os',
@@ -27,11 +27,11 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     { displayName: $localize`:language:English`, value: 'en' },
   ];
 
-  useCurrentTimeZoneCtrl = new FormControl(false);
-  usePerunSettingsCtrl = new FormControl(false);
-  administrationModeCtrl = new FormControl(false);
+  readonly useCurrentTimeZoneCtrl = new FormControl(false);
+  readonly usePerunSettingsCtrl = new FormControl(false);
+  readonly administrationModeCtrl = new FormControl(false);
 
-  settingsForm = new FormGroup({
+  readonly settingsForm = new FormGroup({
     locale: new FormControl(''),
     homeTimeZone: new FormControl(''),
     currentTimeZone: new FormControl({
@@ -40,7 +40,7 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     }),
   });
 
-  private _destroy$ = new Subject<void>();
+  private readonly _destroy$ = new Subject<void>();
 
   constructor(public settings: SettingsService) {}
 
@@ -55,10 +55,18 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Updated user settings on the backend.
+   */
   submitSettings(): void {
     this.settings.updateSettings(this._getUserSettings());
   }
 
+  /**
+   * Gets user settings object based on form value.
+   *
+   * @returns User settings.
+   */
   private _getUserSettings(): UserSettings {
     const userSettings = this.settingsForm.value as UserSettings;
     userSettings.useWebService = this.usePerunSettingsCtrl.value;
@@ -77,6 +85,9 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     return userSettings;
   }
 
+  /**
+   * Observes user settings observable and updates form value accordingly.
+   */
   private _observeUserSettings(): void {
     this.settings.userSettingsLoading$
       .pipe(
@@ -112,23 +123,39 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Observes current timezone checkbox and enables/disables timezone field accordingly.
+   */
   private _observeCurrentTimezone(): void {
     this.useCurrentTimeZoneCtrl.valueChanges
       .pipe(takeUntil(this._destroy$))
       .subscribe((isChecked) => this._handleCurrentTimezoneEnabled(isChecked));
   }
 
+  /**
+   * Observes use perun settings control value and enables/disables fields accordingly.
+   */
   private _observeUsePerunSettings(): void {
     this.usePerunSettingsCtrl.valueChanges
       .pipe(takeUntil(this._destroy$))
       .subscribe((isChecked) => this._handlePerunEnabled(!isChecked));
   }
 
+  /**
+   * Enables/disables locale and home time zone fields based on use perun settings checkbox value.
+   *
+   * @param isEnabled Whether use perun settings checkbox is enabled.
+   */
   private _handlePerunEnabled(isEnabled: boolean): void {
     this._setControlEnabled(this.settingsForm.get('locale')!, isEnabled);
     this._setControlEnabled(this.settingsForm.get('homeTimeZone')!, isEnabled);
   }
 
+  /**
+   * Enables/disables current time zone field based on use current time zone checkbox value.
+   *
+   * @param isEnabled Whether use current time zone checkbox is enabled
+   */
   private _handleCurrentTimezoneEnabled(isEnabled: boolean) {
     this._setControlEnabled(
       this.settingsForm.get('currentTimeZone')!,
@@ -136,6 +163,12 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Enables/disables form control.
+   *
+   * @param control Form control.
+   * @param enabled Whether form control should be enabled.
+   */
   private _setControlEnabled(control: AbstractControl, enabled: boolean): void {
     if (enabled) {
       control.enable({ emitEvent: false });

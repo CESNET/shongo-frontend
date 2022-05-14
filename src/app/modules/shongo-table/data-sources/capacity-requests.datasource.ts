@@ -8,7 +8,7 @@ import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { DeleteButton } from '../buttons/delete-button';
 import { LinkButton } from '../buttons/link-button';
 import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
@@ -16,8 +16,8 @@ import { DataTableDataSource } from './data-table-datasource';
 
 interface CapacityRequestsTableData {
   id: string;
-  slotStart: number;
-  slotEnd: number;
+  slotStart: string;
+  slotEnd: string;
   participantCount: number;
   parentRequestId?: string;
   state: string;

@@ -24,7 +24,7 @@ export class DisconnectUserButton extends ApiActionButton<RuntimeParticipantTabl
     return this.resReqService.disconnectUser(this.requestId, row.id).pipe(
       tap(() => {
         this.removeFromLoading(row);
-        this._deleted$.next();
+        this._deleted$.next(row);
       }),
       mapTo($localize`:success message:User disconnected`),
       catchError(() => {

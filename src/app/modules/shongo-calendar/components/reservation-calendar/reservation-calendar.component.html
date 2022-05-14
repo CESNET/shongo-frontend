@@ -83,9 +83,15 @@
       <span [innerHtml]="getSlotString(event)"></span>
       <b i18n="definition tag">Reserved by:&nbsp;</b>
       <span [innerHtml]="event.meta.owner"></span>
-      <a [href]="'mailto:' + event.meta.ownerEmail">{{
-        event.meta.ownerEmail
-      }}</a>
+      <a
+        *ngIf="event.meta.ownerEmail; else unknownOwner"
+        [href]="'mailto:' + event.meta.ownerEmail"
+        >{{ event.meta.ownerEmail }}</a
+      >
+
+      <ng-template #unknownOwner>
+        <span class="grayed-text" i18n="fallback text">Unknown</span>
+      </ng-template>
     </div>
   </div>
 </ng-template>

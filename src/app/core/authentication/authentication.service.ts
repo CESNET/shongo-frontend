@@ -37,7 +37,6 @@ export class AuthenticationService {
     this._observeStorage();
     this._observeAuthEvents();
 
-    // Initialize silent refresh
     this._oauthService.setupAutomaticSilentRefresh();
   }
 

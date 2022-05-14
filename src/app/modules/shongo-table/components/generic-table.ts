@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { filter, first, takeUntil } from 'rxjs/operators';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
@@ -39,9 +39,25 @@ export abstract class GenericTableComponent<T>
 {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(ComponentHostDirective) filterHost?: ComponentHostDirective;
+
+  /**
+   * Data source for table, contains table column definitions, functionality for data fetching etc.
+   */
   @Input() dataSource!: DataTableDataSource<T>;
+
+  /**
+   * Whether checkboxes should be shown next to table rows or not shown at all.
+   */
   @Input() showCheckboxes = true;
+
+  /**
+   * Table description text.
+   */
   @Input() description: string = '';
+
+  /**
+   * Whether mass delete buttons should be displayed in table header.
+   */
   @Input() showDeleteButtons = true;
 
   filter?: DataTableFilter;
@@ -63,6 +79,9 @@ export abstract class GenericTableComponent<T>
     this.displayedColumns = this._displayedColumns.asObservable();
   }
 
+  /**
+   * Whether refresh button should be shown.
+   */
   get showRefreshButton(): boolean {
     return this.dataSource && !(this.dataSource instanceof StaticDataSource);
   }
@@ -70,6 +89,7 @@ export abstract class GenericTableComponent<T>
   ngOnInit(): void {
     this._displayedColumns.next(this._buildDisplayedColumnsArray());
     this._observeLoading();
+    this._observeDeletions();
   }
 
   ngAfterViewInit(): void {
@@ -104,7 +124,7 @@ export abstract class GenericTableComponent<T>
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.count;
+    const numRows = this.dataSource.data.items.length;
     return numSelected === numRows;
   }
 
@@ -131,6 +151,12 @@ export abstract class GenericTableComponent<T>
     return '';
   }
 
+  /**
+   * Returns table button type.
+   *
+   * @param button Table button.
+   * @returns Table button type.
+   */
   getButtonType(button: TableButton<T>): TableButtonType {
     if (button instanceof ApiActionButton) {
       return TableButtonType.API_ACTION;
@@ -140,6 +166,14 @@ export abstract class GenericTableComponent<T>
     return TableButtonType.ACTION;
   }
 
+  /**
+   * Creates value injector for column component.
+   * We need a value injector to provide row data and table settings for dynamically created column component.
+   *
+   * @param row Table row.
+   * @param columnName Column name.
+   * @returns Value injector.
+   */
   createColComponentValueInjector(row: T, columnName: string): Injector {
     const tableSettings = this.filter?.settings$;
     return Injector.create({
@@ -151,12 +185,21 @@ export abstract class GenericTableComponent<T>
     });
   }
 
+  /**
+   * Filters out buttons for a given row which should not be displayed based on display function defined in table button.
+   *
+   * @param row Table row.
+   * @returns Array of table buttons.
+   */
   filterDisplayedButtons(row: T): TableButton<T>[] {
     return this.dataSource.buttons.filter((button) =>
       button.displayButtonFunc ? button.displayButtonFunc(row) : true
     );
   }
 
+  /**
+   * Checks user intention and deletes all rows selected with checkbox.
+   */
   deleteSelectedRows(): void {
     if (!this.dataSource.apiService) {
       console.error(`No api service defined in table's datasource`);
@@ -206,47 +249,12 @@ export abstract class GenericTableComponent<T>
       });
   }
 
-  deleteAllRows(): void {
-    if (!this.dataSource.apiService) {
-      console.error($localize`No api service defined in table's datasource`);
-      return this._alert.showError(
-        $localize`:error message:Mass deletion is not available for this table`
-      );
-    } else if (this.dataSource.data.count === 0) {
-      return this._alert.showWarning(
-        $localize`:warning message:Table is empty`
-      );
-    }
-
-    this._dialog
-      .open(CertainityCheckComponent, {
-        data: { message: $localize`Are you sure you want to delete all rows?` },
-      })
-      .afterClosed()
-      .pipe(first())
-      .subscribe((shouldDelete) => {
-        if (shouldDelete) {
-          this.dataSource
-            .apiService!.deleteItems()
-            .pipe(first())
-            .subscribe({
-              next: () => {
-                this._alert.showSuccess(
-                  $localize`:success message:Rows deleted`
-                );
-                this.dataSource.refreshData();
-              },
-              error: (err) => {
-                console.error(err);
-                this._alert.showError(
-                  $localize`:error message:Failed to delete all rows`
-                );
-              },
-            });
-        }
-      });
-  }
-
+  /**
+   * Executes function defined in action button.
+   *
+   * @param button Table button.
+   * @param row Table row.
+   */
   handleButtonClick(button: TableButton<T>, row: T): void {
     if (button instanceof ActionButton) {
       button
@@ -258,17 +266,53 @@ export abstract class GenericTableComponent<T>
               this._alert.showSuccess(msg);
             }
           },
-          error: (msg) => {
-            this._alert.showError(msg);
+          error: (err) => {
+            this._alert.showError(err.message);
           },
         });
     }
   }
 
+  /**
+   * Opens help component for a given column.
+   *
+   * @param column Table column.
+   */
   openHelp(column: TableColumn<T>): void {
-    this._dialog.open(column.helpComponent as Type<Component>);
+    if (column.helpComponent) {
+      this._dialog.open(column.helpComponent as Type<Component>);
+    } else {
+      throw Error(
+        `Help component not defined for column: ${column.displayName}`
+      );
+    }
   }
 
+  /**
+   * Handles manual row deletion of a row from the datasource's data.
+   *
+   * @param row Table row.
+   */
+  private _handleRowDelete(row: T): void {
+    this.dataSource.deleteItem(row);
+  }
+
+  /**
+   * Observes all delete event emissions from api buttons and manually deletes deleted rows from data.
+   */
+  private _observeDeletions(): void {
+    const deleteSubjects = this.dataSource.buttons
+      .filter((button) => button instanceof ApiActionButton)
+      .map((button) => (button as ApiActionButton<T>).deleted$);
+
+    merge(...deleteSubjects)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((row) => this._handleRowDelete(row));
+  }
+
+  /**
+   * Renders filter component inside the table.
+   */
   private _renderFilterComponent(): void {
     if (this.filterHost && this.dataSource.filterComponent) {
       this.filterHost.viewContainerRef.clear();
@@ -278,6 +322,12 @@ export abstract class GenericTableComponent<T>
     }
   }
 
+  /**
+   * Creates an array of displayed columns. Concatenates columns
+   * defined in datasource with other columns based on table configuration.
+   *
+   * @returns Array of displayed columns.
+   */
   private _buildDisplayedColumnsArray(): string[] {
     const displayedColumns = [...this.dataSource.getColumnNames()];
 
@@ -292,6 +342,9 @@ export abstract class GenericTableComponent<T>
     return displayedColumns;
   }
 
+  /**
+   * Clears row selection after data loads.
+   */
   private _observeLoading(): void {
     this.dataSource.loading$
       .pipe(

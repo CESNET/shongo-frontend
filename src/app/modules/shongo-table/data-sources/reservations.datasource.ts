@@ -1,16 +1,22 @@
 import { StaticDataSource } from './static-datasource';
-import {
-  ResourceReservation,
-  ResourceReservationTableData,
-} from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
+import { ResourceReservation } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { SortDirection } from '@angular/material/sort';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { RequestIdColumnComponent } from '../../resource-management/components/request-id-column/request-id-column.component';
 import { ReservationOwnerColumnComponent } from '../../resource-management/components/reservation-owner-column/reservation-owner-column.component';
+
+export interface ResourceReservationTableData {
+  id: string;
+  requestId: string;
+  slotStart: string;
+  slotEnd: string;
+  licenseCount: number;
+  owner: string;
+}
 
 export class ReservationsDataSource extends StaticDataSource<
   ResourceReservationTableData,
@@ -25,7 +31,7 @@ export class ReservationsDataSource extends StaticDataSource<
         displayName: $localize`:table column:Identifier`,
       },
       {
-        name: 'licenceCount',
+        name: 'licenseCount',
         displayName: $localize`:table column:Licences`,
       },
       {
@@ -73,7 +79,7 @@ export class ReservationsDataSource extends StaticDataSource<
           requestId: item.requestId,
           slotStart: item.slot.start,
           slotEnd: item.slot.end,
-          licenceCount: item.licenceCount,
+          licenseCount: item.licenseCount,
         } as ResourceReservationTableData)
     );
 

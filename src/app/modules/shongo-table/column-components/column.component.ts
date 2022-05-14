@@ -6,6 +6,9 @@ import { ColumnData } from '../models/interfaces/column-data.interface';
 export const COL_DATA_PROVIDER = new InjectionToken<string>('column.value');
 export const SETTINGS_PROVIDER = new InjectionToken<string>('column.settings');
 
+/**
+ * Component which can be used as a shongo table column.
+ */
 @Component({
   template: '',
 })

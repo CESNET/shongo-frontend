@@ -18,6 +18,7 @@ import { VideoconferenceReservationFormComponent } from 'src/app/modules/reserva
 import { WebconferenceReservationFormComponent } from 'src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component';
 import { VirtualRoomReservationForm } from 'src/app/modules/reservation-forms/interfaces/virtual-room-reservation-form.interface';
 import { ComponentHostDirective } from 'src/app/shared/directives/component-host.directive';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -25,6 +26,10 @@ import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
 import { ReservationForm } from '../../../reservation-forms/interfaces/reservation-form.interface';
 
+/**
+ * Dialog which creates reservtion form based on reserved resource
+ * and handles the reservation process.
+ */
 @Component({
   selector: 'app-reservation-dialog',
   templateUrl: './reservation-dialog.component.html',
@@ -32,8 +37,15 @@ import { ReservationForm } from '../../../reservation-forms/interfaces/reservati
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationDialogComponent implements OnInit {
+  /**
+   * Component into which the reservation form gets rendered.
+   */
   @ViewChild(ComponentHostDirective, { static: true })
   formHost!: ComponentHostDirective;
+
+  /**
+   * Reservation form component.
+   */
   formComponent!: ReservationForm;
 
   readonly creating$ = new BehaviorSubject<boolean>(false);
@@ -54,26 +66,34 @@ export class ReservationDialogComponent implements OnInit {
     this.renderFormComponent();
   }
 
+  /**
+   * Creates reservation request.
+   */
   createReservationRequest(): void {
     this.creating$.next(true);
 
-    this._createReservationRequest().subscribe({
-      next: () => {
-        this.creating$.next(false);
-        this._alert.showSuccess(
-          $localize`:success message:Reservation request created`
-        );
-        this._dialogRef.close(true);
-      },
-      error: () => {
-        this.creating$.next(false);
-        this._alert.showError(
-          $localize`:error message:Failed to create reservation request`
-        );
-      },
-    });
+    this._createReservationRequest()
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.creating$.next(false);
+          this._alert.showSuccess(
+            $localize`:success message:Reservation request created`
+          );
+          this._dialogRef.close(true);
+        },
+        error: () => {
+          this.creating$.next(false);
+          this._alert.showError(
+            $localize`:error message:Failed to create reservation request`
+          );
+        },
+      });
   }
 
+  /**
+   * Renders a form component based on reserved resource into the host element.
+   */
   renderFormComponent(): void {
     let component: Type<ReservationForm>;
 
@@ -112,26 +132,56 @@ export class ReservationDialogComponent implements OnInit {
     }
   }
 
+  /**
+   * Creates reservation request body and posts it to the backend.
+   *
+   * @returns Observable of API response.
+   */
   private _createReservationRequest(): Observable<unknown> {
-    const request = this.formComponent.getFormValue();
+    const { timezone, ...rest } = this.formComponent.getFormValue();
     let reservationRequestBase;
 
     if (this._data.parentRequest) {
       reservationRequestBase = {
         roomReservationRequestId: this._data.parentRequest.id,
+        type: ReservationType.ROOM_CAPACITY,
       };
     } else {
-      reservationRequestBase = { resource: this._data.resource.id };
+      const type =
+        this._data.resource.type === ResourceType.PHYSICAL_RESOURCE
+          ? ReservationType.PHYSICAL_RESOURCE
+          : ReservationType.VIRTUAL_ROOM;
+      reservationRequestBase = { resource: this._data.resource.id, type };
     }
 
     const reservationRequest = {
       slot: {
-        start: moment(this._data.slot.start).unix() * 1000,
-        end: moment(this._data.slot.end).unix() * 1000,
+        start: this._changeTimeZone(
+          moment(this._data.slot.start),
+          timezone
+        ).toISOString(),
+        end: this._changeTimeZone(
+          moment(this._data.slot.end),
+          timezone
+        ).toISOString(),
       },
       ...reservationRequestBase,
-      ...request,
+      ...rest,
     };
-    return this._resReqService.postItem(reservationRequest).pipe(first());
+    return this._resReqService.postItem(reservationRequest);
+  }
+
+  /**
+   * Changes timezone of a given date, but keeps date the same.
+   *
+   * @param date Date.
+   * @param timezone Timezone.
+   * @returns Date with changed timezone.
+   */
+  private _changeTimeZone(
+    date: moment.Moment,
+    timezone: string
+  ): moment.Moment {
+    return moment.tz(date.format('YYYY-MM-DDTHH:mm:ss'), timezone);
   }
 }

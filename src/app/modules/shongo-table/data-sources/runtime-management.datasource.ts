@@ -12,11 +12,9 @@ import { SetVideoEnabledButton } from 'src/app/modules/reservation-request/class
 import { UserSnapshotDialogComponent } from 'src/app/modules/reservation-request/components/user-snapshot-dialog/user-snapshot-dialog.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { StringBool } from 'src/app/shared/models/types/string-bool.type';
-import { toTitleCase } from 'src/app/utils/toTitleCase';
+import { toTitleCase } from 'src/app/utils/to-title-case';
 import { CustomActionButton } from '../buttons/custom-action-button';
 import { DataTableDataSource } from './data-table-datasource';
-
-// MatTable automatically converts all data to type string, consequently we have to compare boolean types as strings.
 
 export interface RuntimeParticipantTableData {
   id: string;

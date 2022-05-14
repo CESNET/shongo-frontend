@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -9,7 +10,7 @@ import {
   emailErrorHandler,
   minLengthErrorHandler,
 } from 'src/app/utils/error-handlers';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 
 @Component({
   selector: 'app-report-page',
@@ -71,9 +72,16 @@ export class ReportPageComponent implements OnDestroy {
         },
         error: (err) => {
           console.error(err);
-          this._alert.showError(
-            $localize`:alert message|Alert message on fauled report submission:Failed to send report.`
-          );
+
+          if (err instanceof HttpErrorResponse && err.status === 503) {
+            this._alert.showError(
+              $localize`:alert message|Alert message on failed report submission:Mailing service unavailable`
+            );
+          } else {
+            this._alert.showError(
+              $localize`:alert message|Alert message on failed report submission:Failed to send report`
+            );
+          }
         },
       });
   }
@@ -82,8 +90,9 @@ export class ReportPageComponent implements OnDestroy {
     const email = this.form.get('email')!;
 
     if (isAuthenticated) {
-      email.setValue(this._auth.identityClaims?.email);
-      email.disable();
+      const userEmail = this._auth.identityClaims?.email;
+      email.setValue(userEmail);
+      userEmail && email.disable();
     } else {
       email.reset();
       email.enable();

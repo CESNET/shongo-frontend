@@ -5,8 +5,8 @@ import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { RequestModification } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
-import { toTitleCase } from 'src/app/utils/toTitleCase';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
+import { toTitleCase } from 'src/app/utils/to-title-case';
 import { CustomActionButton } from '../buttons/custom-action-button';
 import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
 import { StaticDataSource } from './static-datasource';

@@ -23,6 +23,9 @@ import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.conf
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResourceSelectionFormComponent {
+  /**
+   * Emits selected resource.
+   */
   @Output() resourceChange = new EventEmitter<Resource | null>();
 
   resourceOpts: Option[] = [];
@@ -38,6 +41,9 @@ export class ResourceSelectionFormComponent {
     this.resourceTypes = this._getResourceTypeOpts();
   }
 
+  /**
+   * Returns resources filtered based on selection filter.
+   */
   get filteredResourceOpts(): Option[] {
     const filter = this.resourceFilterCtrl.value;
 
@@ -47,11 +53,22 @@ export class ResourceSelectionFormComponent {
     return this.resourceOpts.filter((opt) => opt.displayName.includes(filter));
   }
 
+  /**
+   * Handles resource type change.
+   *
+   * @param typeOrTag Resource type or tag.
+   */
   handleResourceTypeChange(typeOrTag: string): void {
     this.emitSelectedResource(null);
     this.createResourceOpts(typeOrTag);
   }
 
+  /**
+   * Creates resource selection options based on
+   * resource type or tag.
+   *
+   * @param typeOrTag Resource type or tag.
+   */
   createResourceOpts(typeOrTag: string): void {
     const resources = this._getResources(typeOrTag);
 
@@ -74,10 +91,21 @@ export class ResourceSelectionFormComponent {
     }
   }
 
+  /**
+   * Emits selected resource.
+   *
+   * @param resource Resource or null.
+   */
   emitSelectedResource(resource: Resource | null): void {
     this.resourceChange.emit(resource);
   }
 
+  /**
+   * Gets resources from resource service filtered by type or tag.
+   *
+   * @param typeOrTag Resource type or tag.
+   * @returns Array of resources.
+   */
   private _getResources(typeOrTag: string): Resource[] {
     if (!this._resourceService.resources) {
       return [];
@@ -92,6 +120,11 @@ export class ResourceSelectionFormComponent {
     }
   }
 
+  /**
+   * Gets resource type options.
+   *
+   * @returns Array of options.
+   */
   private _getResourceTypeOpts(): Option[] {
     const physicalResourceTags =
       this._resourceService.getPhysicalResourceTags();

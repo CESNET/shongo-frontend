@@ -99,16 +99,18 @@
   <ng-template #data>
     <ng-container *ngIf="reservationRequest">
       <mat-divider></mat-divider>
-      <mat-tab-group [animationDuration]="0">
+      <mat-tab-group
+        [animationDuration]="0"
+        [(selectedIndex)]="tabIndex"
+        (selectedIndexChange)="onTabIndexChange($event)"
+      >
         <!-- Reservation -->
         <mat-tab label="Reservation" i18n-label="tab label">
-          <ng-template matTabContent>
-            <div class="tab-content">
-              <app-reservation-detail
-                [reservationRequest]="reservationRequest"
-              ></app-reservation-detail>
-            </div>
-          </ng-template>
+          <div class="tab-content">
+            <app-reservation-detail
+              [reservationRequest]="reservationRequest"
+            ></app-reservation-detail>
+          </div>
         </mat-tab>
 
         <!-- Capacity reservations -->
@@ -122,39 +124,29 @@
               reservationRequest.roomCapacityData?.periodicity?.type !== 'NONE')
           "
         >
-          <ng-template matTabContent>
-            <div class="tab-content">
-              <app-capacity-reservations-tab></app-capacity-reservations-tab>
-            </div>
-          </ng-template>
+          <div class="tab-content">
+            <app-capacity-reservations-tab></app-capacity-reservations-tab>
+          </div>
         </mat-tab>
 
         <!-- User roles -->
-        <mat-tab
-          label="User roles"
-          i18n-label="tab label"
-          *ngIf="reservationRequest.type !== ReservationType.ROOM_CAPACITY"
-        >
-          <ng-template matTabContent>
-            <div class="tab-content">
-              <app-user-roles-tab></app-user-roles-tab>
-            </div>
-          </ng-template>
+        <mat-tab label="User roles" i18n-label="tab label">
+          <div class="tab-content">
+            <app-user-roles-tab></app-user-roles-tab>
+          </div>
         </mat-tab>
 
         <ng-container
           *ngIf="
-            !reservationRequest.futureSlotCount &&
-            reservationRequest.type !== ReservationType.PHYSICAL_RESOURCE
+            reservationRequest.type !== ReservationType.PHYSICAL_RESOURCE &&
+            reservationRequest.type !== ReservationType.VIRTUAL_ROOM
           "
         >
           <!-- Participants -->
           <mat-tab label="Participants" i18n-label="tab label">
-            <ng-template matTabContent>
-              <div class="tab-content">
-                <app-participants-tab></app-participants-tab>
-              </div>
-            </ng-template>
+            <div class="tab-content">
+              <app-participants-tab></app-participants-tab>
+            </div>
           </mat-tab>
 
           <!-- Runtime management -->
@@ -172,28 +164,32 @@
                   RoomState.STARTED_AVAILABLE)
             "
           >
-            <ng-template matTabContent>
-              <div class="tab-content">
-                <app-runtime-management-tab></app-runtime-management-tab>
-              </div>
-            </ng-template>
-          </mat-tab>
-
-          <!-- Recordings -->
-          <mat-tab
-            label="Recordings"
-            i18n-label="tab label"
-            [disabled]="areRecordingsDisabled()"
-          >
-            <ng-template matTabContent>
-              <div class="tab-content">
-                <app-recordings-tab
-                  [reservationRequest]="reservationRequest"
-                ></app-recordings-tab>
-              </div>
-            </ng-template>
+            <div class="tab-content">
+              <app-runtime-management-tab></app-runtime-management-tab>
+            </div>
           </mat-tab>
         </ng-container>
+
+        <!-- Recordings -->
+        <mat-tab
+          label="Recordings"
+          i18n-label="tab label"
+          [disabled]="areRecordingsDisabled()"
+          *ngIf="
+            (reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
+              reservationRequest.virtualRoomData?.roomHasRecordings === true) ||
+            (reservationRequest.type === ReservationType.ROOM_CAPACITY &&
+              reservationRequest.futureSlotCount &&
+              reservationRequest.roomCapacityData?.capacityHasRecordings) ||
+            !reservationRequest.futureSlotCount
+          "
+        >
+          <div class="tab-content">
+            <app-recordings-tab
+              [reservationRequest]="reservationRequest"
+            ></app-recordings-tab>
+          </div>
+        </mat-tab>
       </mat-tab-group>
     </ng-container>
   </ng-template>

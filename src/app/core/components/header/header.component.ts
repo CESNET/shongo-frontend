@@ -15,6 +15,9 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 import { SettingsService } from '../../http/settings/settings.service';
 import { locales, menuItems } from './header-items';
 
+/**
+ * App header.
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -46,6 +49,11 @@ export class HeaderComponent implements OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Returns users full name or falls back to 'Unknown user'.
+   *
+   * @returns User's full name.
+   */
   getUsername(): string {
     return (
       this.auth.identityClaims?.name ??
@@ -53,10 +61,19 @@ export class HeaderComponent implements OnDestroy {
     );
   }
 
+  /**
+   * Opens navigation drop down menu (on mobile).
+   */
   toggleDropdown(): void {
     this.isDropdownClosed = !this.isDropdownClosed;
   }
 
+  /**
+   * Returns observable which says if user is authorized to view given menu item.
+   *
+   * @param item Menu item.
+   * @returns Observable of authorization state.
+   */
   getAuthGuard(item: MenuItem): Observable<boolean> {
     switch (item.itemAuth) {
       case ItemAuthorization.LOGGED_IN:

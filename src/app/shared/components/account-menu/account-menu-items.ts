@@ -1,6 +1,9 @@
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';
 import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
 
+/**
+ * Items displayed in account menu.
+ */
 export const accountMenuItems: MenuItem[] = [
   {
     label: $localize`:account menu link|Sublink in account:Settings`,

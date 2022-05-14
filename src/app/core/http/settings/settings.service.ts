@@ -19,11 +19,21 @@ import { ApiService } from '../api.service';
 
 const SETTINGS_LOCALSTORAGE_KEY = 'userSettings';
 
+/**
+ * Service for managing user settings.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
+  /**
+   * Observable of current user settings.
+   */
   userSettings$: Observable<UserSettings | null>;
+
+  /**
+   * Implies if user settings are being loaded.
+   */
   userSettingsLoading$: Observable<boolean>;
 
   private _userSettings$ = new BehaviorSubject<UserSettings | null>(null);
@@ -43,10 +53,16 @@ export class SettingsService {
     this._observeSettings();
   }
 
+  /**
+   * Returns current user settings.
+   */
   get userSettings(): UserSettings | null {
     return this._userSettings$.value;
   }
 
+  /**
+   * Checks if current user has administrator permission.
+   */
   get isAdmin(): boolean {
     return (
       this.userSettings?.permissions?.includes(Permission.ADMINISTRATOR) ??
@@ -54,6 +70,9 @@ export class SettingsService {
     );
   }
 
+  /**
+   * Checks if current user has reservation permission.
+   */
   get canReserve(): boolean {
     return (
       this.userSettings?.permissions?.includes(Permission.RESERVATION) ?? false
@@ -73,6 +92,9 @@ export class SettingsService {
     );
   }
 
+  /**
+   * Gets offset of used timezone.
+   */
   get timeZoneOffset(): string | undefined {
     const timezone = this.timeZone;
 
@@ -82,10 +104,18 @@ export class SettingsService {
     return undefined;
   }
 
+  /**
+   * Clears user settings.
+   */
   clearSettings(): void {
     this._userSettings$.next(null);
   }
 
+  /**
+   * Makes a request to update user settings.
+   *
+   * @param settings User settings.
+   */
   updateSettings(settings: UserSettings): void {
     this._userSettingsLoading$.next(true);
     const url = ApiService.buildEndpointURL(Endpoint.SETTINGS, 'v1');
@@ -106,6 +136,9 @@ export class SettingsService {
       });
   }
 
+  /**
+   * Loads user settings from local storage.
+   */
   private _loadSettingsFromStorage(): void {
     const settings = localStorage.getItem(SETTINGS_LOCALSTORAGE_KEY);
 
@@ -132,6 +165,9 @@ export class SettingsService {
     );
   }
 
+  /**
+   * Observes user authentication state, clears settings if user logs out, fetches settings after user authenticates.
+   */
   private _observeIsAuthenticated(): void {
     this._auth.isAuthenticated$
       .pipe(
@@ -150,12 +186,20 @@ export class SettingsService {
       });
   }
 
+  /**
+   * Observes changes to user settings and makes a call to handle these changes.
+   */
   private _observeSettings(): void {
     this.userSettings$
       .pipe(filter((settings) => settings !== null))
       .subscribe((settings) => this._handleSettingsChange(settings!));
   }
 
+  /**
+   * Stores new settings and updates timezone/locale data in the app.
+   *
+   * @param settings User settings.
+   */
   private _handleSettingsChange(settings: UserSettings | null): void {
     if (settings) {
       localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
@@ -174,10 +218,20 @@ export class SettingsService {
     }
   }
 
+  /**
+   * Changes global timezone for moment library.
+   *
+   * @param timezone Timezone (e.g. Europe/Bratislava).
+   */
   private _handleTimezoneChange(timezone: string): void {
     moment.tz.setDefault(timezone);
   }
 
+  /**
+   * Changes locale for moment library.
+   *
+   * @param locale Locale.
+   */
   private _handleLocaleChange(locale: 'cs' | 'en'): void {
     moment.locale(locale);
   }

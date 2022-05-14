@@ -12,7 +12,10 @@
   </h2>
 
   <ng-container
-    *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
+    *ngIf="
+      reservationRequest.type === ReservationType.ROOM_CAPACITY &&
+      !reservationRequest.futureSlotCount
+    "
     [ngTemplateOutlet]="recordingButton"
   ></ng-container>
 </header>
@@ -61,9 +64,7 @@
     mat-button
     aria-labelledby="start-recording-btn-name"
     (click)="setRecording(true)"
-    [disabled]="
-      reservationRequest.state !== ReservationRequestState.ALLOCATED_STARTED
-    "
+    [disabled]="reservationRequest.executableState !== ExecutableState.STARTED"
   >
     <mat-icon color="primary">videocam</mat-icon>&nbsp;<span
       i18n="button name"

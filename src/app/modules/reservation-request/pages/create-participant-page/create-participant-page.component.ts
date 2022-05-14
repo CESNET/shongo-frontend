@@ -13,7 +13,7 @@ import {
   UserParticipantPostBody,
 } from 'src/app/shared/models/rest-api/request-participant.interface';
 import { User } from 'src/app/shared/models/rest-api/user.interface';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 
 @Component({
   selector: 'app-create-participant-page',
@@ -22,7 +22,7 @@ import { getFormError } from 'src/app/utils/getFormError';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateParticipantPageComponent {
-  form = new FormGroup({
+  readonly form = new FormGroup({
     participantType: new FormControl(ParticipantType.USER, [
       Validators.required,
     ]),
@@ -37,15 +37,16 @@ export class CreateParticipantPageComponent {
     }),
   });
 
+  readonly ParticipantType = ParticipantType;
+  readonly participantRoles = Object.values(ParticipantRole);
+  readonly AlertType = AlertType;
+
+  readonly searchingUsers$ = new BehaviorSubject<boolean>(false);
+  readonly posting$ = new BehaviorSubject<boolean>(false);
+
+  readonly getFormError = getFormError;
+
   filteredUsers: User[] = [];
-  ParticipantType = ParticipantType;
-  participantRoles = Object.values(ParticipantRole);
-  searchingUsers$ = new BehaviorSubject<boolean>(false);
-  posting$ = new BehaviorSubject<boolean>(false);
-
-  AlertType = AlertType;
-
-  getFormError = getFormError;
 
   constructor(
     private _resReqService: ReservationRequestService,
@@ -54,6 +55,11 @@ export class CreateParticipantPageComponent {
     private _alert: AlertService
   ) {}
 
+  /**
+   * Returns form validity.
+   *
+   * @returns True if form is valid, else false.
+   */
   isValid(): boolean {
     const { participantType, userForm, anonymousForm } = this.form.controls;
 
@@ -65,6 +71,9 @@ export class CreateParticipantPageComponent {
     );
   }
 
+  /**
+   * Posts created participant.
+   */
   postParticipant(): void {
     const participantType = this.form.get('participantType')!.value;
     this.posting$.next(true);
@@ -98,24 +107,36 @@ export class CreateParticipantPageComponent {
       });
   }
 
+  /**
+   * Creates user participant body.
+   *
+   * @returns User participant body.
+   */
   private _createUserBody(): UserParticipantPostBody {
     const { userForm } = this.form.controls;
     const { userId, role } = userForm.value;
 
     return {
+      type: ParticipantType.USER,
       userId,
       role,
     };
   }
 
+  /**
+   * Creates guest participant body.
+   *
+   * @returns Guest participant body.
+   */
   private _createGuestBody(): GuestParticipantPostBody {
     const { anonymousForm } = this.form.controls;
     const { name, email } = anonymousForm.value;
 
     return {
+      type: ParticipantType.ANONYMOUS,
+      role: ParticipantRole.PARTICIPANT,
       name,
       email,
-      role: ParticipantRole.PARTICIPANT,
     };
   }
 }

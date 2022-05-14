@@ -80,6 +80,12 @@ $section-margin: 1.34375em + 0.25em;
       &-name {
         font-weight: 500;
       }
+
+      &-value {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+      }
     }
   }
 
@@ -91,6 +97,23 @@ $section-margin: 1.34375em + 0.25em;
 
   &__error-container {
     width: clamp(15ch, 20vw, 30ch);
+  }
+}
+
+.time-setting {
+  display: flex;
+  gap: 0.2em;
+
+  &__button {
+    background: var(--gray-800);
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+
+    &:hover {
+      background: var(--gray-700);
+      cursor: pointer;
+    }
   }
 }
 

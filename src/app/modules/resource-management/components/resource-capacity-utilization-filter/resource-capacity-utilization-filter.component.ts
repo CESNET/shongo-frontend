@@ -14,6 +14,7 @@ import {
   DataTableFilter,
   TableSettings,
 } from 'src/app/modules/shongo-table/filter/data-table-filter';
+import { TimeUnit } from 'src/app/shared/models/enums/time-unit.enum';
 
 const DEFAULT_UNIT_DIST = 5;
 
@@ -27,18 +28,18 @@ export class ResourceCapacityUtilizationFilterComponent
   extends DataTableFilter
   implements OnInit, OnDestroy
 {
-  filterForm = new FormGroup({
-    unit: new FormControl('day'),
+  readonly filterForm = new FormGroup({
+    unit: new FormControl(TimeUnit.DAY),
     dateFrom: new FormControl(),
     dateTo: new FormControl(),
   });
-  useAbsoluteValues = new FormControl(false);
+  readonly useAbsoluteValues = new FormControl(false);
 
-  units: Option[] = [
-    { value: 'day', displayName: $localize`:unit option:Days` },
-    { value: 'week', displayName: $localize`:unit option:Weeks` },
-    { value: 'month', displayName: $localize`:unit option:Months` },
-    { value: 'year', displayName: $localize`:unit option:Years` },
+  readonly units: Option[] = [
+    { value: TimeUnit.DAY, displayName: $localize`:unit option:Days` },
+    { value: TimeUnit.WEEK, displayName: $localize`:unit option:Weeks` },
+    { value: TimeUnit.MONTH, displayName: $localize`:unit option:Months` },
+    { value: TimeUnit.YEAR, displayName: $localize`:unit option:Years` },
   ];
 
   private _destroy$ = new Subject<void>();
@@ -83,6 +84,11 @@ export class ResourceCapacityUtilizationFilterComponent
     this._destroy$.complete();
   }
 
+  /**
+   * Getts HTTP query params based on form state.
+   *
+   * @returns HTTP query parameters.
+   */
   getHttpQuery(): HttpParams {
     const { unit, dateFrom, dateTo } = this.filterForm.value as Record<
       string,
@@ -90,11 +96,16 @@ export class ResourceCapacityUtilizationFilterComponent
     >;
     const params = new HttpParams()
       .set('unit', unit)
-      .set('interval_from', moment(dateFrom).unix() * 1000)
-      .set('interval_to', moment(dateTo).unix() * 1000);
+      .set('interval_from', moment(dateFrom).toISOString())
+      .set('interval_to', moment(dateTo).toISOString());
     return params;
   }
 
+  /**
+   * Returns table settings record.
+   *
+   * @returns Table settings.
+   */
   getTableSettings(): TableSettings {
     const useAbsoluteValues = this.useAbsoluteValues.value;
     return { useAbsoluteValues };

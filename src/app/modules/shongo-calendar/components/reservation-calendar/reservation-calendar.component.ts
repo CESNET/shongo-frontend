@@ -31,6 +31,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
 import { AlertService } from 'src/app/core/services/alert.service';
+import { ResourceService } from 'src/app/core/http/resource/resource.service';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
+import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -137,11 +140,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   private _view = CalendarView.Month;
   private _lastFetchedInterval?: Interval;
 
-  private _destroy$ = new Subject<void>();
-  private _loading$ = new BehaviorSubject<boolean>(true);
+  private readonly _destroy$ = new Subject<void>();
+  private readonly _loading$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _resReqService: ReservationRequestService,
+    private _resourceService: ResourceService,
     private _auth: AuthenticationService,
     private _settings: SettingsService,
     private _dialog: MatDialog,
@@ -178,8 +182,26 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     return undefined;
   }
 
+  set selectedSlot(slot: CalendarSlot | undefined) {
+    if (!slot) {
+      this._events = this._events.filter((evt) => evt !== this._createdEvent);
+    } else if (this._createdEvent) {
+      this._createdEvent.start = slot.start;
+      this._createdEvent.end = slot.end;
+    } else {
+      this._createdEvent = this._createSelectedSlotEvent(
+        this._auth.identityClaims!,
+        slot.start,
+        slot.end
+      );
+      this._events.push(this._createdEvent);
+    }
+
+    this.refresh$.next();
+  }
+
   ngOnInit(): void {
-    this.fetchReservations();
+    this._selectedResourceId && this.fetchReservations();
   }
 
   ngOnDestroy(): void {
@@ -187,11 +209,14 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Fetches reservations on view or date change.
+   *
+   * Checks if new displayed interval is a sub-interval of previously
+   * fetched interval and only re-fetches if not.
+   */
   handleViewOrDateChange(): void {
     const interval = this._getInterval(this.viewDate);
-
-    console.log('Fetched interval: ', this._lastFetchedInterval);
-    console.log('New interval: ', interval);
 
     if (
       !this._lastFetchedInterval ||
@@ -201,17 +226,31 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Fetches reservations based on currently displayed interval and selected resource.
+   */
   fetchReservations(): void {
     this._loading$.next(true);
 
     const interval = this._getInterval(this.viewDate);
 
     let filter = new HttpParams()
-      .set('interval_from', moment(interval.start).unix() * 1000)
-      .set('interval_to', moment(interval.end).unix() * 1000);
+      .set('interval_from', moment(interval.start).toISOString())
+      .set('interval_to', moment(interval.end).toISOString());
 
     if (this._selectedResourceId) {
       filter = filter.set('resource', this._selectedResourceId);
+
+      const resource = this._resourceService.findResourceById(
+        this._selectedResourceId
+      );
+      if (resource) {
+        const type =
+          resource.type === ResourceType.VIRTUAL_ROOM
+            ? ReservationType.ROOM_CAPACITY
+            : ReservationType.PHYSICAL_RESOURCE;
+        filter = filter.set('type', type);
+      }
     }
 
     this._resReqService
@@ -247,11 +286,19 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Refreshes data.
+   */
   refresh(): void {
     this._loading$.next(true);
     setTimeout(() => this.fetchReservations(), 200);
   }
 
+  /**
+   * Opens date on click.
+   *
+   * @param date Clicked date.
+   */
   openDate(date: Date): void {
     this._viewDate = date;
     this._view = CalendarView.Day;
@@ -259,9 +306,15 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this._cd.detectChanges();
   }
 
+  /**
+   * Starts event creation by dragging. Handles event collisions.
+   *
+   * @param segment Drag start segment.
+   * @param segmentElement Drag start segment element.
+   */
   startDragToCreate(segment: WeekViewHourSegment, segmentElement: HTMLElement) {
     const prevCreatedEvent = this._createdEvent;
-    this._createdEvent = this._createSelectionEvent(
+    this._createdEvent = this._createSelectedSlotEvent(
       this._auth.identityClaims!,
       segment.date
     );
@@ -310,6 +363,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Gets event's slot as formatted readable string.
+   *
+   * @param event Calendar event.
+   * @returns Formatted slot string.
+   */
   getSlotString(event: CalendarEvent): string {
     if (event.end) {
       return `${moment(event.start).format('LLL')} - ${moment(event.end).format(
@@ -319,13 +378,24 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     return moment(event.start).format('LLL');
   }
 
+  /**
+   * Validates event time change against event intersections.
+   *
+   * @param param0 Calendar event times changed event.
+   * @returns True if time change is valid, else false.
+   */
   validateEventTimesChanged = ({
     newStart,
     newEnd,
-  }: CalendarEventTimesChangedEvent) => {
+  }: CalendarEventTimesChangedEvent): boolean => {
     return this._hasNoIntersection(newStart, newEnd!);
   };
 
+  /**
+   * Changes event times on valid event time change event.
+   *
+   * @param eventTimesChangedEvent Calendar event times changed event.
+   */
   eventTimesChanged(
     eventTimesChangedEvent: CalendarEventTimesChangedEvent
   ): void {
@@ -338,6 +408,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Clears selected slot.
+   */
   clearSelectedSlot(): void {
     this._events = this._events.filter((event) => event !== this._createdEvent);
     this._createdEvent = undefined;
@@ -345,6 +418,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.refresh$.next();
   }
 
+  /**
+   * If clicked event is awaiting confirmation and logged in user has
+   * a permission to confirm this request, opens an event confirmation dialog.
+   *
+   * @param event
+   */
   handleEventClick(event: CalendarEvent): void {
     const { reservationRequest } = event.meta as CalendarEventMeta;
 
@@ -368,6 +447,13 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Checks if interval is a sub-interval of another interval.
+   *
+   * @param superInterval Super interval.
+   * @param subInterval Sub interval.
+   * @returns True if interval is a sub-interval of super interval, else false.
+   */
   private _isSubInterval(
     superInterval: Interval,
     subInterval: Interval
@@ -416,6 +502,13 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     return { start: intervalFrom, end: intervalTo };
   }
 
+  /**
+   * Checks if interval has no intersection with any calendar event.
+   *
+   * @param start Interval start.
+   * @param end Interval end.
+   * @returns True if interval has no intersection, else false.
+   */
   private _hasNoIntersection(start: Date, end: Date): boolean {
     return this._events.every(
       (event) =>
@@ -425,6 +518,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Creates calendar events from reservation requests.
+   *
+   * @param reservationRequests Reservation request.
+   * @returns Array of calendar events.
+   */
   private _createEvents(
     reservationRequests: ApiResponse<ReservationRequest>
   ): CalendarEvent[] {
@@ -438,6 +537,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Crates a calendar event from reservation request.
+   *
+   * @param reservationRequest Reservation request.
+   * @returns Calendar event.
+   */
   private _createEvent(reservationRequest: ReservationRequest): CalendarEvent {
     return {
       start: moment(reservationRequest.slot.start).toDate(),
@@ -451,20 +556,29 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     };
   }
 
-  private _createSelectionEvent(
+  /**
+   * Creates selected slot calendar event.
+   *
+   * @param owner Logged in user's identity claims.
+   * @param start Slot start.
+   * @param end Slot end.
+   * @returns Calendar event.
+   */
+  private _createSelectedSlotEvent(
     owner: IdentityClaims,
-    start: Date
+    start: Date,
+    end?: Date
   ): CalendarEvent {
     return {
       id: this._events.length,
       title: $localize`:event name|Name of calendar event that user just selected:Selected time slot`,
       start,
-      end: moment(start).add(30, 'minutes').toDate(),
+      end: end ?? moment(start).add(30, 'minutes').toDate(),
       color: COLORS.created,
       meta: {
         tmpEvent: true,
-        owner: owner.name,
-        ownerEmail: owner.email,
+        owner: owner?.name ?? $localize`:fallback text:Unknown`,
+        ownerEmail: owner?.email ?? $localize`:fallback text:Unknown`,
       },
       resizable: {
         beforeStart: true,
@@ -474,6 +588,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     };
   }
 
+  /**
+   * Handles event highlighting state change. Highlights events based on this state.
+   */
   private _onHighlightChange(): void {
     this._events = this._highlightEvents(
       this._events,
@@ -482,6 +599,13 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.refresh$.next();
   }
 
+  /**
+   * Highlights or unhighlights calendar events based on highlighting state.
+   *
+   * @param events Array of calendar events.
+   * @param highlightMine Whether user's events should be highlighted.
+   * @returns Calendar events.
+   */
   private _highlightEvents(
     events: CalendarEvent[],
     highlightMine: boolean

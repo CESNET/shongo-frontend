@@ -1,8 +1,8 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  OnInit,
   Input,
+  OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
@@ -15,7 +15,7 @@ import {
   VirtualRoomResource,
 } from 'src/app/shared/models/rest-api/resource.interface';
 import { VirtualRoomReservationRequest } from 'src/app/shared/models/rest-api/virtual-room-reservation-request.interfacet';
-import { getFormError } from 'src/app/utils/getFormError';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { ReservationForm } from '../../interfaces/reservation-form.interface';
 import {
@@ -97,6 +97,9 @@ export class VirtualRoomReservationFormComponent
     return this.form.get('teleconferenceFields') as FormGroup;
   }
 
+  /**
+   * Form validity.
+   */
   get valid(): boolean {
     return this.form.valid;
   }
@@ -107,6 +110,11 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Fills form with reservation request detail.
+   *
+   * @param param0 Reservation request detail.
+   */
   fill({
     description,
     virtualRoomData,
@@ -125,7 +133,8 @@ export class VirtualRoomReservationFormComponent
         resource = this._resourceService.findResourceById(roomResourceId);
 
         if (resource) {
-          this.form.get('technology')!.setValue(resource);
+          this.form.get('resource')!.setValue(roomResourceId);
+          this.onTechnologyChange(resource as VirtualRoomResource);
         }
       }
       if (roomName) {
@@ -150,18 +159,18 @@ export class VirtualRoomReservationFormComponent
         }
       } else if (resource.technology === Technology.FREEPBX) {
         if (authorizedData.adminPin) {
-          this.videoconferenceFieldsForm
+          this.teleconferenceFieldsForm
             .get('adminPin')!
             .setValue(authorizedData.adminPin);
         }
         if (authorizedData.userPin) {
-          this.videoconferenceFieldsForm
+          this.teleconferenceFieldsForm
             .get('userPin')!
             .setValue(authorizedData.userPin);
         }
       } else if (resource.technology === Technology.ADOBE_CONNECT) {
         if (authorizedData.userPin) {
-          this.videoconferenceFieldsForm
+          this.webconferenceFieldsForm
             .get('userPin')!
             .setValue(authorizedData.userPin);
         }
@@ -169,14 +178,25 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Returns form value.
+   *
+   * @returns Form value.
+   */
   getFormValue(): VirtualRoomReservationRequest {
     const {
-      resource,
+      resource: resourceId,
       videoconferenceFields,
       teleconferenceFields,
       webconferenceFields,
       ...rest
     } = this.form.value;
+
+    const resource = this._resourceService.findResourceById(resourceId);
+
+    if (!resource) {
+      throw new Error('Resource not found.');
+    }
 
     if (
       resource.technology === Technology.PEXIP ||
@@ -192,16 +212,28 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Returns technology of selected resource.
+   *
+   * @returns Technology or null.
+   */
   getSelectedTechnology(): Technology | null {
-    const selectedResource = this.form.get('technology')?.value;
+    const selectedResourceId = this.form.get('resource')?.value;
+    const selectedResource =
+      this._resourceService.findResourceById(selectedResourceId);
 
     if (!selectedResource) {
       return null;
     }
 
-    return selectedResource.technology;
+    return selectedResource.technology ?? null;
   }
 
+  /**
+   * Enables/disables sub-forms based on selected resource technology.
+   *
+   * @param selectedResource Selected resource.
+   */
   onTechnologyChange(selectedResource: VirtualRoomResource): void {
     switch (selectedResource.technology) {
       case Technology.PEXIP:
@@ -227,12 +259,17 @@ export class VirtualRoomReservationFormComponent
     }
   }
 
+  /**
+   * Creates technology selection options based on available virtual room resources.
+   *
+   * @returns Array of technology options.
+   */
   private _createTechnologyOpts(): Option[] {
     const resources = this._resourceService.getVirtualRoomResources();
 
     return resources
       .map((res) => ({
-        value: res,
+        value: res.id,
         displayName: virtualRoomResourceConfig.technologyNameMap.get(
           res.technology
         ),

@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interfa
 import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { StringBool } from 'src/app/shared/models/types/string-bool.type';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { datePipeFunc } from 'src/app/utils/datePipeFunc';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { ReservationRequestFilterComponent } from '../../home/components/reservation-request-filter/reservation-request-filter.component';
 import { DeleteButton } from '../buttons/delete-button';
@@ -23,11 +23,11 @@ import { DataTableDataSource } from './data-table-datasource';
 export interface YourRoomsTableData {
   id: string;
   ownerName: string;
-  createdAt: number;
+  createdAt: string;
   roomName: string;
   technology: string;
-  slotStart: number;
-  slotEnd: number;
+  slotStart: string;
+  slotEnd: string;
   state: string;
   isWritable: StringBool;
   isProvidable: StringBool;
@@ -103,7 +103,9 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
         this.apiService,
         this._dialog,
         '/:id',
-        (row: YourRoomsTableData) => String(row.isWritable) === 'false'
+        (row: YourRoomsTableData) => String(row.isWritable) === 'false',
+        undefined,
+        this._deleteErrorHandler
       ),
     ];
   }
@@ -157,5 +159,13 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
           return { count, items: mappedItems };
         })
       );
+  }
+
+  private _deleteErrorHandler(err: Error): void {
+    if (err instanceof HttpErrorResponse && err.status === 403) {
+      throw Error(
+        $localize`:error message:Can't delete a virtual room with reserved capacity`
+      );
+    }
   }
 }

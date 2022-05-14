@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { SettingsService } from '../http/settings/settings.service';
 
+/**
+ * Checks for ADMINISTRATION user permission.
+ */
 @Injectable({
   providedIn: 'root',
 })

@@ -28,16 +28,6 @@
           >
             <mat-icon>delete</mat-icon>
           </button>
-          <button
-            mat-icon-button
-            matTooltip="Delete all"
-            aria-label="Delete all"
-            i18n-matTooltip="button name"
-            i18n-aria-label="button name"
-            (click)="deleteAllRows()"
-          >
-            <mat-icon>delete_forever</mat-icon>
-          </button>
         </ng-container>
       </div>
     </section>
@@ -162,6 +152,9 @@
                   "
                   [matTooltip]="button.name"
                   [attr.aria-label]="button.name"
+                  [class.disabled-link]="
+                    button.isDisabledFunc ? button.isDisabledFunc(row) : false
+                  "
                   [disabled]="
                     button.isDisabledFunc ? button.isDisabledFunc(row) : false
                   "

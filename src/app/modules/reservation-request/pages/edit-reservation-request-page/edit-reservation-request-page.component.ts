@@ -18,13 +18,9 @@ import { ReservationType } from 'src/app/shared/models/enums/reservation-type.en
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Slot } from 'src/app/shared/models/rest-api/slot.interface';
-import { ReservationRequestPostBody } from 'src/app/shared/models/types/reservation-request-post-body.type';
-import { getFormError } from 'src/app/utils/getFormError';
+import { EditReservationRequestBody } from 'src/app/shared/models/types/edit-reservation-request-body.type';
+import { getFormError } from 'src/app/utils/get-form-error';
 import { RequestNotEditableError } from './errors/request-not-editable.error';
-
-type EditRequestBody = Omit<ReservationRequestPostBody, 'timezone'> & {
-  slot: Slot;
-};
 
 @Component({
   selector: 'app-edit-reservation-request-page',
@@ -41,16 +37,16 @@ export class EditReservationRequestPageComponent implements OnInit {
     endDate: new FormControl(null, [Validators.required]),
     endTime: new FormControl(null, [Validators.required]),
   });
-  readonly getFormError = getFormError;
   readonly editing$ = new BehaviorSubject(false);
-
-  reservationRequest?: ReservationRequestDetail;
-  error?: Error;
-
   readonly loading$ = new BehaviorSubject(false);
   readonly ReservationType = ReservationType;
   readonly Technology = Technology;
   readonly AlertType = AlertType;
+
+  readonly getFormError = getFormError;
+
+  reservationRequest?: ReservationRequestDetail;
+  error?: Error;
 
   constructor(
     private _resReqService: ReservationRequestService,
@@ -63,19 +59,27 @@ export class EditReservationRequestPageComponent implements OnInit {
     this._fetchReservationRequest(this._route.snapshot.params.id);
   }
 
+  /**
+   * Returns form validity.
+   *
+   * @returns True if form is valid.
+   */
   isValid(): boolean {
     return this.reservationForm
       ? this.slotForm.valid && this.reservationForm.valid
       : false;
   }
 
+  /**
+   * Creates reservation request edit request.
+   */
   editRequest(): void {
     const request = this._createEditRequestBody();
 
     this.editing$.next(true);
 
     this._resReqService
-      .putItem(this.reservationRequest!.id, request)
+      .edit(this.reservationRequest!.id, request)
       .pipe(
         first(),
         finalize(() => this.editing$.next(false))
@@ -96,36 +100,52 @@ export class EditReservationRequestPageComponent implements OnInit {
       });
   }
 
-  private _createEditRequestBody(): EditRequestBody {
+  /**
+   * Creates reservation request edit body.
+   *
+   * @returns Reservation request edit body.
+   */
+  private _createEditRequestBody(): EditReservationRequestBody {
     const { startDate, startTime, endDate, endTime } = this.slotForm.value;
     const { timezone, ...reservationFormValue } =
       this.reservationForm!.getFormValue();
 
-    const start = this._getSlotPartTimestamp(startDate, startTime, timezone);
-    const end = this._getSlotPartTimestamp(endDate, endTime, timezone);
+    const start = this._getSlotPart(startDate, startTime, timezone);
+    const end = this._getSlotPart(endDate, endTime, timezone);
     const slot = { start, end } as Slot;
 
     return { slot, ...reservationFormValue };
   }
 
-  private _getSlotPartTimestamp(
+  /**
+   * Gets slot part as a complete ISO string (date + time).
+   *
+   * @param partDate Date only part of Date.
+   * @param partTime Time only part of Date.
+   * @param timezone Timezone.
+   * @returns Date ISO string.
+   */
+  private _getSlotPart(
     partDate: string,
     partTime: string,
     timezone?: string
-  ): number {
+  ): string {
     const [hours, minutes] = partTime.split(':') as [string, string];
-    let momentDate = moment(partDate).set({
-      hours: Number(hours),
-      minutes: Number(minutes),
-    });
+    const momentDate = moment(partDate)
+      .set({
+        hours: Number(hours),
+        minutes: Number(minutes),
+      })
+      .tz(timezone ?? moment.tz.guess());
 
-    if (timezone) {
-      momentDate = momentDate.tz(timezone);
-    }
-
-    return momentDate.unix() * 1000;
+    return momentDate.toISOString();
   }
 
+  /**
+   * Fetches reservation request by ID.
+   *
+   * @param requestId Reservation request ID.
+   */
   private _fetchReservationRequest(requestId: string): void {
     this.loading$.next(true);
 
@@ -155,6 +175,11 @@ export class EditReservationRequestPageComponent implements OnInit {
       });
   }
 
+  /**
+   * Fills slot form with slot data.
+   *
+   * @param slot Slot.
+   */
   private _fillSlotForm(slot: Slot): void {
     this.slotForm.patchValue({
       startDate: moment(slot.start).toDate(),

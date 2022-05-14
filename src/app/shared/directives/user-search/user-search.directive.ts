@@ -13,6 +13,9 @@ export interface UserSearchItem {
   user: string;
 }
 
+/**
+ * Sets up user search on NgxMatSelectSearch element.
+ */
 @Directive({
   selector: '[appUserSearch]',
   exportAs: 'userSearch',
@@ -45,6 +48,10 @@ export class UserSearchDirective implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  /**
+   * Observes filter control value changes and fetches users based on value.
+   * Waits a defined debounce time after each input to optimize loading.
+   */
   private _createUserFilterSub(): void {
     this._filterCtrl.valueChanges
       .pipe(takeUntil(this._destroy$), debounceTime(SEARCH_DEBOUNCE_TIME))
@@ -55,6 +62,11 @@ export class UserSearchDirective implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Fetches users from the backend based on filter value and emits them from the output stream.
+   *
+   * @param filter Filter value.
+   */
   private _fetchUsers(filter: string): void {
     const httpParams = new HttpParams().set('filter', filter);
     this._host.searching = true;

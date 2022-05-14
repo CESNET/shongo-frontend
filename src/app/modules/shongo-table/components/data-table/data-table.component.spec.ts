@@ -3,7 +3,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { DataTableComponent } from './data-table.component';
-import { DataTableDatasourceStub } from 'src/app/test/stubs/data-table-datasource.stub';
+import {
+  DataTableDatasourceStub,
+  DataTableDataStub,
+} from 'src/app/test/stubs/data-table-datasource.stub';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDividerModule } from '@angular/material/divider';
@@ -14,8 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ShongoTableModule } from '../../shongo-table.module';
 
 describe('DataTableComponent', () => {
-  let component: DataTableComponent<unknown>;
-  let fixture: ComponentFixture<DataTableComponent<unknown>>;
+  let component: DataTableComponent<DataTableDataStub>;
+  let fixture: ComponentFixture<DataTableComponent<DataTableDataStub>>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -37,7 +40,9 @@ describe('DataTableComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataTableComponent);
+    fixture = TestBed.createComponent(DataTableComponent) as ComponentFixture<
+      DataTableComponent<DataTableDataStub>
+    >;
     component = fixture.componentInstance;
     component.dataSource = new DataTableDatasourceStub();
     fixture.detectChanges();

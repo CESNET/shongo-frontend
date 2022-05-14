@@ -1,6 +1,6 @@
 export interface Slot {
-  start: number;
-  end: number;
+  start: string;
+  end: string;
 }
 
 export interface CalendarSlot {

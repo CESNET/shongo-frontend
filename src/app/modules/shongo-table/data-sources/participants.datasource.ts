@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ParticipantRole } from 'src/app/shared/models/enums/participant-role.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { toTitleCase } from 'src/app/utils/toTitleCase';
+import { toTitleCase } from 'src/app/utils/to-title-case';
 import { DeleteButton } from '../buttons/delete-button';
 import { DataTableDataSource } from './data-table-datasource';
 
@@ -37,7 +37,7 @@ export class ParticipantsDataSource extends DataTableDataSource<ParticipantsTabl
       new DeleteButton(
         this._resReqService,
         this._dialog,
-        `/${requestId}/participant/:id`
+        `/${requestId}/participants/:id`
       ),
     ];
   }

@@ -1,5 +1,6 @@
 <div class="filter">
   <form [formGroup]="filterForm" class="filter__form">
+    <!-- Time unit field -->
     <mat-form-field appearance="outline" class="filter__field">
       <mat-label i18n="field label">Time unit</mat-label>
       <mat-select formControlName="unit">
@@ -9,6 +10,7 @@
       </mat-select>
     </mat-form-field>
 
+    <!-- Interval from field -->
     <mat-form-field appearance="outline" class="filter__field">
       <mat-label i18n="field label">From</mat-label>
       <input matInput [matDatepicker]="fromPicker" formControlName="dateFrom" />
@@ -19,6 +21,7 @@
       <mat-datepicker #fromPicker></mat-datepicker>
     </mat-form-field>
 
+    <!-- Interval to field -->
     <mat-form-field appearance="outline" class="filter__field">
       <mat-label i18n="field label">To</mat-label>
       <input matInput [matDatepicker]="toPicker" formControlName="dateTo" />
@@ -26,6 +29,7 @@
       <mat-datepicker #toPicker></mat-datepicker>
     </mat-form-field>
 
+    <!-- Show absolute values toggle -->
     <mat-slide-toggle
       color="primary"
       class="filter__slide-toggle"

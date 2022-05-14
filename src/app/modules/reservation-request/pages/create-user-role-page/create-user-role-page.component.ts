@@ -8,7 +8,8 @@ import { AlertService } from 'src/app/core/services/alert.service';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { IdentityType } from 'src/app/shared/models/enums/identity-type.enum';
 import { RoleType } from 'src/app/shared/models/enums/role-type.enum';
-import { getFormError } from 'src/app/utils/getFormError';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
+import { getFormError } from 'src/app/utils/get-form-error';
 
 @Component({
   selector: 'app-create-user-role-page',
@@ -19,8 +20,13 @@ import { getFormError } from 'src/app/utils/getFormError';
 export class CreateUserRolePageComponent implements OnInit {
   form?: FormGroup;
   IdentityType = IdentityType;
-  roleTypes = Object.values(RoleType);
   posting$ = new BehaviorSubject(false);
+
+  roleTypes: Option[] = [
+    { value: RoleType.OWNER, displayName: $localize`:role type:Owner` },
+    { value: RoleType.USER, displayName: $localize`:role type:User` },
+    { value: RoleType.READER, displayName: $localize`:role type:Reader` },
+  ];
 
   AlertType = AlertType;
 
@@ -39,10 +45,18 @@ export class CreateUserRolePageComponent implements OnInit {
     });
   }
 
+  /**
+   * Returns form validity.
+   *
+   * @returns True if form is valid, else false.
+   */
   isValid(): boolean {
     return this.form ? this.form?.valid : false;
   }
 
+  /**
+   * Posts created user role.
+   */
   postUserRole(): void {
     this.posting$.next(true);
 
@@ -69,6 +83,11 @@ export class CreateUserRolePageComponent implements OnInit {
       });
   }
 
+  /**
+   * Creates role body.
+   *
+   * @returns Role body.
+   */
   private _createRoleBody(): any {
     const { identityType, identityId, role } = this.form?.value;
 
@@ -79,6 +98,12 @@ export class CreateUserRolePageComponent implements OnInit {
     };
   }
 
+  /**
+   * Creates user role form.
+   *
+   * @param requestId Reservation request ID.
+   * @returns Form group.
+   */
   private _createForm(requestId: string): FormGroup {
     return new FormGroup({
       reservationRequest: new FormControl(
