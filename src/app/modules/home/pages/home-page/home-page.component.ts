@@ -56,15 +56,17 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Try reading tab index from fragment and set it in mat tab group.
-    this._route.fragment
+    // Try reading tab index from query string and set it in mat tab group.
+    this._route.queryParamMap
       .pipe(takeUntil(this._destroy$))
-      .subscribe((fragment) => {
-        if (fragment) {
-          const tabIndex = Number(fragment);
+      .subscribe((params) => {
+        const tabIndex = params.get('tabIndex');
 
-          if (tabIndex !== NaN) {
-            this.tabIndex = tabIndex;
+        if (tabIndex) {
+          const tabIndexNum = Number(tabIndex);
+
+          if (tabIndexNum !== NaN) {
+            this.tabIndex = tabIndexNum;
           }
         }
       });
@@ -76,11 +78,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sets tab index into the route's fragment.
+   * Sets tab index into the route's query string.
    *
    * @param index Index of selected tab.
    */
   onTabIndexChange(index: number): void {
-    this._router.navigate([], { fragment: String(index) });
+    this._router.navigate([], { queryParams: { tabIndex: String(index) } });
   }
 }
