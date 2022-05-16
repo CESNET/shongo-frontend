@@ -8,7 +8,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { finalize, first, takeUntil } from 'rxjs/operators';
@@ -31,7 +30,6 @@ import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reserva
 export class ReservationRequestDetailPageComponent
   implements OnInit, OnDestroy
 {
-  @ViewChild(MatTabGroup) tabGroup?: MatTabGroup;
   @Input() reservationRequest?: ReservationRequestDetail;
 
   readonly loading$ = new BehaviorSubject(true);
@@ -57,15 +55,17 @@ export class ReservationRequestDetailPageComponent
   }
 
   ngOnInit(): void {
-    // Try reading tab index from fragment and set it in mat tab group.
-    this._route.fragment
+    // Try reading tab index from query string and set it in mat tab group.
+    this._route.queryParamMap
       .pipe(takeUntil(this._destroy$))
-      .subscribe((fragment) => {
-        if (fragment) {
-          const tabIndex = Number(fragment);
+      .subscribe((params) => {
+        const tabIndex = params.get('tabIndex');
 
-          if (tabIndex !== NaN) {
-            this.tabIndex = tabIndex;
+        if (tabIndex) {
+          const tabIndexNum = Number(tabIndex);
+
+          if (tabIndexNum !== NaN) {
+            this.tabIndex = tabIndexNum;
           }
         }
       });
@@ -77,12 +77,12 @@ export class ReservationRequestDetailPageComponent
   }
 
   /**
-   * Sets tab index into the route's fragment.
+   * Sets tab index into the route's query string.
    *
    * @param index Index of selected tab.
    */
   onTabIndexChange(index: number): void {
-    this._router.navigate([], { fragment: String(index) });
+    this._router.navigate([], { queryParams: { tabIndex: String(index) } });
   }
 
   /**
@@ -168,9 +168,7 @@ export class ReservationRequestDetailPageComponent
         finalize(() => this.loading$.next(false))
       )
       .subscribe((req) => {
-        if (this.tabGroup) {
-          this.tabGroup.selectedIndex = 0;
-        }
+        this.tabIndex = 0;
         this.reservationRequest = req;
       });
   }
