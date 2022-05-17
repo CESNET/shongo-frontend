@@ -31,7 +31,9 @@ export abstract class ApiService {
    * @returns Endpoint URL.
    */
   static buildEndpointURL(endpoint: string, version: string) {
-    return `http://${environment.shongoRESTApiHost}:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
+    return `http${environment.useHttps ? 's' : ''}://${
+      environment.shongoRESTApiHost
+    }:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
   }
 
   /**
