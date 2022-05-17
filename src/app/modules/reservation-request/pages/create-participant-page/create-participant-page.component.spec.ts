@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { of } from 'rxjs';

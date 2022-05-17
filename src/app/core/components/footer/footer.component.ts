@@ -12,6 +12,4 @@ import * as moment from 'moment';
 })
 export class FooterComponent {
   currentYear = moment().year();
-
-  constructor() {}
 }

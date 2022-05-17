@@ -53,7 +53,7 @@ export abstract class GenericTableComponent<T>
   /**
    * Table description text.
    */
-  @Input() description: string = '';
+  @Input() description = '';
 
   /**
    * Whether mass delete buttons should be displayed in table header.

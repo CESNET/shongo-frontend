@@ -17,6 +17,7 @@ describe('UserSnapshotDialogComponent', () => {
       declarations: [UserSnapshotDialogComponent],
       imports: [MatDialogModule, MatButtonModule],
       providers: [
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         { provide: MatDialog, useValue: { close: () => {} } },
         {
           provide: MAT_DIALOG_DATA,

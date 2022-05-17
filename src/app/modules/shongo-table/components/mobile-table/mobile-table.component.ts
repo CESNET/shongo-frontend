@@ -80,6 +80,7 @@ export class MobileTableComponent<T>
    * @returns Row data.
    */
   getRowData(item: T, rowName: string): string | undefined {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rowData = (item as any)[rowName];
     return rowData ? String(rowData) : undefined;
   }

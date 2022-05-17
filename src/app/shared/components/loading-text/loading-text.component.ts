@@ -8,6 +8,4 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 })
 export class LoadingTextComponent {
   @Input() message: string = $localize`:loading text:Loading...`;
-
-  constructor() {}
 }

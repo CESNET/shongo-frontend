@@ -1,9 +1,9 @@
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export class CertainityDialogStub {
   trueAfterClosed = true;
 
-  open(): { afterClosed: any } {
+  open(): { afterClosed: () => Observable<boolean> } {
     return {
       afterClosed: () => of(this.trueAfterClosed),
     };

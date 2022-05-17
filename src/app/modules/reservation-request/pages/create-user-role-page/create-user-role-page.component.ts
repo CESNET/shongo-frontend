@@ -9,6 +9,7 @@ import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { IdentityType } from 'src/app/shared/models/enums/identity-type.enum';
 import { RoleType } from 'src/app/shared/models/enums/role-type.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
+import { RoleBody } from 'src/app/shared/models/rest-api/request-participant.interface';
 import { getFormError } from 'src/app/utils/get-form-error';
 
 @Component({
@@ -88,7 +89,7 @@ export class CreateUserRolePageComponent implements OnInit {
    *
    * @returns Role body.
    */
-  private _createRoleBody(): any {
+  private _createRoleBody(): RoleBody {
     const { identityType, identityId, role } = this.form?.value;
 
     return {

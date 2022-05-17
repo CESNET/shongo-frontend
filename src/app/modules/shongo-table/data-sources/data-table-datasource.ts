@@ -101,12 +101,14 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
    * @returns Transformed row.
    */
   pipeRow(row: T): T {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pipedRow: T & any = Object.assign({}, row);
 
     Object.keys(row).forEach((key: string) => {
       const pipeFunc = this.displayedColumns.find(
         (column) => column.name === key
       )?.pipeFunc;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       pipedRow[key] = this.pipeData((row as any)[key], pipeFunc);
     });
 

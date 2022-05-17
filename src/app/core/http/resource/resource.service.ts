@@ -50,7 +50,7 @@ interface ResourcesStore {
 })
 export class ResourceService extends ApiService {
   resources?: Resource[];
-  error: boolean = false;
+  error = false;
 
   readonly loading$: Observable<boolean>;
   private _loading$ = new BehaviorSubject<boolean>(false);

@@ -74,6 +74,7 @@ export abstract class TableButton<T> {
     if (segment.startsWith(':')) {
       segment = segment.substring(1);
       const pathSegments = segment.split('.');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return pathSegments.reduce((acc: any, cur) => acc[cur], row);
     }
     return segment;

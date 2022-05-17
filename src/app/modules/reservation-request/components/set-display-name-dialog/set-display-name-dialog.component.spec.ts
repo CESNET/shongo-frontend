@@ -28,6 +28,7 @@ describe('SetDisplayNameDialogComponent', () => {
         NoopAnimationsModule,
       ],
       providers: [
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         { provide: MatDialog, useValue: { close: () => {} } },
         { provide: MAT_DIALOG_DATA, useValue: {} },
       ],

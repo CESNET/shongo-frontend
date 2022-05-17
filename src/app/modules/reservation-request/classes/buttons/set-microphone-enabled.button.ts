@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { catchError, mapTo, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ApiActionButton } from 'src/app/modules/shongo-table/buttons/api-action-button';
 import { RowPredicate } from 'src/app/modules/shongo-table/buttons/table-button';
@@ -30,8 +30,6 @@ export class SetMicrophoneEnabledButton extends ApiActionButton<RuntimeParticipa
   executeAction(row: RuntimeParticipantTableData): Observable<string> {
     this.addToLoading(row);
 
-    const action = this.enableMicrophone ? 'unmute' : 'mute';
-
     return this.resReqService
       .setParticipantMicrophoneEnabled(
         this.requestId,
@@ -42,7 +40,7 @@ export class SetMicrophoneEnabledButton extends ApiActionButton<RuntimeParticipa
         tap(() => {
           this.removeFromLoading(row);
         }),
-        mapTo(
+        map(() =>
           this.enableMicrophone
             ? $localize`:success message:User unmuted`
             : $localize`:success message:User muted`

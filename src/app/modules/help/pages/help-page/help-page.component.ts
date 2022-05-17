@@ -8,6 +8,4 @@ import { Component } from '@angular/core';
   templateUrl: './help-page.component.html',
   styleUrls: ['help-page.component.scss'],
 })
-export class HelpPageComponent {
-  constructor() {}
-}
+export class HelpPageComponent {}
