@@ -4,7 +4,6 @@ import {
   OnInit,
   ChangeDetectorRef,
 } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceCapacityUtilizationDataSource } from 'src/app/modules/shongo-table/data-sources/resource-capacity-utilization-datasource';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';

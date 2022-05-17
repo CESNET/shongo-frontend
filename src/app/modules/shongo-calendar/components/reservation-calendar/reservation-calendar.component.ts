@@ -100,6 +100,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
       this.fetchReservations();
     }
   }
+  get selectedResourceId(): string {
+    return this.selectedResourceId;
+  }
 
   /**
    * If true, calendar will highlight all reservations that belong to the current user.
@@ -107,6 +110,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   @Input() set highlightUsersReservations(value: boolean) {
     this._highlightUsersReservations = value;
     this._onHighlightChange();
+  }
+  get highlightUsersReservations(): boolean {
+    return this._highlightUsersReservations;
   }
 
   /**
@@ -117,6 +123,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.handleViewOrDateChange();
     this._cd.detectChanges();
   }
+  get viewDate(): Date {
+    return this._viewDate;
+  }
 
   /**
    * Current calendar view (day, week, month).
@@ -125,6 +134,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this._view = value;
     this.handleViewOrDateChange();
     this._cd.detectChanges();
+  }
+  get view(): CalendarView {
+    return this._view;
   }
 
   readonly refresh$ = new Subject<void>();
@@ -155,24 +167,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.loading$ = this._loading$.asObservable();
   }
 
-  get highlightUsersReservations(): boolean {
-    return this._highlightUsersReservations;
-  }
-
-  get selectedResourceId(): string {
-    return this.selectedResourceId;
-  }
-
   get events(): CalendarEvent[] {
     return this._events;
-  }
-
-  get viewDate(): Date {
-    return this._viewDate;
-  }
-
-  get view(): CalendarView {
-    return this._view;
   }
 
   get selectedSlot(): CalendarSlot | undefined {

@@ -51,6 +51,4 @@ export class ReservationRequestStateHelpComponent {
       },
     ],
   ]);
-
-  constructor() {}
 }

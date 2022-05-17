@@ -18,8 +18,6 @@ export class CalendarPaginatorComponent {
   @Input() viewDate!: Date;
   @Output() viewDateChange = new EventEmitter<Date>();
 
-  constructor() {}
-
   onViewDateChange(viewDateChange: Date): void {
     this.viewDateChange.emit(viewDateChange);
   }

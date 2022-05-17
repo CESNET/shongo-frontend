@@ -3,7 +3,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   OnDestroy,
-  ViewChild,
   Input,
   OnInit,
 } from '@angular/core';

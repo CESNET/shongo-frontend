@@ -11,6 +11,4 @@ export type StateColor = 'error' | 'success' | 'info' | 'ready';
 export class StateChipComponent {
   @Input() color!: StateColor;
   @Input() state!: string;
-
-  constructor() {}
 }

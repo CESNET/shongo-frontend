@@ -28,7 +28,7 @@ export class ReportService {
   get reportMetadata(): ReportMetadata {
     const timezone = this._settings.timeZone;
     const settings = this._settings.userSettings;
-    let metadata: ReportMetadata = {
+    const metadata: ReportMetadata = {
       user: this._auth.identityClaims?.name,
       timezone,
       settings: settings ?? undefined,

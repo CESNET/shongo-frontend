@@ -9,6 +9,4 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./unauthorized-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UnauthorizedPageComponent {
-  constructor() {}
-}
+export class UnauthorizedPageComponent {}

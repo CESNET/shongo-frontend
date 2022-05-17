@@ -22,9 +22,7 @@ describe('CapacityReservationsTabComponent', () => {
     params: of({ id: 'shongo:meetings.cesnet.cz:req:1' }),
   };
   const mockReservationRequestService = {
-    fetchTableItems: (
-      ..._: unknown[]
-    ): Observable<ApiResponse<ReservationRequest>> => {
+    fetchTableItems: (): Observable<ApiResponse<ReservationRequest>> => {
       return of({
         count: 1,
         items: [mockReservationRequest],

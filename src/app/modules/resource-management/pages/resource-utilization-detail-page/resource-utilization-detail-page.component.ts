@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, interval, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ReservationsDataSource } from 'src/app/modules/shongo-table/data-sources/reservations.datasource';

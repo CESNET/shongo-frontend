@@ -18,7 +18,7 @@ import { DataTableDataSource } from '../../data-sources/data-table-datasource';
 export class DataTableComponent<T> implements OnDestroy {
   @Input() dataSource!: DataTableDataSource<T>;
   @Input() showCheckboxes = true;
-  @Input() description: string = '';
+  @Input() description = '';
   @Input() showDeleteButtons = true;
 
   readonly tabletSizeHit$: Observable<BreakpointState>;

@@ -12,7 +12,7 @@ export const getFormError = (
   }
 
   const activeErrors = Object.entries(control.errors).filter(
-    ([_, value]) => value
+    (entry) => entry[1]
   );
 
   if (!activeErrors) {

@@ -12,7 +12,7 @@ export class AppReadyEvent {
   private doc: Document;
   private isAppReady: boolean;
 
-  constructor(@Inject(DOCUMENT) doc: any) {
+  constructor(@Inject(DOCUMENT) doc: Document) {
     this.doc = doc;
     this.isAppReady = false;
   }
@@ -25,8 +25,8 @@ export class AppReadyEvent {
       return;
     }
 
-    var bubbles = true;
-    var cancelable = false;
+    const bubbles = true;
+    const cancelable = false;
 
     this.doc.dispatchEvent(this.createEvent('appready', bubbles, cancelable));
     this.isAppReady = true;
@@ -41,13 +41,15 @@ export class AppReadyEvent {
     // IE (shakes fist) uses some other kind of event initialization. As such,
     // we'll default to trying the "normal" event generation and then fallback to
     // using the IE version.
+    let customEvent: CustomEvent;
+
     try {
-      var customEvent: any = new CustomEvent(eventType, {
+      customEvent = new CustomEvent(eventType, {
         bubbles: bubbles,
         cancelable: cancelable,
       });
     } catch (error) {
-      var customEvent: any = this.doc.createEvent('CustomEvent');
+      customEvent = this.doc.createEvent('CustomEvent');
       customEvent.initCustomEvent(eventType, bubbles, cancelable);
     }
 

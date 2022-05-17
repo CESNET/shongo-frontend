@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { Observable, of } from 'rxjs';
 import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
@@ -60,17 +59,10 @@ export class ModificationHistoryDataSource extends StaticDataSource<
     pageSize: number,
     pageIndex: number,
     sortedColumn: string,
-    sortDirection: SortDirection,
-    filter: HttpParams
+    sortDirection: SortDirection
   ): Observable<ApiResponse<RequestModification>> {
     return of(
-      this.getFakeApiResponse(
-        pageSize,
-        pageIndex,
-        sortedColumn,
-        sortDirection,
-        filter
-      )
+      this.getFakeApiResponse(pageSize, pageIndex, sortedColumn, sortDirection)
     );
   }
 }

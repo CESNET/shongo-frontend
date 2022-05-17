@@ -101,8 +101,6 @@ export class PeriodicitySelectionFormComponent implements OnInit {
 
   readonly getFormError = getFormError;
 
-  constructor() {}
-
   /**
    * Validity of form.
    */
@@ -268,8 +266,8 @@ export class PeriodicitySelectionFormComponent implements OnInit {
    *
    * @param dateInputEvent MatDatepicker input event.
    */
-  addExcludedDate(dateInputEvent: MatDatepickerInputEvent<any, any>): void {
-    if (!this.excludedDays.has(dateInputEvent.value)) {
+  addExcludedDate(dateInputEvent: MatDatepickerInputEvent<Date, Date>): void {
+    if (dateInputEvent.value && !this.excludedDays.has(dateInputEvent.value)) {
       this.excludedDays.add(dateInputEvent.value);
     }
   }
@@ -356,7 +354,8 @@ export class PeriodicitySelectionFormComponent implements OnInit {
   private _weeklyFormValidator =
     (): ValidatorFn =>
     (control: AbstractControl): ValidationErrors => {
-      const { nthWeek, ...days } = (control as FormGroup).value;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _, ...days } = (control as FormGroup).value;
       return Object.values(days).some((value) => value)
         ? {}
         : { noneChecked: true };

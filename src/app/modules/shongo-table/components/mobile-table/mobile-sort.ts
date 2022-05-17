@@ -2,7 +2,7 @@ import { Sort, SortDirection } from '@angular/material/sort';
 import { Observable, Subject } from 'rxjs';
 
 export class MobileSort {
-  active: string = '';
+  active = '';
   direction: SortDirection = '';
 
   readonly sortChange$: Observable<Sort>;

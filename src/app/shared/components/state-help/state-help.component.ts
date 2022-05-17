@@ -9,6 +9,4 @@ import { StateHelp } from '../../models/interfaces/state-help.interface';
 })
 export class StateHelpComponent {
   @Input() stateHelpMap!: Map<string, StateHelp>;
-
-  constructor() {}
 }

@@ -21,7 +21,7 @@ export class AlertComponent {
   /**
    * Message displayed inside alert.
    */
-  @Input() message: string = '';
+  @Input() message = '';
 
   /**
    * Whether a button for closing alert should be shown.
@@ -40,7 +40,7 @@ export class AlertComponent {
     this._cd.detectChanges();
   }
 
-  private _isActive: boolean = false;
+  private _isActive = false;
 
   constructor(private _cd: ChangeDetectorRef) {}
 

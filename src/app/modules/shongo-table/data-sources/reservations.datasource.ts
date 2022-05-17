@@ -1,7 +1,6 @@
 import { StaticDataSource } from './static-datasource';
 import { ResourceReservation } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { SortDirection } from '@angular/material/sort';
-import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { datePipeFunc } from 'src/app/utils/date-pipe-func';
@@ -61,15 +60,13 @@ export class ReservationsDataSource extends StaticDataSource<
     pageSize: number,
     pageIndex: number,
     sortedColumn: string,
-    sortDirection: SortDirection,
-    filter: HttpParams
+    sortDirection: SortDirection
   ): Observable<ApiResponse<ResourceReservationTableData>> {
     const data = super.getFakeApiResponse(
       pageSize,
       pageIndex,
       sortedColumn,
-      sortDirection,
-      filter
+      sortDirection
     );
     const items = data.items.map(
       (item: ResourceReservation) =>

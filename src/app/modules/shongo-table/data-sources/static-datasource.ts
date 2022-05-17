@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
 import { HasID } from 'src/app/shared/models/interfaces/has-id.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
@@ -31,15 +30,14 @@ export abstract class StaticDataSource<
     pageSize: number,
     pageIndex: number,
     sortedColumn: string,
-    sortDirection: SortDirection,
-    _: HttpParams
+    sortDirection: SortDirection
   ): ApiResponse<K> {
     const startIndex = pageSize * pageIndex;
 
     const items = this._data
       .sort((a: K, b: K) => {
-        const valueA = (a as Record<string, any>)[sortedColumn];
-        const valueB = (b as Record<string, any>)[sortedColumn];
+        const valueA = (a as Record<string, never>)[sortedColumn];
+        const valueB = (b as Record<string, never>)[sortedColumn];
 
         if (!valueA || !valueB) {
           return 0;

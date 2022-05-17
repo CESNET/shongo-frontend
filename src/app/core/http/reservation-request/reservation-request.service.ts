@@ -33,8 +33,14 @@ export class ReservationRequestService extends ApiService {
    * @param body Edit parameters.
    * @returns Observable of API response.
    */
-  edit(id: string, body: EditReservationRequestBody): Observable<{}> {
-    return this._http.patch(`${this.endpointURL}/${id}`, body);
+  edit(
+    id: string,
+    body: EditReservationRequestBody
+  ): Observable<Record<string, never>> {
+    return this._http.patch<Record<string, never>>(
+      `${this.endpointURL}/${id}`,
+      body
+    );
   }
 
   /**
@@ -274,8 +280,11 @@ export class ReservationRequestService extends ApiService {
    * @param requestId Reservation request ID.
    * @returns Observable of API response.
    */
-  acceptRequest(requestId: string): Observable<{}> {
-    return this._http.post<{}>(`${this.endpointURL}/${requestId}/accept`, {});
+  acceptRequest(requestId: string): Observable<Record<string, never>> {
+    return this._http.post<Record<string, never>>(
+      `${this.endpointURL}/${requestId}/accept`,
+      {}
+    );
   }
 
   /**
@@ -285,7 +294,10 @@ export class ReservationRequestService extends ApiService {
    * @param requestId Reservation request ID.
    * @returns Observable of API response.
    */
-  rejectRequest(requestId: string): Observable<{}> {
-    return this._http.post<{}>(`${this.endpointURL}/${requestId}/reject`, {});
+  rejectRequest(requestId: string): Observable<Record<string, never>> {
+    return this._http.post<Record<string, never>>(
+      `${this.endpointURL}/${requestId}/reject`,
+      {}
+    );
   }
 }

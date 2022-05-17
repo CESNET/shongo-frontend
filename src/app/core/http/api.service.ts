@@ -31,7 +31,9 @@ export abstract class ApiService {
    * @returns Endpoint URL.
    */
   static buildEndpointURL(endpoint: string, version: string) {
-    return `http://${environment.shongoRESTApiHost}:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
+    return `http${environment.useHttps ? 's' : ''}://${
+      environment.shongoRESTApiHost
+    }:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
   }
 
   /**
@@ -99,8 +101,13 @@ export abstract class ApiService {
    * @param url Endpoint URL.
    * @returns Observable of API response.
    */
-  deleteItems(ids?: string[], url = this.endpointURL): Observable<{}> {
-    return this._http.delete(url, { body: ids ?? undefined });
+  deleteItems(
+    ids?: string[],
+    url = this.endpointURL
+  ): Observable<Record<string, never>> {
+    return this._http.delete<Record<string, never>>(url, {
+      body: ids ?? undefined,
+    });
   }
 
   /**
@@ -121,7 +128,10 @@ export abstract class ApiService {
    * @param url Endpoint URL.
    * @returns Observable of API response.
    */
-  deleteItem(id: string, url = this.endpointURL): Observable<{}> {
+  deleteItem(
+    id: string,
+    url = this.endpointURL
+  ): Observable<Record<string, never>> {
     return this.deleteByUrl(`${url}/${id}`);
   }
 
@@ -131,8 +141,8 @@ export abstract class ApiService {
    * @param url URL of item to delete.
    * @returns Observable of API response.
    */
-  deleteByUrl(url: string): Observable<{}> {
-    return this._http.delete<{}>(url);
+  deleteByUrl(url: string): Observable<Record<string, never>> {
+    return this._http.delete<Record<string, never>>(url);
   }
 
   /**

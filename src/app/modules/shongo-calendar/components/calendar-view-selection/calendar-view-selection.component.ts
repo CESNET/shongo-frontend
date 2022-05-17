@@ -31,8 +31,6 @@ export class CalendarViewSelectionComponent {
 
   readonly CalendarView = CalendarView;
 
-  constructor() {}
-
   onViewSelection(view: CalendarView): void {
     this.viewSelected.emit(view);
   }
