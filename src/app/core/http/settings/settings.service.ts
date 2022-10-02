@@ -72,24 +72,31 @@ export class SettingsService {
 
   /**
    * Checks if current user has reservation permission.
+   * If
    */
   get canReserve(): boolean {
-    return (
-      this.userSettings?.permissions?.includes(Permission.RESERVATION) ?? false
-    );
+    return this.loa === 2;
   }
 
   /**
-   * Returns first available timezone setting in this order:
+   * Returns timezone information based on this logic:
    *
-   * Current > Home > OS
+   * - If user doesn't want to use information from Perun:
+   *   - Current time zone > home time zone > Perun time zone
+   * - If user want to use information from Perun:
+   *   - Use Perun time zone
+   * - If none of these is available, guess the timezone with Moment
    */
   get timeZone(): string | undefined {
-    return (
-      this.userSettings?.currentTimeZone ??
-      this.userSettings?.homeTimeZone ??
-      moment.tz.guess()
-    );
+    if (this.userSettings && !this.userSettings.useWebService) {
+      const { homeTimeZone, currentTimeZone } = this.userSettings;
+
+      if (homeTimeZone || currentTimeZone) {
+        return currentTimeZone ?? homeTimeZone;
+      }
+    }
+
+    return this._auth.identityClaims?.zoneInfo ?? moment.tz.guess();
   }
 
   /**
@@ -102,6 +109,34 @@ export class SettingsService {
       return moment.tz(timezone).format('Z');
     }
     return undefined;
+  }
+
+  get locale(): string {
+    if (!this.userSettings?.useWebService && this.userSettings?.locale) {
+      return this.userSettings?.locale;
+    }
+    return this._auth.identityClaims?.locale ?? 'en';
+  }
+
+  /**
+   * LOA = 2
+   * - If cesnet employee confirmed his authorization by logging in at most 1 year ago.
+   */
+  get loa(): 0 | 1 | 2 {
+    const isCesnetEligibleLastSeen =
+      this._auth.identityClaims?.isCesnetEligibleLastSeen;
+    const acceptableDifference = 365 * 24 * 60 * 60 * 1000;
+
+    if (isCesnetEligibleLastSeen) {
+      const timestamp = moment(isCesnetEligibleLastSeen);
+      const timeElapsed = moment().diff(timestamp);
+
+      if (timeElapsed <= acceptableDifference) {
+        return 2;
+      }
+    }
+
+    return 0;
   }
 
   /**
@@ -203,36 +238,10 @@ export class SettingsService {
   private _handleSettingsChange(settings: UserSettings | null): void {
     if (settings) {
       localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
-
-      if (settings.currentTimeZone) {
-        this._handleTimezoneChange(settings.currentTimeZone);
-      } else if (settings.homeTimeZone) {
-        this._handleTimezoneChange(settings.homeTimeZone);
-      }
-
-      if (settings.locale) {
-        this._handleLocaleChange(settings.locale);
-      }
+      moment.tz.setDefault(this.timeZone);
+      moment.locale(this.locale);
     } else {
       localStorage.removeItem(SETTINGS_LOCALSTORAGE_KEY);
     }
-  }
-
-  /**
-   * Changes global timezone for moment library.
-   *
-   * @param timezone Timezone (e.g. Europe/Bratislava).
-   */
-  private _handleTimezoneChange(timezone: string): void {
-    moment.tz.setDefault(timezone);
-  }
-
-  /**
-   * Changes locale for moment library.
-   *
-   * @param locale Locale.
-   */
-  private _handleLocaleChange(locale: 'cs' | 'en'): void {
-    moment.locale(locale);
   }
 }

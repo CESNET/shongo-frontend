@@ -29,7 +29,6 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
 
   readonly useCurrentTimeZoneCtrl = new FormControl(false);
   readonly usePerunSettingsCtrl = new FormControl(false);
-  readonly administrationModeCtrl = new FormControl(false);
 
   readonly settingsForm = new FormGroup({
     locale: new FormControl(''),
@@ -71,9 +70,6 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     const userSettings = this.settingsForm.value as UserSettings;
     userSettings.useWebService = this.usePerunSettingsCtrl.value;
 
-    if (this.settings.isAdmin) {
-      userSettings.administrationMode = this.administrationModeCtrl.value;
-    }
     if (!this.useCurrentTimeZoneCtrl.value) {
       delete userSettings.currentTimeZone;
     }
@@ -102,7 +98,6 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
             locale: userSettings.locale,
             homeTimeZone: userSettings.homeTimeZone,
             currentTimeZone: userSettings.currentTimeZone,
-            administrationMode: userSettings.administrationMode,
           });
 
           this.useCurrentTimeZoneCtrl.setValue(

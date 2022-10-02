@@ -2,9 +2,8 @@ import { Permission } from '../enums/permission.enum';
 
 export interface UserSettings {
   permissions?: Permission[];
-  locale?: 'en' | 'cs';
+  useWebService: boolean;
+  locale?: 'cz' | 'en';
   homeTimeZone?: string;
   currentTimeZone?: string;
-  administrationMode?: boolean;
-  useWebService?: boolean;
 }

@@ -1,16 +1,20 @@
 export interface IdentityClaims {
-  sub: string;
-  kid: string;
-  iss: string;
-  given_name: string;
-  nonce: string;
-  aud: string;
   acr: string;
+  aud: string;
   auth_time: number;
-  name: string;
-  exp: number;
-  iat: number;
-  family_name: string;
-  jti: string;
   email: string;
+  email_verified: boolean;
+  exp: number;
+  family_name: string;
+  given_name: string;
+  iat: number;
+  iss: string;
+  jti: string;
+  kid: string;
+  locale: string;
+  name: string;
+  nonce: string;
+  sub: string;
+  zoneInfo: string;
+  isCesnetEligibleLastSeen?: string;
 }

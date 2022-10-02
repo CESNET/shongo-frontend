@@ -21,6 +21,9 @@ export const mockIdentityClaims: IdentityClaims = {
   family_name: 'Doe',
   jti: '8gt5j235-1h81-5217-yuyu-d4h8gnq721g9',
   email: '000000@mail.muni.cz',
+  zoneInfo: 'Europe/Bratislava',
+  locale: 'en',
+  email_verified: true,
 };
 
 export const mockRefreshToken =

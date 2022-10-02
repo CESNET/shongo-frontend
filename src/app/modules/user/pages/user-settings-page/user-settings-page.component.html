@@ -85,15 +85,6 @@
         >
       </div>
 
-      <!-- Administration mode checkbox -->
-      <mat-checkbox
-        *ngIf="settings.isAdmin"
-        color="primary"
-        i18n="checkbox label"
-        [formControl]="administrationModeCtrl"
-        >Administration mode</mat-checkbox
-      >
-
       <div class="settings__row settings__row--submit">
         <a mat-button type="button" routerLink="/" i18n="button name">Cancel</a>
         <button
