@@ -7,6 +7,23 @@ import { LocaleItem } from 'src/app/models/interfaces/locale-item.interface';
  */
 export const menuItems: MenuItem[] = [
   {
+    label: $localize`:navbar link|Link to reservations:Reserve`,
+    route: '/reserve',
+    itemAuth: ItemAuthorization.LOGGED_IN,
+  },
+  {
+    label: $localize`:navbar link|Link to resource management:Resource management`,
+    route: '/',
+    itemAuth: ItemAuthorization.ADMIN,
+    subItems: [
+      {
+        label: $localize`:navbar link|Sublink in resource management:Resource capacity utilization`,
+        route: '/resource-management/capacity-utilization',
+        itemAuth: ItemAuthorization.ADMIN,
+      },
+    ],
+  },
+  {
     label: $localize`:navbar link|Link to help page:Help`,
     route: '/help',
     itemAuth: ItemAuthorization.NONE,
@@ -24,23 +41,6 @@ export const menuItems: MenuItem[] = [
     route: '/help/report',
     itemAuth: ItemAuthorization.NONE,
     hideOnTablet: true,
-  },
-  {
-    label: $localize`:navbar link|Link to resource management:Resource management`,
-    route: '/',
-    itemAuth: ItemAuthorization.ADMIN,
-    subItems: [
-      {
-        label: $localize`:navbar link|Sublink in resource management:Resource capacity utilization`,
-        route: '/resource-management/capacity-utilization',
-        itemAuth: ItemAuthorization.ADMIN,
-      },
-    ],
-  },
-  {
-    label: $localize`:navbar link|Link to reservations:Reserve`,
-    route: '/reserve',
-    itemAuth: ItemAuthorization.LOGGED_IN,
   },
 ];
 

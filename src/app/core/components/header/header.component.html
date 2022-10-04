@@ -13,7 +13,7 @@
 
       <nav class="fx-center-vert">
         <!-- Big layout menu -->
-        <ul>
+        <ul class="navigation-list">
           <li
             *ngFor="let item of menuItems"
             [fxHide.lt-lg]="item.hideOnTablet"
@@ -27,15 +27,22 @@
 
             <ng-template #itemWithSubMenu>
               <ng-container *ngIf="getAuthGuard(item) | async">
-                <button mat-button [matMenuTriggerFor]="popupSubMenu">
+                <button
+                  mat-button
+                  [matMenuTriggerFor]="popupSubMenu"
+                  class="navigation-list__item"
+                >
                   {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
                 </button>
 
                 <mat-menu #popupSubMenu="matMenu">
                   <ng-container *ngFor="let subItem of item.subItems">
-                    <a mat-menu-item [routerLink]="subItem.route">{{
-                      subItem.label
-                    }}</a>
+                    <a
+                      mat-menu-item
+                      [routerLink]="subItem.route"
+                      class="navigation-list__item"
+                      >{{ subItem.label }}</a
+                    >
                   </ng-container>
                 </mat-menu>
               </ng-container>
@@ -97,7 +104,7 @@
           <button
             mat-ripple
             (click)="item.subMenuOpen = !item.subMenuOpen"
-            class="mat-body"
+            class="mat-body navigation-list__item"
             *ngIf="getAuthGuard(item) | async"
           >
             {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
@@ -121,11 +128,20 @@
 
 <ng-template #linkButton let-item="item">
   <ng-container *ngIf="getAuthGuard(item) | async">
-    <a mat-button [href]="item.route" *ngIf="item.externalRoute">{{
-      item.label
-    }}</a>
-    <a mat-button [routerLink]="item.route" *ngIf="!item.externalRoute">{{
-      item.label
-    }}</a>
+    <a
+      mat-button
+      *ngIf="item.externalRoute"
+      class="navigation-list__item"
+      [href]="item.route"
+      >{{ item.label }}</a
+    >
+    <a
+      mat-button
+      *ngIf="!item.externalRoute"
+      class="navigation-list__item"
+      [routerLink]="item.route"
+      [class.navigation-list__item--primary]="item.route === '/reserve'"
+      >{{ item.label }}</a
+    >
   </ng-container>
 </ng-template>
