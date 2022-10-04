@@ -75,7 +75,9 @@ export class SettingsService {
    * If
    */
   get canReserve(): boolean {
-    return this.loa === 2;
+    return (
+      this.userSettings?.permissions?.includes(Permission.RESERVATION) ?? false
+    );
   }
 
   /**
