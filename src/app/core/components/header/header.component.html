@@ -60,14 +60,18 @@
       <!-- i18n language changer -->
       <button mat-icon-button [matMenuTriggerFor]="languageMenu">
         <img
-          [src]="defaultLocale.icon"
-          [alt]="defaultLocale.name"
+          [src]="currentLocale.icon"
+          [alt]="currentLocale.name"
           width="20px"
           height="13.33px"
         />
       </button>
       <mat-menu #languageMenu="matMenu">
-        <button mat-menu-item *ngFor="let locale of locales">
+        <a
+          mat-menu-item
+          *ngFor="let locale of locales"
+          [href]="locale.route + getCurrentRoute()"
+        >
           <img
             [src]="locale.icon"
             [alt]="locale.name"
@@ -76,7 +80,7 @@
             class="locale-menu-icon"
           />
           <span>{{ locale.name }}</span>
-        </button>
+        </a>
       </mat-menu>
 
       <!-- Account menu -->

@@ -49,15 +49,15 @@ export const menuItems: MenuItem[] = [
  */
 export const locales: LocaleItem[] = [
   {
-    shortcut: 'cz',
-    icon: 'assets/img/i18n/CZ.svg',
-    route: '/cz',
-    name: $localize`:cz language|CZ language in locale picker:Czech language`,
-  },
-  {
     shortcut: 'en',
     icon: 'assets/img/i18n/GB.svg',
     route: '/en',
     name: $localize`:en language|EN language in locale picker:English language`,
+  },
+  {
+    shortcut: 'cs',
+    icon: 'assets/img/i18n/CZ.svg',
+    route: '/cs',
+    name: $localize`:cz language|CZ language in locale picker:Czech language`,
   },
 ];

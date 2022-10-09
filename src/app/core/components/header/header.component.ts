@@ -6,9 +6,11 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';
+import { LocaleItem } from 'src/app/models/interfaces/locale-item.interface';
 import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
 import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { AuthenticationService } from '../../authentication/authentication.service';
@@ -34,15 +36,20 @@ import { locales, menuItems } from './header-items';
 export class HeaderComponent implements OnDestroy {
   menuItems = menuItems;
   locales = locales;
-  defaultLocale = this.locales[0];
   isDropdownClosed = true;
 
   private _destroy$ = new Subject<void>();
 
   constructor(
     public auth: AuthenticationService,
-    public settings: SettingsService
+    public settings: SettingsService,
+    private _router: Router
   ) {}
+
+  get currentLocale(): LocaleItem {
+    const locale = $localize`:locale:en`;
+    return this.locales.find((loc) => loc.shortcut === locale)!;
+  }
 
   ngOnDestroy(): void {
     this._destroy$.next();
@@ -99,5 +106,9 @@ export class HeaderComponent implements OnDestroy {
       default:
         return of(true);
     }
+  }
+
+  getCurrentRoute() {
+    return this._router.url;
   }
 }
