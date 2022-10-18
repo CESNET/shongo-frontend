@@ -237,7 +237,7 @@ export class ResourceService extends ApiService {
   loadResources(): Promise<void> {
     const resources = this._getFromLocalStorage();
 
-    if (resources && resources.length > 0) {
+    if (resources) {
       this.resources = resources;
       return Promise.resolve();
     } else {
@@ -262,7 +262,10 @@ export class ResourceService extends ApiService {
       .then((resources) => {
         this._loading$.next(false);
         this.resources = this._filterSupportedResources(resources);
-        this._saveToLocalStorage(this.resources);
+
+        if (this.resources.length > 0) {
+          this._saveToLocalStorage(this.resources);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -325,7 +328,7 @@ export class ResourceService extends ApiService {
    * @param resources Available resources.
    * @returns Supported resources.
    */
-  private _filterSupportedResources(resources: Resource[]): Resource[] {
+  private _filterSupportedResources(resources: Resource[] = []): Resource[] {
     return resources.filter((res) => {
       if (res.type === ResourceType.PHYSICAL_RESOURCE) {
         return (res as PhysicalResource).tags.some((tag) =>

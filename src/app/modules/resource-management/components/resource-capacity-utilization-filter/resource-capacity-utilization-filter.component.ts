@@ -47,11 +47,13 @@ export class ResourceCapacityUtilizationFilterComponent
   constructor() {
     super();
 
-    const currentDate = moment().toDate();
+    const currentDate = moment().startOf('day').toDate();
     this.filterForm.get('dateFrom')!.setValue(currentDate);
     this.filterForm
       .get('dateTo')!
-      .setValue(moment(currentDate).add(DEFAULT_UNIT_DIST, 'day').toDate());
+      .setValue(
+        moment(currentDate).add(DEFAULT_UNIT_DIST, 'day').endOf('day').toDate()
+      );
   }
 
   ngOnInit(): void {

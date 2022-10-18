@@ -7,7 +7,6 @@ import { ResourceUtilizationColumnComponent } from 'src/app/modules/resource-man
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
-import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { ResourceCapacityUtilizationFilterComponent } from '../../resource-management/components/resource-capacity-utilization-filter/resource-capacity-utilization-filter.component';
 import { TableColumn } from '../models/table-column.interface';
 import { DataTableDataSource } from './data-table-datasource';
@@ -75,14 +74,13 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
 
   getInterval(item: ResourceCapacityUtilization): string {
     if (item.interval.start === item.interval.end) {
-      return this.datePipeFunc(item.interval.start);
+      return this._datePipe.transform(item.interval.start, 'LL');
     }
-    return `${this.datePipeFunc(item.interval.start)} - ${this.datePipeFunc(
-      item.interval.end
-    )}`;
+    return `${this._datePipe.transform(
+      item.interval.start,
+      'LL'
+    )} - ${this._datePipe.transform(item.interval.end)}`;
   }
-
-  datePipeFunc = datePipeFunc.bind({ datePipe: this._datePipe });
 
   private _buildDisplayedColumns(): TableColumn<ResourceCapacityUtilizationTableData>[] {
     const columns: TableColumn<ResourceCapacityUtilizationTableData>[] = [
