@@ -237,7 +237,7 @@ export class ResourceService extends ApiService {
   loadResources(): Promise<void> {
     const resources = this._getFromLocalStorage();
 
-    if (resources) {
+    if (resources && resources.length > 0) {
       this.resources = resources;
       return Promise.resolve();
     } else {
