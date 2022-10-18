@@ -48,11 +48,7 @@
             class="unpadded calendar__resource-selection"
           >
             <mat-label i18n="field label">Physical resource</mat-label>
-            <mat-select
-              #resourceSelect
-              formControlName="resource"
-              (valueChange)="calendar.fetchReservations()"
-            >
+            <mat-select #resourceSelect formControlName="resource">
               <mat-option>
                 <ngx-mat-select-search
                   formControlName="resourceFilter"
