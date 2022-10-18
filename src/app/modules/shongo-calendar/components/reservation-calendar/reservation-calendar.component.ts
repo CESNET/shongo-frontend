@@ -215,8 +215,9 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     const interval = this._getInterval(this.viewDate);
 
     if (
-      !this._lastFetchedInterval ||
-      !this._isSubInterval(this._lastFetchedInterval, interval)
+      (!this._lastFetchedInterval ||
+        !this._isSubInterval(this._lastFetchedInterval, interval)) &&
+      this._selectedResourceId
     ) {
       this.fetchReservations();
     }
