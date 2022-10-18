@@ -133,19 +133,21 @@
 <ng-template #linkButton let-item="item">
   <ng-container *ngIf="getAuthGuard(item) | async">
     <a
+      *ngIf="item.externalRoute; else internalRoute"
       mat-button
-      *ngIf="item.externalRoute"
       class="navigation-list__item"
       [href]="item.route"
       >{{ item.label }}</a
     >
-    <a
-      mat-button
-      *ngIf="!item.externalRoute"
-      class="navigation-list__item"
-      [routerLink]="item.route"
-      [class.navigation-list__item--primary]="item.route === '/reserve'"
-      >{{ item.label }}</a
-    >
+
+    <ng-template #internalRoute>
+      <a
+        mat-button
+        class="navigation-list__item"
+        [routerLink]="item.route"
+        [class.navigation-list__item--primary]="item.route === '/reserve'"
+        >{{ item.label }}</a
+      >
+    </ng-template>
   </ng-container>
 </ng-template>
