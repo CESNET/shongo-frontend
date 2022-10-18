@@ -35,9 +35,8 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { authAppInitializerFactory } from './authentication/auth-app-initializer.factory';
-import { resourceInitializerFactory } from './http/resource/resource-initializer-factory';
 import { ResourceService } from './http/resource/resource.service';
+import { appInitializerFactory } from './app-initializer.factory';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -80,14 +79,8 @@ export class CoreModule extends EnsureModuleLoadedOnceGuard {
       providers: [
         {
           provide: APP_INITIALIZER,
-          useFactory: authAppInitializerFactory,
-          deps: [AuthenticationService],
-          multi: true,
-        },
-        {
-          provide: APP_INITIALIZER,
-          useFactory: resourceInitializerFactory,
-          deps: [ResourceService],
+          useFactory: appInitializerFactory,
+          deps: [AuthenticationService, ResourceService],
           multi: true,
         },
         { provide: OAuthStorage, useFactory: storageFactory },

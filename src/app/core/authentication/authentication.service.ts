@@ -94,9 +94,11 @@ export class AuthenticationService {
     return this._oauthService
       .loadDiscoveryDocument()
       .then(() => this._oauthService.tryLogin())
-      .then(() =>
-        this.hasValidAccessToken() ? Promise.resolve() : Promise.reject()
-      )
+      .then(() => {
+        return this.hasValidAccessToken()
+          ? Promise.resolve()
+          : Promise.reject();
+      })
       .catch((error) => {
         // Require user to login manually if one of these errors occur.
         if (
