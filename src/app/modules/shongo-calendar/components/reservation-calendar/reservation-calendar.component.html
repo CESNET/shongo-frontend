@@ -11,7 +11,6 @@
       [tooltipTemplate]="calendarTooltip"
       [hourSegmentTemplate]="hourSegment"
       [refresh]="refresh$"
-      [validateEventTimesChanged]="validateEventTimesChanged"
       (eventTimesChanged)="eventTimesChanged($event)"
       (eventClicked)="handleEventClick($event.event)"
     ></mwl-calendar-day-view>
@@ -24,7 +23,6 @@
       [hourSegmentTemplate]="hourSegment"
       [weekStartsOn]="weekStartsOn"
       [refresh]="refresh$"
-      [validateEventTimesChanged]="validateEventTimesChanged"
       (eventTimesChanged)="eventTimesChanged($event)"
       (dayHeaderClicked)="openDate($event.day.date)"
       (eventClicked)="handleEventClick($event.event)"

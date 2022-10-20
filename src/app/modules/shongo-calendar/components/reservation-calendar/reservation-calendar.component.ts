@@ -304,7 +304,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Starts event creation by dragging. Handles event collisions.
+   * Starts event creation by dragging.
    *
    * @param segment Drag start segment.
    * @param segmentElement Drag start segment element.
@@ -322,7 +322,6 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this.slotSelected.emit(this.selectedSlot);
 
     const segmentPosition = segmentElement.getBoundingClientRect();
-    const endOfView = moment(this.viewDate).endOf('week').toDate();
 
     (fromEvent(document, 'mousemove') as Observable<MouseEvent>)
       .pipe(
@@ -348,11 +347,8 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
           .add(minutesDiff, 'minute')
           .add(daysDiff, 'day')
           .toDate();
-        if (
-          newEnd > segment.date &&
-          newEnd < endOfView &&
-          this._hasNoIntersection(this._createdEvent!.start, newEnd)
-        ) {
+
+        if (newEnd > segment.date) {
           this._createdEvent!.end = newEnd;
         }
         this.refresh$.next();
@@ -376,19 +372,6 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Validates event time change against event intersections.
-   *
-   * @param param0 Calendar event times changed event.
-   * @returns True if time change is valid, else false.
-   */
-  validateEventTimesChanged = ({
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): boolean => {
-    return this._hasNoIntersection(newStart, newEnd!);
-  };
-
-  /**
    * Changes event times on valid event time change event.
    *
    * @param eventTimesChangedEvent Calendar event times changed event.
@@ -396,13 +379,11 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   eventTimesChanged(
     eventTimesChangedEvent: CalendarEventTimesChangedEvent
   ): void {
-    if (this.validateEventTimesChanged(eventTimesChangedEvent)) {
-      const { event, newStart, newEnd } = eventTimesChangedEvent;
-      event.start = newStart;
-      event.end = newEnd;
-      this.refresh$.next();
-      this.slotSelected.emit(this.selectedSlot);
-    }
+    const { event, newStart, newEnd } = eventTimesChangedEvent;
+    event.start = newStart;
+    event.end = newEnd;
+    this.refresh$.next();
+    this.slotSelected.emit(this.selectedSlot);
   }
 
   /**
