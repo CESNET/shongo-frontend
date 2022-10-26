@@ -241,7 +241,7 @@ export class ResourceService extends ApiService {
       this.resources = resources;
       return Promise.resolve();
     } else {
-      return this._fetchResources();
+      return this.fetchResources();
     }
   }
 
@@ -251,34 +251,33 @@ export class ResourceService extends ApiService {
    *
    * @returns Empty promise.
    */
-  private _fetchResources(): Promise<void> {
+  async fetchResources(): Promise<void> {
     this._loading$.next(true);
 
-    return lastValueFrom(
-      this._http
-        .get<Resource[]>(this.endpointURL)
-        .pipe(first(), retry(RESOURCE_FETCH_RETRY_COUNT))
-    )
-      .then((resources) => {
-        this._loading$.next(false);
-        this.resources = this._filterSupportedResources(resources);
+    try {
+      const resources = await lastValueFrom(
+        this._http
+          .get<Resource[]>(this.endpointURL)
+          .pipe(first(), retry(RESOURCE_FETCH_RETRY_COUNT))
+      );
+      this._loading$.next(false);
+      this.resources = this._filterSupportedResources(resources);
 
-        if (this.resources.length > 0) {
-          this._saveToLocalStorage(this.resources);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        this._loading$.next(false);
+      if (this.resources.length > 0) {
+        this._saveToLocalStorage(this.resources);
+      }
+    } catch (err) {
+      console.error(err);
+      this._loading$.next(false);
 
-        const resourcesInLocalStorage = this._getFromLocalStorage(true);
+      const resourcesInLocalStorage = this._getFromLocalStorage(true);
 
-        if (resourcesInLocalStorage) {
-          this.resources = resourcesInLocalStorage;
-        } else {
-          this.error = true;
-        }
-      });
+      if (resourcesInLocalStorage) {
+        this.resources = resourcesInLocalStorage;
+      } else {
+        this.error = true;
+      }
+    }
   }
 
   /**
