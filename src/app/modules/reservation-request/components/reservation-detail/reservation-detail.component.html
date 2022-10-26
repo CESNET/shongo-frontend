@@ -1,4 +1,7 @@
-<div class="reservation-detail">
+<div
+  class="reservation-detail"
+  *ngIf="currentRequest$ | async as currentRequest"
+>
   <main class="reservation-detail__main">
     <header>
       <h2 class="mat-primary-color" i18n="heading">Detail</h2>

@@ -28,6 +28,7 @@ import { ModificationHistoryDataSource } from 'src/app/modules/shongo-table/data
 import { StateProps } from 'src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -39,7 +40,7 @@ export class ReservationDetailComponent implements OnInit {
   @Input() reservationRequest!: ReservationRequestDetail;
 
   modificationHistoryDataSource?: ModificationHistoryDataSource;
-  currentRequest!: ReservationRequestDetail;
+  currentRequest$!: BehaviorSubject<ReservationRequestDetail>;
 
   readonly ReservationType = ReservationType;
   readonly PeriodicityType = PeriodicityType;
@@ -69,7 +70,9 @@ export class ReservationDetailComponent implements OnInit {
       this.openModification,
       this.isRowSelected
     );
-    this.currentRequest = this.reservationRequest;
+    this.currentRequest$ = new BehaviorSubject<ReservationRequestDetail>(
+      this.reservationRequest
+    );
   }
 
   /**
@@ -163,7 +166,7 @@ export class ReservationDetailComponent implements OnInit {
     this._resReqService
       .fetchItem<ReservationRequestDetail>(id)
       .pipe(first())
-      .subscribe((request) => (this.currentRequest = request));
+      .subscribe((request) => this.currentRequest$.next(request));
   };
 
   /**
@@ -173,6 +176,6 @@ export class ReservationDetailComponent implements OnInit {
    * @returns True if request modification is selected, else false.
    */
   isRowSelected = (row: RequestModification): boolean => {
-    return this.currentRequest.id === row.id;
+    return this.currentRequest$.value.id === row.id;
   };
 }
