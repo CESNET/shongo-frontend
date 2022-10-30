@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
-import { finalize, first, tap } from 'rxjs/operators';
+import { catchError, finalize, first, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { ReservationForm } from 'src/app/modules/reservation-forms/interfaces/reservation-form.interface';
@@ -159,20 +159,18 @@ export class EditReservationRequestPageComponent implements OnInit {
             resReq.state === ReservationRequestState.ALLOCATED_FINISHED
           ) {
             throw new RequestNotEditableError();
+          } else {
+            this._fillSlotForm(resReq.slot);
           }
+        }),
+        catchError((err) => {
+          console.error(err);
+          this.error = err;
+          throw err;
         }),
         finalize(() => this.loading$.next(false))
       )
-      .subscribe({
-        next: (resReq) => {
-          this.reservationRequest = resReq;
-          this._fillSlotForm(resReq.slot);
-        },
-        error: (err) => {
-          console.error(err);
-          this.error = err;
-        },
-      });
+      .subscribe((resReq) => (this.reservationRequest = resReq));
   }
 
   /**

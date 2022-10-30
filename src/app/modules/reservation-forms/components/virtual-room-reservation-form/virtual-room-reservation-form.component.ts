@@ -127,13 +127,13 @@ export class VirtualRoomReservationFormComponent
     let resource: Resource | null = null;
 
     if (virtualRoomData) {
-      const { roomResourceId, roomName } = virtualRoomData;
+      const { technology, roomName } = virtualRoomData;
 
-      if (roomResourceId) {
-        resource = this._resourceService.findResourceById(roomResourceId);
+      if (technology) {
+        resource = this._resourceService.findResourceByTechnology(technology);
 
         if (resource) {
-          this.form.get('resource')!.setValue(roomResourceId);
+          this.form.get('resource')!.setValue(resource.id);
           this.onTechnologyChange(resource as VirtualRoomResource);
         }
       }
