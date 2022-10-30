@@ -7,7 +7,6 @@ import {
   PeriodicityType,
 } from '../enums/periodicity-type.enum';
 import { ReservationRequestState } from '../enums/reservation-request-state.enum';
-import { ReservationRequestType } from '../enums/reservation-request-type.enum';
 import { ReservationType } from '../enums/reservation-type.enum';
 import { Technology } from '../enums/technology.enum';
 import { Alias } from './alias.interface';
@@ -90,13 +89,4 @@ export interface ChildRequest {
   aliases: Alias[];
 }
 
-export interface RequestModification {
-  id: string;
-  createdAt: string;
-  createdBy: string;
-  type: ReservationRequestType;
-  allocationState: string;
-  state: string;
-  isActive: boolean;
-  isLatestAllocated: boolean;
-}
+export type RequestModification = Omit<ReservationRequestDetail, 'history'>;

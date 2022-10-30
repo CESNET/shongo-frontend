@@ -13,8 +13,6 @@ import {
   RequestModification,
   ReservationRequestDetail,
 } from 'src/app/shared/models/rest-api/reservation-request.interface';
-import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { first } from 'rxjs/operators';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -57,11 +55,7 @@ export class ReservationDetailComponent implements OnInit {
     [ReservationType.ROOM_CAPACITY, $localize`:resource type:Room capacity`],
   ]);
 
-  constructor(
-    private _datePipe: MomentDatePipe,
-    private _resReqService: ReservationRequestService,
-    private _dialog: MatDialog
-  ) {}
+  constructor(private _datePipe: MomentDatePipe, private _dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.modificationHistoryDataSource = new ModificationHistoryDataSource(
@@ -163,10 +157,15 @@ export class ReservationDetailComponent implements OnInit {
    * @param id ID of request modification.
    */
   openModification = (id: string): void => {
-    this._resReqService
-      .fetchItem<ReservationRequestDetail>(id)
-      .pipe(first())
-      .subscribe((request) => this.currentRequest$.next(request));
+    const modification = this.reservationRequest.history.find(
+      (request) => request.id === id
+    );
+    const currentRequestCopy = JSON.parse(
+      JSON.stringify(this.reservationRequest)
+    );
+    const modifiedRequest = Object.assign(currentRequestCopy, modification);
+
+    this.currentRequest$.next(modifiedRequest);
   };
 
   /**
