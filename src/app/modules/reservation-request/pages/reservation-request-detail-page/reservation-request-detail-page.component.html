@@ -136,39 +136,34 @@
           </div>
         </mat-tab>
 
-        <ng-container
-          *ngIf="
-            reservationRequest.type !== ReservationType.PHYSICAL_RESOURCE &&
-            reservationRequest.type !== ReservationType.VIRTUAL_ROOM
+        <!-- Runtime management -->
+        <mat-tab
+          label="Runtime management"
+          i18n-label="tab label"
+          *ngIf="reservationRequest.type === ReservationType.VIRTUAL_ROOM"
+          [disabled]="
+            reservationRequest.allocationState !== AllocationState.ALLOCATED ||
+            reservationRequest.virtualRoomData?.technology === 'FREEPBX' ||
+            (reservationRequest.virtualRoomData?.state !== RoomState.STARTED &&
+              reservationRequest.virtualRoomData?.state !==
+                RoomState.STARTED_AVAILABLE)
           "
         >
-          <!-- Participants -->
-          <mat-tab label="Participants" i18n-label="tab label">
-            <div class="tab-content">
-              <app-participants-tab></app-participants-tab>
-            </div>
-          </mat-tab>
+          <div class="tab-content">
+            <app-runtime-management-tab></app-runtime-management-tab>
+          </div>
+        </mat-tab>
 
-          <!-- Runtime management -->
-          <mat-tab
-            label="Runtime management"
-            i18n-label="tab label"
-            *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
-            [disabled]="
-              reservationRequest.allocationState !==
-                AllocationState.ALLOCATED ||
-              reservationRequest.virtualRoomData?.technology === 'FREEPBX' ||
-              (reservationRequest.virtualRoomData?.state !==
-                RoomState.STARTED &&
-                reservationRequest.virtualRoomData?.state !==
-                  RoomState.STARTED_AVAILABLE)
-            "
-          >
-            <div class="tab-content">
-              <app-runtime-management-tab></app-runtime-management-tab>
-            </div>
-          </mat-tab>
-        </ng-container>
+        <!-- Participants -->
+        <mat-tab
+          label="Participants"
+          i18n-label="tab label"
+          *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
+        >
+          <div class="tab-content">
+            <app-participants-tab></app-participants-tab>
+          </div>
+        </mat-tab>
 
         <!-- Recordings -->
         <mat-tab
@@ -176,12 +171,9 @@
           i18n-label="tab label"
           [disabled]="areRecordingsDisabled()"
           *ngIf="
-            (reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
-              reservationRequest.virtualRoomData?.roomHasRecordings === true) ||
+            reservationRequest.type === ReservationType.VIRTUAL_ROOM ||
             (reservationRequest.type === ReservationType.ROOM_CAPACITY &&
-              reservationRequest.futureSlotCount &&
-              reservationRequest.roomCapacityData?.capacityHasRecordings) ||
-            !reservationRequest.futureSlotCount
+              !reservationRequest.futureSlotCount)
           "
         >
           <div class="tab-content">
