@@ -45,7 +45,9 @@
         </dt>
         <dd>
           {{
-            (slot.start | date: "medium") + " - " + (slot.end | date: "medium")
+            (slot.start | momentDate: "lll") +
+              " - " +
+              (slot.end | momentDate: "lll")
           }}
         </dd>
       </ng-container>
@@ -82,7 +84,7 @@
       <!-- Created at -->
       <ng-container *ngIf="currentRequest.createdAt as createdAt">
         <dt i18n="definition tag">Created at:</dt>
-        <dd>{{ createdAt }}</dd>
+        <dd>{{ createdAt | momentDate }}</dd>
       </ng-container>
 
       <ng-container
@@ -146,7 +148,7 @@
           >
             <i class="grayed-text"
               >&nbsp;(<span i18n="periodicity note">until</span>
-              {{ periodicity.periodicityEnd | date }})</i
+              {{ periodicity.periodicityEnd | momentDate }})</i
             >
           </span>
         </dd>
@@ -158,7 +160,7 @@
           <dt i18n="definition tag">Exclude dates:</dt>
           <dd>
             <span *ngFor="let date of periodicity.excludeDates; index as i">
-              {{ date | date }}
+              {{ date | momentDate }}
               <br *ngIf="i !== periodicity.excludeDates.length - 1" />
             </span>
           </dd>
