@@ -144,8 +144,9 @@
               periodicity.type !== PeriodicityType.NONE
             "
           >
-            <i class="grayed-text" i18n="note"
-              >(until {{ periodicity.periodicityEnd | date }})</i
+            <i class="grayed-text"
+              >&nbsp;(<span i18n="periodicity note">until</span>
+              {{ periodicity.periodicityEnd | date }})</i
             >
           </span>
         </dd>
