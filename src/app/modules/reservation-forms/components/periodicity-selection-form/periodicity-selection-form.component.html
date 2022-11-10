@@ -54,8 +54,8 @@
               [value]="1"
               formControlName="nthWeek"
             >
-              <mat-option *ngFor="let opt of [1, 2, 3, 4, 5]" [value]="opt">{{
-                opt
+              <mat-option *ngFor="let opt of orderOpts" [value]="opt.value">{{
+                opt.displayName
               }}</mat-option>
             </mat-select> </mat-form-field
           ><span
@@ -63,7 +63,7 @@
               sentence part|Middle part of sentence: Repeat every {nth}. week at
               {days e.g. monday, tuesday...}.
             "
-            >. week at:</span
+            >week at:</span
           ></span
         >
 
@@ -113,7 +113,7 @@
             #regularRadio
           >
             <form formGroupName="regularForm" class="monthly-form__regular">
-              &nbsp;<span
+              <span
                 i18n="
                   sentence part|Start of sentence: Repeat every {nth}. month.
                 "
@@ -130,14 +130,14 @@
                   formControlName="nthMonth"
                 >
                   <mat-option
-                    *ngFor="let opt of [1, 2, 3, 4, 5]"
-                    [value]="opt"
-                    >{{ opt }}</mat-option
+                    *ngFor="let opt of orderOpts"
+                    [value]="opt.value"
+                    >{{ opt.displayName }}</mat-option
                   >
                 </mat-select> </mat-form-field
               ><span
                 i18n="sentence part|End of sentence: Repeat every {nth}. month."
-                >. month.</span
+                >month.</span
               >
             </form>
           </mat-radio-button>
@@ -173,7 +173,6 @@
                   >
                 </mat-select>
               </mat-form-field>
-              .&nbsp;
 
               <!-- Day in month selection -->
               <mat-form-field
@@ -212,9 +211,9 @@
                   formControlName="nthMonth"
                 >
                   <mat-option
-                    *ngFor="let opt of [1, 2, 3, 4, 5]"
-                    [value]="opt"
-                    >{{ opt }}</mat-option
+                    *ngFor="let opt of orderOpts"
+                    [value]="opt.value"
+                    >{{ opt.displayName }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -223,7 +222,7 @@
                   sentence part|End of sentence: Repeat every {nth}. {day} in
                   every {nth}. month.
                 "
-                >. month.</span
+                >month.</span
               >
             </form>
           </mat-radio-button>

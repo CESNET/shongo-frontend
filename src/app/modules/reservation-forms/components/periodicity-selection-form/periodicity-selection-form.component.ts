@@ -85,6 +85,14 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     { value: -1, displayName: $localize`:text|last {day}:last` },
   ];
 
+  readonly orderOpts: Option[] = [
+    { value: 1, displayName: '1.' },
+    { value: 2, displayName: '2.' },
+    { value: 3, displayName: '3.' },
+    { value: 4, displayName: '4.' },
+    { value: 5, displayName: '5.' },
+  ];
+
   readonly monthlyDayOpts: Option[] = [
     { value: Days.MONDAY, displayName: $localize`:day:Monday` },
     { value: Days.TUESDAY, displayName: $localize`:day:Tuesday` },
