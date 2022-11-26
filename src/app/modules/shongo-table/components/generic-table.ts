@@ -142,10 +142,7 @@ export abstract class GenericTableComponent<T>
    * @returns Tooltip text.
    */
   getTooltipText(text: string): string {
-    if (
-      this.maxCellTextLength !== undefined &&
-      text.length > this.maxCellTextLength
-    ) {
+    if (!!this.maxCellTextLength && text?.length > this.maxCellTextLength) {
       return text;
     }
     return '';
