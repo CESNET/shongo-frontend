@@ -62,10 +62,10 @@ export class DeleteButton<T>
             }),
             map(() => $localize`:success message:Item deleted`),
             catchError((err) => {
-              // Try using custom error handler, if it doesn't exist or doesn't throw an error, throw generic error.
+              // Try using custom error handler, if it doesn't exist, throw generic error.
               if (this.customErrorHandler) {
                 return this.customErrorHandler(row, err).pipe(
-                  tap(() => this._deleted$.next(row))
+                  tap((res) => !!res && this._deleted$.next(row))
                 );
               } else {
                 throw new Error($localize`:error message:Item deletion failed`);
