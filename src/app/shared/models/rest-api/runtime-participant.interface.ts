@@ -4,7 +4,7 @@ import { RoomLayout } from '../enums/room-layout.enum';
 export interface RuntimeParticipant {
   id: number;
   name: string;
-  displayName: string;
+  alias: string;
   role: ParticipantRole;
   email: string;
   layout: RoomLayout;

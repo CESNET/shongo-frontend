@@ -13,6 +13,7 @@ import { UserSnapshotDialogComponent } from 'src/app/modules/reservation-request
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { RuntimeParticipant } from 'src/app/shared/models/rest-api/runtime-participant.interface';
 import { StringBool } from 'src/app/shared/models/types/string-bool.type';
+import { isNullOrUndefined } from 'src/app/utils/null-or-undefined';
 import { toTitleCase } from 'src/app/utils/to-title-case';
 import { CustomActionButton } from '../buttons/custom-action-button';
 import { DataTableDataSource } from './data-table-datasource';
@@ -24,11 +25,12 @@ export interface RuntimeParticipantTableData {
   displayName: string;
   layout: string;
   microphone: string;
+  video: string;
   microphoneLevel: string;
   microphoneEnabled: StringBool;
-  video: string;
   videoSnapshot: StringBool;
   videoEnabled: StringBool;
+  displayNameEnabled: StringBool;
 }
 
 export class RuntimeManagementDataSource extends DataTableDataSource<RuntimeParticipantTableData> {
@@ -52,45 +54,58 @@ export class RuntimeManagementDataSource extends DataTableDataSource<RuntimePart
         $localize`:button name:Take video snapshot`,
         'photo_camera',
         (participant) => this.openUserSnapshot(participant),
-        (participant) => participant.videoSnapshot === 'true'
+        (participant) => participant.videoSnapshot === 'false',
+        (participant) => participant.videoSnapshot !== 'undefined'
       ),
       new SetMicrophoneLevelButton(
         this._resReqService,
         this._dialog,
-        this.requestId
+        this.requestId,
+        undefined,
+        (participant) => participant.microphoneLevel !== 'undefined'
       ),
       new SetDisplayNameButton(
         this._resReqService,
         this._dialog,
-        this.requestId
+        this.requestId,
+        undefined,
+        (participant) => participant.displayNameEnabled !== 'undefined'
       ),
       new SetMicrophoneEnabledButton(
         this._resReqService,
         this.requestId,
         false,
         undefined,
-        (participant) => participant.microphoneEnabled === 'true'
+        (participant) =>
+          participant.microphoneEnabled !== 'undefined' &&
+          participant.microphoneEnabled === 'true'
       ),
       new SetMicrophoneEnabledButton(
         this._resReqService,
         this.requestId,
         true,
         undefined,
-        (participant) => participant.microphoneEnabled === 'false'
+        (participant) =>
+          participant.microphoneEnabled !== 'undefined' &&
+          participant.microphoneEnabled === 'false'
       ),
       new SetVideoEnabledButton(
         this._resReqService,
         this.requestId,
         false,
         undefined,
-        (participant) => participant.videoEnabled === 'true'
+        (participant) =>
+          participant.videoEnabled !== 'undefined' &&
+          participant.videoEnabled === 'true'
       ),
       new SetVideoEnabledButton(
         this._resReqService,
         this.requestId,
         true,
         undefined,
-        (participant) => participant.videoEnabled === 'false'
+        (participant) =>
+          participant.videoEnabled !== 'undefined' &&
+          participant.videoEnabled === 'false'
       ),
       new DisconnectUserButton(this._resReqService, this.requestId),
     ];
@@ -139,6 +154,7 @@ export class RuntimeManagementDataSource extends DataTableDataSource<RuntimePart
             videoSnapshot: this._getVideoSnapshot(item),
             microphoneEnabled: this._getMicrophoneEnabled(item),
             videoEnabled: this._getVideoEnabled(item),
+            displayNameEnabled: this._getDisplayNameEnabled(item),
           }));
 
           return { count, items: mappedItems };
@@ -151,12 +167,12 @@ export class RuntimeManagementDataSource extends DataTableDataSource<RuntimePart
   }
 
   private _getDisplayName(item: RuntimeParticipant): string {
-    return item.displayName ?? item.name ?? $localize`Unknown user`;
+    return item.alias ?? item.name ?? $localize`Unknown user`;
   }
 
   private _getParticipant(item: RuntimeParticipant): string {
     return (
-      (item.name ?? item.displayName ?? $localize`Unknown user`) +
+      (item.name ?? item.alias ?? $localize`Unknown user`) +
       (item.email ? ` (${item.email})` : '')
     );
   }
@@ -178,23 +194,42 @@ export class RuntimeManagementDataSource extends DataTableDataSource<RuntimePart
     );
   }
 
-  private _getMicrophoneLevel(item: RuntimeParticipant): string {
-    return item.microphoneLevel ? String(item.microphoneLevel) : 'Unknown';
-  }
-
   private _getVideo(item: RuntimeParticipant): string {
     return !!item.videoEnabled ? $localize`Yes` : $localize`No`;
   }
 
+  private _getMicrophoneLevel(item: RuntimeParticipant): string {
+    if (!isNullOrUndefined(item.microphoneLevel)) {
+      return String(item.microphoneLevel);
+    }
+    return 'undefined';
+  }
+
   private _getVideoSnapshot(item: RuntimeParticipant): StringBool {
-    return String(!!item.videoSnapshot) as StringBool;
+    if (!isNullOrUndefined(item.videoSnapshot)) {
+      return String(item.videoSnapshot) as StringBool;
+    }
+    return 'undefined';
   }
 
   private _getMicrophoneEnabled(item: RuntimeParticipant): StringBool {
-    return String(!!item.microphoneEnabled) as StringBool;
+    if (!isNullOrUndefined(item.microphoneEnabled)) {
+      return String(item.microphoneEnabled) as StringBool;
+    }
+    return 'undefined';
   }
 
   private _getVideoEnabled(item: RuntimeParticipant): StringBool {
-    return String(!!item.videoEnabled) as StringBool;
+    if (!isNullOrUndefined(item.videoEnabled)) {
+      return String(item.videoEnabled) as StringBool;
+    }
+    return 'undefined';
+  }
+
+  private _getDisplayNameEnabled(item: RuntimeParticipant): StringBool {
+    if (isNullOrUndefined(item.alias)) {
+      return 'undefined';
+    }
+    return 'true';
   }
 }

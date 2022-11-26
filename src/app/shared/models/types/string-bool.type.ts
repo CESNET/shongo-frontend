@@ -1,1 +1,1 @@
-export type StringBool = 'true' | 'false';
+export type StringBool = 'true' | 'false' | 'undefined';
