@@ -23,7 +23,7 @@ export class DeleteButton<T>
     public pathTemplate: string,
     public isDisabledFunc?: RowPredicate<T>,
     public displayButtonFunc?: RowPredicate<T>,
-    public customErrorHandler?: (err: Error) => void
+    public customErrorHandler?: (row: T, err: Error) => Observable<string>
   ) {
     super(isDisabledFunc, displayButtonFunc);
   }
@@ -66,8 +66,11 @@ export class DeleteButton<T>
               this.removeFromLoading(row);
 
               // Try using custom error handler, if it doesn't exist or doesn't throw an error, throw generic error.
-              this.customErrorHandler && this.customErrorHandler(err);
-              throw new Error($localize`:error message:Item deletion failed`);
+              if (this.customErrorHandler) {
+                return this.customErrorHandler(row, err);
+              } else {
+                throw new Error($localize`:error message:Item deletion failed`);
+              }
             })
           );
         } else {

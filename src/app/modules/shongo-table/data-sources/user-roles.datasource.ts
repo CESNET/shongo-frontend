@@ -76,11 +76,15 @@ export class UserRolesDataSource extends DataTableDataSource<UserRolesTableData>
       );
   }
 
-  private _deleteErrorHandler(err: Error): void {
+  private _deleteErrorHandler(
+    row: UserRolesTableData,
+    err: Error
+  ): Observable<string> {
     if (err instanceof HttpErrorResponse && err.status === 403) {
       throw Error(
         $localize`:error message:Reservation must have at least 1 owner`
       );
     }
+    throw new Error($localize`:error message:Item deletion failed`);
   }
 }
