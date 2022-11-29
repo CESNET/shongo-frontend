@@ -32,6 +32,11 @@ nav {
   margin-right: 1em;
   width: fit-content;
 }
+.navigation-fragment {
+  &__text {
+    margin-left: 0.5rem;
+  }
+}
 
 /* Images */
 .image-row {

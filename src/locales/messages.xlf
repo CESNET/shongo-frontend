@@ -294,35 +294,51 @@
         </context-group>
         <note priority="1" from="description">Header of navigation sidebar in help page</note>
       </trans-unit>
-      <trans-unit id="6539005596658917693" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;primary&quot; inline&gt;"/>arrow_forward_ios<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Introduction</source>
+      <trans-unit id="2171894153326157864" datatype="html">
+        <source>Introduction</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">9,10</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+          <context context-type="linenumber">75</context>
         </context-group>
         <note priority="1" from="description">Navigation link in help page</note>
       </trans-unit>
-      <trans-unit id="7939022408211062259" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;primary&quot; inline&gt;"/>arrow_forward_ios<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Level of authenticity</source>
+      <trans-unit id="6832669484592247069" datatype="html">
+        <source>Level of authenticity</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">15,16</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="description">Navigation link in help page</note>
       </trans-unit>
-      <trans-unit id="1331510127783680185" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;primary&quot; inline&gt;"/>arrow_forward_ios<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Rooms</source>
+      <trans-unit id="6318077128670918892" datatype="html">
+        <source>Rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">21,22</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+          <context context-type="linenumber">160</context>
         </context-group>
         <note priority="1" from="description">Navigation link in help page</note>
       </trans-unit>
-      <trans-unit id="7938937685605207118" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;primary&quot; inline&gt;"/>arrow_forward_ios<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Resources</source>
+      <trans-unit id="2446117790692479672" datatype="html">
+        <source>Resources</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">27,28</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+          <context context-type="linenumber">232</context>
         </context-group>
         <note priority="1" from="description">Navigation link in help page</note>
       </trans-unit>
@@ -330,17 +346,9 @@
         <source>Help</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="description">Header in help page</note>
-      </trans-unit>
-      <trans-unit id="2171894153326157864" datatype="html">
-        <source>Introduction</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <note priority="1" from="description">Subheader in help page</note>
       </trans-unit>
       <trans-unit id="3042109042432599574" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Reservation system<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> allows you to create your own virtual rooms for H.323/SIP videoconferences or Adobe Connect web conferences. You can share the rooms with your colleagues and use them for your conference calls. The creation of new rooms is allowed only for logged in users with certain level of authenticity. You can log in with you user account from your organization that is involved in <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
@@ -356,7 +364,7 @@
         &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">48,67</context>
+          <context context-type="linenumber">80,99</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -369,11 +377,11 @@
         &gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">68,77</context>
+          <context context-type="linenumber">100,109</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">14,23</context>
+          <context context-type="linenumber">15,24</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -381,23 +389,15 @@
         <source> You can create a new room from main page or from page with your reservation requests. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">78,81</context>
+          <context context-type="linenumber">110,113</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
-      </trans-unit>
-      <trans-unit id="6832669484592247069" datatype="html">
-        <source>Level of authenticity</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">87</context>
-        </context-group>
-        <note priority="1" from="description">Subheader in help page</note>
       </trans-unit>
       <trans-unit id="3672501217646006057" datatype="html">
         <source> Only logged in user with a certain level of authorization can create a new room or book a capacity for existing room. If you see <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;warn&quot; inline=&quot;true&quot;&gt;"/>warning<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> next to your name on the top of the page, it means that your account doesn&apos;t meet the required level of authorization. In this case you have two options: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">91,97</context>
+          <context context-type="linenumber">123,129</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -415,7 +415,7 @@
           &gt;"/>). </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">99,115</context>
+          <context context-type="linenumber">131,147</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -423,23 +423,15 @@
         <source> Request the system <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/report&quot; class=&quot;mat-primary-color&quot;&gt;"/>administrators<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> to grant you the permissions to create new rooms and book room capacities. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">116,121</context>
+          <context context-type="linenumber">148,153</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
-      </trans-unit>
-      <trans-unit id="6318077128670918892" datatype="html">
-        <source>Rooms</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">128</context>
-        </context-group>
-        <note priority="1" from="description">Subheader in help page</note>
       </trans-unit>
       <trans-unit id="2550705945803243942" datatype="html">
         <source> Virtual rooms can be used for multiple conference calls (e.g., periodic meetings). The room can be created for longer period of time (a number of years), but throughout the period it isn&apos;t automatically available for participants to join. For each conference call in the virtual room you must book capacity, which determines how many participants will be able to join to the room. The virtual room gets assigned identifiers on creation which don&apos;t change throughout the room&apos;s existence (if you don&apos;t requet a change). Thus the identifiers are the same for all conference calls that take place in the virtual room. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">132,142</context>
+          <context context-type="linenumber">164,174</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -449,7 +441,7 @@
         &gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">144,149</context>
+          <context context-type="linenumber">176,181</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -457,7 +449,7 @@
         <source>Virtual room</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">189</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.ts</context>
@@ -475,7 +467,7 @@
         &gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">161,168</context>
+          <context context-type="linenumber">192,199</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -483,7 +475,7 @@
         <source>Capacity for 4 participants</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">180</context>
+          <context context-type="linenumber">210</context>
         </context-group>
         <note priority="1" from="description">Help page image label</note>
       </trans-unit>
@@ -491,23 +483,15 @@
         <source>Capacity for 8 participants</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">193</context>
+          <context context-type="linenumber">222</context>
         </context-group>
         <note priority="1" from="description">Help page image label</note>
-      </trans-unit>
-      <trans-unit id="2446117790692479672" datatype="html">
-        <source>Resources</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">203</context>
-        </context-group>
-        <note priority="1" from="description">Subheader in help page</note>
       </trans-unit>
       <trans-unit id="2139999177097368647" datatype="html">
         <source> Reservation system manages hardware and software equipment (referred to as <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>resources<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>), which provides the creation and management of virtual rooms. Each resource has only a limited number of licenses that can be used at a time. For instance if you want to join an Adobe Connect room, the resource must have at least one available license, otherwise it won&apos;t allow you to join the room. After joining the room the license is consumed and after leaving the room the license is released. To be able to guarantee a specific number of participants to be able to join to every room, it is necessery to book the licenses in advance. That is the reason why you must explicitly book a requested capacity for each room when you want to use it (when booking a capacity for virtual room). </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">207,219</context>
+          <context context-type="linenumber">236,248</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -517,7 +501,7 @@
         &gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">221,229</context>
+          <context context-type="linenumber">250,258</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -525,7 +509,7 @@
         <source>A building may contain, e.g., 20 chairs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-          <context context-type="linenumber">241</context>
+          <context context-type="linenumber">269</context>
         </context-group>
         <note priority="1" from="description">Help page image label</note>
       </trans-unit>
@@ -809,17 +793,15 @@
         <source> Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">5,7</context>
+          <context context-type="linenumber">5,8</context>
         </context-group>
         <note priority="1" from="description">paragraph</note>
       </trans-unit>
-      <trans-unit id="6652081233503370854" datatype="html">
-        <source> You can send your suggestions to <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vidcon@cesnet.cz&quot; class=&quot;mat-primary-color&quot;
-      &gt;"/>vidcon@cesnet.cz<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
-    &gt;"/>. </source>
+      <trans-unit id="620360473989352905" datatype="html">
+        <source>You can send your suggestions to</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">8,13</context>
+          <context context-type="linenumber">8,10</context>
         </context-group>
         <note priority="1" from="description">paragraph</note>
       </trans-unit>
@@ -836,7 +818,7 @@
         <source>List of rooms which you own or which have been made accessible to you by other users.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">41,42</context>
+          <context context-type="linenumber">40,41</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -844,7 +826,7 @@
         <source>Your participation in rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">50,51</context>
+          <context context-type="linenumber">48,49</context>
         </context-group>
         <note priority="1" from="description">Label for your participation table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -853,7 +835,7 @@
         <source>List of rooms in which you are configured as participant and which you can join.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">58,59</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -861,7 +843,7 @@
         <source>Your phys. resources reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">66,68</context>
+          <context context-type="linenumber">62,64</context>
         </context-group>
         <note priority="1" from="description">Label for your resource reservations table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -870,7 +852,7 @@
         <source>All reservations of physical resources.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">74,75</context>
+          <context context-type="linenumber">69,70</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -878,7 +860,7 @@
         <source>Reservations calendar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">82,83</context>
+          <context context-type="linenumber">76,77</context>
         </context-group>
         <note priority="1" from="description">Label for reservation calendar component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -1886,14 +1868,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.html</context>
           <context context-type="linenumber">313,315</context>
-        </context-group>
-        <note priority="1" from="description">definition tag</note>
-      </trans-unit>
-      <trans-unit id="7708270344948043036" datatype="html">
-        <source> <x id="INTERPOLATION" equiv-text="{{ getAliasDisplayType(alias.type) }}"/> </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.html</context>
-          <context context-type="linenumber">318,319</context>
         </context-group>
         <note priority="1" from="description">definition tag</note>
       </trans-unit>

@@ -4,9 +4,10 @@
   <p i18n="paragraph">
     Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms.
   </p>
-  <p i18n="paragraph">
-    You can send your suggestions to
-    <a href="mailto:vidcon@cesnet.cz" class="mat-primary-color"
+  <p>
+    <span i18n="paragraph">You can send your suggestions to</span>&nbsp;<a
+      href="mailto:vidcon@cesnet.cz"
+      class="mat-primary-color"
       >vidcon@cesnet.cz</a
     >.
   </p>
@@ -28,19 +29,16 @@
     <mat-tab-group
       [animationDuration]="0"
       [(selectedIndex)]="tabIndex"
-      (selectedIndexChange)="onTabIndexChange($event)"
-    >
+      (selectedIndexChange)="onTabIndexChange($event)">
       <!-- Reservation requests -->
       <mat-tab
         label="Your rooms"
-        i18n-label="tab label|Label for your rooms table component"
-      >
+        i18n-label="tab label|Label for your rooms table component">
         <div class="tab-content">
           <app-data-table
             [dataSource]="yourRoomsDataSource"
             description="List of rooms which you own or which have been made accessible to you by other users."
-            i18n-description="table description"
-          >
+            i18n-description="table description">
           </app-data-table>
         </div>
       </mat-tab>
@@ -48,16 +46,14 @@
       <!-- Room participations -->
       <mat-tab
         label="Your participation in rooms"
-        i18n-label="tab label|Label for your participation table component"
-      >
+        i18n-label="tab label|Label for your participation table component">
         <div class="tab-content">
           <app-data-table
             [dataSource]="participationInRoomsDataSource"
             [showCheckboxes]="false"
             [showDeleteButtons]="false"
             description="List of rooms in which you are configured as participant and which you can join."
-            i18n-description="table description"
-          ></app-data-table>
+            i18n-description="table description"></app-data-table>
         </div>
       </mat-tab>
 
@@ -66,22 +62,19 @@
         label="Your phys. resources reservations"
         i18n-label="
           tab label|Label for your resource reservations table component
-        "
-      >
+        ">
         <div class="tab-content">
           <app-data-table
             [dataSource]="physicalReservationsDataSource"
             description="All reservations of physical resources."
-            i18n-description="table description"
-          ></app-data-table>
+            i18n-description="table description"></app-data-table>
         </div>
       </mat-tab>
 
       <!-- Reservation calendar -->
       <mat-tab
         label="Reservations calendar"
-        i18n-label="tab label|Label for reservation calendar component"
-      >
+        i18n-label="tab label|Label for reservation calendar component">
         <div class="tab-content">
           <app-reservation-calendar-tab></app-reservation-calendar-tab>
         </div>

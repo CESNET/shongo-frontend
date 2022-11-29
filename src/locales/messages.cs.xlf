@@ -193,7 +193,7 @@
 			</trans-unit>
 			<trans-unit id="7618870723010461457" datatype="html">
 				<source>en</source>
-				<target>cz</target>
+				<target>cs</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/core/components/header/header.component.ts</context>
 					<context context-type="linenumber">50</context>
@@ -410,29 +410,6 @@
 				</context-group>
 				<note priority="1" from="description">Help page text</note>
 			</trans-unit>
-			<trans-unit id="5259288281316256019" datatype="html">
-				<source> Terms and conditions under which personal data collated in providing the CESNET e-infrastructure services are processed you can find <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-          href=&quot;https://www.cesnet.cz/cesnet/documents/privacy&quot;
-          target=&quot;_blank&quot;
-          class=&quot;mat-primary-color&quot;
-          &gt;"/>here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
-        &gt;"/>. </source>
-				<target> Podmínky, za kterých jsou zpracovávány osobní údaje shromažďované při poskytování služeb e-infrastruktury CESNET, naleznete <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
-          href=&quot;https://www.cesnet.cz/cesnet/documents/privacy&quot;
-          target=&quot;_blank&quot;
-          class=&quot;mat-primary-color&quot;
-          &gt;"/>tady<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
-        &gt;"/>. </target>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
-					<context context-type="linenumber">68,77</context>
-				</context-group>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-					<context context-type="linenumber">14,23</context>
-				</context-group>
-				<note priority="1" from="description">Help page text</note>
-			</trans-unit>
 			<trans-unit id="6655793895297992694" datatype="html">
 				<source> You can create a new room from main page or from page with your reservation requests. </source>
 				<target> Nový pokoj můžete vytvořit na hlavní stránce nebo na stránce s vašimi žádostmi o rezervaci. </target>
@@ -453,7 +430,7 @@
 			</trans-unit>
 			<trans-unit id="3672501217646006057" datatype="html">
 				<source> Only logged in user with a certain level of authorization can create a new room or book a capacity for existing room. If you see <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;warn&quot; inline=&quot;true&quot;&gt;"/>warning<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> next to your name on the top of the page, it means that your account doesn&apos;t meet the required level of authorization. In this case you have two options: </source>
-				<target> Pouze přihlášený uživatel s určitou úrovní oprávnění může vytvořit nový pokoj nebo rezervovat kapacitu pro stávající pokoj. Pokud se vidíte <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;warn&quot; inline=&quot;true&quot;&gt;"/>varování<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> vedle vašeho jména v horní části stránky znamená, že váš účet nesplňuje požadovanou úroveň oprávnění. V tomto případě máte dvě možnosti: </target>
+				<target> Pouze přihlášený uživatel s určitou úrovní oprávnění může vytvořit nový pokoj nebo rezervovat kapacitu pro stávající pokoj. Pokud se vidíte <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon color=&quot;warn&quot; inline=&quot;true&quot;&gt;"/>warning<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> vedle vašeho jména v horní části stránky znamená, že váš účet nesplňuje požadovanou úroveň oprávnění. V tomto případě máte dvě možnosti: </target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
 					<context context-type="linenumber">91,97</context>
@@ -925,19 +902,6 @@
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
 					<context context-type="linenumber">5,7</context>
-				</context-group>
-				<note priority="1" from="description">paragraph</note>
-			</trans-unit>
-			<trans-unit id="6652081233503370854" datatype="html">
-				<source> You can send your suggestions to <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vidcon@cesnet.cz&quot; class=&quot;mat-primary-color&quot;
-      &gt;"/>vidcon@cesnet.cz<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
-    &gt;"/>. </source>
-				<target> Své návrhy můžete zasílat na <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;mailto:vidcon@cesnet.cz&quot; class=&quot;mat-primary-color&quot;
-      &gt;"/>vidcon@cesnet.cz<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
-    &gt;"/>. </target>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-					<context context-type="linenumber">8,13</context>
 				</context-group>
 				<note priority="1" from="description">paragraph</note>
 			</trans-unit>
@@ -1979,15 +1943,6 @@
 					<context context-type="linenumber">143</context>
 				</context-group>
 			</trans-unit>
-			<trans-unit id="3930495857721009934" datatype="html">
-				<source>(until <x id="INTERPOLATION" equiv-text="{{ periodicity.periodicityEnd | date }}"/>)</source>
-				<target>(do <x id="INTERPOLATION" equiv-text="{{ periodicity.periodicityEnd | date }}"/>)</target>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.html</context>
-					<context context-type="linenumber">145</context>
-				</context-group>
-				<note priority="1" from="description">note</note>
-			</trans-unit>
 			<trans-unit id="2598236854360122344" datatype="html">
 				<source>Exclude dates:</source>
 				<target>Vynechat data:</target>
@@ -2097,15 +2052,6 @@
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.html</context>
 					<context context-type="linenumber">307</context>
-				</context-group>
-				<note priority="1" from="description">definition tag</note>
-			</trans-unit>
-			<trans-unit id="7708270344948043036" datatype="html">
-				<source> <x id="INTERPOLATION" equiv-text="{{ getAliasDisplayType(alias.type) }}"/> </source>
-				<target><x id="INTERPOLATION" equiv-text="{{ getAliasDisplayType(alias.type) }}"/></target>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.html</context>
-					<context context-type="linenumber">311,313</context>
 				</context-group>
 				<note priority="1" from="description">definition tag</note>
 			</trans-unit>
@@ -4665,6 +4611,103 @@
 					<context context-type="sourcefile">src/config/virtual-room-resource.config.ts</context>
 					<context context-type="linenumber">10</context>
 				</context-group>
+			</trans-unit>
+			<trans-unit id="620360473989352905" datatype="html">
+				<source>You can send your suggestions to</source>
+				<target>Své návrhy můžete posílat na</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">8,10</context>
+				</context-group>
+				<note priority="1" from="description">paragraph</note>
+			</trans-unit>
+			<trans-unit id="3559374226973066760" datatype="html">
+				<source>Terms and conditions under which personal data collated in providing the CESNET e-infrastructure services are processed you can find at the following link</source>
+				<target>Podmínky, za kterých jsou zpracovávány osobní údaje shromážděné při poskytování služeb e-infrastruktury CESNET, naleznete na následujícím odkazu</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">16,19</context>
+				</context-group>
+				<note priority="1" from="description">paragraph</note>
+			</trans-unit>
+			<trans-unit id="7880342747895814760" datatype="html">
+				<source>privacy policy</source>
+				<target>zásady ochrany osobních údajů</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">26,29</context>
+				</context-group>
+				<note priority="1" from="description">link</note>
+			</trans-unit>
+			<trans-unit id="1850266684772324946" datatype="html">
+				<source>week at:</source>
+				<target>týden v:</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/periodicity-selection-form/periodicity-selection-form.component.html</context>
+					<context context-type="linenumber">66</context>
+				</context-group>
+				<note priority="1" from="description">Middle part of sentence: Repeat every {nth}. week at
+              {days e.g. monday, tuesday...}.</note>
+				<note priority="1" from="meaning">sentence part</note>
+			</trans-unit>
+			<trans-unit id="2632123911648391798" datatype="html">
+				<source>month.</source>
+				<target>měsíc.</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/periodicity-selection-form/periodicity-selection-form.component.html</context>
+					<context context-type="linenumber">140</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/periodicity-selection-form/periodicity-selection-form.component.html</context>
+					<context context-type="linenumber">225</context>
+				</context-group>
+				<note priority="1" from="description">End of sentence: Repeat every {nth}. month.</note>
+				<note priority="1" from="meaning">sentence part</note>
+			</trans-unit>
+			<trans-unit id="5974640300559179461" datatype="html">
+				<source>until</source>
+				<target>do</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.html</context>
+					<context context-type="linenumber">150,151</context>
+				</context-group>
+				<note priority="1" from="description">periodicity note</note>
+			</trans-unit>
+			<trans-unit id="3080871390882721532" datatype="html">
+				<source>This room has reserved capacities, do you wish to proceed?</source>
+				<target>Tato místnost má rezervovanou kapacitu, přejete si pokračovat?</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
+					<context context-type="linenumber">179</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="5004041682838118401" datatype="html">
+				<source>Administration mode</source>
+				<target>Režim administrace</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/user/pages/user-settings-page/user-settings-page.component.html</context>
+					<context context-type="linenumber">94,97</context>
+				</context-group>
+				<note priority="1" from="description">checkbox label</note>
+			</trans-unit>
+			<trans-unit id="5259288281316256019" datatype="html">
+				<source> Terms and conditions under which personal data collated in providing the CESNET e-infrastructure services are processed you can find <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+          href=&quot;https://www.cesnet.cz/cesnet/documents/privacy&quot;
+          target=&quot;_blank&quot;
+          class=&quot;mat-primary-color&quot;
+          &gt;"/>here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/>. </source>
+				<target> Podmínky, za kterých jsou zpracovávány osobní údaje shromážděné při poskytování služeb e-infrastruktury CESNET, najdete <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+          href=&quot;https://www.cesnet.cz/cesnet/documents/privacy&quot;
+          target=&quot;_blank&quot;
+          class=&quot;mat-primary-color&quot;
+          &gt;"/>zde<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/>. </target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+					<context context-type="linenumber">100,109</context>
+				</context-group>
+				<note priority="1" from="description">Help page text</note>
 			</trans-unit>
 		</body>
 	</file>
