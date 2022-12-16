@@ -56,7 +56,7 @@ export class LocaleService {
     const expectedLocale =
       this.sessionLocale || this.settingsLocale || Locale.EN;
 
-    if (this.currentLocale !== expectedLocale && !environment.production) {
+    if (this.currentLocale !== expectedLocale && environment.production) {
       this._useLocale(expectedLocale);
     }
   }
