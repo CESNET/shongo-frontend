@@ -31,6 +31,10 @@ export class CalendarViewSelectionComponent {
 
   readonly CalendarView = CalendarView;
 
+  get selectedViewDisplayName(): string {
+    return this.calendarViewOpts.find(opt => opt.value === this.selectedView)?.displayName ?? '';
+  }
+
   onViewSelection(view: CalendarView): void {
     this.viewSelected.emit(view);
   }
