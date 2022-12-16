@@ -16,6 +16,7 @@ import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { AlertService } from '../../services/alert.service';
+import { LocaleService } from '../../services/locale.service';
 import { ApiService } from '../api.service';
 
 const SETTINGS_LOCALSTORAGE_KEY = 'userSettings';
@@ -43,7 +44,8 @@ export class SettingsService {
   constructor(
     private _http: HttpClient,
     private _auth: AuthenticationService,
-    private _alert: AlertService
+    private _alert: AlertService,
+    private _locale: LocaleService
   ) {
     this._loadSettingsFromStorage();
 
@@ -181,6 +183,7 @@ export class SettingsService {
       )
       .subscribe((userSettings) => {
         this._userSettings$.next(userSettings);
+        this._locale.sessionLocale = this.locale;
         this._alert.showSuccess($localize`Settings updated`);
       });
   }
