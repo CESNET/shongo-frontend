@@ -123,13 +123,13 @@ export class SettingsService {
       locale = this._auth.identityClaims?.locale ?? null;
     }
 
-    if (['cs', 'cz'].includes(locale)) {
+    if (!locale) {
+      return null;
+    } else if (['cs', 'cz'].includes(locale)) {
       return Locale.CS;
-    } else if (locale) {
+    } else {
       return Locale.EN;
     }
-
-    return null;
   }
 
   /**
