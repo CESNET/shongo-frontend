@@ -6,15 +6,16 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';
 import { LocaleItem } from 'src/app/models/interfaces/locale-item.interface';
 import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
+import { Locale } from 'src/app/shared/models/enums/locale.enum';
 import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { SettingsService } from '../../http/settings/settings.service';
+import { LocaleService } from '../../services/locale.service';
 import { locales, menuItems } from './header-items';
 
 /**
@@ -43,12 +44,12 @@ export class HeaderComponent implements OnDestroy {
   constructor(
     public auth: AuthenticationService,
     public settings: SettingsService,
-    private _router: Router
+    private _locale: LocaleService
   ) {}
 
   get currentLocale(): LocaleItem {
-    const locale = $localize`:locale:en`;
-    return this.locales.find((loc) => loc.shortcut === locale)!;
+    const locale = this._locale.currentLocale;
+    return this.locales.find((loc) => loc.value === locale)!;
   }
 
   ngOnDestroy(): void {
@@ -108,7 +109,10 @@ export class HeaderComponent implements OnDestroy {
     }
   }
 
-  getCurrentRoute() {
-    return this._router.url;
+  /**
+   * Saves selected locale to session storage.
+   */
+  onSelectLocale(locale: Locale): void {
+    this._locale.sessionLocale = locale;
   }
 }

@@ -11,6 +11,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
+import { Locale } from 'src/app/shared/models/enums/locale.enum';
 import { Permission } from 'src/app/shared/models/enums/permission.enum';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
 import { AuthenticationService } from '../../authentication/authentication.service';
@@ -113,11 +114,11 @@ export class SettingsService {
     return undefined;
   }
 
-  get locale(): string {
+  get locale(): Locale | null {
     if (!this.userSettings?.useWebService && this.userSettings?.locale) {
-      return this.userSettings?.locale;
+      return this.userSettings?.locale as Locale;
     }
-    return this._auth.identityClaims?.locale ?? 'en';
+    return (this._auth.identityClaims?.locale as Locale) ?? null;
   }
 
   /**
@@ -241,7 +242,6 @@ export class SettingsService {
     if (settings) {
       localStorage.setItem(SETTINGS_LOCALSTORAGE_KEY, JSON.stringify(settings));
       moment.tz.setDefault(this.timeZone);
-      moment.locale(this.locale);
     } else {
       localStorage.removeItem(SETTINGS_LOCALSTORAGE_KEY);
     }

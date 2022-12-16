@@ -1,6 +1,7 @@
+import { Locale } from "src/app/shared/models/enums/locale.enum";
+
 export interface LocaleItem {
-  shortcut: string;
+  value: Locale;
   icon: string;
-  route: string;
   name: string;
 }

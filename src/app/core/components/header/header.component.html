@@ -67,10 +67,10 @@
         />
       </button>
       <mat-menu #languageMenu="matMenu">
-        <a
+        <button
           mat-menu-item
           *ngFor="let locale of locales"
-          [href]="locale.route + getCurrentRoute()"
+          (click)="onSelectLocale(locale.value)"
         >
           <img
             [src]="locale.icon"
@@ -80,7 +80,7 @@
             class="locale-menu-icon"
           />
           <span>{{ locale.name }}</span>
-        </a>
+        </button>
       </mat-menu>
 
       <!-- Account menu -->

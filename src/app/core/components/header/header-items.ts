@@ -1,6 +1,7 @@
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';
 import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
 import { LocaleItem } from 'src/app/models/interfaces/locale-item.interface';
+import { Locale } from 'src/app/shared/models/enums/locale.enum';
 
 /**
  * Navigation items displayed inside header navigation.
@@ -49,15 +50,13 @@ export const menuItems: MenuItem[] = [
  */
 export const locales: LocaleItem[] = [
   {
-    shortcut: 'en',
+    value: Locale.EN,
     icon: 'assets/img/i18n/GB.svg',
-    route: '/en',
     name: $localize`:en language|EN language in locale picker:English language`,
   },
   {
-    shortcut: 'cs',
+    value: Locale.CS,
     icon: 'assets/img/i18n/CZ.svg',
-    route: '/cs',
     name: $localize`:cz language|CZ language in locale picker:Czech language`,
   },
 ];
