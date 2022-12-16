@@ -123,7 +123,7 @@ export class SettingsService {
       locale = this._auth.identityClaims?.locale ?? null;
     }
 
-    if (locale === 'cz') {
+    if (['cs', 'cz'].includes(locale)) {
       return Locale.CS;
     } else if (locale) {
       return Locale.EN;
