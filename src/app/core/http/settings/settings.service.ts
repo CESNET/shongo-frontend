@@ -115,10 +115,21 @@ export class SettingsService {
   }
 
   get locale(): Locale | null {
+    let locale: string | null;
+
     if (!this.userSettings?.useWebService && this.userSettings?.locale) {
-      return this.userSettings?.locale as Locale;
+      locale = this.userSettings?.locale;
+    } else {
+      locale = this._auth.identityClaims?.locale ?? null;
     }
-    return (this._auth.identityClaims?.locale as Locale) ?? null;
+
+    if (locale === 'cz') {
+      return Locale.CS;
+    } else if (locale) {
+      return Locale.EN;
+    }
+
+    return null;
   }
 
   /**

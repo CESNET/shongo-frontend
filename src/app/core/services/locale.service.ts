@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { filter, first } from 'rxjs';
+import { filter } from 'rxjs';
 import { Locale } from 'src/app/shared/models/enums/locale.enum';
 import { environment } from 'src/environments/environment';
 import { SettingsService } from '../http/settings/settings.service';
@@ -13,9 +13,10 @@ const LOCALE_KEY = 'locale';
 })
 export class LocaleService {
   constructor(private _router: Router, private _settings: SettingsService) {
+    moment.locale(this.currentLocale);
+
     this._settings.userSettings$.pipe(filter(Boolean)).subscribe(() => {
       this._useExpectedLocale();
-      moment.locale(this.currentLocale);
     });
   }
 
@@ -55,7 +56,7 @@ export class LocaleService {
     const expectedLocale =
       this.sessionLocale || this.settingsLocale || Locale.EN;
 
-    if (this.currentLocale !== expectedLocale && environment.production) {
+    if (this.currentLocale !== expectedLocale && !environment.production) {
       this._useLocale(expectedLocale);
     }
   }
