@@ -3,8 +3,12 @@ import {
   ChangeDetectionStrategy,
   EventEmitter,
   Output,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Subject, takeUntil } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -19,20 +23,29 @@ import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.conf
   styleUrls: ['./resource-selection-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResourceSelectionFormComponent {
+export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
   /**
    * Emits selected resource.
    */
   @Output() resourceChange = new EventEmitter<Resource | null>();
+
+  /**
+   * Emits all resources that should be displayed in the calendar (including selected resource for reservation).
+   */
+  @Output() displayedResourcesChange = new EventEmitter<Resource[]>();
 
   resourceOpts: Option[] = [];
 
   readonly form = new FormGroup({
     type: new FormControl(),
     resource: new FormControl(),
+    displayedResources: new FormControl([]),
+    showMore: new FormControl(false),
   });
   readonly resourceFilterCtrl = new FormControl();
   readonly resourceTypes: Option[];
+
+  private readonly _destroy$ = new Subject<void>();
 
   constructor(private _resourceService: ResourceService) {
     this.resourceTypes = this._getResourceTypeOpts();
@@ -51,12 +64,36 @@ export class ResourceSelectionFormComponent {
   }
 
   /**
+   * Returns resource that is selected for reservation.
+   */
+  get selectedResource(): Resource | null {
+    return this.form.get('resource')!.value;
+  }
+
+  get showMore(): boolean {
+    return this.form.get('showMore')!.value;
+  }
+
+  ngOnInit(): void {
+    this.form
+      .get('displayedResources')!
+      .valueChanges.pipe(takeUntil(this._destroy$))
+      .subscribe((resources) => this.displayedResourcesChange.emit(resources));
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
+  /**
    * Handles resource type change.
    *
    * @param typeOrTag Resource type or tag.
    */
   handleResourceTypeChange(typeOrTag: string): void {
-    this.emitSelectedResource(null);
+    this.form.get('resource')!.reset();
+    this.form.get('displayedResources')!.setValue([]);
     this.createResourceOpts(typeOrTag);
   }
 
@@ -69,32 +106,61 @@ export class ResourceSelectionFormComponent {
   createResourceOpts(typeOrTag: string): void {
     const resources = this._getResources(typeOrTag);
 
-    if (typeOrTag === ResourceType.VIRTUAL_ROOM) {
-      this.resourceOpts = resources
-        .map((res) => ({
-          value: res,
-          displayName: virtualRoomResourceConfig.technologyNameMap.get(
-            res.technology as Technology
-          ),
-        }))
-        .filter((opt) => opt.displayName) as Option[];
-    } else {
-      this.resourceOpts = resources
-        .map((res) => ({
-          value: res,
-          displayName: res.name,
-        }))
-        .filter((opt) => opt.displayName) as Option[];
-    }
+    this.resourceOpts = resources
+      .map((res) => ({
+        value: res,
+        displayName: this.getResourceDisplayName(res),
+      }))
+      .filter((opt) => opt.displayName) as Option[];
   }
 
   /**
-   * Emits selected resource.
+   * Handles resource selection.
    *
-   * @param resource Resource or null.
+   * @param resource Selected resource for reservation.
    */
-  emitSelectedResource(resource: Resource | null): void {
+  onResourceSelect(resource: Resource | null): void {
+    const displayedResourcesCtrl = this.form.get('displayedResources')!;
+    const displayedResources: Resource[] = displayedResourcesCtrl.value;
+
+    if (resource && !displayedResources.includes(resource)) {
+      displayedResourcesCtrl.setValue([resource, ...displayedResources]);
+    } else if (!resource) {
+      displayedResourcesCtrl.setValue([]);
+    }
+
     this.resourceChange.emit(resource);
+  }
+
+  /**
+   * Emits all resources that should be displayed in the calendar.
+   *
+   * @param resources Selected resources.
+   */
+  emitDisplayedResources(resources: Resource[]): void {
+    this.displayedResourcesChange.emit(resources);
+  }
+
+  /**
+   * Returns a display name of the resource.
+   */
+  getResourceDisplayName(resource: Resource): string {
+    if (resource.type === ResourceType.VIRTUAL_ROOM) {
+      return (
+        virtualRoomResourceConfig.technologyNameMap.get(
+          resource.technology as Technology
+        ) ?? resource.name
+      );
+    }
+    return resource.name;
+  }
+
+  onMoreResourcesChange({ checked }: MatSlideToggleChange): void {
+    if (!checked) {
+      this.form
+        .get('displayedResources')!
+        .setValue(this.selectedResource ? [this.selectedResource] : []);
+    }
   }
 
   /**

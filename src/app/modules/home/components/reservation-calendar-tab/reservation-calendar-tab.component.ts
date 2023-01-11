@@ -15,7 +15,10 @@ import { takeUntil } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ReservationCalendarComponent } from 'src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
-import { PhysicalResource } from 'src/app/shared/models/rest-api/resource.interface';
+import {
+  PhysicalResource,
+  Resource,
+} from 'src/app/shared/models/rest-api/resource.interface';
 
 @Component({
   selector: 'app-reservation-calendar-tab',
@@ -33,7 +36,7 @@ export class ReservationCalendarTabComponent
 
   readonly tabletSizeHit$: Observable<BreakpointState>;
   readonly filterGroup = new FormGroup({
-    resource: new FormControl(null),
+    resources: new FormControl([]),
     highlightMine: new FormControl(false),
     resourceFilter: new FormControl(''),
   });
@@ -49,6 +52,10 @@ export class ReservationCalendarTabComponent
     this.tabletSizeHit$ = this._createTabletSizeObservable();
     this._physicalResources = this._getPhysicalResources();
     this.filteredResources = this._physicalResources;
+  }
+
+  get displayedResources(): Resource[] {
+    return this.filterGroup.get('resources')!.value ?? [];
   }
 
   ngOnInit(): void {
@@ -69,10 +76,6 @@ export class ReservationCalendarTabComponent
   ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
-  }
-
-  setResource(resource: string | null): void {
-    this.filterGroup.get('resource')!.setValue(resource);
   }
 
   getNextDate(viewDate: Date, increment: 0 | 1 | -1): Date {

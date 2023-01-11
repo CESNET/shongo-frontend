@@ -48,7 +48,7 @@
             class="unpadded calendar__resource-selection"
           >
             <mat-label i18n="field label">Physical resource</mat-label>
-            <mat-select #resourceSelect formControlName="resource">
+            <mat-select formControlName="resources" multiple>
               <mat-option>
                 <ngx-mat-select-search
                   formControlName="resourceFilter"
@@ -60,7 +60,7 @@
               </mat-option>
               <mat-option
                 *ngFor="let resource of filteredResources"
-                [value]="resource.id"
+                [value]="resource"
               >
                 {{ resource.name }}
               </mat-option>
@@ -97,7 +97,7 @@
         </ng-template>
 
         <h1 class="calendar__view-date">
-          {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
+          {{ calendar.viewDate | calendarDate : calendar.view + "ViewTitle" }}
         </h1>
 
         <app-calendar-paginator
@@ -111,7 +111,7 @@
 
     <app-reservation-calendar
       #calendar
-      [selectedResourceId]="resourceSelect.value"
+      [displayedResources]="displayedResources"
     ></app-reservation-calendar>
   </div>
 </mat-card>

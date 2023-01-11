@@ -19,7 +19,7 @@
     <mat-label i18n="field label">Select resource</mat-label>
     <mat-select
       formControlName="resource"
-      (valueChange)="emitSelectedResource($event)"
+      (valueChange)="onResourceSelect($event)"
     >
       <mat-option>
         <ngx-mat-select-search
@@ -33,6 +33,40 @@
       <mat-option
         *ngFor="let resource of filteredResourceOpts"
         [value]="resource.value"
+        >{{ resource.displayName }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-slide-toggle
+    color="primary"
+    formControlName="showMore"
+    class="resource-selection__show-more"
+    (change)="onMoreResourcesChange($event)"
+    >More resources</mat-slide-toggle
+  >
+
+  <!-- Show reservations of field -->
+  <mat-form-field appearance="outline" *ngIf="showMore">
+    <mat-label i18n="field label">Show reservations of</mat-label>
+    <mat-select
+      multiple
+      formControlName="displayedResources"
+      (valueChange)="emitDisplayedResources($event)"
+    >
+      <mat-option>
+        <ngx-mat-select-search
+          [formControl]="resourceFilterCtrl"
+          placeholderLabel="Search..."
+          noEntriesFoundLabel="No resources found"
+          i18n-placeholderLabel="placeholder"
+          i18n-noEntriesFoundLabel="no results text"
+        ></ngx-mat-select-search>
+      </mat-option>
+      <mat-option
+        *ngFor="let resource of filteredResourceOpts"
+        [value]="resource.value"
+        [disabled]="resource.value === selectedResource"
         >{{ resource.displayName }}</mat-option
       >
     </mat-select>

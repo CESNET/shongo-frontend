@@ -1,4 +1,8 @@
 .resource-selection {
   display: flex;
   flex-direction: column;
+
+  &__show-more {
+    margin-bottom: 1rem;
+  }
 }

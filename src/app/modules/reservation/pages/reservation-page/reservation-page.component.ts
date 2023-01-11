@@ -51,6 +51,7 @@ export class ReservationPageComponent
   readonly AlertType = AlertType;
 
   selectedResource?: Resource | null;
+  displayedResources?: Resource[];
   selectedSlot?: CalendarSlot | null;
   parentReservationRequest?: ReservationRequestDetail;
   parentRequestError?: Error;

@@ -31,9 +31,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
-import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
+import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -90,18 +88,12 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   @Input() allowSlotSelection = false;
 
   /**
-   * ID of selected resource. Calendar will automatically refresh
-   * it's data when setting this property to display only resources with this ID.
+   * Calendar will automatically refresh
+   * it's data when setting this property to display only this resources.
    */
-  @Input() set selectedResourceId(id: string | undefined) {
-    this._selectedResourceId = id;
-
-    if (id) {
-      this.fetchReservations();
-    }
-  }
-  get selectedResourceId(): string {
-    return this.selectedResourceId;
+  @Input() set displayedResources(resources: Resource[] | undefined) {
+    this._displayedResources = resources;
+    this.fetchReservations();
   }
 
   /**
@@ -147,7 +139,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   private _events: CalendarEvent[] = [];
   private _createdEvent?: CalendarEvent;
   private _highlightUsersReservations = false;
-  private _selectedResourceId?: string | null;
+  private _displayedResources?: Resource[];
   private _viewDate = moment().toDate();
   private _view = CalendarView.Month;
   private _lastFetchedInterval?: Interval;
@@ -157,7 +149,6 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
   constructor(
     private _resReqService: ReservationRequestService,
-    private _resourceService: ResourceService,
     private _auth: AuthenticationService,
     private _settings: SettingsService,
     private _dialog: MatDialog,
@@ -197,7 +188,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._selectedResourceId && this.fetchReservations();
+    this._displayedResources?.length && this.fetchReservations();
   }
 
   ngOnDestroy(): void {
@@ -217,7 +208,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     if (
       (!this._lastFetchedInterval ||
         !this._isSubInterval(this._lastFetchedInterval, interval)) &&
-      this._selectedResourceId
+      this._displayedResources?.length
     ) {
       this.fetchReservations();
     }
@@ -233,22 +224,11 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
 
     let filter = new HttpParams()
       .set('interval_from', moment(interval.start).toISOString())
-      .set('interval_to', moment(interval.end).toISOString());
-
-    if (this._selectedResourceId) {
-      filter = filter.set('resource', this._selectedResourceId);
-
-      const resource = this._resourceService.findResourceById(
-        this._selectedResourceId
+      .set('interval_to', moment(interval.end).toISOString())
+      .set(
+        'resource',
+        this._displayedResources?.map((res) => res.id).join(',') ?? ''
       );
-      if (resource) {
-        const type =
-          resource.type === ResourceType.VIRTUAL_ROOM
-            ? ReservationType.ROOM_CAPACITY
-            : ReservationType.PHYSICAL_RESOURCE;
-        filter = filter.set('type', type);
-      }
-    }
 
     this._resReqService
       .fetchItems<ReservationRequest>(filter)

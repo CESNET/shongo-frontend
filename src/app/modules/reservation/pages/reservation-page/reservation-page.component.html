@@ -48,7 +48,7 @@
 
         <!-- Current view date -->
         <h1 class="reservation__date-header reservation__date-header--main">
-          {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
+          {{ calendar.viewDate | calendarDate : calendar.view + "ViewTitle" }}
         </h1>
       </div>
 
@@ -64,7 +64,7 @@
       class="reservation__toolbar-row reservation__toolbar-row--mobile"
     >
       <h1 class="reservation__date-header reservation__date-header--mobile">
-        {{ calendar.viewDate | calendarDate: calendar.view + "ViewTitle" }}
+        {{ calendar.viewDate | calendarDate : calendar.view + "ViewTitle" }}
       </h1>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -122,6 +122,7 @@
           <b class="sidebar__heading" i18n="heading">Resource selection</b>
           <app-resource-selection-form
             (resourceChange)="selectedResource = $event"
+            (displayedResourcesChange)="displayedResources = $event"
           ></app-resource-selection-form>
         </section>
 
@@ -250,7 +251,7 @@
               >
               <!-- Slot start value -->
               <div class="sidebar__slot-part-value">
-                <span>{{ selectedSlot.start | momentDate: "LLL" }}</span>
+                <span>{{ selectedSlot.start | momentDate : "LLL" }}</span>
 
                 <!-- Fine tuning buttons -->
                 <div class="time-setting">
@@ -288,7 +289,7 @@
 
               <!-- Slot end value -->
               <div class="sidebar__slot-part-value">
-                <span>{{ selectedSlot.end | momentDate: "LLL" }}</span>
+                <span>{{ selectedSlot.end | momentDate : "LLL" }}</span>
 
                 <!-- Fine tuning buttons -->
                 <div class="time-setting">
@@ -351,7 +352,7 @@
         #calendar
         class="reservation__calendar fullscreen-calendar"
         [allowSlotSelection]="true"
-        [selectedResourceId]="selectedResource?.id"
+        [displayedResources]="displayedResources"
         (slotSelected)="selectedSlot = $event"
       ></app-reservation-calendar>
     </mat-drawer-content>

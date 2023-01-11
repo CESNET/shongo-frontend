@@ -26,6 +26,7 @@ import { ShongoCalendarModule } from '../shongo-calendar/shongo-calendar.module'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRippleModule } from '@angular/material/core';
 import { HoldClickDirective } from './directives/hold-click.directive';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { HoldClickDirective } from './directives/hold-click.directive';
     MatSidenavModule,
     MatMenuModule,
     MatDialogModule,
+    MatSlideToggleModule,
     MatProgressSpinnerModule,
     ReservationFormsModule,
     ShongoCalendarModule,
