@@ -230,7 +230,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     const interval = this._getInterval(this.viewDate);
     const type =
       this._displayedResources[0].type === ResourceType.VIRTUAL_ROOM
-        ? ReservationType.ROOM_CAPACITY
+        ? `${ReservationType.ROOM_CAPACITY},${ReservationType.VIRTUAL_ROOM}`
         : ReservationType.PHYSICAL_RESOURCE;
 
     const filter = new HttpParams()
