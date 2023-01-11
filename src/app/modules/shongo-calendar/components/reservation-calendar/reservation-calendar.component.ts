@@ -218,6 +218,11 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
    * Fetches reservations based on currently displayed interval and selected resource.
    */
   fetchReservations(): void {
+    if (!this._displayedResources?.length) {
+      this._events = [];
+      return;
+    }
+
     this._loading$.next(true);
 
     const interval = this._getInterval(this.viewDate);
