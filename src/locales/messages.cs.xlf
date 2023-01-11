@@ -4709,6 +4709,24 @@
 				</context-group>
 				<note priority="1" from="description">Help page text</note>
 			</trans-unit>
+			<trans-unit id="8699958211629904621" datatype="html">
+				<source>Show reservations of</source>
+				<target>Zobrazit rezervace pro</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.html</context>
+					<context context-type="linenumber">51</context>
+				</context-group>
+				<note priority="1" from="description">field label</note>
+			</trans-unit>
+			<trans-unit id="4331794290611284056" datatype="html">
+				<source>More resources</source>
+				<target>Více zdrojů</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.html</context>
+					<context context-type="linenumber">47</context>
+				</context-group>
+				<note priority="1" from="description">input label</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
