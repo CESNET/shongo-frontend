@@ -142,10 +142,20 @@
 
     <ng-template #internalRoute>
       <a
+        *ngIf="item.route === '/reserve'"
+        mat-flat-button
+        color="primary"
+        class="navigation-list__item"
+        [routerLink]="item.route"
+      >
+        <mat-icon inline>edit_calendar</mat-icon>
+        &nbsp;{{ item.label }}
+      </a>
+      <a
+        *ngIf="item.route !== '/reserve'"
         mat-button
         class="navigation-list__item"
         [routerLink]="item.route"
-        [class.navigation-list__item--primary]="item.route === '/reserve'"
         >{{ item.label }}</a
       >
     </ng-template>
