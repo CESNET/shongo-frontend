@@ -32,6 +32,8 @@ import { RequestConfirmationDialogComponent } from '../../../../shared/component
 import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
+import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -226,10 +228,15 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
     this._loading$.next(true);
 
     const interval = this._getInterval(this.viewDate);
+    const type =
+      this._displayedResources[0].type === ResourceType.VIRTUAL_ROOM
+        ? ReservationType.ROOM_CAPACITY
+        : ReservationType.PHYSICAL_RESOURCE;
 
-    let filter = new HttpParams()
+    const filter = new HttpParams()
       .set('interval_from', moment(interval.start).toISOString())
       .set('interval_to', moment(interval.end).toISOString())
+      .set('type', type)
       .set(
         'resource',
         this._displayedResources?.map((res) => res.id).join(',') ?? ''
