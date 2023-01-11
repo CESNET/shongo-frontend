@@ -121,11 +121,10 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    */
   onResourceSelect(resource: Resource | null): void {
     const displayedResourcesCtrl = this.form.get('displayedResources')!;
-    const displayedResources: Resource[] = displayedResourcesCtrl.value;
 
-    if (resource && !displayedResources.includes(resource)) {
-      displayedResourcesCtrl.setValue([resource, ...displayedResources]);
-    } else if (!resource) {
+    if (resource) {
+      displayedResourcesCtrl.setValue([resource]);
+    } else {
       displayedResourcesCtrl.setValue([]);
     }
 
