@@ -567,10 +567,6 @@
           <context context-type="sourcefile">src/app/modules/help/pages/report-page/report-page.component.html</context>
           <context context-type="linenumber">59,61</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/user/pages/user-settings-page/user-settings-page.component.html</context>
-          <context context-type="linenumber">105,106</context>
-        </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
       <trans-unit id="3841698373957494646" datatype="html">
@@ -1079,6 +1075,22 @@
         <note priority="1" from="description">Middle of sentence: Repeat every {nth}. {day} in
                   every {nth}. month.</note>
         <note priority="1" from="meaning">sentence part</note>
+      </trans-unit>
+      <trans-unit id="169368048913887307" datatype="html">
+        <source>Repeat until</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/periodicity-selection-form/periodicity-selection-form.component.html</context>
+          <context context-type="linenumber">244</context>
+        </context-group>
+        <note priority="1" from="description">field label</note>
+      </trans-unit>
+      <trans-unit id="2410388344305113622" datatype="html">
+        <source>Except for dates</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/periodicity-selection-form/periodicity-selection-form.component.html</context>
+          <context context-type="linenumber">263</context>
+        </context-group>
+        <note priority="1" from="description">label</note>
       </trans-unit>
       <trans-unit id="4782966356126666886" datatype="html">
         <source>Add date</source>
@@ -2960,6 +2972,22 @@
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
+      <trans-unit id="7731186600337237359" datatype="html">
+        <source>Resource capacity utilization</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-capacity-utilization-page/resource-capacity-utilization-page.component.html</context>
+          <context context-type="linenumber">2,5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+        <note priority="1" from="description">heading</note>
+      </trans-unit>
       <trans-unit id="1571513162229977209" datatype="html">
         <source>Shows percentage of utilized resource capacity.</source>
         <context-group purpose="location">
@@ -2983,18 +3011,6 @@
           <context context-type="linenumber">69,71</context>
         </context-group>
         <note priority="1" from="description">error message</note>
-      </trans-unit>
-      <trans-unit id="7731186600337237359" datatype="html">
-        <source>Resource capacity utilization</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
-          <context context-type="linenumber">3,4</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
-          <context context-type="linenumber">32,33</context>
-        </context-group>
-        <note priority="1" from="description">heading</note>
       </trans-unit>
       <trans-unit id="6009275794209052356" datatype="html">
         <source>Reservations</source>
@@ -3683,6 +3699,14 @@
           <context context-type="linenumber">94,97</context>
         </context-group>
         <note priority="1" from="description">checkbox label</note>
+      </trans-unit>
+      <trans-unit id="3620188369327429839" datatype="html">
+        <source> Save </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/user/pages/user-settings-page/user-settings-page.component.html</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+        <note priority="1" from="description">button name</note>
       </trans-unit>
       <trans-unit id="4168689084593765068" datatype="html">
         <source>Use your operating system&apos;s configuration</source>
