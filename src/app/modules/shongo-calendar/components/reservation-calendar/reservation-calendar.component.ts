@@ -221,7 +221,7 @@ export class ReservationCalendarComponent implements OnInit, OnDestroy {
    */
   fetchReservations(): void {
     if (!this._displayedResources?.length) {
-      this._events = [];
+      this._events = this._createdEvent ? [this._createdEvent] : [];
       return;
     }
 
