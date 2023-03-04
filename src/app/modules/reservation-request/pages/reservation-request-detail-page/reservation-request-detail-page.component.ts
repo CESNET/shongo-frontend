@@ -63,7 +63,7 @@ export class ReservationRequestDetailPageComponent
         if (tabIndex) {
           const tabIndexNum = Number(tabIndex);
 
-          if (tabIndexNum !== NaN) {
+          if (!Number.isNaN(tabIndexNum)) {
             this.tabIndex = tabIndexNum;
           }
         }
