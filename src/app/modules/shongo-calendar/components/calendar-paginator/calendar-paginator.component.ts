@@ -1,9 +1,9 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
 } from '@angular/core';
 import { CalendarView } from 'angular-calendar';
 

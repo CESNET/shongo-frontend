@@ -1,6 +1,6 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   Input,
   OnInit,
 } from '@angular/core';
@@ -12,13 +12,13 @@ import { getFormError } from 'src/app/utils/get-form-error';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
-  roomNameErrorHandler,
   pinErrorHandler,
+  roomNameErrorHandler,
 } from '../../utils/custom-error-handlers';
 import {
-  ROOM_DESCRIPTION_MAXLENGTH,
-  PIN_PATTERN,
   PIN_MINLENGTH,
+  PIN_PATTERN,
+  ROOM_DESCRIPTION_MAXLENGTH,
   ROOM_NAME_MAXLENGTH,
   ROOM_NAME_PATTERN,
 } from '../../utils/reservation-form.constants';

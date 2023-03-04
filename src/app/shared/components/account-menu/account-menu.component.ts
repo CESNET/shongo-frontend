@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { accountMenuItems } from './account-menu-items';

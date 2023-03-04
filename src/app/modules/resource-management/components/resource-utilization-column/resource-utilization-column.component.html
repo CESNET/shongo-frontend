@@ -4,9 +4,8 @@
     aria-label="Open resource utilization detail"
     i18n-aria-label="button name"
     [routerLink]="['./detail']"
-    [queryParams]="getQueryParams()"
-  >
-    {{ cellData.usedCapacity + "/" + cellData.totalCapacity }}
+    [queryParams]="getQueryParams()">
+    {{ cellData.usedCapacity + '/' + cellData.totalCapacity }}
   </a>
   <ng-template #relativeValue>
     <a

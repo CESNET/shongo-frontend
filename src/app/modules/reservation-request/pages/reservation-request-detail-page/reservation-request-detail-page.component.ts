@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnDestroy,
+  Component,
   Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';

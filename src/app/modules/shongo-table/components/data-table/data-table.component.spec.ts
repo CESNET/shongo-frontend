@@ -1,20 +1,20 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { DataTableComponent } from './data-table.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   DataTableDatasourceStub,
   DataTableDataStub,
 } from 'src/app/test/stubs/data-table-datasource.stub';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
 import { ShongoTableModule } from '../../shongo-table.module';
+import { DataTableComponent } from './data-table.component';
 
 describe('DataTableComponent', () => {
   let component: DataTableComponent<DataTableDataStub>;

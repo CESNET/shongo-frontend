@@ -1,8 +1,8 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  Input,
   ChangeDetectorRef,
+  Component,
+  Input,
 } from '@angular/core';
 import { AlertType } from '../../models/enums/alert-type.enum';
 

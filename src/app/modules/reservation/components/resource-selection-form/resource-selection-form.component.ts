@@ -1,10 +1,10 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   EventEmitter,
-  Output,
-  OnInit,
   OnDestroy,
+  OnInit,
+  Output,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';

@@ -1,10 +1,10 @@
 import {
-  Component,
+  AfterViewInit,
   ChangeDetectionStrategy,
-  ViewChild,
+  Component,
   Input,
   OnInit,
-  AfterViewInit,
+  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
@@ -16,13 +16,13 @@ import { getFormError } from 'src/app/utils/get-form-error';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
-  roomNameErrorHandler,
   pinErrorHandler,
+  roomNameErrorHandler,
 } from '../../utils/custom-error-handlers';
 import {
-  ROOM_DESCRIPTION_MAXLENGTH,
-  PIN_PATTERN,
   PIN_MINLENGTH,
+  PIN_PATTERN,
+  ROOM_DESCRIPTION_MAXLENGTH,
   ROOM_NAME_MAXLENGTH,
   ROOM_NAME_PATTERN,
 } from '../../utils/reservation-form.constants';

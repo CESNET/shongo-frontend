@@ -1,9 +1,9 @@
 import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  Input,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';

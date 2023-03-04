@@ -6,7 +6,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { resourceCapacityUtilizationMock } from 'src/app/test/mocks/resource-capacity-utilization.mock';
 import { Spied } from 'src/app/test/models/spied.type';
 import { ResourceManagementModule } from '../../resource-management.module';
-
 import { ResourceCapacityUtilizationPageComponent } from './resource-capacity-utilization-page.component';
 
 describe('ResourceCapacityUtilizationPageComponent', () => {

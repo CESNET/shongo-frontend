@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { IdentityClaims } from '../../shared/models/interfaces/identity-claims.interface';
-import { MatDialog } from '@angular/material/dialog';
-import { SessionEndedDialogComponent } from 'src/app/shared/components/session-ended-dialog/session-ended-dialog.component';
 import { map } from 'rxjs/operators';
+import { SessionEndedDialogComponent } from 'src/app/shared/components/session-ended-dialog/session-ended-dialog.component';
+import { IdentityClaims } from '../../shared/models/interfaces/identity-claims.interface';
 import { AlertService } from '../services/alert.service';
 
 const ERRORS_REQUIRING_USER_INTERACTION = [

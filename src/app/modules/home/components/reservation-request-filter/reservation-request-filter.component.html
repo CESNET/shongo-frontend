@@ -17,8 +17,7 @@
       <mat-form-field
         appearance="outline"
         *ngIf="showAdvancedFilter"
-        class="filter__field"
-      >
+        class="filter__field">
         <mat-label i18n="field label">Search</mat-label>
         <input type="text" matInput formControlName="search" />
       </mat-form-field>
@@ -29,18 +28,15 @@
       <mat-form-field
         appearance="outline"
         *ngIf="showAdvancedFilter"
-        class="filter__field"
-      >
+        class="filter__field">
         <mat-label i18n="field label:From date">From</mat-label>
         <input
           matInput
           [matDatepicker]="dateFromPicker"
-          formControlName="dateFrom"
-        />
+          formControlName="dateFrom" />
         <mat-datepicker-toggle
           matSuffix
-          [for]="dateFromPicker"
-        ></mat-datepicker-toggle>
+          [for]="dateFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #dateFromPicker></mat-datepicker>
       </mat-form-field>
 
@@ -48,18 +44,15 @@
       <mat-form-field
         appearance="outline"
         *ngIf="showAdvancedFilter"
-        class="filter__field"
-      >
+        class="filter__field">
         <mat-label i18n="field label:To date">To</mat-label>
         <input
           matInput
           [matDatepicker]="dateToPicker"
-          formControlName="dateTo"
-        />
+          formControlName="dateTo" />
         <mat-datepicker-toggle
           matSuffix
-          [for]="dateToPicker"
-        ></mat-datepicker-toggle>
+          [for]="dateToPicker"></mat-datepicker-toggle>
         <mat-datepicker #dateToPicker></mat-datepicker>
       </mat-form-field>
     </div>
@@ -81,8 +74,7 @@
       mat-stroked-button
       color="primary"
       (click)="toggleAdvancedFilter()"
-      class="buttons__button"
-    >
+      class="buttons__button">
       <span
         *ngIf="showAdvancedFilter; else hiddenAdvancedFilter"
         i18n="button name"

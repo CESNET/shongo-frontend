@@ -1,7 +1,7 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   OnInit,
-  ChangeDetectionStrategy,
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';

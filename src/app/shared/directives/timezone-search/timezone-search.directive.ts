@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatSelectSearchComponent } from 'ngx-mat-select-search';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Timezone, IANA_TIMEZONES } from '../../models/data/timezones';
+import { IANA_TIMEZONES, Timezone } from '../../models/data/timezones';
 
 /**
  * Sets up timezone search on NgxMatSelectSearch element.

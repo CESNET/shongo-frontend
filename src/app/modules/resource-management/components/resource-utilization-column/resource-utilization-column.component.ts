@@ -1,9 +1,9 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   Inject,
-  OnInit,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

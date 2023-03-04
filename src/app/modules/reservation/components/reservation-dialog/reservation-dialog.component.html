@@ -12,8 +12,7 @@
   <div class="creating-container" *ngIf="creating$ | async">
     <mat-progress-spinner
       mode="indeterminate"
-      color="primary"
-    ></mat-progress-spinner>
+      color="primary"></mat-progress-spinner>
     <b i18n="loading text">Creating reservation request</b>
   </div>
 </mat-dialog-content>
@@ -25,8 +24,7 @@
     color="primary"
     (click)="createReservationRequest()"
     [disabled]="!formComponent || !formComponent.valid"
-    i18n="button name"
-  >
+    i18n="button name">
     Create
   </button>
 </mat-dialog-actions>

@@ -6,7 +6,6 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
-
 import { SetMictophoneLevelDialogComponent } from './set-mictophone-level-dialog.component';
 
 describe('SetMictophoneLevelDialogComponent', () => {

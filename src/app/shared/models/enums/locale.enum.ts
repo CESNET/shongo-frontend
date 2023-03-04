@@ -1,4 +1,4 @@
 export enum Locale {
-    EN = 'en',
-    CS = 'cs'
+  EN = 'en',
+  CS = 'cs',
 }

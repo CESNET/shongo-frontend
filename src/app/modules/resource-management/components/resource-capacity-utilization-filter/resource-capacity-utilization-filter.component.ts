@@ -1,20 +1,20 @@
 import { HttpParams } from '@angular/common/http';
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   OnDestroy,
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Option } from 'src/app/shared/models/interfaces/option.interface';
-import * as moment from 'moment';
 import {
   DataTableFilter,
   TableSettings,
 } from 'src/app/modules/shongo-table/filter/data-table-filter';
 import { TimeUnit } from 'src/app/shared/models/enums/time-unit.enum';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 
 const DEFAULT_UNIT_DIST = 5;
 

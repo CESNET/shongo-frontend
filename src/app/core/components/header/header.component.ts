@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';

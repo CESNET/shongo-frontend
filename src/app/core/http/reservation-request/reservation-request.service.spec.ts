@@ -1,7 +1,7 @@
-import { TestBed } from '@angular/core/testing';
-import { ReservationRequestService } from './reservation-request.service';
-import { httpClientStub } from 'src/app/test/stubs/http-client.stub';
 import { HttpClient } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
+import { httpClientStub } from 'src/app/test/stubs/http-client.stub';
+import { ReservationRequestService } from './reservation-request.service';
 
 describe('ReservationRequestService', () => {
   let service: ReservationRequestService;

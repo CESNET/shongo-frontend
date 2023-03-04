@@ -11,7 +11,6 @@ import { ReservationRequest } from 'src/app/shared/models/rest-api/reservation-r
 import { SharedModule } from 'src/app/shared/shared.module';
 import { mockReservationRequest } from 'src/app/test/mocks/reservation-request.mock';
 import { CertainityDialogStub } from 'src/app/test/stubs/certainity-dialog.stub';
-
 import { CapacityReservationsTabComponent } from './capacity-reservations-tab.component';
 
 describe('CapacityReservationsTabComponent', () => {

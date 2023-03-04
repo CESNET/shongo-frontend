@@ -1,8 +1,7 @@
 <div class="mobile-table">
   <header
     class="mobile-table__header"
-    *ngIf="showRefreshButton || showDeleteButtons || description"
-  >
+    *ngIf="showRefreshButton || showDeleteButtons || description">
     <mat-card>
       <section class="mobile-table__header-main">
         <span>{{ description }}</span>
@@ -15,8 +14,7 @@
             aria-label="Refresh"
             i18n-matTooltip="button name"
             i18n-aria-label="button name"
-            (click)="dataSource.refreshData()"
-          >
+            (click)="dataSource.refreshData()">
             <mat-icon>refresh</mat-icon>
           </button>
 
@@ -27,8 +25,7 @@
               aria-label="Delete selected"
               i18n-matTooltip="button name"
               i18n-aria-label="button name"
-              (click)="deleteSelectedRows()"
-            >
+              (click)="deleteSelectedRows()">
               <mat-icon>delete</mat-icon>
             </button>
           </ng-container>
@@ -88,8 +85,7 @@
                   *ngIf="column.helpComponent"
                   mat-icon-button
                   class="help-icon-button"
-                  (click)="openHelp(column)"
-                >
+                  (click)="openHelp(column)">
                   <mat-icon>help</mat-icon>
                 </button>
               </div>
@@ -110,8 +106,7 @@
                         item,
                         column.name
                       )
-                    "
-                  ></ng-container>
+                    "></ng-container>
                 </ng-template>
               </div>
             </div>
@@ -123,8 +118,7 @@
         <div class="cell__footer">
           <div
             class="cell__actions"
-            *ngIf="filterDisplayedButtons(item)?.length"
-          >
+            *ngIf="filterDisplayedButtons(item)?.length">
             <!-- Buttons -->
             <ng-container>
               <ng-container *ngFor="let button of filterDisplayedButtons(item)">
@@ -140,8 +134,7 @@
                         button.isDisabledFunc
                           ? button.isDisabledFunc(item)
                           : false
-                      "
-                    >
+                      ">
                       <mat-icon>{{ button.icon }}</mat-icon>
                     </button>
                   </div>
@@ -162,8 +155,7 @@
                           item
                         );
                         else buttonLoading
-                      "
-                    >
+                      ">
                       <mat-icon>{{ button.icon }}</mat-icon>
                     </button>
                     <ng-template #buttonLoading>
@@ -171,8 +163,7 @@
                         diameter="20"
                         strokeWidth="3"
                         color="accent"
-                        class="button-loading"
-                      ></mat-spinner>
+                        class="button-loading"></mat-spinner>
                     </ng-template>
                   </div>
                   <div *ngSwitchCase="TableButtonType.LINK">
@@ -189,8 +180,7 @@
                         button.isDisabledFunc
                           ? button.isDisabledFunc(item)
                           : false
-                      "
-                    >
+                      ">
                       <mat-icon>{{ button.icon }}</mat-icon>
                     </a>
                   </div>
@@ -204,8 +194,7 @@
               color="primary"
               (click)="$event.stopPropagation()"
               (change)="$event ? selection.toggle(item) : null"
-              [checked]="selection.isSelected(item)"
-            >
+              [checked]="selection.isSelected(item)">
             </mat-checkbox>
           </div>
         </div>
@@ -221,14 +210,12 @@
           height: '30vh',
           width: '100%',
           border: '1px solid white'
-        }"
-      ></ngx-skeleton-loader>
+        }"></ngx-skeleton-loader>
     </ng-template>
 
     <!-- No data or error -->
     <mat-card
-      *ngIf="(loadingData$ | async) === false && data?.items?.length === 0"
-    >
+      *ngIf="(loadingData$ | async) === false && data?.items?.length === 0">
       <div class="cell cell--message">
         <b *ngIf="data?.error; else noEntries" i18n="error message"
           >An error occured</b
@@ -251,8 +238,7 @@
         [pageSizeOptions]="[5, 10, 20]"
         [class.extra-gap]="
           !dataSource || !dataSource.data || !dataSource.data.count
-        "
-      >
+        ">
       </mat-paginator>
     </mat-card>
   </footer>

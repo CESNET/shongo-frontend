@@ -1,8 +1,8 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnInit,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';

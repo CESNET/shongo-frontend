@@ -1,7 +1,6 @@
 <div
   class="reservation-detail"
-  *ngIf="currentRequest$ | async as currentRequest"
->
+  *ngIf="currentRequest$ | async as currentRequest">
   <main class="reservation-detail__main">
     <header>
       <h2 class="mat-primary-color" i18n="heading">Detail</h2>
@@ -35,8 +34,7 @@
               currentRequest.allocationState === AllocationState.ALLOCATED;
               else requestedTimeSlotTag
             "
-            i18n="definition tag"
-          >
+            i18n="definition tag">
             Allocated time slot
           </span>
           <ng-template #requestedTimeSlotTag>
@@ -45,9 +43,9 @@
         </dt>
         <dd>
           {{
-            (slot.start | momentDate: "lll") +
-              " - " +
-              (slot.end | momentDate: "lll")
+            (slot.start | momentDate : 'lll') +
+              ' - ' +
+              (slot.end | momentDate : 'lll')
           }}
         </dd>
       </ng-container>
@@ -67,8 +65,7 @@
             aria-label="Open help"
             i18n-aria-label="button name"
             class="help-icon-button"
-            (click)="openStateHelp()"
-          >
+            (click)="openStateHelp()">
             <mat-icon>help</mat-icon>
           </button>
         </dt>
@@ -76,8 +73,7 @@
           <app-state-chip
             *ngIf="getStateProps(state) as props"
             [state]="props.displayName"
-            [color]="props.color"
-          ></app-state-chip>
+            [color]="props.color"></app-state-chip>
         </dd>
       </ng-container>
 
@@ -91,8 +87,7 @@
         *ngIf="
           currentRequest.notifyParticipants !== null &&
           currentRequest.notifyParticipants !== undefined
-        "
-      >
+        ">
         <dt>
           <span i18n="definition tag">Notify participants:</span
           ><button
@@ -104,8 +99,7 @@
             matTooltip="Specifies whether participants receive e-mail notification to the meeting in the room, notifications about room changes and notification when room becomes available to join."
             i18n-matTooltip="help message"
             matTooltipPosition="right"
-            (click)="tooltip.toggle()"
-          >
+            (click)="tooltip.toggle()">
             <mat-icon>help</mat-icon>
           </button>
         </dt>
@@ -121,8 +115,7 @@
         *ngIf="
           isPeriodicityShown() &&
           currentRequest.roomCapacityData?.periodicity as periodicity
-        "
-      >
+        ">
         <dt i18n="definition tag">Periodicity</dt>
         <dd>
           <span [ngSwitch]="periodicity.type">
@@ -144,8 +137,7 @@
             *ngIf="
               periodicity.periodicityEnd &&
               periodicity.type !== PeriodicityType.NONE
-            "
-          >
+            ">
             <i class="grayed-text"
               >&nbsp;(<span i18n="periodicity note">until</span>
               {{ periodicity.periodicityEnd | momentDate }})</i
@@ -155,8 +147,7 @@
         <ng-container
           *ngIf="
             periodicity.excludeDates && periodicity.excludeDates.length !== 0
-          "
-        >
+          ">
           <dt i18n="definition tag">Exclude dates:</dt>
           <dd>
             <span *ngFor="let date of periodicity.excludeDates; index as i">
@@ -172,8 +163,7 @@
         *ngIf="
           currentRequest.type === ReservationType.PHYSICAL_RESOURCE &&
           currentRequest.physicalResourceData as physicalResData
-        "
-      >
+        ">
         <!-- Resource name -->
         <ng-container *ngIf="physicalResData.resourceName as resourceName">
           <dt i18n="definition tag">Resource name:</dt>
@@ -182,8 +172,7 @@
 
         <!-- Resource description -->
         <ng-container
-          *ngIf="physicalResData.resourceDescription as description"
-        >
+          *ngIf="physicalResData.resourceDescription as description">
           <dt i18n="definition tag">Resource description:</dt>
           <dd>
             {{ description }}
@@ -195,8 +184,7 @@
       <ng-container *ngIf="currentRequest.virtualRoomData">
         <!-- Technology -->
         <ng-container
-          *ngIf="currentRequest.virtualRoomData.technology as technology"
-        >
+          *ngIf="currentRequest.virtualRoomData.technology as technology">
           <dt i18n="definition tag">Technology</dt>
           <dd>
             <span
@@ -217,8 +205,7 @@
           *ngIf="
             currentRequest?.virtualRoomData?.roomName &&
             currentRequest.type !== ReservationType.ROOM_CAPACITY
-          "
-        >
+          ">
           <dt i18n="definition tag">Room name:</dt>
           <dd>{{ currentRequest.virtualRoomData.roomName }}</dd>
         </ng-container>
@@ -229,22 +216,19 @@
         *ngIf="
           currentRequest.type === ReservationType.ROOM_CAPACITY &&
           currentRequest.roomCapacityData as capacityData
-        "
-      >
+        ">
         <!-- Reservation request ID -->
         <dt i18n="definition tag">For virtual room:</dt>
         <dd *ngIf="capacityData.roomReservationRequestId; else noResReqId">
           <a
             [routerLink]="
               '/reservation-request/' + capacityData.roomReservationRequestId
-            "
-          >
+            ">
             <span
               *ngIf="
                 reservationRequest?.virtualRoomData?.roomName as roomName;
                 else undefinedRoomName
-              "
-            >
+              ">
               {{ roomName }}
             </span>
           </a>
@@ -266,8 +250,7 @@
           *ngIf="
             currentRequest.virtualRoomData?.technology !== Technology.FREEPBX &&
             capacityData.capacityParticipantCount as participantCount
-          "
-        >
+          ">
           <dt i18n="definition tag">Number of participants:</dt>
           <dd>{{ participantCount }}</dd>
         </ng-container>
@@ -278,8 +261,7 @@
             currentRequest.virtualRoomData?.technology !==
               Technology.ADOBE_CONNECT &&
             currentRequest.virtualRoomData?.technology !== Technology.FREEPBX
-          "
-        >
+          ">
           <dt i18n="definition tag">Record:</dt>
           <dd>
             <span *ngIf="capacityData.capacityHasRecordingService; else no"
@@ -333,8 +315,7 @@
         *ngIf="modificationHistoryDataSource as dataSource"
         [dataSource]="dataSource"
         [showCheckboxes]="false"
-        [showDeleteButtons]="false"
-      ></app-data-table>
+        [showDeleteButtons]="false"></app-data-table>
     </section>
   </aside>
 </div>

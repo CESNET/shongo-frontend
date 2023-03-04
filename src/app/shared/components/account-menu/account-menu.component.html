@@ -3,8 +3,7 @@
     mat-button
     [matMenuTriggerFor]="accountSubMenu"
     fxHide.lt-sm
-    class="account"
-  >
+    class="account">
     <span class="account__body">
       <mat-icon
         class="account__icon icon-s"
@@ -20,7 +19,7 @@
       </ng-template>
 
       <span class="account__username">{{
-        getUsername() | appShortString: 15
+        getUsername() | appShortString : 15
       }}</span>
       <span class="account__timezone">{{ settings.timeZoneOffset }}</span>
     </span>
@@ -30,8 +29,7 @@
     mat-icon-button
     [matMenuTriggerFor]="accountSubMenu"
     fxHide
-    fxShow.lt-sm
-  >
+    fxShow.lt-sm>
     <mat-icon>account_circle</mat-icon>
   </button>
 
@@ -39,8 +37,7 @@
     <ng-container *ngFor="let item of accountItems">
       <ng-container
         [ngTemplateOutlet]="item.route ? linkItem : buttonItem"
-        [ngTemplateOutletContext]="{ item: item }"
-      >
+        [ngTemplateOutletContext]="{ item: item }">
       </ng-container>
     </ng-container>
 
@@ -61,8 +58,7 @@
     mat-button
     (click)="auth.login()"
     i18n="button name|Log in button"
-    *ngIf="auth.isDoneLoading$ | async; else loggingIn"
-  >
+    *ngIf="auth.isDoneLoading$ | async; else loggingIn">
     Log in
   </button>
 </ng-template>

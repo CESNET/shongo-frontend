@@ -3,8 +3,7 @@
 
   <div
     class="buttons"
-    *ngIf="(loading$ | async) === false && reservationRequest"
-  >
+    *ngIf="(loading$ | async) === false && reservationRequest">
     <!-- Book room capacity button -->
     <a
       mat-flat-button
@@ -16,8 +15,7 @@
         reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
         reservationRequest.isProvidable &&
         reservationRequest.state !== ReservationRequestState.ALLOCATED_FINISHED
-      "
-    >
+      ">
       <mat-icon>group_add</mat-icon>&nbsp;<span
         i18n="button name"
         id="book-room-capacity-btn-name"
@@ -36,8 +34,7 @@
         *ngIf="
           reservationRequest.state !==
           ReservationRequestState.ALLOCATED_FINISHED
-        "
-      >
+        ">
         <mat-icon>settings</mat-icon>&nbsp;<span
           i18n="button name"
           id="edit-btn-name"
@@ -51,8 +48,7 @@
         class="buttons__button"
         aria-labelledby="delete-btn-name"
         *ngIf="(deleting$ | async) === false; else deleting"
-        (click)="delete()"
-      >
+        (click)="delete()">
         <mat-icon>delete_forever</mat-icon>&nbsp;<span
           i18n="button name"
           id="delete-btn-name"
@@ -63,8 +59,7 @@
       <ng-template #deleting>
         <app-loading-text
           message="Deleting..."
-          i18n-message="loading text"
-        ></app-loading-text>
+          i18n-message="loading text"></app-loading-text>
       </ng-template>
     </ng-container>
   </div>
@@ -80,12 +75,10 @@
         width: '150px',
         'margin-right': '15px',
         border: '1px solid white'
-      }"
-    ></ngx-skeleton-loader>
+      }"></ngx-skeleton-loader>
     <ngx-skeleton-loader
       count="4"
-      [theme]="{ height: '50px' }"
-    ></ngx-skeleton-loader>
+      [theme]="{ height: '50px' }"></ngx-skeleton-loader>
   </div>
 
   <!-- Data or error -->
@@ -102,14 +95,14 @@
       <mat-tab-group
         [animationDuration]="0"
         [(selectedIndex)]="tabIndex"
-        (selectedIndexChange)="onTabIndexChange($event)"
-      >
+        (selectedIndexChange)="onTabIndexChange($event)">
         <!-- Reservation -->
         <mat-tab label="Reservation" i18n-label="tab label">
           <div class="tab-content">
             <app-reservation-detail
-              [reservationRequest]="reservationRequest"
-            ></app-reservation-detail>
+              [reservationRequest]="
+                reservationRequest
+              "></app-reservation-detail>
           </div>
         </mat-tab>
 
@@ -122,8 +115,7 @@
             (reservationRequest.type === ReservationType.ROOM_CAPACITY &&
               reservationRequest.roomCapacityData?.periodicity &&
               reservationRequest.roomCapacityData?.periodicity?.type !== 'NONE')
-          "
-        >
+          ">
           <div class="tab-content">
             <app-capacity-reservations-tab></app-capacity-reservations-tab>
           </div>
@@ -147,8 +139,7 @@
             (reservationRequest.virtualRoomData?.state !== RoomState.STARTED &&
               reservationRequest.virtualRoomData?.state !==
                 RoomState.STARTED_AVAILABLE)
-          "
-        >
+          ">
           <div class="tab-content">
             <app-runtime-management-tab></app-runtime-management-tab>
           </div>
@@ -158,8 +149,7 @@
         <mat-tab
           label="Participants"
           i18n-label="tab label"
-          *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY"
-        >
+          *ngIf="reservationRequest.type === ReservationType.ROOM_CAPACITY">
           <div class="tab-content">
             <app-participants-tab></app-participants-tab>
           </div>
@@ -174,12 +164,10 @@
             reservationRequest.type === ReservationType.VIRTUAL_ROOM ||
             (reservationRequest.type === ReservationType.ROOM_CAPACITY &&
               !reservationRequest.futureSlotCount)
-          "
-        >
+          ">
           <div class="tab-content">
             <app-recordings-tab
-              [reservationRequest]="reservationRequest"
-            ></app-recordings-tab>
+              [reservationRequest]="reservationRequest"></app-recordings-tab>
           </div>
         </mat-tab>
       </mat-tab-group>
@@ -193,7 +181,6 @@
       i18n-message="error message"
       [type]="AlertType.ERROR"
       [isActive]="true"
-      [showCloseButton]="false"
-    ></app-alert>
+      [showCloseButton]="false"></app-alert>
   </ng-template>
 </main>

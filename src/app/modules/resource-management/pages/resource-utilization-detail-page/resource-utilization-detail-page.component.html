@@ -3,7 +3,7 @@
     <h1 i18n="heading">Resource capacity utilization</h1>
     <dl class="definition-list--flex">
       <dt i18b="definition tag">Resource:</dt>
-      <dd>{{ data.name + " (" + data.id + ")" }}</dd>
+      <dd>{{ data.name + ' (' + data.id + ')' }}</dd>
       <dt i18b="definition tag">Interval:</dt>
       <dd>
         {{ this.getInterval() }}
@@ -21,8 +21,7 @@
       i18n-description="table description"
       [dataSource]="reservationsDataSource"
       [showCheckboxes]="false"
-      [showDeleteButtons]="false"
-    ></app-data-table>
+      [showDeleteButtons]="false"></app-data-table>
   </main>
 </ng-container>
 
@@ -37,8 +36,7 @@
           'border-radius': '5px',
           height: '30px',
           border: '1px solid white'
-        }"
-      ></ngx-skeleton-loader>
+        }"></ngx-skeleton-loader>
     </header>
     <main>
       <h1 i18n="heading">Reservations</h1>
@@ -49,8 +47,7 @@
           'border-radius': '5px',
           height: '30px',
           border: '1px solid white'
-        }"
-      ></ngx-skeleton-loader>
+        }"></ngx-skeleton-loader>
     </main>
   </ng-container>
 </ng-template>
@@ -59,6 +56,5 @@
   <app-alert
     [type]="AlertType.ERROR"
     message="Resource not found"
-    i18n-message="error message"
-  ></app-alert>
+    i18n-message="error message"></app-alert>
 </ng-template>

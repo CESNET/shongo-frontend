@@ -18,8 +18,7 @@
         type="email"
         formControlName="email"
         placeholder="Your e-mail..."
-        i18n-placeholder="input placeholder"
-      />
+        i18n-placeholder="input placeholder" />
       <mat-error
         *ngIf="getFormError(form.get('email')!, emailErrorHandler) as error"
         >{{ error }}</mat-error
@@ -35,8 +34,7 @@
         rows="10"
         formControlName="message"
         placeholder="Message about the problem..."
-        i18n-placeholder="input placeholder"
-      ></textarea>
+        i18n-placeholder="input placeholder"></textarea>
       <mat-error
         *ngIf="
           getFormError(form.get('message')!, minLengthErrorHandler) as error
@@ -54,8 +52,7 @@
         class="form__button"
         i18n="button name"
         [disabled]="!form.valid"
-        *ngIf="(loading$ | async) === false; else loading"
-      >
+        *ngIf="(loading$ | async) === false; else loading">
         Submit
       </button>
       <ng-template #loading>
@@ -68,8 +65,7 @@
         type="button"
         class="form__button"
         aria-labelledby="metadata-btn-name"
-        (click)="toggleMetadata()"
-      >
+        (click)="toggleMetadata()">
         <ng-container *ngIf="!showMetadata; else hideMetadata">
           <mat-icon>expand_more</mat-icon>&nbsp;<span
             i18n="button name"

@@ -1,12 +1,12 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  OnInit,
-  OnDestroy,
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';

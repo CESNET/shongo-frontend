@@ -1,10 +1,10 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Inject,
-  ViewChild,
+  OnInit,
   Type,
+  ViewChild,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';

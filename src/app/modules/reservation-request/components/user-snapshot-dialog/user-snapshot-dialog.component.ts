@@ -1,8 +1,8 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Inject,
+  OnInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RuntimeParticipantTableData } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';

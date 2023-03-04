@@ -1,8 +1,7 @@
 <div
   *ngIf="data"
   class="snackbar-alert"
-  [class]="['snackbar-alert--' + data.type]"
->
+  [class]="['snackbar-alert--' + data.type]">
   <div class="snackbar-alert__section">
     <mat-icon>{{ getAlertIcon(data.type) }}</mat-icon>
     <span class="snackbar-alert__message">{{ data.message }}</span>

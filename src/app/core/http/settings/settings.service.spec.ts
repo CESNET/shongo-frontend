@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
-import { SettingsService } from './settings.service';
-import { httpClientStub } from 'src/app/test/stubs/http-client.stub';
 import { HttpClient } from '@angular/common/http';
-import { AuthServiceStub } from 'src/app/test/stubs/auth-service.stub';
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { TestBed } from '@angular/core/testing';
 import { AlertServiceStub } from 'src/app/test/stubs/alert-service.stub';
+import { AuthServiceStub } from 'src/app/test/stubs/auth-service.stub';
+import { httpClientStub } from 'src/app/test/stubs/http-client.stub';
+import { AuthenticationService } from '../../authentication/authentication.service';
 import { AlertService } from '../../services/alert.service';
+import { SettingsService } from './settings.service';
 
 describe('SettingsService', () => {
   let service: SettingsService;

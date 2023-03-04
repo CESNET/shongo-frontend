@@ -9,7 +9,6 @@ import { ReservationRequestService } from 'src/app/core/http/reservation-request
 import { ShongoTableModule } from 'src/app/modules/shongo-table/shongo-table.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CertainityDialogStub } from 'src/app/test/stubs/certainity-dialog.stub';
-
 import { UserRolesTabComponent } from './user-roles-tab.component';
 
 describe('UserRolesTabComponent', () => {

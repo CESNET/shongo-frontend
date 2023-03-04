@@ -1,8 +1,8 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnInit,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';

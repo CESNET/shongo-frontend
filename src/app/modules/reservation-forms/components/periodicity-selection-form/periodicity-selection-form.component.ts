@@ -1,8 +1,8 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  Component,
   Input,
+  OnInit,
 } from '@angular/core';
 import {
   AbstractControl,

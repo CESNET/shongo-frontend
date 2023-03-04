@@ -1,12 +1,12 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnDestroy,
+  Component,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { DataTableDataSource } from '../../data-sources/data-table-datasource';
 
 @Component({

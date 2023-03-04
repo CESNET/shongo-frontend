@@ -1,11 +1,11 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy,
-  ViewChild,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CalendarView } from 'angular-calendar';

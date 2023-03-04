@@ -10,7 +10,6 @@ import { of } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { UserService } from 'src/app/core/http/user/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-
 import { CreateParticipantPageComponent } from './create-participant-page.component';
 
 describe('CreateParticipantPageComponent', () => {

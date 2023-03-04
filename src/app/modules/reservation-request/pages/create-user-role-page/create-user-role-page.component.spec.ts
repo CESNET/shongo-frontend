@@ -12,7 +12,6 @@ import { GroupService } from 'src/app/core/http/group/group.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { UserService } from 'src/app/core/http/user/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-
 import { CreateUserRolePageComponent } from './create-user-role-page.component';
 
 describe('CreateUserRolePageComponent', () => {

@@ -1,13 +1,13 @@
 import {
-  Component,
-  OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
   Injector,
-  AfterViewInit,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

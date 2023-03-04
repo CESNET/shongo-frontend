@@ -1,19 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
-import { ApiService } from '../api.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
+import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { Role } from 'src/app/shared/models/rest-api/role.interface';
+import { Recording } from 'src/app/shared/models/rest-api/recording';
 import {
   RequestParticipant,
   RoleBody,
 } from 'src/app/shared/models/rest-api/request-participant.interface';
+import { Role } from 'src/app/shared/models/rest-api/role.interface';
 import { RuntimeParticipant } from 'src/app/shared/models/rest-api/runtime-participant.interface';
-import { SortDirection } from '@angular/material/sort';
-import { Recording } from 'src/app/shared/models/rest-api/recording';
-import { ParticipantPostBody } from 'src/app/shared/models/types/participant-post-body.type';
 import { EditReservationRequestBody } from 'src/app/shared/models/types/edit-reservation-request-body.type';
+import { ParticipantPostBody } from 'src/app/shared/models/types/participant-post-body.type';
+import { ApiService } from '../api.service';
 
 /**
  * Service for interaction with reservation request endpoint.

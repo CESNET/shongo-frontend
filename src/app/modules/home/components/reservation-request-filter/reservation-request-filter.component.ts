@@ -1,21 +1,21 @@
 import { HttpParams } from '@angular/common/http';
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnInit,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
-import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import {
   DataTableFilter,
   TableSettings,
 } from 'src/app/modules/shongo-table/filter/data-table-filter';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 
 @Component({
   selector: 'app-reservation-request-filter',

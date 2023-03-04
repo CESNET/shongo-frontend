@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { HomeModule } from './modules/home/home.module';
 import { MatPaginatorI18nService } from './mat-paginator-intl.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [AppComponent],

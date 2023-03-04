@@ -1,39 +1,39 @@
+import { animate, style, transition, trigger } from '@angular/animations';
+import { HttpParams } from '@angular/common/http';
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  OnDestroy,
-  Input,
-  Output,
-  EventEmitter,
   ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
   CalendarEvent,
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
-import { finalize, first, takeUntil } from 'rxjs/operators';
-import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { WeekViewHourSegment } from 'calendar-utils';
+import * as moment from 'moment';
+import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
+import { finalize, first, takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { HttpParams } from '@angular/common/http';
-import { ReservationRequest } from '../../../../shared/models/rest-api/reservation-request.interface';
-import * as moment from 'moment';
-import { IdentityClaims } from '../../../../shared/models/interfaces/identity-claims.interface';
-import { CalendarSlot } from '../../../../shared/models/rest-api/slot.interface';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
-import { ReservationRequestState } from '../../../../shared/models/enums/reservation-request-state.enum';
-import { MatDialog } from '@angular/material/dialog';
-import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
-import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
-import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
+import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
+import { Interval } from 'src/app/shared/models/interfaces/interval.interface';
+import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
+import { RequestConfirmationDialogComponent } from '../../../../shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
+import { ReservationRequestState } from '../../../../shared/models/enums/reservation-request-state.enum';
+import { IdentityClaims } from '../../../../shared/models/interfaces/identity-claims.interface';
+import { ReservationRequest } from '../../../../shared/models/rest-api/reservation-request.interface';
+import { CalendarSlot } from '../../../../shared/models/rest-api/slot.interface';
 
 type WeekStartsOn = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 

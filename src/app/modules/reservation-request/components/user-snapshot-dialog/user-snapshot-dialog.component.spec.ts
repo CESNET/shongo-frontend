@@ -5,7 +5,6 @@ import {
   MatDialogModule,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-
 import { UserSnapshotDialogComponent } from './user-snapshot-dialog.component';
 
 describe('UserSnapshotDialogComponent', () => {

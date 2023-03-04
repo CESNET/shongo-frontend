@@ -1,13 +1,13 @@
 import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
   Injector,
   Input,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';

@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
 import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';

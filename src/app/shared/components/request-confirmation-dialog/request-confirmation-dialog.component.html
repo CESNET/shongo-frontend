@@ -6,13 +6,11 @@
   <div class="request-detail">
     <div
       class="request-detail__loading"
-      *ngIf="loading$ | async; else requestDetail"
-    >
+      *ngIf="loading$ | async; else requestDetail">
       <mat-progress-spinner
         diameter="60"
         mode="indeterminate"
-        color="primary"
-      ></mat-progress-spinner>
+        color="primary"></mat-progress-spinner>
       <b i18n="loading text">Processing</b>
     </div>
 
@@ -23,17 +21,17 @@
           {{
             reservationRequest.ownerName +
               (reservationRequest.ownerEmail
-                ? " (" + reservationRequest.ownerEmail + ")"
-                : "")
+                ? ' (' + reservationRequest.ownerEmail + ')'
+                : '')
           }}
         </dd>
 
         <dt i18n="definition tag">Requested slot</dt>
         <dd>
           {{
-            (reservationRequest.slot.start | momentDate: "LLL") +
-              " - " +
-              (reservationRequest.slot.end | momentDate: "LLL")
+            (reservationRequest.slot.start | momentDate : 'LLL') +
+              ' - ' +
+              (reservationRequest.slot.end | momentDate : 'LLL')
           }}
         </dd>
 
@@ -44,8 +42,7 @@
           *ngIf="
             reservationRequest.type === ReservationType.VIRTUAL_ROOM;
             else physicalResource
-          "
-        >
+          ">
           <dt i18n="definition tag">Requested technology</dt>
           <dd>
             {{
@@ -62,8 +59,7 @@
                 reservationRequest.physicalResourceData
                   ?.resourceName as resourceName;
                 else unknownResourceName
-              "
-            >
+              ">
               {{ resourceName }}
             </span>
             <ng-template #unknownResourceName>
@@ -93,8 +89,7 @@
       mat-button
       mat-dialog-close
       i18n="button name"
-      [disabled]="loading$ | async"
-    >
+      [disabled]="loading$ | async">
       Close
     </button>
   </div>
@@ -104,8 +99,7 @@
       color="primary"
       i18n="button name"
       [disabled]="loading$ | async"
-      (click)="accept()"
-    >
+      (click)="accept()">
       Accept
     </button>
     <button
@@ -113,8 +107,7 @@
       color="warn"
       i18n="button name"
       [disabled]="loading$ | async"
-      (click)="reject()"
-    >
+      (click)="reject()">
       Reject
     </button>
   </div>

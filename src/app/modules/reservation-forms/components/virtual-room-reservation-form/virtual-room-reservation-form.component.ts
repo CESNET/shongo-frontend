@@ -1,6 +1,6 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   Input,
   OnInit,
 } from '@angular/core';
@@ -24,8 +24,8 @@ import {
   roomNameErrorHandler,
 } from '../../utils/custom-error-handlers';
 import {
-  PIN_PATTERN,
   PIN_MINLENGTH,
+  PIN_PATTERN,
 } from '../../utils/reservation-form.constants';
 
 @Component({

@@ -6,8 +6,7 @@
       placeholder="Select resource type"
       formControlName="type"
       i18n-placeholder="placeholder"
-      (valueChange)="handleResourceTypeChange($event)"
-    >
+      (valueChange)="handleResourceTypeChange($event)">
       <mat-option *ngFor="let opt of resourceTypes" [value]="opt.value">{{
         opt.displayName
       }}</mat-option>
@@ -19,16 +18,14 @@
     <mat-label i18n="field label">Select resource</mat-label>
     <mat-select
       formControlName="resource"
-      (valueChange)="onResourceSelect($event)"
-    >
+      (valueChange)="onResourceSelect($event)">
       <mat-option>
         <ngx-mat-select-search
           [formControl]="resourceFilterCtrl"
           placeholderLabel="Search..."
           noEntriesFoundLabel="No resources found"
           i18n-placeholderLabel="placeholder"
-          i18n-noEntriesFoundLabel="no results text"
-        ></ngx-mat-select-search>
+          i18n-noEntriesFoundLabel="no results text"></ngx-mat-select-search>
       </mat-option>
       <mat-option
         *ngFor="let resource of filteredResourceOpts"
@@ -53,16 +50,14 @@
     <mat-select
       multiple
       formControlName="displayedResources"
-      (valueChange)="emitDisplayedResources($event)"
-    >
+      (valueChange)="emitDisplayedResources($event)">
       <mat-option>
         <ngx-mat-select-search
           [formControl]="resourceFilterCtrl"
           placeholderLabel="Search..."
           noEntriesFoundLabel="No resources found"
           i18n-placeholderLabel="placeholder"
-          i18n-noEntriesFoundLabel="no results text"
-        ></ngx-mat-select-search>
+          i18n-noEntriesFoundLabel="no results text"></ngx-mat-select-search>
       </mat-option>
       <mat-option
         *ngFor="let resource of filteredResourceOpts"

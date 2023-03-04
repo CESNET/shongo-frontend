@@ -1,11 +1,9 @@
 <div
   class="reservation"
-  *ngIf="(resourceService.loading$ | async) === false; else loadingResources"
->
+  *ngIf="(resourceService.loading$ | async) === false; else loadingResources">
   <mat-toolbar class="reservation__toolbar">
     <mat-toolbar-row
-      class="reservation__toolbar-row reservation__toolbar-row--main"
-    >
+      class="reservation__toolbar-row reservation__toolbar-row--main">
       <!-- Toolbar left -->
       <div class="reservation__toolbar-row-left">
         <!-- Burger menu icon -->
@@ -13,8 +11,7 @@
           mat-icon-button
           (click)="drawer.toggle()"
           aria-label="Toggle side drawer"
-          i18n-aria-label="button name"
-        >
+          i18n-aria-label="button name">
           <mat-icon>menu</mat-icon>
         </button>
 
@@ -23,8 +20,7 @@
           mat-stroked-button
           aria-labelledby="go-back-btn-name"
           routerLink="/"
-          class="reservation__back reservation__back--navbar"
-        >
+          class="reservation__back reservation__back--navbar">
           <mat-icon>arrow_back</mat-icon>&nbsp;<span
             i18n="button name"
             id="go-back-btn-name"
@@ -36,19 +32,19 @@
         <app-calendar-view-selection
           *ngIf="(tabletSizeHit$ | async)?.matches === false"
           [selectedView]="calendar.view"
-          (viewSelected)="calendar.view = $event"
-        ></app-calendar-view-selection>
+          (viewSelected)="calendar.view = $event"></app-calendar-view-selection>
 
         <!-- Calendar paginator -->
         <app-calendar-paginator
           [view]="calendar.view"
           [viewDate]="calendar.viewDate"
-          (viewDateChange)="calendar.viewDate = $event"
-        ></app-calendar-paginator>
+          (viewDateChange)="
+            calendar.viewDate = $event
+          "></app-calendar-paginator>
 
         <!-- Current view date -->
         <h1 class="reservation__date-header reservation__date-header--main">
-          {{ calendar.viewDate | calendarDate : calendar.view + "ViewTitle" }}
+          {{ calendar.viewDate | calendarDate : calendar.view + 'ViewTitle' }}
         </h1>
       </div>
 
@@ -61,10 +57,9 @@
 
     <!-- Second toolbar row for mobile view -->
     <mat-toolbar-row
-      class="reservation__toolbar-row reservation__toolbar-row--mobile"
-    >
+      class="reservation__toolbar-row reservation__toolbar-row--mobile">
       <h1 class="reservation__date-header reservation__date-header--mobile">
-        {{ calendar.viewDate | calendarDate : calendar.view + "ViewTitle" }}
+        {{ calendar.viewDate | calendarDate : calendar.view + 'ViewTitle' }}
       </h1>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -74,8 +69,7 @@
     <mat-drawer
       #drawer
       [mode]="(tabletSizeHit$ | async)?.matches ? 'over' : 'side'"
-      opened
-    >
+      opened>
       <div class="sidebar">
         <!-- Mobile only section -->
         <section class="sidebar__section sidebar__section--mobile">
@@ -83,8 +77,7 @@
             mat-stroked-button
             aria-labelledby="sidebar-go-back-btn-name"
             routerLink="/"
-            class="reservation__back reservation__back--sidebar"
-          >
+            class="reservation__back reservation__back--sidebar">
             <mat-icon>arrow_back</mat-icon>&nbsp;<span
               i18n="button name"
               id="sidebar-go-back-btn-name"
@@ -97,8 +90,7 @@
               mat-stroked-button
               class="jump-to-date__button"
               aria-labelledby="jump-to-date-btn-name"
-              (click)="picker.open()"
-            >
+              (click)="picker.open()">
               <mat-icon>event</mat-icon>&nbsp;<span
                 i18n="button name"
                 id="jump-to-date-btn-name"
@@ -109,29 +101,27 @@
               type="date"
               class="jump-to-date__input"
               [matDatepicker]="picker"
-              (dateInput)="onDateSelection($event.value)"
-            />
+              (dateInput)="onDateSelection($event.value)" />
             <mat-datepicker #picker></mat-datepicker>
           </div>
         </section>
 
         <section
           class="sidebar__section sidebar__section--form-field-padded"
-          *ngIf="!capacityBookingMode; else capacityBookingSection"
-        >
+          *ngIf="!capacityBookingMode; else capacityBookingSection">
           <b class="sidebar__heading" i18n="heading">Resource selection</b>
           <app-resource-selection-form
             (resourceChange)="selectedResource = $event"
-            (displayedResourcesChange)="displayedResources = $event"
-          ></app-resource-selection-form>
+            (displayedResourcesChange)="
+              displayedResources = $event
+            "></app-resource-selection-form>
         </section>
 
         <ng-template #capacityBookingSection>
           <!-- Parent capacity section (for capacity booking) -->
           <section class="sidebar__section">
             <ng-container
-              *ngIf="parentReservationRequest; else loadingParentOrError"
-            >
+              *ngIf="parentReservationRequest; else loadingParentOrError">
               <b class="sidebar__heading" i18n="heading"
                 >Reserving capacity for</b
               >
@@ -155,8 +145,7 @@
             <ng-container
               *ngTemplateOutlet="
                 (loadingParentRequest$ | async) ? loadingParent : parentError
-              "
-            ></ng-container>
+              "></ng-container>
           </ng-template>
 
           <!-- Loading display -->
@@ -165,8 +154,7 @@
               <mat-progress-spinner
                 diameter="70"
                 mode="indeterminate"
-                color="primary"
-              ></mat-progress-spinner>
+                color="primary"></mat-progress-spinner>
               <span i18n="loading text">Loading parent request</span>
             </div>
           </ng-template>
@@ -177,8 +165,7 @@
                 parentPropertyErrorOccured()
                   ? parentPropertyError
                   : loadingParentError
-              "
-            >
+              ">
             </ng-container>
           </ng-template>
 
@@ -191,15 +178,13 @@
                   i18n-message="error message"
                   [type]="AlertType.ERROR"
                   [showCloseButton]="false"
-                  [isActive]="true"
-                ></app-alert>
+                  [isActive]="true"></app-alert>
               </div>
               <button
                 mat-flat-button
                 color="primary"
                 i18n="button name"
-                (click)="retryLoadingParentRequest()"
-              >
+                (click)="retryLoadingParentRequest()">
                 Try again
               </button>
             </div>
@@ -213,8 +198,7 @@
                   [type]="AlertType.ERROR"
                   [isActive]="true"
                   [showCloseButton]="false"
-                  [message]="parentRequestError!.message"
-                ></app-alert>
+                  [message]="parentRequestError!.message"></app-alert>
               </div>
             </div>
           </ng-template>
@@ -235,23 +219,21 @@
 
         <section
           class="sidebar__section"
-          *ngIf="selectedResource && selectedSlot"
-        >
+          *ngIf="selectedResource && selectedSlot">
           <b class="sidebar__heading" i18n="heading">Reservation slot</b>
 
           <div class="sidebar__slot">
             <!-- Selected slot start -->
             <div
               class="sidebar__slot-part"
-              *ngIf="selectedSlot && selectedSlot.start"
-            >
+              *ngIf="selectedSlot && selectedSlot.start">
               <!-- Slot start heading -->
               <b class="sidebar__slot-part-name" i18n="item name"
                 >Slot start:</b
               >
               <!-- Slot start value -->
               <div class="sidebar__slot-part-value">
-                <span>{{ selectedSlot.start | momentDate : "LLL" }}</span>
+                <span>{{ selectedSlot.start | momentDate : 'LLL' }}</span>
 
                 <!-- Fine tuning buttons -->
                 <div class="time-setting">
@@ -261,8 +243,7 @@
                     (click)="incrementSlot('start', -1)"
                     aria-label="decrement slot start by one minute"
                     i18n-aria-label="button label"
-                    appHoldClick
-                  >
+                    appHoldClick>
                     <mat-icon class="icon-xs">arrow_left</mat-icon>
                   </button>
                   <button
@@ -271,8 +252,7 @@
                     appHoldClick
                     (click)="incrementSlot('start', 1)"
                     aria-label="increment slot start by one minute"
-                    i18n-aria-label="button label"
-                  >
+                    i18n-aria-label="button label">
                     <mat-icon class="icon-xs">arrow_right</mat-icon>
                   </button>
                 </div>
@@ -282,14 +262,13 @@
             <!-- Selected slot end-->
             <div
               class="sidebar__slot-part"
-              *ngIf="selectedSlot && selectedSlot.end"
-            >
+              *ngIf="selectedSlot && selectedSlot.end">
               <!-- Slot end heading -->
               <b class="sidebar__slot-part-name" i18n="item name">Slot end:</b>
 
               <!-- Slot end value -->
               <div class="sidebar__slot-part-value">
-                <span>{{ selectedSlot.end | momentDate : "LLL" }}</span>
+                <span>{{ selectedSlot.end | momentDate : 'LLL' }}</span>
 
                 <!-- Fine tuning buttons -->
                 <div class="time-setting">
@@ -299,8 +278,7 @@
                     (click)="incrementSlot('end', -1)"
                     aria-label="decrement slot end by one minute"
                     i18n-aria-label="button label"
-                    appHoldClick
-                  >
+                    appHoldClick>
                     <mat-icon class="icon-xs">arrow_left</mat-icon>
                   </button>
                   <button
@@ -309,8 +287,7 @@
                     (click)="incrementSlot('end', 1)"
                     aria-label="increment slot end by one minute"
                     i18n-aria-label="button label"
-                    appHoldClick
-                  >
+                    appHoldClick>
                     <mat-icon class="icon-xs">arrow_right</mat-icon>
                   </button>
                 </div>
@@ -325,8 +302,7 @@
               color="primary"
               class="sidebar__button"
               i18n="button name"
-              (click)="openReservationDialog()"
-            >
+              (click)="openReservationDialog()">
               Create reservation
             </button>
 
@@ -336,8 +312,7 @@
               class="sidebar__button"
               color="warn"
               i18n="button name"
-              (click)="calendar.clearSelectedSlot()"
-            >
+              (click)="calendar.clearSelectedSlot()">
               Cancel selection
             </button>
           </div>
@@ -353,8 +328,7 @@
         class="reservation__calendar fullscreen-calendar"
         [allowSlotSelection]="true"
         [displayedResources]="displayedResources"
-        (slotSelected)="selectedSlot = $event"
-      ></app-reservation-calendar>
+        (slotSelected)="selectedSlot = $event"></app-reservation-calendar>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
@@ -365,7 +339,6 @@
     <h1 i18n="loading text">Loading resources</h1>
     <mat-progress-spinner
       color="primary"
-      mode="indeterminate"
-    ></mat-progress-spinner>
+      mode="indeterminate"></mat-progress-spinner>
   </div>
 </ng-template>

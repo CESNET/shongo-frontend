@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 /**
  * Event emitted on after app bootstrap. Used to destroy bootstrap loading screen.

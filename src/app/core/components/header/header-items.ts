@@ -1,6 +1,6 @@
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';
-import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
 import { LocaleItem } from 'src/app/models/interfaces/locale-item.interface';
+import { MenuItem } from 'src/app/models/interfaces/menu-item.interface';
 import { Locale } from 'src/app/shared/models/enums/locale.enum';
 
 /**

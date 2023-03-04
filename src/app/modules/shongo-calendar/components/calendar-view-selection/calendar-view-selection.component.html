@@ -3,17 +3,17 @@
     mat-stroked-button
     aria-label="Select calendar view"
     i18n-aria-label="button name"
-    [matMenuTriggerFor]="viewMenu"
-  >
-    {{ selectedViewDisplayName | titlecase }}&nbsp;<mat-icon>arrow_drop_down</mat-icon>
+    [matMenuTriggerFor]="viewMenu">
+    {{ selectedViewDisplayName | titlecase }}&nbsp;<mat-icon
+      >arrow_drop_down</mat-icon
+    >
   </button>
 
   <mat-menu #viewMenu="matMenu">
     <button
       *ngFor="let opt of calendarViewOpts"
       mat-menu-item
-      (click)="onViewSelection(opt.value)"
-    >
+      (click)="onViewSelection(opt.value)">
       {{ opt.displayName }}
     </button>
   </mat-menu>

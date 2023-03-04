@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { Spied } from 'src/app/test/models/spied.type';
-import { ReservationRequestDetailPageComponent } from './reservation-request-detail-page.component';
 import { mockReservationRequest } from 'src/app/test/mocks/reservation-request.mock';
-import { ReservationRequestModule } from '../../reservation-request.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Spied } from 'src/app/test/models/spied.type';
 import { CertainityDialogStub } from 'src/app/test/stubs/certainity-dialog.stub';
-import { MatDialog } from '@angular/material/dialog';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ReservationRequestModule } from '../../reservation-request.module';
+import { ReservationRequestDetailPageComponent } from './reservation-request-detail-page.component';
 
 describe('ReservationRequestDetailPageComponent', () => {
   let component: ReservationRequestDetailPageComponent;

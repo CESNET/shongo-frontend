@@ -1,16 +1,16 @@
 import { DataSource } from '@angular/cdk/collections';
+import { HttpParams } from '@angular/common/http';
+import { Type } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort, SortDirection } from '@angular/material/sort';
+import { merge, Observable, of, Subject } from 'rxjs';
 import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
-import { Observable, merge, Subject, of } from 'rxjs';
-import { PipeFunction, TableColumn } from '../models/table-column.interface';
+import { ApiService } from 'src/app/core/http/api.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { TableButton } from '../buttons/table-button';
-import { HttpParams } from '@angular/common/http';
-import { ApiService } from 'src/app/core/http/api.service';
-import { DataTableFilter } from '../filter/data-table-filter';
-import { Type } from '@angular/core';
 import { MobileSort } from '../components/mobile-table/mobile-sort';
+import { DataTableFilter } from '../filter/data-table-filter';
+import { PipeFunction, TableColumn } from '../models/table-column.interface';
 
 export const REFRESH_TIMEOUT = 200;
 

@@ -1,10 +1,10 @@
 import { BreakpointState } from '@angular/cdk/layout';
 import {
-  Component,
   ChangeDetectionStrategy,
-  Output,
+  Component,
   EventEmitter,
   Input,
+  Output,
 } from '@angular/core';
 import { CalendarView } from 'angular-calendar';
 import { Observable } from 'rxjs';
@@ -32,7 +32,10 @@ export class CalendarViewSelectionComponent {
   readonly CalendarView = CalendarView;
 
   get selectedViewDisplayName(): string {
-    return this.calendarViewOpts.find(opt => opt.value === this.selectedView)?.displayName ?? '';
+    return (
+      this.calendarViewOpts.find((opt) => opt.value === this.selectedView)
+        ?.displayName ?? ''
+    );
   }
 
   onViewSelection(view: CalendarView): void {

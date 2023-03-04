@@ -6,8 +6,7 @@
     <mat-form-field
       appearance="outline"
       class="form__field"
-      *ngIf="!editingMode"
-    >
+      *ngIf="!editingMode">
       <mat-label i18n="field label">Room name</mat-label>
       <input type="text" matInput formControlName="roomName" />
       <mat-error
@@ -49,13 +48,11 @@
         <mat-option>
           <ngx-mat-select-search
             appTimezoneSearch
-            #timezoneSarch="timezoneSearch"
-          ></ngx-mat-select-search>
+            #timezoneSarch="timezoneSearch"></ngx-mat-select-search>
         </mat-option>
         <mat-option
           *ngFor="let opt of timezoneSarch.filteredTimezones | async"
-          [value]="opt.timezone"
-        >
+          [value]="opt.timezone">
           {{ opt.label }}
         </mat-option>
       </mat-select>
@@ -82,13 +79,11 @@
       <mat-radio-group
         aria-labelledby="access-mode-group-label"
         formControlName="accessMode"
-        class="form__radio-group"
-      >
+        class="form__radio-group">
         <mat-radio-button
           *ngFor="let opt of accessModeOpts"
           [value]="opt.value"
-          color="primary"
-        >
+          color="primary">
           {{ opt.displayName }}
         </mat-radio-button>
       </mat-radio-group>
@@ -102,7 +97,8 @@
 
     <!-- Periodicity form -->
     <app-periodicity-selection-form
-      [periodicity]="editedRequest?.roomCapacityData?.periodicity"
-    ></app-periodicity-selection-form>
+      [periodicity]="
+        editedRequest?.roomCapacityData?.periodicity
+      "></app-periodicity-selection-form>
   </div>
 </form>

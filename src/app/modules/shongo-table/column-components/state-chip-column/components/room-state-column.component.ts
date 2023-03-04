@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { RoomState } from 'src/app/shared/models/enums/room-state.enum';
 import { TableSettings } from '../../../filter/data-table-filter';
 import { ColumnData } from '../../../models/interfaces/column-data.interface';
-import { SETTINGS_PROVIDER, COL_DATA_PROVIDER } from '../../column.component';
+import { COL_DATA_PROVIDER, SETTINGS_PROVIDER } from '../../column.component';
 import {
   StateChipColumnComponent,
   StateProps,
