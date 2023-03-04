@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatLegacySlideToggleChange as MatSlideToggleChange } from '@angular/material/legacy-slide-toggle';
 import { Subject, takeUntil } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable, of } from 'rxjs';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';

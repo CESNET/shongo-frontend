@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import {
-  MatDialog,
-  MatDialogModule,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
-import { MatSliderModule } from '@angular/material/slider';
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogModule as MatDialogModule,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
+import { MatLegacySliderModule as MatSliderModule } from '@angular/material/legacy-slider';
 import { SetMictophoneLevelDialogComponent } from './set-mictophone-level-dialog.component';
 
 describe('SetMictophoneLevelDialogComponent', () => {

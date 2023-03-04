@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BehaviorSubject } from 'rxjs';
 import { StateProps } from 'src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component';
 import { ModificationHistoryDataSource } from 'src/app/modules/shongo-table/data-sources/modification-history.datasource';

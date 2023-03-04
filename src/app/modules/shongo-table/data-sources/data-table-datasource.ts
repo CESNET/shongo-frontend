@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { HttpParams } from '@angular/common/http';
 import { Type } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
@@ -104,7 +104,7 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pipedRow: T & any = Object.assign({}, row);
 
-    Object.keys(row).forEach((key: string) => {
+    Object.keys(row as object).forEach((key: string) => {
       const pipeFunc = this.displayedColumns.find(
         (column) => column.name === key
       )?.pipeFunc;

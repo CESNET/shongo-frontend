@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { SnackbarAlertComponent } from 'src/app/shared/components/snackbar-alert/snackbar-alert.component';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 

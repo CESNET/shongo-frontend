@@ -10,8 +10,8 @@ import {
   Type,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { filter, first, takeUntil } from 'rxjs/operators';
 import { AlertService } from 'src/app/core/services/alert.service';

@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatRadioChange } from '@angular/material/radio';
+import { MatLegacyRadioChange as MatRadioChange } from '@angular/material/legacy-radio';
 import * as moment from 'moment';
 import { Days } from 'src/app/shared/models/enums/days.enum';
 import {

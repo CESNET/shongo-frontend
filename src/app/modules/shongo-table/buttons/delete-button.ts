@@ -1,4 +1,4 @@
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Observable, of } from 'rxjs';
 import { catchError, finalize, map, mergeMap, tap } from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api.service';

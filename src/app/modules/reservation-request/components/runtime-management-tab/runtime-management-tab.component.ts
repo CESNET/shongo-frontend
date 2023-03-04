@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { RuntimeManagementDataSource } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';
