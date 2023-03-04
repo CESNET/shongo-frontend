@@ -9,6 +9,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class SetMictophoneLevelDialogComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { microphoneLevel: string }
+    @Inject(MAT_DIALOG_DATA) public data: { microphoneLevel?: string }
   ) {}
 }

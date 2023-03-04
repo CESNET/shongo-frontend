@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { finalize, first, switchMap } from 'rxjs/operators';
@@ -22,18 +22,18 @@ import { getFormError } from 'src/app/utils/get-form-error';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateParticipantPageComponent {
-  readonly form = new FormGroup({
-    participantType: new FormControl(ParticipantType.USER, [
+  readonly form = new UntypedFormGroup({
+    participantType: new UntypedFormControl(ParticipantType.USER, [
       Validators.required,
     ]),
-    userForm: new FormGroup({
-      userFilter: new FormControl(null),
-      userId: new FormControl(null, [Validators.required]),
-      role: new FormControl(ParticipantRole.PARTICIPANT, [Validators.required]),
+    userForm: new UntypedFormGroup({
+      userFilter: new UntypedFormControl(null),
+      userId: new UntypedFormControl(null, [Validators.required]),
+      role: new UntypedFormControl(ParticipantRole.PARTICIPANT, [Validators.required]),
     }),
-    anonymousForm: new FormGroup({
-      name: new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
+    anonymousForm: new UntypedFormGroup({
+      name: new UntypedFormControl(null, [Validators.required]),
+      email: new UntypedFormControl(null, [Validators.required, Validators.email]),
     }),
   });
 

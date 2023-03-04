@@ -4,7 +4,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
@@ -31,11 +31,11 @@ import { RequestNotEditableError } from './errors/request-not-editable.error';
 export class EditReservationRequestPageComponent implements OnInit {
   @ViewChild('reservationForm') reservationForm?: ReservationForm;
 
-  readonly slotForm = new FormGroup({
-    startDate: new FormControl(moment().toDate(), [Validators.required]),
-    startTime: new FormControl(moment().toDate(), [Validators.required]),
-    endDate: new FormControl(null, [Validators.required]),
-    endTime: new FormControl(null, [Validators.required]),
+  readonly slotForm = new UntypedFormGroup({
+    startDate: new UntypedFormControl(moment().toDate(), [Validators.required]),
+    startTime: new UntypedFormControl(moment().toDate(), [Validators.required]),
+    endDate: new UntypedFormControl(null, [Validators.required]),
+    endTime: new UntypedFormControl(null, [Validators.required]),
   });
   readonly editing$ = new BehaviorSubject(false);
   readonly loading$ = new BehaviorSubject(false);

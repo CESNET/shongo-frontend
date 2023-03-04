@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { finalize, first, switchMap } from 'rxjs/operators';
@@ -19,7 +19,7 @@ import { getFormError } from 'src/app/utils/get-form-error';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateUserRolePageComponent implements OnInit {
-  form?: FormGroup;
+  form?: UntypedFormGroup;
   IdentityType = IdentityType;
   posting$ = new BehaviorSubject(false);
 
@@ -105,15 +105,15 @@ export class CreateUserRolePageComponent implements OnInit {
    * @param requestId Reservation request ID.
    * @returns Form group.
    */
-  private _createForm(requestId: string): FormGroup {
-    return new FormGroup({
-      reservationRequest: new FormControl(
+  private _createForm(requestId: string): UntypedFormGroup {
+    return new UntypedFormGroup({
+      reservationRequest: new UntypedFormControl(
         { value: requestId, disabled: true },
         [Validators.required]
       ),
-      identityType: new FormControl(IdentityType.USER, [Validators.required]),
-      identityId: new FormControl(null, [Validators.required]),
-      role: new FormControl(RoleType.OWNER, [Validators.required]),
+      identityType: new UntypedFormControl(IdentityType.USER, [Validators.required]),
+      identityId: new UntypedFormControl(null, [Validators.required]),
+      role: new UntypedFormControl(RoleType.OWNER, [Validators.required]),
     });
   }
 }

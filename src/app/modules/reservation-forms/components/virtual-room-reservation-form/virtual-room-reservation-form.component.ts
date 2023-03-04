@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -39,30 +39,30 @@ export class VirtualRoomReservationFormComponent
 {
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
-  readonly form = new FormGroup({
-    resource: new FormControl(null, [Validators.required]),
-    description: new FormControl(null, [Validators.required]),
-    roomName: new FormControl(null, [Validators.required]),
-    timezone: new FormControl(null, [Validators.required]),
-    videoconferenceFields: new FormGroup({
-      adminPin: new FormControl(null, [
+  readonly form = new UntypedFormGroup({
+    resource: new UntypedFormControl(null, [Validators.required]),
+    description: new UntypedFormControl(null, [Validators.required]),
+    roomName: new UntypedFormControl(null, [Validators.required]),
+    timezone: new UntypedFormControl(null, [Validators.required]),
+    videoconferenceFields: new UntypedFormGroup({
+      adminPin: new UntypedFormControl(null, [
         Validators.pattern(PIN_PATTERN),
         Validators.minLength(PIN_MINLENGTH),
       ]),
-      allowGuests: new FormControl(false, [Validators.required]),
+      allowGuests: new UntypedFormControl(false, [Validators.required]),
     }),
-    webconferenceFields: new FormGroup({
-      userPin: new FormControl(null, [
+    webconferenceFields: new UntypedFormGroup({
+      userPin: new UntypedFormControl(null, [
         Validators.pattern(PIN_PATTERN),
         Validators.minLength(PIN_MINLENGTH),
       ]),
     }),
-    teleconferenceFields: new FormGroup({
-      adminPin: new FormControl(null, [
+    teleconferenceFields: new UntypedFormGroup({
+      adminPin: new UntypedFormControl(null, [
         Validators.pattern(PIN_PATTERN),
         Validators.minLength(PIN_MINLENGTH),
       ]),
-      userPin: new FormControl(null, [
+      userPin: new UntypedFormControl(null, [
         Validators.pattern(PIN_PATTERN),
         Validators.minLength(PIN_MINLENGTH),
       ]),
@@ -85,16 +85,16 @@ export class VirtualRoomReservationFormComponent
     this.form.patchValue({ timezone: this._settings.timeZone });
   }
 
-  get videoconferenceFieldsForm(): FormGroup {
-    return this.form.get('videoconferenceFields') as FormGroup;
+  get videoconferenceFieldsForm(): UntypedFormGroup {
+    return this.form.get('videoconferenceFields') as UntypedFormGroup;
   }
 
-  get webconferenceFieldsForm(): FormGroup {
-    return this.form.get('webconferenceFields') as FormGroup;
+  get webconferenceFieldsForm(): UntypedFormGroup {
+    return this.form.get('webconferenceFields') as UntypedFormGroup;
   }
 
-  get teleconferenceFieldsForm(): FormGroup {
-    return this.form.get('teleconferenceFields') as FormGroup;
+  get teleconferenceFieldsForm(): UntypedFormGroup {
+    return this.form.get('teleconferenceFields') as UntypedFormGroup;
   }
 
   /**

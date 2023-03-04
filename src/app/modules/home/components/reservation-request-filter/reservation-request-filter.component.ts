@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -29,14 +29,14 @@ export class ReservationRequestFilterComponent
 {
   showAdvancedFilter = false;
 
-  filterForm = new FormGroup({
-    technology: new FormControl(null),
-    dateFrom: new FormControl(null),
-    dateTo: new FormControl(null),
-    user: new FormControl(null),
-    participant: new FormControl(null),
-    search: new FormControl(null),
-    showFailedRooms: new FormControl(true),
+  filterForm = new UntypedFormGroup({
+    technology: new UntypedFormControl(null),
+    dateFrom: new UntypedFormControl(null),
+    dateTo: new UntypedFormControl(null),
+    user: new UntypedFormControl(null),
+    participant: new UntypedFormControl(null),
+    search: new UntypedFormControl(null),
+    showFailedRooms: new UntypedFormControl(true),
   });
 
   readonly technologyOptions: Option[];

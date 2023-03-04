@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -43,34 +43,34 @@ const daysMap = new Map<Days, string>([
 export class PeriodicitySelectionFormComponent implements OnInit {
   @Input() periodicity?: Periodicity;
 
-  readonly periodicityForm = new FormGroup({
-    periodicity: new FormControl(PeriodicityType.NONE, [Validators.required]),
-    repeatUntil: new FormControl(null, [Validators.required]),
-    weeklyForm: new FormGroup({
-      nthWeek: new FormControl(1, [Validators.required]),
-      monday: new FormControl(false),
-      tuesday: new FormControl(false),
-      wednesday: new FormControl(false),
-      thursday: new FormControl(false),
-      friday: new FormControl(false),
-      saturday: new FormControl(false),
-      sunday: new FormControl(false),
+  readonly periodicityForm = new UntypedFormGroup({
+    periodicity: new UntypedFormControl(PeriodicityType.NONE, [Validators.required]),
+    repeatUntil: new UntypedFormControl(null, [Validators.required]),
+    weeklyForm: new UntypedFormGroup({
+      nthWeek: new UntypedFormControl(1, [Validators.required]),
+      monday: new UntypedFormControl(false),
+      tuesday: new UntypedFormControl(false),
+      wednesday: new UntypedFormControl(false),
+      thursday: new UntypedFormControl(false),
+      friday: new UntypedFormControl(false),
+      saturday: new UntypedFormControl(false),
+      sunday: new UntypedFormControl(false),
     }),
-    monthlyForm: new FormGroup({
-      periodicityType: new FormControl(MonthlyPeriodicityType.STANDARD, [
+    monthlyForm: new UntypedFormGroup({
+      periodicityType: new UntypedFormControl(MonthlyPeriodicityType.STANDARD, [
         Validators.required,
       ]),
-      regularForm: new FormGroup({
-        nthMonth: new FormControl(null, [Validators.required]),
+      regularForm: new UntypedFormGroup({
+        nthMonth: new UntypedFormControl(null, [Validators.required]),
       }),
-      irregularForm: new FormGroup({
-        nthDay: new FormControl({ value: null, disabled: true }, [
+      irregularForm: new UntypedFormGroup({
+        nthDay: new UntypedFormControl({ value: null, disabled: true }, [
           Validators.required,
         ]),
-        nthMonth: new FormControl({ value: null, disabled: true }, [
+        nthMonth: new UntypedFormControl({ value: null, disabled: true }, [
           Validators.required,
         ]),
-        day: new FormControl({ value: null, disabled: true }, [
+        day: new UntypedFormControl({ value: null, disabled: true }, [
           Validators.required,
         ]),
       }),
@@ -155,7 +155,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
 
     if (periodicity.type === PeriodicityType.WEEKLY) {
-      const weeklyForm = this.periodicityForm.get('weeklyForm')! as FormGroup;
+      const weeklyForm = this.periodicityForm.get('weeklyForm')! as UntypedFormGroup;
       const { nthWeek } = weeklyForm.controls;
 
       if (periodicity.periodicityCycle) {
@@ -167,7 +167,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
         });
       }
     } else if (periodicity.type === PeriodicityType.MONTHLY) {
-      const monthlyForm = this.periodicityForm.get('monthlyForm')! as FormGroup;
+      const monthlyForm = this.periodicityForm.get('monthlyForm')! as UntypedFormGroup;
 
       if (periodicity.monthlyPeriodicityType) {
         monthlyForm
@@ -179,7 +179,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
       if (
         periodicity.monthlyPeriodicityType === MonthlyPeriodicityType.STANDARD
       ) {
-        const { nthMonth } = (monthlyForm.get('regularForm')! as FormGroup)
+        const { nthMonth } = (monthlyForm.get('regularForm')! as UntypedFormGroup)
           .controls;
 
         if (periodicity.periodicityCycle) {
@@ -190,7 +190,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
         MonthlyPeriodicityType.SPECIFIC_DAY
       ) {
         const { nthMonth, nthDay, day } = (
-          monthlyForm.get('irregularForm')! as FormGroup
+          monthlyForm.get('irregularForm')! as UntypedFormGroup
         ).controls;
 
         if (periodicity.periodicityCycle) {
@@ -342,7 +342,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
    * @param formType Monthly periodicity type.
    */
   enableMonthlyForm(formType: MonthlyPeriodicityType): void {
-    const monthlyForm = this.periodicityForm.get('monthlyForm') as FormGroup;
+    const monthlyForm = this.periodicityForm.get('monthlyForm') as UntypedFormGroup;
     const { regularForm, irregularForm } = monthlyForm.controls;
 
     if (formType === MonthlyPeriodicityType.STANDARD) {
@@ -363,7 +363,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     (): ValidatorFn =>
     (control: AbstractControl): ValidationErrors => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { _, ...days } = (control as FormGroup).value;
+      const { _, ...days } = (control as UntypedFormGroup).value;
       return Object.values(days).some((value) => value)
         ? {}
         : { noneChecked: true };

@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { TeleconferenceReservationRequest } from 'src/app/shared/models/rest-api/teleconference-reservation-request.interface';
@@ -38,17 +38,17 @@ export class TeleconferenceReservationFormComponent
   @Input() editingMode = false;
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
-  readonly form = new FormGroup({
-    description: new FormControl(null, [
+  readonly form = new UntypedFormGroup({
+    description: new UntypedFormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
-    timezone: new FormControl(null, [Validators.required]),
-    adminPin: new FormControl(null, [
+    timezone: new UntypedFormControl(null, [Validators.required]),
+    adminPin: new UntypedFormControl(null, [
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
-    userPin: new FormControl(null, [
+    userPin: new UntypedFormControl(null, [
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
@@ -74,7 +74,7 @@ export class TeleconferenceReservationFormComponent
     if (!this.editingMode && !this.editedRequest) {
       this.form.addControl(
         'roomName',
-        new FormControl(null, [
+        new UntypedFormControl(null, [
           Validators.required,
           Validators.maxLength(ROOM_NAME_MAXLENGTH),
           Validators.pattern(ROOM_NAME_PATTERN),

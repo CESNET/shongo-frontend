@@ -1,5 +1,5 @@
 import { Directive, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatSelectSearchComponent } from 'ngx-mat-select-search';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,7 +14,7 @@ export class TimezoneSearchDirective implements OnInit, OnDestroy {
   filteredTimezones: Observable<Timezone[]>;
 
   private _filteredTimezones$ = new BehaviorSubject<Timezone[]>(IANA_TIMEZONES);
-  private _filterCtrl = new FormControl();
+  private _filterCtrl = new UntypedFormControl();
   private _destroy$ = new Subject<void>();
 
   constructor(private _host: MatSelectSearchComponent) {
@@ -37,7 +37,7 @@ export class TimezoneSearchDirective implements OnInit, OnDestroy {
   /**
    * Observes filter control value changes and returns timezones filtered by value.
    */
-  private _initTimeZoneFilter(filterControl: FormControl): void {
+  private _initTimeZoneFilter(filterControl: UntypedFormControl): void {
     filterControl.valueChanges
       .pipe(takeUntil(this._destroy$))
       .subscribe((filter) => {

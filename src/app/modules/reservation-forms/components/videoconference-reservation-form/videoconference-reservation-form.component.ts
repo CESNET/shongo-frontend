@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { VideoconferenceReservationRequest } from 'src/app/shared/models/rest-api/videoconference-reservation-request.interface';
@@ -49,19 +49,19 @@ export class VideoconferenceReservationFormComponent
   @Input() editingMode = false;
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
-  readonly form = new FormGroup({
-    description: new FormControl(null, [
+  readonly form = new UntypedFormGroup({
+    description: new UntypedFormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
-    adminPin: new FormControl(null, [
+    adminPin: new UntypedFormControl(null, [
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
-    participantCount: new FormControl(null, [Validators.required]),
-    timezone: new FormControl(null, [Validators.required]),
-    allowGuests: new FormControl(false),
-    record: new FormControl(false),
+    participantCount: new UntypedFormControl(null, [Validators.required]),
+    timezone: new UntypedFormControl(null, [Validators.required]),
+    allowGuests: new UntypedFormControl(false),
+    record: new UntypedFormControl(false),
   });
 
   readonly getFormError = getFormError;
@@ -86,7 +86,7 @@ export class VideoconferenceReservationFormComponent
     if (!this.editingMode && !this.editedRequest) {
       this.form.addControl(
         'roomName',
-        new FormControl(null, [
+        new UntypedFormControl(null, [
           Validators.required,
           Validators.maxLength(ROOM_NAME_MAXLENGTH),
           Validators.pattern(ROOM_NAME_PATTERN),

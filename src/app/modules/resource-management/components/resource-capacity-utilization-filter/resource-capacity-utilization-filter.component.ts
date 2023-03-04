@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -28,12 +28,12 @@ export class ResourceCapacityUtilizationFilterComponent
   extends DataTableFilter
   implements OnInit, OnDestroy
 {
-  readonly filterForm = new FormGroup({
-    unit: new FormControl(TimeUnit.DAY),
-    dateFrom: new FormControl(),
-    dateTo: new FormControl(),
+  readonly filterForm = new UntypedFormGroup({
+    unit: new UntypedFormControl(TimeUnit.DAY),
+    dateFrom: new UntypedFormControl(),
+    dateTo: new UntypedFormControl(),
   });
-  readonly useAbsoluteValues = new FormControl(false);
+  readonly useAbsoluteValues = new UntypedFormControl(false);
 
   readonly units: Option[] = [
     { value: TimeUnit.DAY, displayName: $localize`:unit option:Days` },

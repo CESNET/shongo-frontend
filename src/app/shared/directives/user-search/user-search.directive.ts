@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectorRef, Directive, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatSelectSearchComponent } from 'ngx-mat-select-search';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { debounceTime, first, takeUntil } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class UserSearchDirective implements OnInit, OnDestroy {
   filteredUsers: Observable<UserSearchItem[]>;
 
   private _filteredUsers = new BehaviorSubject<UserSearchItem[]>([]);
-  private _filterCtrl = new FormControl();
+  private _filterCtrl = new UntypedFormControl();
   private _destroy$ = new Subject<void>();
 
   constructor(

@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
 import { Observable, Subject } from 'rxjs';
@@ -35,10 +35,10 @@ export class ReservationCalendarTabComponent
   filteredResources: PhysicalResource[];
 
   readonly tabletSizeHit$: Observable<BreakpointState>;
-  readonly filterGroup = new FormGroup({
-    resources: new FormControl([]),
-    highlightMine: new FormControl(false),
-    resourceFilter: new FormControl(''),
+  readonly filterGroup = new UntypedFormGroup({
+    resources: new UntypedFormControl([]),
+    highlightMine: new UntypedFormControl(false),
+    resourceFilter: new UntypedFormControl(''),
   });
 
   readonly CalendarView = CalendarView;
@@ -61,7 +61,7 @@ export class ReservationCalendarTabComponent
   ngOnInit(): void {
     const resourceFilter = this.filterGroup.get(
       'resourceFilter'
-    ) as FormControl;
+    ) as UntypedFormControl;
     resourceFilter.valueChanges
       .pipe(takeUntil(this._destroy$))
       .subscribe((filter) => {
