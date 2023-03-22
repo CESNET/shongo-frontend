@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';

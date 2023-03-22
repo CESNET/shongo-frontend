@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatLegacyRadioChange as MatRadioChange } from '@angular/material/legacy-radio';
+import { MatRadioChange } from '@angular/material/radio';
 import * as moment from 'moment';
 import { Days } from 'src/app/shared/models/enums/days.enum';
 import {
@@ -44,7 +44,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
   @Input() periodicity?: Periodicity;
 
   readonly periodicityForm = new UntypedFormGroup({
-    periodicity: new UntypedFormControl(PeriodicityType.NONE, [Validators.required]),
+    periodicity: new UntypedFormControl(PeriodicityType.NONE, [
+      Validators.required,
+    ]),
     repeatUntil: new UntypedFormControl(null, [Validators.required]),
     weeklyForm: new UntypedFormGroup({
       nthWeek: new UntypedFormControl(1, [Validators.required]),
@@ -155,7 +157,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }
 
     if (periodicity.type === PeriodicityType.WEEKLY) {
-      const weeklyForm = this.periodicityForm.get('weeklyForm')! as UntypedFormGroup;
+      const weeklyForm = this.periodicityForm.get(
+        'weeklyForm'
+      )! as UntypedFormGroup;
       const { nthWeek } = weeklyForm.controls;
 
       if (periodicity.periodicityCycle) {
@@ -167,7 +171,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
         });
       }
     } else if (periodicity.type === PeriodicityType.MONTHLY) {
-      const monthlyForm = this.periodicityForm.get('monthlyForm')! as UntypedFormGroup;
+      const monthlyForm = this.periodicityForm.get(
+        'monthlyForm'
+      )! as UntypedFormGroup;
 
       if (periodicity.monthlyPeriodicityType) {
         monthlyForm
@@ -179,8 +185,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
       if (
         periodicity.monthlyPeriodicityType === MonthlyPeriodicityType.STANDARD
       ) {
-        const { nthMonth } = (monthlyForm.get('regularForm')! as UntypedFormGroup)
-          .controls;
+        const { nthMonth } = (
+          monthlyForm.get('regularForm')! as UntypedFormGroup
+        ).controls;
 
         if (periodicity.periodicityCycle) {
           nthMonth.setValue(periodicity.periodicityCycle);
@@ -342,7 +349,9 @@ export class PeriodicitySelectionFormComponent implements OnInit {
    * @param formType Monthly periodicity type.
    */
   enableMonthlyForm(formType: MonthlyPeriodicityType): void {
-    const monthlyForm = this.periodicityForm.get('monthlyForm') as UntypedFormGroup;
+    const monthlyForm = this.periodicityForm.get(
+      'monthlyForm'
+    ) as UntypedFormGroup;
     const { regularForm, irregularForm } = monthlyForm.controls;
 
     if (formType === MonthlyPeriodicityType.STANDARD) {

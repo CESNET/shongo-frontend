@@ -59,15 +59,7 @@
       <!-- State -->
       <ng-container *ngIf="currentRequest.state as state">
         <dt>
-          <span i18n="definition tag">State:</span
-          ><button
-            mat-icon-button
-            aria-label="Open help"
-            i18n-aria-label="button name"
-            class="help-icon-button"
-            (click)="openStateHelp()">
-            <mat-icon>help</mat-icon>
-          </button>
+          <span i18n="definition tag">State:</span>
         </dt>
         <dd>
           <app-state-chip

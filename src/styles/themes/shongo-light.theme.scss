@@ -6,6 +6,17 @@ $shongo-frontend-primary: mat.define-palette(mat.$green-palette, A700);
 $shongo-frontend-accent: mat.define-palette(mat.$blue-grey-palette, 600);
 $shongo-frontend-warn: mat.define-palette(mat.$red-palette, A400);
 
+$shongo-typography: mat.define-typography-config(
+  $headline-5: mat.define-typography-level(2rem, 2.2rem, 400),
+  $headline-6: mat.define-typography-level(1.8rem, 2rem, 400),
+  $subtitle-1: mat.define-typography-level(1.2rem, 1.4rem, 400),
+  $subtitle-2: mat.define-typography-level(0.8rem, 0.8rem, 500),
+  $body-1: mat.define-typography-level(1rem, 1rem, 400),
+  $body-2: mat.define-typography-level(1rem, 1rem, 400),
+  $caption: mat.define-typography-level(0.8rem, 0.8rem, 400),
+  $button: mat.define-typography-level(0.9rem, 0.9rem, 500),
+);
+
 $shongo-frontend-theme: mat.define-light-theme(
   (
     color: (
@@ -13,30 +24,11 @@ $shongo-frontend-theme: mat.define-light-theme(
       accent: $shongo-frontend-accent,
       warn: $shongo-frontend-warn,
     ),
+    typography: $shongo-typography,
   )
 );
 
-$shongo-typography: mat.define-typography-config(
-  $headline-5: mat.define-typography-level(2rem, 2.2rem, 400),
-  $headline-6: mat.define-typography-level(1.8rem, 2rem, 400),
-  $subtitle-1: mat.define-typography-level(1.2rem, 1.4rem, 400),
-  $subtitle-2: mat.define-typography-level(1.4rem, 1.6rem, 400),
-  $body-1: mat.define-typography-level(1rem, 1.3rem, 400),
-  $body-2: mat.define-typography-level(1rem, 1.3rem, 500),
-  $caption: mat.define-typography-level(0.8rem, 0.8rem, 400),
-  $button: mat.define-typography-level(0.9rem, 0.9rem, 500),
-);
-
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy($shongo-typography);`
-@include mat.all-legacy-component-typographies($shongo-typography);
-@include mat.legacy-core();
-@include mat.all-legacy-component-themes($shongo-frontend-theme);
+@include mat.core();
+@include mat.all-component-themes($shongo-frontend-theme);
 @include shongo-components-theme($shongo-frontend-theme);
 @include typography-colors.color($shongo-frontend-theme);

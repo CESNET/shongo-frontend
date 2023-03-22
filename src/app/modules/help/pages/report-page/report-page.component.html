@@ -49,10 +49,9 @@
         mat-flat-button
         type="submit"
         color="primary"
-        class="form__button"
         i18n="button name"
         [disabled]="!form.valid"
-        *ngIf="(loading$ | async) === false; else loading">
+        *ngIf="!(loading$ | async); else loading">
         Submit
       </button>
       <ng-template #loading>
@@ -63,23 +62,16 @@
       <button
         mat-button
         type="button"
-        class="form__button"
         aria-labelledby="metadata-btn-name"
         (click)="toggleMetadata()">
-        <ng-container *ngIf="!showMetadata; else hideMetadata">
-          <mat-icon>expand_more</mat-icon>&nbsp;<span
-            i18n="button name"
-            id="metadata-btn-name"
-            >Show metadata</span
-          >
-        </ng-container>
-        <ng-template #hideMetadata>
-          <mat-icon>expand_less</mat-icon>&nbsp;<span
-            i18n="button name"
-            id="metadata-btn-name"
-            >Hide metadata</span
-          >
-        </ng-template>
+        <mat-icon>{{ showMetadata ? 'expand_less' : 'expand_more' }}</mat-icon>
+
+        <span *ngIf="showMetadata" i18n="button name" id="metadata-btn-name"
+          >Show metadata</span
+        >
+        <span *ngIf="!showMetadata" i18n="button name" id="metadata-btn-name"
+          >Hide metadata</span
+        >
       </button>
     </div>
   </form>

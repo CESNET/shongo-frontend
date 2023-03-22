@@ -1,9 +1,7 @@
 <header>
   <h1 i18n="heading">Reservation request detail</h1>
 
-  <div
-    class="buttons"
-    *ngIf="(loading$ | async) === false && reservationRequest">
+  <div class="buttons" *ngIf="!(loading$ | async) && reservationRequest">
     <!-- Book room capacity button -->
     <a
       mat-flat-button
@@ -16,9 +14,8 @@
         reservationRequest.isProvidable &&
         reservationRequest.state !== ReservationRequestState.ALLOCATED_FINISHED
       ">
-      <mat-icon>group_add</mat-icon>&nbsp;<span
-        i18n="button name"
-        id="book-room-capacity-btn-name"
+      <mat-icon>group_add</mat-icon
+      ><span i18n="button name" id="book-room-capacity-btn-name"
         >Book room capacity</span
       >
     </a>
@@ -35,11 +32,8 @@
           reservationRequest.state !==
           ReservationRequestState.ALLOCATED_FINISHED
         ">
-        <mat-icon>settings</mat-icon>&nbsp;<span
-          i18n="button name"
-          id="edit-btn-name"
-          >Edit</span
-        >
+        <mat-icon>settings</mat-icon
+        ><span i18n="button name" id="edit-btn-name">Edit</span>
       </a>
       <!-- Delete button -->
       <button
@@ -47,13 +41,10 @@
         color="warn"
         class="buttons__button"
         aria-labelledby="delete-btn-name"
-        *ngIf="(deleting$ | async) === false; else deleting"
+        *ngIf="!(deleting$ | async); else deleting"
         (click)="delete()">
-        <mat-icon>delete_forever</mat-icon>&nbsp;<span
-          i18n="button name"
-          id="delete-btn-name"
-          >Delete</span
-        >
+        <mat-icon>delete_forever</mat-icon
+        ><span i18n="button name" id="delete-btn-name">Delete</span>
       </button>
 
       <ng-template #deleting>

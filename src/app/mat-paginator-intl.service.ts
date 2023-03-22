@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatLegacyPaginatorIntl as MatPaginatorIntl } from '@angular/material/legacy-paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 const OUT_OF = $localize`:out of|Used in paginator for saying x items "out of" n:out of`;
 

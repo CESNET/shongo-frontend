@@ -1,10 +1,14 @@
 <div *ngIf="isActive" class="alert" [class]="type">
-  <mat-icon>{{ getAlertIcon(type) }}</mat-icon>
+  <div>
+    <mat-icon>{{ getAlertIcon(type) }}</mat-icon>
+  </div>
+
   <span>{{ message }}</span>
+
   <button
     *ngIf="showCloseButton"
     mat-icon-button
-    id="close-btn"
+    class="small-icon-button"
     (click)="isActive = false">
     <mat-icon>close</mat-icon>
   </button>

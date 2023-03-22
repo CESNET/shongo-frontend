@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { HttpParams } from '@angular/common/http';
 import { Type } from '@angular/core';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 import { merge, Observable, of, Subject } from 'rxjs';
 import { catchError, first, map, switchMap, tap } from 'rxjs/operators';

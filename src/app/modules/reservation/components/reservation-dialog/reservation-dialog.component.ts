@@ -6,7 +6,7 @@ import {
   Type,
   ViewChild,
 } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';

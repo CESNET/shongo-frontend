@@ -51,12 +51,12 @@ export const menuItems: MenuItem[] = [
 export const locales: LocaleItem[] = [
   {
     value: Locale.EN,
-    icon: 'assets/img/i18n/GB.svg',
+    icon: 'flag-en',
     name: $localize`:en language|EN language in locale picker:English language`,
   },
   {
     value: Locale.CS,
-    icon: 'assets/img/i18n/CZ.svg',
+    icon: 'flag-cz',
     name: $localize`:cz language|CZ language in locale picker:Czech language`,
   },
 ];

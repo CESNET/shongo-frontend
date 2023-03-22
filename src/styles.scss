@@ -1,23 +1,15 @@
-@use "./styles/mat-theme-colors" as mat-theme-colors;
-@use "@angular/material" as mat;
+@use './styles/mat-theme-colors' as mat-theme-colors;
+@use '@angular/material' as mat;
 
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+@include mat.all-component-typographies();
+@include mat.core();
 
-@import "./styles/res-container.scss";
-@import "./styles/themes/shongo-light.theme.scss";
-@import "./styles/utils.scss";
-@import "./styles/definition-list.scss";
-@import "./styles/calendar.scss";
-@import "./styles/scrollbar.scss";
+@import './styles/res-container.scss';
+@import './styles/themes/shongo-light.theme.scss';
+@import './styles/utils.scss';
+@import './styles/definition-list.scss';
+@import './styles/calendar.scss';
+@import './styles/scrollbar.scss';
 
 :root {
   @include mat-theme-colors.publish($shongo-frontend-theme);
@@ -74,7 +66,7 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 /* Material */
@@ -87,16 +79,22 @@ mat-toolbar.header-toolbar {
 
 .snackbar {
   &--error {
-    border: 2px solid var(--error-color);
-    background: var(--error-color-light) !important;
+    > .mdc-snackbar__surface {
+      border: 2px solid var(--error-color);
+      background: var(--error-color-light) !important;
+    }
   }
   &--warning {
-    border: 2px solid var(--warning-color);
-    background: var(--warning-color-light) !important;
+    > .mdc-snackbar__surface {
+      border: 2px solid var(--warning-color);
+      background: var(--warning-color-light) !important;
+    }
   }
   &--success {
-    border: 2px solid var(--success-color);
-    background: var(--success-color-light) !important;
+    > .mdc-snackbar__surface {
+      border: 2px solid var(--success-color);
+      background: var(--success-color-light) !important;
+    }
   }
 }
 
