@@ -18,6 +18,7 @@
 
   &__options {
     justify-content: flex-end;
+    align-items: center;
     gap: 1em;
 
     &-left {
@@ -82,8 +83,8 @@
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
       grid-template-areas:
-        "datepicker paginator"
-        "date date";
+        'datepicker paginator'
+        'date date';
     }
 
     &__datepicker {
