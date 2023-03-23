@@ -1,4 +1,9 @@
-<header *ngIf="{ isAuthenticated: auth.isAuthenticated$ | async } as authData">
+<header
+  *ngIf="{
+    ltLg: layout.isLessThanLarge$ | async,
+    ltMd: layout.isLessThanMedium$ | async
+  } as breakpoints"
+>
   <mat-toolbar class="header-toolbar">
     <div class="res-container fx-center-vert">
       <!-- Logo -->
@@ -7,7 +12,8 @@
           src="assets/img/meetings_RGB.png"
           alt="Cesnet Meetings"
           width="116px"
-          height="50px" />
+          height="50px"
+        />
       </a>
 
       <nav class="fx-center-vert">
@@ -15,14 +21,14 @@
         <ul class="navigation-list">
           <li
             *ngFor="let item of menuItems"
-            [fxHide.lt-lg]="item.hideOnTablet"
-            fxHide.lt-md>
+            [hidden]="
+              breakpoints.ltMd || (breakpoints.ltLg && item.hideOnTablet)
+            "
+          >
             <ng-container *ngIf="!item.subItems; else itemWithSubMenu">
               <ng-container
-                *ngTemplateOutlet="
-                  linkButton;
-                  context: { item: item }
-                "></ng-container>
+                *ngTemplateOutlet="linkButton; context: { item: item }"
+              ></ng-container>
             </ng-container>
 
             <ng-template #itemWithSubMenu>
@@ -30,7 +36,8 @@
                 <button
                   mat-button
                   [matMenuTriggerFor]="popupSubMenu"
-                  class="navigation-list__item">
+                  class="navigation-list__item"
+                >
                   {{ item.label }}<mat-icon>expand_more</mat-icon>
                 </button>
 
@@ -49,7 +56,11 @@
           </li>
         </ul>
 
-        <button mat-icon-button fxHide fxShow.lt-lg (click)="toggleDropdown()">
+        <button
+          mat-icon-button
+          [hidden]="!breakpoints.ltLg"
+          (click)="toggleDropdown()"
+        >
           <mat-icon>menu</mat-icon>
         </button>
       </nav>
@@ -64,7 +75,8 @@
         <button
           *ngFor="let locale of locales"
           (click)="onSelectLocale(locale.value)"
-          mat-menu-item>
+          mat-menu-item
+        >
           <mat-icon [svgIcon]="locale.icon"></mat-icon>
           {{ locale.name }}
         </button>
@@ -78,17 +90,20 @@
   <!-- Small layout menu -->
   <ul id="dropdown-menu" [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
     <ng-container *ngFor="let item of menuItems">
-      <li fxHide fxShow.lt-md [fxShow.lt-lg]="item.hideOnTablet">
+      <li
+        [hidden]="
+          !breakpoints.ltMd && (!breakpoints.ltLg || !item.hideOnTablet)
+        "
+      >
         <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
           <div
             matRipple
             [matRippleCentered]="true"
-            *ngIf="getAuthGuard(item) | async">
+            *ngIf="getAuthGuard(item) | async"
+          >
             <ng-container
-              *ngTemplateOutlet="
-                linkButton;
-                context: { item: item }
-              "></ng-container>
+              *ngTemplateOutlet="linkButton; context: { item: item }"
+            ></ng-container>
           </div>
         </ng-container>
 
@@ -97,7 +112,8 @@
             mat-ripple
             (click)="item.subMenuOpen = !item.subMenuOpen"
             class="mat-body navigation-list__item"
-            *ngIf="getAuthGuard(item) | async">
+            *ngIf="getAuthGuard(item) | async"
+          >
             {{ item.label }}<mat-icon>expand_more</mat-icon>
           </button>
         </ng-template>
@@ -106,12 +122,11 @@
         <li
           class="subItem"
           [@dropdown]="item.subMenuOpen ? 'open' : 'closed'"
-          *ngFor="let subItem of item.subItems">
+          *ngFor="let subItem of item.subItems"
+        >
           <ng-container
-            *ngTemplateOutlet="
-              linkButton;
-              context: { item: subItem }
-            "></ng-container>
+            *ngTemplateOutlet="linkButton; context: { item: subItem }"
+          ></ng-container>
         </li>
       </ng-container>
     </ng-container>
@@ -134,7 +149,8 @@
         mat-flat-button
         color="primary"
         class="navigation-list__item"
-        [routerLink]="item.route">
+        [routerLink]="item.route"
+      >
         <mat-icon>edit_calendar</mat-icon>
         {{ item.label }}
       </a>

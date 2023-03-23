@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +36,6 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
-    FlexLayoutModule,
     MatCheckboxModule,
     MatMomentDateModule,
     MatInputModule,

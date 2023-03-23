@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { LayoutService } from '@app/core/services/layout.service';
 import { Observable, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ItemAuthorization } from 'src/app/models/enums/item-authorization.enum';
@@ -44,6 +45,7 @@ export class HeaderComponent implements OnDestroy {
   constructor(
     public auth: AuthenticationService,
     public settings: SettingsService,
+    public layout: LayoutService,
     private _locale: LocaleService
   ) {}
 

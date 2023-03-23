@@ -1,3 +1,4 @@
+import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
@@ -7,7 +8,6 @@ import {
   Optional,
   SkipSelf,
 } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -56,7 +56,6 @@ export function storageFactory(): OAuthStorage {
   exports: [HeaderComponent, FooterComponent],
   imports: [
     CommonModule,
-    FlexLayoutModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
@@ -69,6 +68,7 @@ export function storageFactory(): OAuthStorage {
     MatDividerModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    LayoutModule,
     OAuthModule.forRoot(),
   ],
 })
