@@ -3,7 +3,8 @@
   <a
     mat-button
     routerLink="participant/create"
-    aria-labelledby="add-participant-btn-name">
+    aria-labelledby="add-participant-btn-name"
+  >
     <mat-icon color="primary">add_circle</mat-icon>&nbsp;<span
       i18n="button name"
       id="add-participant-btn-name"
@@ -19,5 +20,6 @@
     i18n-description="table description"
     [showDeleteButtons]="false"
     [showCheckboxes]="false"
-    [dataSource]="participantsDataSource"></app-data-table>
+    [dataSource]="participantsDataSource"
+  ></app-data-table>
 </main>

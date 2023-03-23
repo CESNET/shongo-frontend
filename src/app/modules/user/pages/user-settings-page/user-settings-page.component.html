@@ -8,7 +8,8 @@
       [formGroup]="settingsForm"
       (ngSubmit)="submitSettings()"
       class="settings__form"
-      *ngIf="(settings.userSettingsLoading$ | async) === false; else loading">
+      *ngIf="(settings.userSettingsLoading$ | async) === false; else loading"
+    >
       <!-- Preferred language field -->
       <mat-form-field appearance="outline">
         <mat-label i18n="field label">Preferred language</mat-label>
@@ -26,11 +27,13 @@
           <mat-option>
             <ngx-mat-select-search
               appTimezoneSearch
-              #homeTimezoneSearch="timezoneSearch"></ngx-mat-select-search>
+              #homeTimezoneSearch="timezoneSearch"
+            ></ngx-mat-select-search>
           </mat-option>
           <mat-option
             *ngFor="let opt of homeTimezoneSearch.filteredTimezones | async"
-            [value]="opt.timezone">
+            [value]="opt.timezone"
+          >
             {{ opt.label }}
           </mat-option>
         </mat-select>
@@ -41,20 +44,23 @@
         <mat-checkbox
           class="checkbox-form-field__checkbox"
           color="primary"
-          [formControl]="useCurrentTimeZoneCtrl"></mat-checkbox>
+          [formControl]="useCurrentTimeZoneCtrl"
+        ></mat-checkbox>
         <mat-form-field appearance="outline" class="checkbox-form-field__field">
           <mat-label i18n="field label">Current time zone</mat-label>
           <mat-select formControlName="currentTimeZone">
             <mat-option>
               <ngx-mat-select-search
                 appTimezoneSearch
-                #currentTimezoneSearch="timezoneSearch"></ngx-mat-select-search>
+                #currentTimezoneSearch="timezoneSearch"
+              ></ngx-mat-select-search>
             </mat-option>
             <mat-option
               *ngFor="
                 let opt of currentTimezoneSearch.filteredTimezones | async
               "
-              [value]="opt.timezone">
+              [value]="opt.timezone"
+            >
               {{ opt.label }}
             </mat-option>
           </mat-select>
@@ -94,7 +100,8 @@
           mat-flat-button
           type="submit"
           color="primary"
-          i18n="button name">
+          i18n="button name"
+        >
           Save
         </button>
       </div>
@@ -103,7 +110,8 @@
     <ng-template #loading>
       <ngx-skeleton-loader
         count="4"
-        [theme]="{ height: '50px' }"></ngx-skeleton-loader>
+        [theme]="{ height: '50px' }"
+      ></ngx-skeleton-loader>
     </ng-template>
   </main>
 </div>

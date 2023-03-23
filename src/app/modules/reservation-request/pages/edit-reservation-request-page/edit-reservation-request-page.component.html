@@ -6,19 +6,22 @@
   <main>
     <div
       [ngSwitch]="reservationRequest.type"
-      class="reservation-form-container">
+      class="reservation-form-container"
+    >
       <!-- Virtual room form -->
       <div *ngSwitchCase="ReservationType.VIRTUAL_ROOM">
         <app-virtual-room-reservation-form
           [editedRequest]="reservationRequest"
-          #reservationForm></app-virtual-room-reservation-form>
+          #reservationForm
+        ></app-virtual-room-reservation-form>
       </div>
 
       <!-- Physical resource form -->
       <div *ngSwitchCase="ReservationType.PHYSICAL_RESOURCE">
         <app-physical-resource-reservation-form
           [editedRequest]="reservationRequest"
-          #reservationForm></app-physical-resource-reservation-form>
+          #reservationForm
+        ></app-physical-resource-reservation-form>
       </div>
 
       <div *ngSwitchCase="ReservationType.ROOM_CAPACITY">
@@ -28,7 +31,8 @@
             <app-videoconference-reservation-form
               [editedRequest]="reservationRequest"
               [editingMode]="true"
-              #reservationForm></app-videoconference-reservation-form>
+              #reservationForm
+            ></app-videoconference-reservation-form>
           </div>
 
           <!-- H323.SIP form -->
@@ -36,7 +40,8 @@
             <app-videoconference-reservation-form
               [editedRequest]="reservationRequest"
               [editingMode]="true"
-              #reservationForm></app-videoconference-reservation-form>
+              #reservationForm
+            ></app-videoconference-reservation-form>
           </div>
 
           <!-- FREEPBX form -->
@@ -44,7 +49,8 @@
             <app-teleconference-reservation-form
               [editedRequest]="reservationRequest"
               [editingMode]="true"
-              #reservationForm></app-teleconference-reservation-form>
+              #reservationForm
+            ></app-teleconference-reservation-form>
           </div>
 
           <!-- Adobe Connect form -->
@@ -52,7 +58,8 @@
             <app-webconference-reservation-form
               [editedRequest]="reservationRequest"
               [editingMode]="true"
-              #reservationForm></app-webconference-reservation-form>
+              #reservationForm
+            ></app-webconference-reservation-form>
           </div>
 
           <!-- Unknown technology -->
@@ -61,7 +68,8 @@
               message="Unknown technology"
               i18n-message="error message"
               [type]="AlertType.ERROR"
-              [showCloseButton]="false"></app-alert>
+              [showCloseButton]="false"
+            ></app-alert>
           </div>
         </div>
       </div>
@@ -72,7 +80,8 @@
           message="Unknown reservation request type"
           i18n-message="error message"
           [type]="AlertType.ERROR"
-          [showCloseButton]="false"></app-alert>
+          [showCloseButton]="false"
+        ></app-alert>
       </div>
     </div>
 
@@ -91,10 +100,12 @@
           <input
             matInput
             [matDatepicker]="startDatePicker"
-            formControlName="startDate" />
+            formControlName="startDate"
+          />
           <mat-datepicker-toggle
             matSuffix
-            [for]="startDatePicker"></mat-datepicker-toggle>
+            [for]="startDatePicker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #startDatePicker></mat-datepicker>
           <mat-error
             *ngIf="getFormError(slotForm.get('startDate')!) as error"
@@ -124,10 +135,12 @@
           <input
             matInput
             [matDatepicker]="endDatePicker"
-            formControlName="endDate" />
+            formControlName="endDate"
+          />
           <mat-datepicker-toggle
             matSuffix
-            [for]="endDatePicker"></mat-datepicker-toggle>
+            [for]="endDatePicker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
           <mat-error *ngIf="getFormError(slotForm.get('endDate')!) as error">{{
             error
@@ -153,7 +166,8 @@
         color="primary"
         i18n="button name"
         [disabled]="!isValid()"
-        (click)="editRequest()">
+        (click)="editRequest()"
+      >
         Edit request
       </button>
       <a
@@ -167,7 +181,8 @@
       <ng-template #editing>
         <app-loading-text
           message="Editing..."
-          i18n-message="loading text"></app-loading-text>
+          i18n-message="loading text"
+        ></app-loading-text>
       </ng-template>
     </div>
   </footer>
@@ -175,16 +190,16 @@
 
 <ng-template #loadingOrError>
   <ng-container
-    *ngTemplateOutlet="
-      (loading$ | async) ? loading : errorOccured
-    "></ng-container>
+    *ngTemplateOutlet="(loading$ | async) ? loading : errorOccured"
+  ></ng-container>
 </ng-template>
 
 <ng-template #loading>
   <div class="loading">
     <ngx-skeleton-loader
       count="4"
-      [theme]="{ height: '50px' }"></ngx-skeleton-loader>
+      [theme]="{ height: '50px' }"
+    ></ngx-skeleton-loader>
   </div>
 </ng-template>
 <ng-template #errorOccured>
@@ -193,5 +208,6 @@
     i18n-message="error message"
     [type]="AlertType.ERROR"
     [isActive]="true"
-    [showCloseButton]="false"></app-alert>
+    [showCloseButton]="false"
+  ></app-alert>
 </ng-template>

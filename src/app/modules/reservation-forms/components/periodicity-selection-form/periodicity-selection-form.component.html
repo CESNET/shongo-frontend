@@ -5,7 +5,8 @@
     i18n-aria-label="label"
     formControlName="periodicity"
     class="selection selection--periodicity"
-    (change)="handlePeriodicityRadioChange($event)">
+    (change)="handlePeriodicityRadioChange($event)"
+  >
     <mat-radio-button
       [value]="PeriodicityType.NONE"
       color="primary"
@@ -51,7 +52,8 @@
             <mat-select
               appearance="outline"
               [value]="1"
-              formControlName="nthWeek">
+              formControlName="nthWeek"
+            >
               <mat-option *ngFor="let opt of orderOpts" [value]="opt.value">{{
                 opt.displayName
               }}</mat-option>
@@ -95,18 +97,21 @@
       <form
         *ngSwitchCase="PeriodicityType.MONTHLY"
         formGroupName="monthlyForm"
-        class="monthly-form">
+        class="monthly-form"
+      >
         <mat-radio-group
           aria-label="Select monthly periodicity option"
           i18n-aria-label="label"
           class="selection--vertical"
           formControlName="periodicityType"
-          (change)="handleMonthlyRadioChange($event)">
+          (change)="handleMonthlyRadioChange($event)"
+        >
           <!-- Standard monthly periodicity -->
           <mat-radio-button
             [value]="MonthlyPeriodicityType.STANDARD"
             color="primary"
-            #regularRadio>
+            #regularRadio
+          >
             <form formGroupName="regularForm" class="monthly-form__regular">
               <span
                 i18n="
@@ -117,11 +122,13 @@
 
               <!-- Nth. month field -->
               <mat-form-field
-                class="periodicity__field periodicity__field--number">
+                class="periodicity__field periodicity__field--number"
+              >
                 <mat-select
                   appearance="outline"
                   [value]="1"
-                  formControlName="nthMonth">
+                  formControlName="nthMonth"
+                >
                   <mat-option
                     *ngFor="let opt of orderOpts"
                     [value]="opt.value"
@@ -139,7 +146,8 @@
           <mat-radio-button
             [value]="MonthlyPeriodicityType.SPECIFIC_DAY"
             color="primary"
-            #irregularRadio>
+            #irregularRadio
+          >
             <form formGroupName="irregularForm" class="monthly-form__irregular">
               <span
                 i18n="
@@ -151,11 +159,13 @@
 
               <!-- Nth. day field -->
               <mat-form-field
-                class="periodicity__field periodicity__field--number">
+                class="periodicity__field periodicity__field--number"
+              >
                 <mat-select
                   appearance="outline"
                   [value]="1"
-                  formControlName="nthDay">
+                  formControlName="nthDay"
+                >
                   <mat-option
                     *ngFor="let opt of monthlyDayOrderOpts"
                     [value]="opt.value"
@@ -166,11 +176,13 @@
 
               <!-- Day in month selection -->
               <mat-form-field
-                class="periodicity__field periodicity__field--text">
+                class="periodicity__field periodicity__field--text"
+              >
                 <mat-select
                   appearance="outline"
                   [value]="1"
-                  formControlName="day">
+                  formControlName="day"
+                >
                   <mat-option
                     *ngFor="let opt of monthlyDayOpts"
                     [value]="opt.value"
@@ -191,11 +203,13 @@
 
               <!-- Nth. month field -->
               <mat-form-field
-                class="periodicity__field periodicity__field--number">
+                class="periodicity__field periodicity__field--number"
+              >
                 <mat-select
                   appearance="outline"
                   [value]="1"
-                  formControlName="nthMonth">
+                  formControlName="nthMonth"
+                >
                   <mat-option
                     *ngFor="let opt of orderOpts"
                     [value]="opt.value"
@@ -220,23 +234,27 @@
 
   <!-- Repeat until + excluded dates -->
   <div
-    *ngIf="periodicityForm.get('periodicity')!.value !== PeriodicityType.NONE">
+    *ngIf="periodicityForm.get('periodicity')!.value !== PeriodicityType.NONE"
+  >
     <!-- Repeat until field -->
     <mat-form-field
       appearance="outline"
-      class="periodicity__field periodicity__field--date">
+      class="periodicity__field periodicity__field--date"
+    >
       <mat-label i18n="field label">Repeat until</mat-label>
       <input
         matInput
         [matDatepicker]="repeatUntilDatePicker"
-        formControlName="repeatUntil" />
+        formControlName="repeatUntil"
+      />
       <mat-error
         *ngIf="getFormError(this.periodicityForm.get('repeatUntil')!) as error"
         >{{ error }}</mat-error
       >
       <mat-datepicker-toggle
         matSuffix
-        [for]="repeatUntilDatePicker"></mat-datepicker-toggle>
+        [for]="repeatUntilDatePicker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #repeatUntilDatePicker></mat-datepicker>
     </mat-form-field>
 
@@ -249,13 +267,15 @@
           type="date"
           style="visibility: hidden; width: 0"
           [matDatepicker]="excludedDatePicker"
-          (dateInput)="addExcludedDate($event)" />
+          (dateInput)="addExcludedDate($event)"
+        />
         <mat-datepicker #excludedDatePicker></mat-datepicker>
         <button
           mat-button
           type="button"
           aria-labelledby="add-date-btn-name"
-          (click)="excludedDatePicker.open()">
+          (click)="excludedDatePicker.open()"
+        >
           <mat-icon color="primary">add</mat-icon>&nbsp;<span
             i18n="button name"
             id="add-date-btn-name"
@@ -271,7 +291,8 @@
     <div
       *ngIf="excludedDays.size === 0"
       class="periodicity__no-excluded-days"
-      i18n="fallback text">
+      i18n="fallback text"
+    >
       None
     </div>
 
@@ -280,7 +301,8 @@
       <mat-chip
         *ngFor="let date of excludedDays"
         color="primary"
-        (removed)="removeExcludedDay(date)">
+        (removed)="removeExcludedDay(date)"
+      >
         {{ date | momentDate }}
         <button matChipRemove>
           <mat-icon>cancel</mat-icon>

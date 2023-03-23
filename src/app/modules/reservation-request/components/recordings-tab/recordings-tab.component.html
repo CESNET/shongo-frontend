@@ -16,7 +16,8 @@
       reservationRequest.type === ReservationType.ROOM_CAPACITY &&
       !reservationRequest.futureSlotCount
     "
-    [ngTemplateOutlet]="recordingButton"></ng-container>
+    [ngTemplateOutlet]="recordingButton"
+  ></ng-container>
 </header>
 
 <main>
@@ -25,12 +26,14 @@
     [showDeleteButtons]="false"
     [dataSource]="roomRecordingDataSource"
     description="List of recordings for this room."
-    i18n-description="table description"></app-data-table>
+    i18n-description="table description"
+  ></app-data-table>
 </main>
 
 <ng-template #recordingButton>
   <ng-container
-    *ngIf="(settingRecording$ | async) === false; else settingRecording">
+    *ngIf="(settingRecording$ | async) === false; else settingRecording"
+  >
     <button
       mat-button
       aria-labelledby="stop-recording-btn-name"
@@ -41,7 +44,8 @@
       *ngIf="
         reservationRequest.roomCapacityData?.isRecordingActive;
         else startRecord
-      ">
+      "
+    >
       <mat-icon color="primary">videocam_off</mat-icon>&nbsp;<span
         i18n="button name"
         id="stop-recording-btn-name"
@@ -60,7 +64,8 @@
     mat-button
     aria-labelledby="start-recording-btn-name"
     (click)="setRecording(true)"
-    [disabled]="reservationRequest.executableState !== ExecutableState.STARTED">
+    [disabled]="reservationRequest.executableState !== ExecutableState.STARTED"
+  >
     <mat-icon color="primary">videocam</mat-icon>&nbsp;<span
       i18n="button name"
       id="start-recording-btn-name"

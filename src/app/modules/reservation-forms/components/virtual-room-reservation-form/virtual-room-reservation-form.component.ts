@@ -4,7 +4,11 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';

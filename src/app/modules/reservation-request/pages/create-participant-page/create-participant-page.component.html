@@ -10,7 +10,8 @@
       <mat-radio-group
         aria-label="Select participant type"
         formControlName="participantType"
-        color="primary">
+        color="primary"
+      >
         <mat-radio-button [value]="ParticipantType.USER" i18n="option"
           >With user account</mat-radio-button
         >
@@ -26,7 +27,8 @@
         form.get('participantType')!.value === ParticipantType.USER;
         else anonymousForm
       "
-      formGroupName="userForm">
+      formGroupName="userForm"
+    >
       <!-- User field -->
       <mat-form-field appearance="outline">
         <mat-label i18n="field label">User</mat-label>
@@ -34,11 +36,13 @@
           <mat-option>
             <ngx-mat-select-search
               appUserSearch
-              #userSearch="userSearch"></ngx-mat-select-search>
+              #userSearch="userSearch"
+            ></ngx-mat-select-search>
           </mat-option>
           <mat-option
             *ngFor="let opt of userSearch.filteredUsers | async"
-            [value]="opt.id">
+            [value]="opt.id"
+          >
             {{ opt.user }}
           </mat-option>
         </mat-select>
@@ -106,14 +110,16 @@
         color="primary"
         i18n="button name"
         [disabled]="!isValid()"
-        (click)="postParticipant()">
+        (click)="postParticipant()"
+      >
         Add participant
       </button>
 
       <ng-container *ngIf="posting$ | async; else cancelButton">
         <app-loading-text
           message="Creating participant..."
-          i18n-message="loading text"></app-loading-text>
+          i18n-message="loading text"
+        ></app-loading-text>
       </ng-container>
 
       <ng-template #cancelButton>

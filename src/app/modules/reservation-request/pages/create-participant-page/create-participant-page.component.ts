@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { finalize, first, switchMap } from 'rxjs/operators';
@@ -29,11 +33,16 @@ export class CreateParticipantPageComponent {
     userForm: new UntypedFormGroup({
       userFilter: new UntypedFormControl(null),
       userId: new UntypedFormControl(null, [Validators.required]),
-      role: new UntypedFormControl(ParticipantRole.PARTICIPANT, [Validators.required]),
+      role: new UntypedFormControl(ParticipantRole.PARTICIPANT, [
+        Validators.required,
+      ]),
     }),
     anonymousForm: new UntypedFormGroup({
       name: new UntypedFormControl(null, [Validators.required]),
-      email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+      email: new UntypedFormControl(null, [
+        Validators.required,
+        Validators.email,
+      ]),
     }),
   });
 

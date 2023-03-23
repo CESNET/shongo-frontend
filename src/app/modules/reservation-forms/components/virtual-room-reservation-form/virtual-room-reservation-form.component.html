@@ -4,7 +4,8 @@
     <mat-label i18n="field label">Technology</mat-label>
     <mat-select
       formControlName="resource"
-      (valueChange)="onTechnologyChange($event)">
+      (valueChange)="onTechnologyChange($event)"
+    >
       <mat-option *ngFor="let opt of technologyOpts" [value]="opt.value">{{
         opt.displayName
       }}</mat-option>
@@ -43,11 +44,13 @@
       <mat-option>
         <ngx-mat-select-search
           appTimezoneSearch
-          #timezoneSarch="timezoneSearch"></ngx-mat-select-search>
+          #timezoneSarch="timezoneSearch"
+        ></ngx-mat-select-search>
       </mat-option>
       <mat-option
         *ngFor="let opt of timezoneSarch.filteredTimezones | async"
-        [value]="opt.timezone">
+        [value]="opt.timezone"
+      >
         {{ opt.label }}
       </mat-option>
     </mat-select>
@@ -66,7 +69,8 @@
     <div
       *ngSwitchCase="Technology.ADOBE_CONNECT"
       formGroupName="webconferenceFields"
-      class="form">
+      class="form"
+    >
       <!-- User pin field -->
       <mat-form-field appearance="outline" class="form__field--pin">
         <mat-label i18n="field label">User PIN</mat-label>
@@ -85,7 +89,8 @@
     <div
       *ngSwitchCase="Technology.FREEPBX"
       formGroupName="teleconferenceFields"
-      class="form">
+      class="form"
+    >
       <!-- Admin pin field -->
       <mat-form-field appearance="outline" class="form__field--pin">
         <mat-label i18n="field label">Admin PIN</mat-label>

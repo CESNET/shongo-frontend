@@ -3,7 +3,8 @@
   [showCheckboxes]="showCheckboxes"
   [description]="description"
   [showDeleteButtons]="showDeleteButtons"
-  *ngIf="(tabletSizeHit$ | async)?.matches === false; else mobileTable">
+  *ngIf="(tabletSizeHit$ | async)?.matches === false; else mobileTable"
+>
 </app-desktop-table>
 
 <!-- Mobile sized table -->
@@ -12,5 +13,6 @@
     [dataSource]="dataSource"
     [showCheckboxes]="showCheckboxes"
     [description]="description"
-    [showDeleteButtons]="showDeleteButtons"></app-mobile-table>
+    [showDeleteButtons]="showDeleteButtons"
+  ></app-mobile-table>
 </ng-template>

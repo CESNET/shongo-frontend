@@ -13,7 +13,8 @@
             aria-label="Refresh"
             i18n-matTooltip="button name"
             i18n-aria-label="button name"
-            (click)="dataSource.refreshData()">
+            (click)="dataSource.refreshData()"
+          >
             <mat-icon>refresh</mat-icon>
           </button>
 
@@ -24,7 +25,8 @@
               aria-label="Delete selected"
               i18n-matTooltip="button name"
               i18n-aria-label="button name"
-              (click)="deleteSelectedRows()">
+              (click)="deleteSelectedRows()"
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </ng-container>
@@ -40,18 +42,21 @@
       [fixedLayout]="fixedLayout"
       mat-table
       matSort
-      class="full-width-table">
+      class="full-width-table"
+    >
       <!-- Columns -->
       <ng-container
         *ngFor="let column of dataSource.displayedColumns"
-        [matColumnDef]="column.name">
+        [matColumnDef]="column.name"
+      >
         <th mat-header-cell *matHeaderCellDef>
           <div class="table-header-wrapper">
             <button
               *ngIf="column.helpComponent"
               mat-icon-button
               class="help-icon-button"
-              (click)="openHelp(column)">
+              (click)="openHelp(column)"
+            >
               <mat-icon>help</mat-icon>
             </button>
             <span mat-sort-header>{{ column.displayName }}</span>
@@ -63,7 +68,8 @@
           <td
             mat-cell
             *matCellDef="let row"
-            [matTooltip]="getTooltipText(row[column.name])">
+            [matTooltip]="getTooltipText(row[column.name])"
+          >
             <ng-container *ngIf="row[column.name] as cellData; else noCellData">
               {{ cellData | appShortString : maxCellTextLength }}
             </ng-container>
@@ -81,7 +87,8 @@
                 *ngComponentOutlet="
                   column.component!;
                   injector: createColComponentValueInjector(row, column.name)
-                "></ng-container>
+                "
+              ></ng-container>
             </div>
           </td>
         </ng-template>
@@ -103,7 +110,8 @@
                     [attr.aria-label]="button.name"
                     [disabled]="
                       button.isDisabledFunc ? button.isDisabledFunc(row) : false
-                    ">
+                    "
+                  >
                     <mat-icon>{{ button.icon }}</mat-icon>
                   </button>
                 </div>
@@ -122,7 +130,8 @@
                         row
                       );
                       else buttonLoading
-                    ">
+                    "
+                  >
                     <mat-icon>{{ button.icon }}</mat-icon>
                   </button>
                   <ng-template #buttonLoading>
@@ -130,7 +139,8 @@
                       diameter="20"
                       strokeWidth="3"
                       color="accent"
-                      class="button-loading"></mat-spinner>
+                      class="button-loading"
+                    ></mat-spinner>
                   </ng-template>
                 </div>
                 <div *ngSwitchCase="TableButtonType.LINK">
@@ -148,7 +158,8 @@
                     "
                     [disabled]="
                       button.isDisabledFunc ? button.isDisabledFunc(row) : false
-                    ">
+                    "
+                  >
                     <mat-icon>{{ button.icon }}</mat-icon>
                   </a>
                 </div>
@@ -163,12 +174,14 @@
         <th
           mat-header-cell
           *matHeaderCellDef
-          class="justify-center button-width">
+          class="justify-center button-width"
+        >
           <mat-checkbox
             color="primary"
             (change)="$event ? masterToggle() : null"
             [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()">
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row" class="justify-center">
@@ -176,7 +189,8 @@
             color="primary"
             (click)="$event.stopPropagation()"
             (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)">
+            [checked]="selection.isSelected(row)"
+          >
           </mat-checkbox>
         </td>
       </ng-container>
@@ -196,7 +210,8 @@
       class="no-data"
       *ngIf="
         (dataSource.loading$ | async) === false && dataSource.data.count === 0
-      ">
+      "
+    >
       <b *ngIf="!dataSource.data.error" i18n="error message"
         >No entries found</b
       >
@@ -211,7 +226,8 @@
       [pageSizeOptions]="[5, 10, 20]"
       [class.extra-gap]="
         !dataSource || !dataSource.data || !dataSource.data.count
-      ">
+      "
+    >
     </mat-paginator>
   </mat-card-content>
 </mat-card>

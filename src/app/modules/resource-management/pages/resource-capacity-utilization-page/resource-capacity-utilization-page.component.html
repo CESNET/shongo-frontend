@@ -9,19 +9,22 @@
     i18n-description="table description"
     [dataSource]="dataSource"
     [showCheckboxes]="false"
-    [showDeleteButtons]="false">
+    [showDeleteButtons]="false"
+  >
   </app-data-table>
 
   <ng-template #loadingOrNoData>
     <ng-container
       *ngIf="error; else noResourcesYet"
-      [ngTemplateOutlet]="errorDisplay"></ng-container>
+      [ngTemplateOutlet]="errorDisplay"
+    ></ng-container>
   </ng-template>
 
   <ng-template #noResourcesYet>
     <ng-container
       *ngIf="noResources; else loadingDisplay"
-      [ngTemplateOutlet]="noResourcesDisplay"></ng-container>
+      [ngTemplateOutlet]="noResourcesDisplay"
+    ></ng-container>
   </ng-template>
 
   <ng-template #errorDisplay>
@@ -30,7 +33,8 @@
       [showCloseButton]="false"
       [isActive]="true"
       i18n-message="error message"
-      message="An error occured while loading resources"></app-alert>
+      message="An error occured while loading resources"
+    ></app-alert>
   </ng-template>
 
   <ng-template #loadingDisplay>
@@ -42,7 +46,8 @@
         width: '25%',
         'margin-right': '15px',
         border: '1px solid white'
-      }"></ngx-skeleton-loader>
+      }"
+    ></ngx-skeleton-loader>
     <ngx-skeleton-loader
       count="4"
       [theme]="{
@@ -51,7 +56,8 @@
         width: '100%',
         'margin-right': '15px',
         border: '1px solid white'
-      }"></ngx-skeleton-loader>
+      }"
+    ></ngx-skeleton-loader>
   </ng-template>
 
   <ng-template #noResourcesDisplay>
@@ -60,6 +66,7 @@
       [showCloseButton]="false"
       [isActive]="true"
       i18n-message="error message"
-      message="No resources with capacity found"></app-alert>
+      message="No resources with capacity found"
+    ></app-alert>
   </ng-template>
 </main>

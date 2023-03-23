@@ -6,7 +6,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { WebconferenceAccessMode } from 'src/app/shared/models/enums/webconference-access-mode.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';

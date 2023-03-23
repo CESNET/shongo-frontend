@@ -12,7 +12,8 @@
     "lint": "ng lint",
     "prepare": "husky install",
     "extract-i18n": "ng extract-i18n --output-path src/locales",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "prettier": "prettier --write \"src/**/*.{ts,html}\""
   },
   "private": true,
   "dependencies": {

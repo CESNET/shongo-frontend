@@ -24,11 +24,13 @@
         <mat-option>
           <ngx-mat-select-search
             appTimezoneSearch
-            #timezoneSarch="timezoneSearch"></ngx-mat-select-search>
+            #timezoneSarch="timezoneSearch"
+          ></ngx-mat-select-search>
         </mat-option>
         <mat-option
           *ngFor="let opt of timezoneSarch.filteredTimezones | async"
-          [value]="opt.timezone">
+          [value]="opt.timezone"
+        >
           {{ opt.label }}
         </mat-option>
       </mat-select>
@@ -45,8 +47,7 @@
 
     <!-- Periodicity form -->
     <app-periodicity-selection-form
-      [periodicity]="
-        editedRequest?.physicalResourceData?.periodicity
-      "></app-periodicity-selection-form>
+      [periodicity]="editedRequest?.physicalResourceData?.periodicity"
+    ></app-periodicity-selection-form>
   </div>
 </form>

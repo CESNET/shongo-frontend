@@ -12,7 +12,8 @@
       [hourSegmentTemplate]="hourSegment"
       [refresh]="refresh$"
       (eventTimesChanged)="eventTimesChanged($event)"
-      (eventClicked)="handleEventClick($event.event)"></mwl-calendar-day-view>
+      (eventClicked)="handleEventClick($event.event)"
+    ></mwl-calendar-day-view>
     <mwl-calendar-week-view
       *ngSwitchCase="CalendarView.Week"
       class="calendar-view"
@@ -24,7 +25,8 @@
       [refresh]="refresh$"
       (eventTimesChanged)="eventTimesChanged($event)"
       (dayHeaderClicked)="openDate($event.day.date)"
-      (eventClicked)="handleEventClick($event.event)"></mwl-calendar-week-view>
+      (eventClicked)="handleEventClick($event.event)"
+    ></mwl-calendar-week-view>
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
       class="calendar-view"
@@ -33,7 +35,8 @@
       [tooltipTemplate]="calendarTooltip"
       [refresh]="refresh$"
       (dayClicked)="openDate($event.day.date)"
-      (eventClicked)="handleEventClick($event.event)"></mwl-calendar-month-view>
+      (eventClicked)="handleEventClick($event.event)"
+    ></mwl-calendar-month-view>
   </div>
 </div>
 
@@ -43,7 +46,8 @@
   let-segment="segment"
   let-locale="locale"
   let-segmentHeight="segmentHeight"
-  let-isTimeLabel="isTimeLabel">
+  let-isTimeLabel="isTimeLabel"
+>
   <div
     #segmentElement
     class="cal-hour-segment"
@@ -53,7 +57,8 @@
     [ngClass]="segment.cssClass"
     (mousedown)="
       allowSlotSelection && startDragToCreate(segment, segmentElement)
-    ">
+    "
+  >
     <div class="cal-time" *ngIf="isTimeLabel">
       {{ segment.date | calendarDate : 'weekViewHour' : locale }}
     </div>
@@ -65,7 +70,8 @@
   #calendarTooltip
   let-contents="contents"
   let-placement="placement"
-  let-event="event">
+  let-event="event"
+>
   <div class="cal-tooltip" [ngClass]="'cal-tooltip-' + placement">
     <div class="cal-tooltip-arrow"></div>
     <div class="cal-tooltip-inner">

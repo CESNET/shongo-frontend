@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { finalize, first, switchMap } from 'rxjs/operators';
@@ -111,7 +115,9 @@ export class CreateUserRolePageComponent implements OnInit {
         { value: requestId, disabled: true },
         [Validators.required]
       ),
-      identityType: new UntypedFormControl(IdentityType.USER, [Validators.required]),
+      identityType: new UntypedFormControl(IdentityType.USER, [
+        Validators.required,
+      ]),
       identityId: new UntypedFormControl(null, [Validators.required]),
       role: new UntypedFormControl(RoleType.OWNER, [Validators.required]),
     });
