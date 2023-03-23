@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RecordingsTabComponent } from './recordings-tab.component';
 import { DatePipe } from '@angular/common';
-import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { of } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { ShongoTableModule } from 'src/app/modules/shongo-table/shongo-table.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { mockReservationRequest } from 'src/app/test/mocks/reservation-request.mock';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ShongoTableModule } from 'src/app/modules/shongo-table/shongo-table.module';
+import { RecordingsTabComponent } from './recordings-tab.component';
 
 describe('RecordingsTabComponent', () => {
   let component: RecordingsTabComponent;

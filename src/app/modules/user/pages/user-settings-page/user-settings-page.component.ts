@@ -1,10 +1,14 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnInit,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
@@ -28,14 +32,14 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
     { displayName: $localize`:language:English`, value: 'en' },
   ];
 
-  readonly useCurrentTimeZoneCtrl = new FormControl(false);
-  readonly usePerunSettingsCtrl = new FormControl(false);
-  readonly administrationModeCtrl = new FormControl(false);
+  readonly useCurrentTimeZoneCtrl = new UntypedFormControl(false);
+  readonly usePerunSettingsCtrl = new UntypedFormControl(false);
+  readonly administrationModeCtrl = new UntypedFormControl(false);
 
-  readonly settingsForm = new FormGroup({
-    locale: new FormControl(''),
-    homeTimeZone: new FormControl(''),
-    currentTimeZone: new FormControl({
+  readonly settingsForm = new UntypedFormGroup({
+    locale: new UntypedFormControl(''),
+    homeTimeZone: new UntypedFormControl(''),
+    currentTimeZone: new UntypedFormControl({
       value: '',
       disabled: true,
     }),

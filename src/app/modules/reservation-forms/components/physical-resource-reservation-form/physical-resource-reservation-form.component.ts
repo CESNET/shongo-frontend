@@ -1,11 +1,15 @@
 import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  Input,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { PhysicalResourceReservationRequest } from 'src/app/shared/models/rest-api/physical-resource-reservation-request.interface';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -32,12 +36,12 @@ export class PhysicalResourceReservationFormComponent
 
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
-  readonly form = new FormGroup({
-    description: new FormControl(null, [
+  readonly form = new UntypedFormGroup({
+    description: new UntypedFormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
-    timezone: new FormControl(null, [Validators.required]),
+    timezone: new UntypedFormControl(null, [Validators.required]),
   });
 
   readonly getFormError = getFormError;

@@ -28,18 +28,18 @@
       <script type="text/javascript">
         const handleAppReady = () => {
           const preBootstrapContainer = document.getElementById(
-            "pre-bootstrap-container"
+            'pre-bootstrap-container'
           );
-          const preBootstrap = document.getElementById("pre-bootstrap");
+          const preBootstrap = document.getElementById('pre-bootstrap');
 
-          preBootstrap.classList.add("loaded");
+          preBootstrap.classList.add('loaded');
 
           setTimeout(() => {
             preBootstrapContainer.removeChild(preBootstrap);
           }, 300);
         };
 
-        document.addEventListener("appready", handleAppReady);
+        document.addEventListener('appready', handleAppReady);
       </script>
 
       <style>

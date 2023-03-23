@@ -5,14 +5,23 @@ footer {
   padding: 50px 0;
 }
 .footer-section {
+  display: flex;
   width: 100%;
   flex-wrap: wrap;
+  align-items: space-between;
+  flex-direction: row;
 }
 .footer-items {
   width: 100%;
+  display: flex;
+  flex: 70%;
+  justify-content: flex-end;
+  gap: 1.5rem;
 }
 .footer-items--group {
   width: 200px;
+  display: flex;
+  flex-direction: column;
 
   mat-divider {
     margin-bottom: 10px;
@@ -30,6 +39,14 @@ footer {
     text-decoration: underline;
   }
 }
+.res-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.spacer {
+  flex: 1;
+}
 
 /* Other */
 #cesnet-logo {
@@ -39,4 +56,42 @@ footer {
   max-width: 228px;
   max-height: 87px;
   margin-bottom: 25px;
+}
+
+// Less than medium
+@media screen and (max-width: 959px) {
+  .footer-section {
+    &__first {
+      flex-direction: column;
+      align-items: start;
+    }
+    &__second {
+      align-items: center;
+    }
+  }
+
+  .footer-items {
+    flex: 100%;
+    justify-content: space-between;
+  }
+  .spacer {
+    flex: 0;
+  }
+}
+
+// Less than small
+@media screen and (max-width: 599px) {
+  .footer-section {
+    &__second {
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+    }
+  }
+
+  .footer-items {
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+  }
 }

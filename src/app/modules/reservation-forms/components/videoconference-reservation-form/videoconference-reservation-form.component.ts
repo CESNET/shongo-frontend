@@ -1,12 +1,16 @@
 import {
-  Component,
+  AfterViewInit,
   ChangeDetectionStrategy,
-  ViewChild,
+  Component,
   Input,
   OnInit,
-  AfterViewInit,
+  ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { VideoconferenceReservationRequest } from 'src/app/shared/models/rest-api/videoconference-reservation-request.interface';
@@ -14,17 +18,16 @@ import { getFormError } from 'src/app/utils/get-form-error';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
-  roomNameErrorHandler,
   pinErrorHandler,
+  roomNameErrorHandler,
 } from '../../utils/custom-error-handlers';
 import {
-  ROOM_DESCRIPTION_MAXLENGTH,
-  PIN_PATTERN,
   PIN_MINLENGTH,
+  PIN_PATTERN,
+  ROOM_DESCRIPTION_MAXLENGTH,
   ROOM_NAME_MAXLENGTH,
   ROOM_NAME_PATTERN,
 } from '../../utils/reservation-form.constants';
-
 import { PeriodicitySelectionFormComponent } from '../periodicity-selection-form/periodicity-selection-form.component';
 
 type VideoconferenceReservationFormValue = Omit<
@@ -50,19 +53,19 @@ export class VideoconferenceReservationFormComponent
   @Input() editingMode = false;
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
-  readonly form = new FormGroup({
-    description: new FormControl(null, [
+  readonly form = new UntypedFormGroup({
+    description: new UntypedFormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
-    adminPin: new FormControl(null, [
+    adminPin: new UntypedFormControl(null, [
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
-    participantCount: new FormControl(null, [Validators.required]),
-    timezone: new FormControl(null, [Validators.required]),
-    allowGuests: new FormControl(false),
-    record: new FormControl(false),
+    participantCount: new UntypedFormControl(null, [Validators.required]),
+    timezone: new UntypedFormControl(null, [Validators.required]),
+    allowGuests: new UntypedFormControl(false),
+    record: new UntypedFormControl(false),
   });
 
   readonly getFormError = getFormError;
@@ -87,7 +90,7 @@ export class VideoconferenceReservationFormComponent
     if (!this.editingMode && !this.editedRequest) {
       this.form.addControl(
         'roomName',
-        new FormControl(null, [
+        new UntypedFormControl(null, [
           Validators.required,
           Validators.maxLength(ROOM_NAME_MAXLENGTH),
           Validators.pattern(ROOM_NAME_PATTERN),

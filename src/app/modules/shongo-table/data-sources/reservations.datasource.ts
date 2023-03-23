@@ -1,12 +1,12 @@
-import { StaticDataSource } from './static-datasource';
-import { ResourceReservation } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { SortDirection } from '@angular/material/sort';
 import { Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { datePipeFunc } from 'src/app/utils/date-pipe-func';
+import { ResourceReservation } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
+import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { RequestIdColumnComponent } from '../../resource-management/components/request-id-column/request-id-column.component';
 import { ReservationOwnerColumnComponent } from '../../resource-management/components/reservation-owner-column/reservation-owner-column.component';
+import { StaticDataSource } from './static-datasource';
 
 export interface ResourceReservationTableData {
   id: string;

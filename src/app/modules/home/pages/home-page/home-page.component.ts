@@ -1,8 +1,8 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnInit,
+  Component,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -65,7 +65,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         if (tabIndex) {
           const tabIndexNum = Number(tabIndex);
 
-          if (tabIndexNum !== NaN) {
+          if (!Number.isNaN(tabIndexNum)) {
             this.tabIndex = tabIndexNum;
           }
         }

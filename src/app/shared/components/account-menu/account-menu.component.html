@@ -1,59 +1,60 @@
-<ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOutFallback">
-  <button
-    mat-button
-    [matMenuTriggerFor]="accountSubMenu"
-    fxHide.lt-sm
-    class="account"
-  >
-    <span class="account__body">
-      <mat-icon
-        class="account__icon icon-s"
-        *ngIf="
-          (settings.userSettings$ | async) && settings.canReserve;
-          else cannotReserve
-        "
-        >account_circle</mat-icon
-      >
+<ng-container *ngIf="{ ltSm: layout.isLessThanSmall$ | async } as breakpoints">
+  <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOutFallback">
+    <button
+      mat-button
+      [matMenuTriggerFor]="accountSubMenu"
+      [hidden]="breakpoints.ltSm"
+      class="account"
+    >
+      <span class="account__body">
+        <mat-icon
+          class="account__icon icon-s"
+          *ngIf="
+            (settings.userSettings$ | async) && settings.canReserve;
+            else cannotReserve
+          "
+          >account_circle</mat-icon
+        >
 
-      <ng-template #cannotReserve>
-        <mat-icon class="account__icon icon-s" color="warn">warning</mat-icon>
+        <ng-template #cannotReserve>
+          <mat-icon class="account__icon icon-s" color="warn">warning</mat-icon>
+        </ng-template>
+
+        <span class="account__username">{{
+          getUsername() | appShortString : 15
+        }}</span>
+        <span class="account__timezone">{{ settings.timeZoneOffset }}</span>
+      </span>
+    </button>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="accountSubMenu"
+      [hidden]="!breakpoints.ltSm"
+    >
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #accountSubMenu="matMenu">
+      <ng-container *ngFor="let item of accountItems">
+        <ng-container
+          [ngTemplateOutlet]="item.route ? linkItem : buttonItem"
+          [ngTemplateOutletContext]="{ item: item }"
+        >
+        </ng-container>
+      </ng-container>
+
+      <ng-template #linkItem let-item="item">
+        <a mat-menu-item [href]="item.route">{{ item.label }}</a>
       </ng-template>
 
-      <span class="account__username">{{
-        getUsername() | appShortString: 15
-      }}</span>
-      <span class="account__timezone">{{ settings.timeZoneOffset }}</span>
-    </span>
-  </button>
-
-  <button
-    mat-icon-button
-    [matMenuTriggerFor]="accountSubMenu"
-    fxHide
-    fxShow.lt-sm
-  >
-    <mat-icon>account_circle</mat-icon>
-  </button>
-
-  <mat-menu #accountSubMenu="matMenu">
-    <ng-container *ngFor="let item of accountItems">
-      <ng-container
-        [ngTemplateOutlet]="item.route ? linkItem : buttonItem"
-        [ngTemplateOutletContext]="{ item: item }"
-      >
-      </ng-container>
-    </ng-container>
-
-    <ng-template #linkItem let-item="item">
-      <a mat-menu-item [href]="item.route">{{ item.label }}</a>
-    </ng-template>
-
-    <ng-template #buttonItem let-item="item">
-      <button mat-menu-item (click)="item.func()">
-        {{ item.label }}
-      </button>
-    </ng-template>
-  </mat-menu>
+      <ng-template #buttonItem let-item="item">
+        <button mat-menu-item (click)="item.func()">
+          {{ item.label }}
+        </button>
+      </ng-template>
+    </mat-menu>
+  </ng-container>
 </ng-container>
 
 <ng-template #loggedOutFallback>

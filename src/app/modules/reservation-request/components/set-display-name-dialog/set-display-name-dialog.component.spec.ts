@@ -9,7 +9,6 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
 import { SetDisplayNameDialogComponent } from './set-display-name-dialog.component';
 
 describe('SetDisplayNameDialogComponent', () => {

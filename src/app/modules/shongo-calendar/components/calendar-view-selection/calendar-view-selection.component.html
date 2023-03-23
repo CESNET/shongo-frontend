@@ -5,7 +5,9 @@
     i18n-aria-label="button name"
     [matMenuTriggerFor]="viewMenu"
   >
-    {{ selectedViewDisplayName | titlecase }}&nbsp;<mat-icon>arrow_drop_down</mat-icon>
+    {{ selectedViewDisplayName | titlecase }}&nbsp;<mat-icon
+      >arrow_drop_down</mat-icon
+    >
   </button>
 
   <mat-menu #viewMenu="matMenu">

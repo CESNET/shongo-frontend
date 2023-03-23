@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { getFormError } from 'src/app/utils/get-form-error';
 
@@ -10,7 +10,7 @@ import { getFormError } from 'src/app/utils/get-form-error';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SetDisplayNameDialogComponent {
-  nameCtrl = new FormControl(null, Validators.required);
+  nameCtrl = new UntypedFormControl(null, Validators.required);
 
   getFormError = getFormError;
 

@@ -48,7 +48,7 @@
 
         <!-- Current view date -->
         <h1 class="reservation__date-header reservation__date-header--main">
-          {{ calendar.viewDate | calendarDate : calendar.view + "ViewTitle" }}
+          {{ calendar.viewDate | calendarDate : calendar.view + 'ViewTitle' }}
         </h1>
       </div>
 
@@ -64,7 +64,7 @@
       class="reservation__toolbar-row reservation__toolbar-row--mobile"
     >
       <h1 class="reservation__date-header reservation__date-header--mobile">
-        {{ calendar.viewDate | calendarDate : calendar.view + "ViewTitle" }}
+        {{ calendar.viewDate | calendarDate : calendar.view + 'ViewTitle' }}
       </h1>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -251,7 +251,7 @@
               >
               <!-- Slot start value -->
               <div class="sidebar__slot-part-value">
-                <span>{{ selectedSlot.start | momentDate : "LLL" }}</span>
+                <span>{{ selectedSlot.start | momentDate : 'LLL' }}</span>
 
                 <!-- Fine tuning buttons -->
                 <div class="time-setting">
@@ -289,7 +289,7 @@
 
               <!-- Slot end value -->
               <div class="sidebar__slot-part-value">
-                <span>{{ selectedSlot.end | momentDate : "LLL" }}</span>
+                <span>{{ selectedSlot.end | momentDate : 'LLL' }}</span>
 
                 <!-- Fine tuning buttons -->
                 <div class="time-setting">

@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
-
 import { SessionEndedDialogComponent } from './session-ended-dialog.component';
 
 describe('SessionEndedDialogComponent', () => {

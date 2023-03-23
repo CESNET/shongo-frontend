@@ -23,17 +23,17 @@
           {{
             reservationRequest.ownerName +
               (reservationRequest.ownerEmail
-                ? " (" + reservationRequest.ownerEmail + ")"
-                : "")
+                ? ' (' + reservationRequest.ownerEmail + ')'
+                : '')
           }}
         </dd>
 
         <dt i18n="definition tag">Requested slot</dt>
         <dd>
           {{
-            (reservationRequest.slot.start | momentDate: "LLL") +
-              " - " +
-              (reservationRequest.slot.end | momentDate: "LLL")
+            (reservationRequest.slot.start | momentDate : 'LLL') +
+              ' - ' +
+              (reservationRequest.slot.end | momentDate : 'LLL')
           }}
         </dd>
 

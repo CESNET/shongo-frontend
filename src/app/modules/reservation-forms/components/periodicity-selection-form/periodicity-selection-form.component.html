@@ -297,7 +297,7 @@
     </div>
 
     <!-- Excluded dates chips -->
-    <mat-chip-list class="periodicity__excluded-days">
+    <mat-chip-listbox class="periodicity__excluded-days">
       <mat-chip
         *ngFor="let date of excludedDays"
         color="primary"
@@ -308,6 +308,6 @@
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-chip>
-    </mat-chip-list>
+    </mat-chip-listbox>
   </div>
 </form>

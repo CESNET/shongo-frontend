@@ -1,14 +1,15 @@
-@use "./styles/mat-theme-colors" as mat-theme-colors;
-@use "@angular/material" as mat;
+@use './styles/mat-theme-colors' as mat-theme-colors;
+@use '@angular/material' as mat;
 
+@include mat.all-component-typographies();
 @include mat.core();
 
-@import "./styles/res-container.scss";
-@import "./styles/themes/shongo-light.theme.scss";
-@import "./styles/utils.scss";
-@import "./styles/definition-list.scss";
-@import "./styles/calendar.scss";
-@import "./styles/scrollbar.scss";
+@import './styles/res-container.scss';
+@import './styles/themes/shongo-light.theme.scss';
+@import './styles/utils.scss';
+@import './styles/definition-list.scss';
+@import './styles/calendar.scss';
+@import './styles/scrollbar.scss';
 
 :root {
   @include mat-theme-colors.publish($shongo-frontend-theme);
@@ -65,7 +66,7 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 /* Material */
@@ -78,16 +79,22 @@ mat-toolbar.header-toolbar {
 
 .snackbar {
   &--error {
-    border: 2px solid var(--error-color);
-    background: var(--error-color-light) !important;
+    > .mdc-snackbar__surface {
+      border: 2px solid var(--error-color);
+      background: var(--error-color-light) !important;
+    }
   }
   &--warning {
-    border: 2px solid var(--warning-color);
-    background: var(--warning-color-light) !important;
+    > .mdc-snackbar__surface {
+      border: 2px solid var(--warning-color);
+      background: var(--warning-color-light) !important;
+    }
   }
   &--success {
-    border: 2px solid var(--success-color);
-    background: var(--success-color-light) !important;
+    > .mdc-snackbar__surface {
+      border: 2px solid var(--success-color);
+      background: var(--success-color-light) !important;
+    }
   }
 }
 

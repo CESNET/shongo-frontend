@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { finalize, first, takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
@@ -19,9 +23,12 @@ import { getFormError } from 'src/app/utils/get-form-error';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportPageComponent implements OnDestroy {
-  readonly form = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    message: new FormControl(null, [
+  readonly form = new UntypedFormGroup({
+    email: new UntypedFormControl(null, [
+      Validators.required,
+      Validators.email,
+    ]),
+    message: new UntypedFormControl(null, [
       Validators.required,
       Validators.minLength(3),
     ]),

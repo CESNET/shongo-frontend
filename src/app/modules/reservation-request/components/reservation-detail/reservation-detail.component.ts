@@ -1,32 +1,32 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   Input,
   OnInit,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
+import { StateProps } from 'src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component';
+import { ModificationHistoryDataSource } from 'src/app/modules/shongo-table/data-sources/modification-history.datasource';
+import resReqPropsMap from 'src/app/modules/shongo-table/models/maps/reservation-request-state-props.map';
+import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
+import { AliasType } from 'src/app/shared/models/enums/alias-type.enum';
+import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
 import {
   MonthlyPeriodicityType,
   PeriodicityType,
 } from 'src/app/shared/models/enums/periodicity-type.enum';
+import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
+import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
+import { Technology } from 'src/app/shared/models/enums/technology.enum';
+import { aliasTypeMap } from 'src/app/shared/models/maps/alias-type.map';
 import {
   Periodicity,
   RequestModification,
   ReservationRequestDetail,
 } from 'src/app/shared/models/rest-api/reservation-request.interface';
-import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
-import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
-import { Technology } from 'src/app/shared/models/enums/technology.enum';
-import { AllocationState } from 'src/app/shared/models/enums/allocation-state.enum';
-import { AliasType } from 'src/app/shared/models/enums/alias-type.enum';
-import { aliasTypeMap } from 'src/app/shared/models/maps/alias-type.map';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
-import resReqPropsMap from 'src/app/modules/shongo-table/models/maps/reservation-request-state-props.map';
-import { ModificationHistoryDataSource } from 'src/app/modules/shongo-table/data-sources/modification-history.datasource';
-import { StateProps } from 'src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-reservation-detail',

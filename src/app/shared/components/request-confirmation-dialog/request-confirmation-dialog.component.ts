@@ -1,20 +1,20 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   Inject,
   OnDestroy,
   OnInit,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ReservationType } from '../../models/enums/reservation-type.enum';
-import { ReservationRequest } from '../../models/rest-api/reservation-request.interface';
-import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
-import { Technology } from '../../models/enums/technology.enum';
-import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { finalize, first, takeUntil } from 'rxjs/operators';
-import { AlertService } from 'src/app/core/services/alert.service';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { finalize, first, takeUntil } from 'rxjs/operators';
+import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
+import { AlertService } from 'src/app/core/services/alert.service';
+import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
+import { ReservationType } from '../../models/enums/reservation-type.enum';
+import { Technology } from '../../models/enums/technology.enum';
+import { ReservationRequest } from '../../models/rest-api/reservation-request.interface';
 
 @Component({
   selector: 'app-request-confirmation-dialog',

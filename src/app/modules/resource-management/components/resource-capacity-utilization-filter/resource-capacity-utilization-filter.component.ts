@@ -1,20 +1,20 @@
 import { HttpParams } from '@angular/common/http';
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Option } from 'src/app/shared/models/interfaces/option.interface';
-import * as moment from 'moment';
 import {
   DataTableFilter,
   TableSettings,
 } from 'src/app/modules/shongo-table/filter/data-table-filter';
 import { TimeUnit } from 'src/app/shared/models/enums/time-unit.enum';
+import { Option } from 'src/app/shared/models/interfaces/option.interface';
 
 const DEFAULT_UNIT_DIST = 5;
 
@@ -28,12 +28,12 @@ export class ResourceCapacityUtilizationFilterComponent
   extends DataTableFilter
   implements OnInit, OnDestroy
 {
-  readonly filterForm = new FormGroup({
-    unit: new FormControl(TimeUnit.DAY),
-    dateFrom: new FormControl(),
-    dateTo: new FormControl(),
+  readonly filterForm = new UntypedFormGroup({
+    unit: new UntypedFormControl(TimeUnit.DAY),
+    dateFrom: new UntypedFormControl(),
+    dateTo: new UntypedFormControl(),
   });
-  readonly useAbsoluteValues = new FormControl(false);
+  readonly useAbsoluteValues = new UntypedFormControl(false);
 
   readonly units: Option[] = [
     { value: TimeUnit.DAY, displayName: $localize`:unit option:Days` },

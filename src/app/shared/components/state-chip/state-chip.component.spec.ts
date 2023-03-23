@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StateChipComponent } from './state-chip.component';
 
 describe('StateChipComponent', () => {

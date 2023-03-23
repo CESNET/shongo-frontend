@@ -1,12 +1,12 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   EventEmitter,
-  Output,
-  OnInit,
   OnDestroy,
+  OnInit,
+  Output,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Subject, takeUntil } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
@@ -36,13 +36,13 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
 
   resourceOpts: Option[] = [];
 
-  readonly form = new FormGroup({
-    type: new FormControl(),
-    resource: new FormControl(),
-    displayedResources: new FormControl([]),
-    showMore: new FormControl(false),
+  readonly form = new UntypedFormGroup({
+    type: new UntypedFormControl(),
+    resource: new UntypedFormControl(),
+    displayedResources: new UntypedFormControl([]),
+    showMore: new UntypedFormControl(false),
   });
-  readonly resourceFilterCtrl = new FormControl();
+  readonly resourceFilterCtrl = new UntypedFormControl();
   readonly resourceTypes: Option[];
 
   private readonly _destroy$ = new Subject<void>();

@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnDestroy,
+  Component,
   Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -63,7 +63,7 @@ export class ReservationRequestDetailPageComponent
         if (tabIndex) {
           const tabIndexNum = Number(tabIndex);
 
-          if (tabIndexNum !== NaN) {
+          if (!Number.isNaN(tabIndexNum)) {
             this.tabIndex = tabIndexNum;
           }
         }

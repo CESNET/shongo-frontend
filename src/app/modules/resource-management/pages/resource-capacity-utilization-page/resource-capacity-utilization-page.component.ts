@@ -1,8 +1,8 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnInit,
   ChangeDetectorRef,
+  Component,
+  OnInit,
 } from '@angular/core';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceCapacityUtilizationDataSource } from 'src/app/modules/shongo-table/data-sources/resource-capacity-utilization-datasource';

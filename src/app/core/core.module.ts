@@ -1,3 +1,6 @@
+import { LayoutModule } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import {
   APP_INITIALIZER,
   ModuleWithProviders,
@@ -5,38 +8,35 @@ import {
   Optional,
   SkipSelf,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { EnsureModuleLoadedOnceGuard } from './ensure-module-loaded-once.guard';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import {
   AuthConfig,
   OAuthModule,
   OAuthModuleConfig,
   OAuthStorage,
 } from 'angular-oauth2-oidc';
-import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatRippleModule } from '@angular/material/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatSelectModule } from '@angular/material/select';
 import { environment } from 'src/environments/environment';
-import { authConfig as prodAuthConfig } from './authentication/auth-prod.config';
+import { SharedModule } from '../shared/shared.module';
+import { appInitializerFactory } from './app-initializer.factory';
 import { authConfig as devAuthConfig } from './authentication/auth-dev.config';
 import { authModuleConfig } from './authentication/auth-module.config';
+import { authConfig as prodAuthConfig } from './authentication/auth-prod.config';
 import { AuthenticationService } from './authentication/authentication.service';
-import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
+import { EnsureModuleLoadedOnceGuard } from './ensure-module-loaded-once.guard';
 import { ResourceService } from './http/resource/resource.service';
-import { appInitializerFactory } from './app-initializer.factory';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -56,7 +56,6 @@ export function storageFactory(): OAuthStorage {
   exports: [HeaderComponent, FooterComponent],
   imports: [
     CommonModule,
-    FlexLayoutModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
@@ -69,6 +68,7 @@ export function storageFactory(): OAuthStorage {
     MatDividerModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    LayoutModule,
     OAuthModule.forRoot(),
   ],
 })

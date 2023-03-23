@@ -57,8 +57,7 @@ export class AlertService {
     this._snackBar.openFromComponent(SnackbarAlertComponent, {
       data: { message, type },
       announcementMessage: message,
-      panelClass: ['snackbar--' + type],
-      duration: SNACKBAR_DURATION,
+      panelClass: ['snackbar', 'snackbar--' + type],
     });
   }
 

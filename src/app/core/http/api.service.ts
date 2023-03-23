@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
-import { environment } from 'src/environments/environment';
 import { SortDirection } from '@angular/material/sort';
+import { Observable, throwError } from 'rxjs';
 import { catchError, first } from 'rxjs/operators';
+import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
+import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
+import { environment } from 'src/environments/environment';
 
 /**
  * Abstract service for API interaction. Implements basic API interaction methods and URL building.

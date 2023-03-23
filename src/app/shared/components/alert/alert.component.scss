@@ -23,19 +23,3 @@
     color: var(--warning-color);
   }
 }
-
-#close-btn {
-  $icon-size: 20px;
-  $button-size: $icon-size + 5px;
-
-  width: $button-size;
-  height: $button-size;
-  line-height: $button-size;
-
-  .mat-icon {
-    height: $icon-size;
-    width: $icon-size;
-    font-size: $icon-size;
-    line-height: $icon-size;
-  }
-}

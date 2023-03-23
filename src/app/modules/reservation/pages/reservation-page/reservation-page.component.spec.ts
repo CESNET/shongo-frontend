@@ -10,7 +10,6 @@ import { Spied } from 'src/app/test/models/spied.type';
 import { createResourceServiceSpy } from 'src/app/test/spies/resource-service.spy';
 import { AuthServiceStub } from 'src/app/test/stubs/auth-service.stub';
 import { ReservationModule } from '../../reservation.module';
-
 import { ReservationPageComponent } from './reservation-page.component';
 
 describe('ReservationPageComponent', () => {

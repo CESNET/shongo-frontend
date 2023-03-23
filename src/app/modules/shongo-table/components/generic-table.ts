@@ -207,7 +207,11 @@ export abstract class GenericTableComponent<T>
       return this._alert.showWarning(
         $localize`:warning message:No rows were selected`
       );
-    } else if (!this.selection.selected.every((item) => 'id' in item)) {
+    } else if (
+      !this.selection.selected.every(
+        (item) => 'id' in (item as { id?: number })
+      )
+    ) {
       console.error(`All selected rows must have an id`);
       return this._alert.showError(
         $localize`:error message:All selected rows must have an id`

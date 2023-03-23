@@ -1,9 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectorRef, Directive, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatSelectSearchComponent } from 'ngx-mat-select-search';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil, debounceTime, first } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { debounceTime, first, takeUntil } from 'rxjs/operators';
 import { GroupService } from 'src/app/core/http/group/group.service';
 import { SEARCH_DEBOUNCE_TIME } from '../../config/search-debounce-time';
 import { Group } from '../../models/rest-api/group.interface';
@@ -24,7 +24,7 @@ export class GroupSearchDirective implements OnInit, OnDestroy {
   filteredGroups: Observable<GroupSearchItem[]>;
 
   private _filteredGroups = new BehaviorSubject<GroupSearchItem[]>([]);
-  private _filterCtrl = new FormControl();
+  private _filterCtrl = new UntypedFormControl();
   private _destroy$ = new Subject<void>();
 
   constructor(

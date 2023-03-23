@@ -4,15 +4,9 @@
 
 <mat-dialog-content>
   <div class="slider-container">
-    <mat-slider
-      min="0"
-      max="100"
-      step="1"
-      [value]="data?.microphoneLevel ?? 50"
-      color="primary"
-      thumbLabel
-      #slider
-    ></mat-slider>
+    <mat-slider min="0" max="100" step="1" color="primary" thumbLabel
+      ><input #slider matSliderThumb [value]="data.microphoneLevel ?? 50"
+    /></mat-slider>
   </div>
 </mat-dialog-content>
 

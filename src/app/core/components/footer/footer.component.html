@@ -1,13 +1,6 @@
 <footer class="mat-theme--footer">
-  <div fxLayout="column" fxLayoutGap="20px" class="res-container">
-    <div
-      fxLayout="row"
-      fxLayout.lt-md="column"
-      fxLayoutAlign="space-between"
-      fxLayoutAlign.lt-md="start start"
-      fxLayoutAlign.lt-sm="center center"
-      class="footer-section"
-    >
+  <div class="res-container">
+    <div class="footer-section footer-section--first">
       <img
         src="assets/img/logo-cesnet-dark.png"
         alt="Cesnet logo"
@@ -16,20 +9,8 @@
         height="87px"
       />
 
-      <div fxFlex="1" fxFlex.lt-md="0"></div>
-
-      <div
-        fxLayout="row"
-        fxFlex="70%"
-        fxFlex.lt-md="100%"
-        fxLayout.lt-sm="column"
-        fxLayoutAlign="end"
-        fxLayoutAlign.lt-md="space-between"
-        fxLayoutAlign.lt-sm="start center"
-        class="footer-items"
-        fxLayoutGap="25px"
-      >
-        <div fxLayout="column" class="footer-items--group">
+      <div class="footer-items">
+        <div class="footer-items--group">
           <h3 i18n="footer item group header|Header for quick links">Links</h3>
 
           <mat-divider></mat-divider>
@@ -43,7 +24,7 @@
           <a href="http://perun.cesnet.cz/web/" target="_blank">PERUN</a>
         </div>
 
-        <div fxLayout="column" class="footer-items--group">
+        <div class="footer-items--group">
           <h3 i18n="footer item group header|Header for contact">Contact</h3>
 
           <mat-divider></mat-divider>
@@ -59,7 +40,7 @@
           <a href="mailto:info@cesnet.cz">info@cesnet.cz</a>
         </div>
 
-        <div fxLayout="column" class="footer-items--group">
+        <div class="footer-items--group">
           <h3 i18n="footer item group header|Header for helpdesk">Helpdesk</h3>
 
           <mat-divider></mat-divider>
@@ -78,13 +59,7 @@
       </div>
     </div>
 
-    <div
-      fxLayout="row"
-      fxLayout.lt-sm="column"
-      fxLayoutAlign="space-between"
-      fxLayoutAlign.lt-sm="start center"
-      class="footer-section"
-    >
+    <div class="footer-section footer-section--second">
       <small i18n="Shongo credit"
         >Used system
         <a
@@ -98,7 +73,7 @@
           >0.9.2</a
         ></small
       >
-      <small>{{ "© 1991–" + currentYear + " CESNET, z. s. p. o" }}</small>
+      <small>{{ '© 1991–' + currentYear + ' CESNET, z. s. p. o' }}</small>
     </div>
   </div>
 </footer>

@@ -37,27 +37,15 @@ mat-form-field.unpadded > .mat-form-field-wrapper {
 }
 
 .small-icon-button {
-  --icon-size: 1.3em;
-  --button-size: calc(var(--icon-size) + 0.5em);
-
-  width: var(--button-size) !important;
-  height: var(--button-size) !important;
-  line-height: var(--button-size) !important;
-
-  .mat-icon {
-    width: var(--icon-size) !important;
-    height: var(--icon-size) !important;
-    line-height: var(--icon-size) !important;
-  }
-  .material-icons {
-    font-size: var(--icon-size) !important;
-  }
+  font-size: 0.5rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  padding: 0.25rem !important;
 }
 
 .help-icon-button {
   @extend .small-icon-button;
   color: var(--gray-300);
-  margin: 0px 0.2em !important;
 }
 
 // Colors

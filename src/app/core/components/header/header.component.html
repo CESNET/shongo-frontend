@@ -1,4 +1,9 @@
-<header *ngIf="{ isAuthenticated: auth.isAuthenticated$ | async } as authData">
+<header
+  *ngIf="{
+    ltLg: layout.isLessThanLarge$ | async,
+    ltMd: layout.isLessThanMedium$ | async
+  } as breakpoints"
+>
   <mat-toolbar class="header-toolbar">
     <div class="res-container fx-center-vert">
       <!-- Logo -->
@@ -16,8 +21,9 @@
         <ul class="navigation-list">
           <li
             *ngFor="let item of menuItems"
-            [fxHide.lt-lg]="item.hideOnTablet"
-            fxHide.lt-md
+            [hidden]="
+              breakpoints.ltMd || (breakpoints.ltLg && item.hideOnTablet)
+            "
           >
             <ng-container *ngIf="!item.subItems; else itemWithSubMenu">
               <ng-container
@@ -32,7 +38,7 @@
                   [matMenuTriggerFor]="popupSubMenu"
                   class="navigation-list__item"
                 >
-                  {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
+                  {{ item.label }}<mat-icon>expand_more</mat-icon>
                 </button>
 
                 <mat-menu #popupSubMenu="matMenu">
@@ -50,7 +56,11 @@
           </li>
         </ul>
 
-        <button mat-icon-button fxHide fxShow.lt-lg (click)="toggleDropdown()">
+        <button
+          mat-icon-button
+          [hidden]="!breakpoints.ltLg"
+          (click)="toggleDropdown()"
+        >
           <mat-icon>menu</mat-icon>
         </button>
       </nav>
@@ -59,27 +69,16 @@
 
       <!-- i18n language changer -->
       <button mat-icon-button [matMenuTriggerFor]="languageMenu">
-        <img
-          [src]="currentLocale.icon"
-          [alt]="currentLocale.name"
-          width="20px"
-          height="13.33px"
-        />
+        <mat-icon [svgIcon]="currentLocale.icon"></mat-icon>
       </button>
-      <mat-menu #languageMenu="matMenu">
+      <mat-menu #languageMenu="matMenu" xPosition="before">
         <button
-          mat-menu-item
           *ngFor="let locale of locales"
           (click)="onSelectLocale(locale.value)"
+          mat-menu-item
         >
-          <img
-            [src]="locale.icon"
-            [alt]="locale.name"
-            width="20px"
-            height="13.33px"
-            class="locale-menu-icon"
-          />
-          <span>{{ locale.name }}</span>
+          <mat-icon [svgIcon]="locale.icon"></mat-icon>
+          {{ locale.name }}
         </button>
       </mat-menu>
 
@@ -91,7 +90,11 @@
   <!-- Small layout menu -->
   <ul id="dropdown-menu" [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
     <ng-container *ngFor="let item of menuItems">
-      <li fxHide fxShow.lt-md [fxShow.lt-lg]="item.hideOnTablet">
+      <li
+        [hidden]="
+          !breakpoints.ltMd && (!breakpoints.ltLg || !item.hideOnTablet)
+        "
+      >
         <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
           <div
             matRipple
@@ -111,7 +114,7 @@
             class="mat-body navigation-list__item"
             *ngIf="getAuthGuard(item) | async"
           >
-            {{ item.label }}<mat-icon>arrow_drop_down</mat-icon>
+            {{ item.label }}<mat-icon>expand_more</mat-icon>
           </button>
         </ng-template>
       </li>
@@ -148,8 +151,8 @@
         class="navigation-list__item"
         [routerLink]="item.route"
       >
-        <mat-icon inline>edit_calendar</mat-icon>
-        &nbsp;{{ item.label }}
+        <mat-icon>edit_calendar</mat-icon>
+        {{ item.label }}
       </a>
       <a
         *ngIf="item.route !== '/reserve'"

@@ -1,12 +1,16 @@
 import {
-  Component,
+  AfterViewInit,
   ChangeDetectionStrategy,
-  ViewChild,
+  Component,
   Input,
   OnInit,
-  AfterViewInit,
+  ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { WebconferenceAccessMode } from 'src/app/shared/models/enums/webconference-access-mode.enum';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
@@ -16,13 +20,13 @@ import { getFormError } from 'src/app/utils/get-form-error';
 import { VirtualRoomReservationForm } from '../../interfaces/virtual-room-reservation-form.interface';
 import {
   descriptionErrorHandler,
-  roomNameErrorHandler,
   pinErrorHandler,
+  roomNameErrorHandler,
 } from '../../utils/custom-error-handlers';
 import {
-  ROOM_DESCRIPTION_MAXLENGTH,
-  PIN_PATTERN,
   PIN_MINLENGTH,
+  PIN_PATTERN,
+  ROOM_DESCRIPTION_MAXLENGTH,
   ROOM_NAME_MAXLENGTH,
   ROOM_NAME_PATTERN,
 } from '../../utils/reservation-form.constants';
@@ -51,17 +55,17 @@ export class WebconferenceReservationFormComponent
   @Input() editingMode = false;
   @Input() editedRequest?: ReservationRequestDetail | undefined;
 
-  readonly form = new FormGroup({
-    description: new FormControl(null, [
+  readonly form = new UntypedFormGroup({
+    description: new UntypedFormControl(null, [
       Validators.required,
       Validators.maxLength(ROOM_DESCRIPTION_MAXLENGTH),
     ]),
-    userPin: new FormControl(null, [
+    userPin: new UntypedFormControl(null, [
       Validators.pattern(PIN_PATTERN),
       Validators.minLength(PIN_MINLENGTH),
     ]),
-    participantCount: new FormControl(null, [Validators.required]),
-    timezone: new FormControl(null, [Validators.required]),
+    participantCount: new UntypedFormControl(null, [Validators.required]),
+    timezone: new UntypedFormControl(null, [Validators.required]),
   });
 
   readonly accessModeOpts: Option[] = [
@@ -101,7 +105,7 @@ export class WebconferenceReservationFormComponent
     if (!this.editingMode && !this.editedRequest) {
       this.form.addControl(
         'roomName',
-        new FormControl(null, [
+        new UntypedFormControl(null, [
           Validators.required,
           Validators.maxLength(ROOM_NAME_MAXLENGTH),
           Validators.pattern(ROOM_NAME_PATTERN),
@@ -116,7 +120,7 @@ export class WebconferenceReservationFormComponent
     } else {
       this.form.addControl(
         'accessMode',
-        new FormControl(WebconferenceAccessMode.CONTROLLED, [
+        new UntypedFormControl(WebconferenceAccessMode.CONTROLLED, [
           Validators.required,
         ])
       );

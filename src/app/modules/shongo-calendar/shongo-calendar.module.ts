@@ -1,7 +1,10 @@
-import { NgModule } from '@angular/core';
+import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { CalendarViewSelectionComponent } from './components/calendar-view-selection/calendar-view-selection.component';
+import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   CalendarDateFormatter,
   CalendarModule,
@@ -11,12 +14,9 @@ import {
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import * as moment from 'moment';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { ReservationCalendarComponent } from './components/reservation-calendar/reservation-calendar.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CalendarPaginatorComponent } from './components/calendar-paginator/calendar-paginator.component';
-import { LayoutModule } from '@angular/cdk/layout';
+import { CalendarViewSelectionComponent } from './components/calendar-view-selection/calendar-view-selection.component';
+import { ReservationCalendarComponent } from './components/reservation-calendar/reservation-calendar.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);

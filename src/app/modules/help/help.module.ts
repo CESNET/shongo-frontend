@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HelpPageComponent } from './pages/help-page/help-page.component';
-import { RouterModule } from '@angular/router';
-import { ReportPageComponent } from './pages/report-page/report-page.component';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HelpRoutingModule } from './help-routing.module';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { HelpRoutingModule } from './help-routing.module';
+import { HelpPageComponent } from './pages/help-page/help-page.component';
+import { ReportPageComponent } from './pages/report-page/report-page.component';
 
 @NgModule({
   declarations: [HelpPageComponent, ReportPageComponent],

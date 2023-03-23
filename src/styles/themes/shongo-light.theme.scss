@@ -1,10 +1,21 @@
-@use "@angular/material" as mat;
-@use "./shongo-typography-color.theme" as typography-colors;
-@import "./shongo-components.theme.scss";
+@use '@angular/material' as mat;
+@use './shongo-typography-color.theme' as typography-colors;
+@import './shongo-components.theme.scss';
 
 $shongo-frontend-primary: mat.define-palette(mat.$green-palette, A700);
 $shongo-frontend-accent: mat.define-palette(mat.$blue-grey-palette, 600);
 $shongo-frontend-warn: mat.define-palette(mat.$red-palette, A400);
+
+$shongo-typography: mat.define-typography-config(
+  $headline-5: mat.define-typography-level(2rem, 2.2rem, 400),
+  $headline-6: mat.define-typography-level(1.8rem, 2rem, 400),
+  $subtitle-1: mat.define-typography-level(1.2rem, 1.4rem, 400),
+  $subtitle-2: mat.define-typography-level(0.8rem, 0.8rem, 500),
+  $body-1: mat.define-typography-level(1rem, 1rem, 400),
+  $body-2: mat.define-typography-level(1rem, 1rem, 400),
+  $caption: mat.define-typography-level(0.8rem, 0.8rem, 400),
+  $button: mat.define-typography-level(0.9rem, 0.9rem, 500),
+);
 
 $shongo-frontend-theme: mat.define-light-theme(
   (
@@ -13,22 +24,11 @@ $shongo-frontend-theme: mat.define-light-theme(
       accent: $shongo-frontend-accent,
       warn: $shongo-frontend-warn,
     ),
+    typography: $shongo-typography,
   )
 );
 
-$shongo-typography: mat.define-typography-config(
-  $headline: mat.define-typography-level(2rem, 2.2rem, 400),
-  $title: mat.define-typography-level(1.8rem, 2rem, 400),
-  $subheading-2: mat.define-typography-level(1.2rem, 1.4rem, 400),
-  $subheading-1: mat.define-typography-level(1.4rem, 1.6rem, 400),
-  $body-1: mat.define-typography-level(1rem, 1.3rem, 400),
-  $body-2: mat.define-typography-level(1rem, 1.3rem, 500),
-  $caption: mat.define-typography-level(0.8rem, 0.8rem, 400),
-  $button: mat.define-typography-level(0.9rem, 0.9rem, 500),
-  $input: mat.define-typography-level(1em, 1em, 400),
-);
-
-@include mat.core($shongo-typography);
+@include mat.core();
 @include mat.all-component-themes($shongo-frontend-theme);
 @include shongo-components-theme($shongo-frontend-theme);
 @include typography-colors.color($shongo-frontend-theme);

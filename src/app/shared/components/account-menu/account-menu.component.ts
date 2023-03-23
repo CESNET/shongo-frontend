@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { LayoutService } from '@app/core/services/layout.service';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { accountMenuItems } from './account-menu-items';
@@ -14,7 +15,8 @@ export class AccountMenuComponent implements OnInit {
 
   constructor(
     public auth: AuthenticationService,
-    public settings: SettingsService
+    public settings: SettingsService,
+    public layout: LayoutService
   ) {}
 
   ngOnInit(): void {

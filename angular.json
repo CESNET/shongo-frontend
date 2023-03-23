@@ -42,7 +42,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["moment-timezone"]
+            "allowedCommonJsDependencies": ["moment", "moment-timezone"]
           },
           "configurations": {
             "en": {
@@ -137,8 +137,7 @@
       }
     }
   },
-  "defaultProject": "shongo-frontend",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

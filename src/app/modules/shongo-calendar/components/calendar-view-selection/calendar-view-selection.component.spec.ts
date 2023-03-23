@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-
 import { CalendarViewSelectionComponent } from './calendar-view-selection.component';
 
 describe('CalendarViewSelectionComponent', () => {

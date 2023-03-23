@@ -1,13 +1,13 @@
 import {
-  Component,
-  OnInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
   Injector,
-  AfterViewInit,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -30,9 +30,9 @@ export class MobileTableComponent<T>
   readonly items$ = new BehaviorSubject<T[]>([]);
   mobileSort = new MobileSort();
 
-  readonly sortForm = new FormGroup({
-    active: new FormControl(''),
-    direction: new FormControl(''),
+  readonly sortForm = new UntypedFormGroup({
+    active: new UntypedFormControl(''),
+    direction: new UntypedFormControl(''),
   });
 
   constructor(
