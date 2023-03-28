@@ -4,15 +4,14 @@
   }
 
   &__field {
-    font-size: 0.9em;
-
     &--number {
-      width: 5ch;
+      width: 10ch;
       margin: 0 1ch;
     }
 
     &--text {
       width: 15ch;
+      margin: 0 1ch;
     }
 
     &--date {

@@ -1,10 +1,8 @@
 mat-slider {
-  width: 100%;
+  width: 90%;
 }
-mat-dialog-content {
-  overflow: visible;
-}
+
 .slider-container {
-  overflow: visible;
-  padding: 1.5em 0;
+  display: flex;
+  justify-content: center;
 }

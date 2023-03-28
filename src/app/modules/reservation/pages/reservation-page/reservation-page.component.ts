@@ -100,7 +100,7 @@ export class ReservationPageComponent
         parentRequest: this.parentReservationRequest,
       },
       width: '95%',
-      maxWidth: '120ch',
+      maxWidth: '90rem',
     });
 
     dialogRef
