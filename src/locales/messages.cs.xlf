@@ -4771,6 +4771,15 @@
 					<context context-type="linenumber">14,16</context>
 				</context-group>
 			</trans-unit>
+			<trans-unit id="4936755350785756470" datatype="html">
+				<source>List of rooms which you can join.</source>
+				<target>Seznam místností, do kterých se můžete připojit.</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">59</context>
+				</context-group>
+				<note priority="1" from="description">table description</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
