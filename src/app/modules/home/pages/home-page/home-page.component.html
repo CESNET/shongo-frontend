@@ -1,9 +1,11 @@
 <!-- Header -->
-<header>
+<header *ngIf="!(auth.isAuthenticated$ | async)">
   <h1 i18n="page header">Main page</h1>
+
   <p i18n="paragraph">
     Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms.
   </p>
+
   <p>
     <span i18n="paragraph">You can send your suggestions to</span>&nbsp;<a
       href="mailto:vidcon@cesnet.cz"
@@ -21,6 +23,15 @@
       >here</a
     >.
   </p>
+
+  <button
+    mat-flat-button
+    color="primary"
+    i18n="button text"
+    (click)="auth.login()"
+  >
+    Log in
+  </button>
 </header>
 
 <!-- Main content -->
