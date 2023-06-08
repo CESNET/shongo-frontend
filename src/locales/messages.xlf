@@ -381,7 +381,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">15,23</context>
+          <context context-type="linenumber">17,25</context>
         </context-group>
         <note priority="1" from="description">Help page text</note>
       </trans-unit>
@@ -797,7 +797,7 @@
         <source> Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">5,6</context>
+          <context context-type="linenumber">6,7</context>
         </context-group>
         <note priority="1" from="description">paragraph</note>
       </trans-unit>
@@ -805,15 +805,23 @@
         <source>You can send your suggestions to</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">10</context>
         </context-group>
         <note priority="1" from="description">paragraph</note>
+      </trans-unit>
+      <trans-unit id="2336550011721758066" datatype="html">
+        <source>Log in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">button text</note>
       </trans-unit>
       <trans-unit id="1974268957021483804" datatype="html">
         <source>Your rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <note priority="1" from="description">Label for your rooms table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -822,7 +830,7 @@
         <source>List of rooms which you own or which have been made accessible to you by other users.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -830,7 +838,7 @@
         <source>Your participation in rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="description">Label for your participation table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -839,7 +847,7 @@
         <source>List of rooms which you can join.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -847,7 +855,7 @@
         <source>Your phys. resources reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="description">Label for your resource reservations table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -856,7 +864,7 @@
         <source>All reservations of physical resources.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -864,7 +872,7 @@
         <source>Reservations calendar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="description">Label for reservation calendar component</note>
         <note priority="1" from="meaning">tab label</note>
