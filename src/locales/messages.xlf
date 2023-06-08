@@ -752,8 +752,8 @@
         </context-group>
         <note priority="1" from="description">field label:To date</note>
       </trans-unit>
-      <trans-unit id="5263318259974092991" datatype="html">
-        <source>Show failed rooms</source>
+      <trans-unit id="2917849155735373166" datatype="html">
+        <source>Show failed reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/components/reservation-request-filter/reservation-request-filter.component.html</context>
           <context context-type="linenumber">74</context>
