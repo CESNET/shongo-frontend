@@ -3,9 +3,19 @@
     ltLg: layout.isLessThanLarge$ | async,
     ltMd: layout.isLessThanMedium$ | async
   } as breakpoints"
+  class="shongo-header"
 >
-  <mat-toolbar class="header-toolbar">
+  <mat-toolbar>
     <div class="res-container fx-center-vert">
+      <!-- Hamburger menu -->
+      <button
+        mat-icon-button
+        [hidden]="!breakpoints.ltLg"
+        (click)="toggleDropdown()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
       <!-- Logo -->
       <a routerLink="/">
         <img
@@ -16,9 +26,9 @@
         />
       </a>
 
-      <nav class="fx-center-vert">
+      <nav class="shongo-header__navigation fx-center-vert">
         <!-- Big layout menu -->
-        <ul class="navigation-list">
+        <ul class="shongo-header__navigation-list">
           <li
             *ngFor="let item of menuItems"
             [hidden]="
@@ -33,44 +43,34 @@
 
             <ng-template #itemWithSubMenu>
               <ng-container *ngIf="getAuthGuard(item) | async">
-                <button
-                  mat-button
-                  [matMenuTriggerFor]="popupSubMenu"
-                  class="navigation-list__item"
-                >
+                <button mat-button [matMenuTriggerFor]="popupSubMenu">
                   {{ item.label }}<mat-icon>expand_more</mat-icon>
                 </button>
 
                 <mat-menu #popupSubMenu="matMenu">
                   <ng-container *ngFor="let subItem of item.subItems">
-                    <a
-                      mat-menu-item
-                      [routerLink]="subItem.route"
-                      class="navigation-list__item"
-                      >{{ subItem.label }}</a
-                    >
+                    <a mat-menu-item [routerLink]="subItem.route">{{
+                      subItem.label
+                    }}</a>
                   </ng-container>
                 </mat-menu>
               </ng-container>
             </ng-template>
           </li>
         </ul>
-
-        <button
-          mat-icon-button
-          [hidden]="!breakpoints.ltLg"
-          (click)="toggleDropdown()"
-        >
-          <mat-icon>menu</mat-icon>
-        </button>
       </nav>
 
       <div class="spacer"></div>
 
       <!-- i18n language changer -->
-      <button mat-icon-button [matMenuTriggerFor]="languageMenu">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="languageMenu"
+        class="shongo-header__language-changer"
+      >
         <mat-icon [svgIcon]="currentLocale.icon"></mat-icon>
       </button>
+
       <mat-menu #languageMenu="matMenu" xPosition="before">
         <button
           *ngFor="let locale of locales"
@@ -88,77 +88,107 @@
   </mat-toolbar>
 
   <!-- Small layout menu -->
-  <ul id="dropdown-menu" [@dropdown]="isDropdownClosed ? 'closed' : 'open'">
-    <ng-container *ngFor="let item of menuItems">
-      <li
-        [hidden]="
-          !breakpoints.ltMd && (!breakpoints.ltLg || !item.hideOnTablet)
-        "
-      >
-        <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
-          <div
-            matRipple
-            [matRippleCentered]="true"
-            *ngIf="getAuthGuard(item) | async"
-          >
-            <ng-container
-              *ngTemplateOutlet="linkButton; context: { item: item }"
-            ></ng-container>
-          </div>
-        </ng-container>
-
-        <ng-template #compactItemWithSubMenu>
-          <button
-            mat-ripple
-            (click)="item.subMenuOpen = !item.subMenuOpen"
-            class="mat-body navigation-list__item"
-            *ngIf="getAuthGuard(item) | async"
-          >
-            {{ item.label }}<mat-icon>expand_more</mat-icon>
-          </button>
-        </ng-template>
-      </li>
-      <ng-container *ngIf="getAuthGuard(item) | async">
-        <li
-          class="subItem"
-          [@dropdown]="item.subMenuOpen ? 'open' : 'closed'"
-          *ngFor="let subItem of item.subItems"
+  <div class="shongo-header__dropdown-wrapper">
+    <mat-nav-list
+      @dropdown
+      *ngIf="!isDropdownClosed"
+      class="shongo-header__dropdown"
+    >
+      <ng-container *ngFor="let item of menuItems">
+        <ng-container
+          *ngIf="breakpoints.ltMd || (breakpoints.ltLg && item.hideOnTablet)"
         >
-          <ng-container
-            *ngTemplateOutlet="linkButton; context: { item: subItem }"
-          ></ng-container>
-        </li>
+          <ng-container *ngIf="!item.subItems; else compactItemWithSubMenu">
+            <ng-container
+              *ngIf="getAuthGuard(item) | async"
+              [ngTemplateOutlet]="linkListItem"
+              [ngTemplateOutletContext]="{ item: item }"
+            ></ng-container>
+          </ng-container>
+
+          <ng-template #compactItemWithSubMenu>
+            <mat-list-item
+              (click)="item.subMenuOpen = !item.subMenuOpen"
+              *ngIf="getAuthGuard(item) | async"
+            >
+              <div matListItemTitle>{{ item.label }}</div>
+              <mat-icon matListItemIcon>{{
+                item.subMenuOpen ? 'expand_less' : 'expand_more'
+              }}</mat-icon>
+            </mat-list-item>
+          </ng-template>
+
+          <ng-container *ngIf="getAuthGuard(item) | async">
+            <mat-nav-list
+              @dropdown
+              *ngIf="item.subMenuOpen"
+              class="shongo-header__subdropdown"
+            >
+              <ng-container
+                *ngFor="let subItem of item.subItems"
+                [ngTemplateOutlet]="linkListItem"
+                [ngTemplateOutletContext]="{ item: subItem }"
+              ></ng-container>
+            </mat-nav-list>
+          </ng-container>
+        </ng-container>
       </ng-container>
-    </ng-container>
-  </ul>
+
+      <ng-template #linkListItem let-item="item">
+        <ng-container *ngIf="getAuthGuard(item) | async">
+          <a
+            *ngIf="item.externalRoute; else internalRoute"
+            [href]="item.route"
+            mat-list-item
+            ><div matListItemTitle>{{ item.label }}</div></a
+          >
+
+          <ng-template #internalRoute>
+            <a
+              *ngIf="item.route === '/reserve'"
+              [routerLink]="item.route"
+              mat-list-item
+            >
+              <mat-icon matListItemIcon>edit_calendar</mat-icon>
+              <div matListItemTitle>{{ item.label }}</div>
+            </a>
+
+            <a
+              *ngIf="item.route !== '/reserve'"
+              [routerLink]="item.route"
+              mat-list-item
+              ><div matListItemTitle>{{ item.label }}</div></a
+            >
+          </ng-template>
+        </ng-container>
+      </ng-template>
+    </mat-nav-list>
+  </div>
 </header>
 
 <ng-template #linkButton let-item="item">
   <ng-container *ngIf="getAuthGuard(item) | async">
     <a
       *ngIf="item.externalRoute; else internalRoute"
-      mat-button
-      class="navigation-list__item"
       [href]="item.route"
+      mat-button
       >{{ item.label }}</a
     >
 
     <ng-template #internalRoute>
       <a
         *ngIf="item.route === '/reserve'"
-        mat-flat-button
-        color="primary"
-        class="navigation-list__item"
         [routerLink]="item.route"
+        color="primary"
+        mat-flat-button
       >
         <mat-icon>edit_calendar</mat-icon>
         {{ item.label }}
       </a>
       <a
         *ngIf="item.route !== '/reserve'"
-        mat-button
-        class="navigation-list__item"
         [routerLink]="item.route"
+        mat-button
         >{{ item.label }}</a
       >
     </ng-template>

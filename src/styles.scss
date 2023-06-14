@@ -10,6 +10,7 @@
 @import './styles/definition-list.scss';
 @import './styles/calendar.scss';
 @import './styles/scrollbar.scss';
+@import './styles/reset.scss';
 
 :root {
   @include mat-theme-colors.publish($shongo-frontend-theme);
@@ -22,6 +23,7 @@
   --gray-400: rgb(180, 180, 180);
   --gray-700: rgb(210, 210, 210);
   --gray-800: rgb(238, 238, 238);
+  --gray-900: rgb(245, 245, 245);
   --red-500: rgb(255, 21, 52);
   --orange-500: rgb(241, 178, 4);
   --green-500: rgb(22, 148, 22);
@@ -35,6 +37,14 @@
   --success-color-light: rgb(238, 255, 238);
   --grayed-text-color: var(--gray-300);
 
+  /* Spacers */
+  --spacer-1: 0.25rem;
+  --spacer-2: 0.5rem;
+  --spacer-3: 0.75rem;
+  --spacer-4: 1rem;
+  --spacer-5: 1.25rem;
+  --spacer-6: 1.5rem;
+
   /* Element sizes */
   --toolbar-row-height: 4.5rem;
   --form-field-padding-bottom: 1.34375em;
@@ -46,6 +56,9 @@
   --font-size-xs: 0.6rem;
   --font-size-medium: 1.2rem;
   --font-size-large: 1.4rem;
+
+  /* Z indexes */
+  --navigation-zx: 3;
 }
 
 html {

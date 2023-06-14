@@ -1,10 +1,4 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { LayoutService } from '@app/core/services/layout.service';
 import { Observable, of, Subject } from 'rxjs';
@@ -29,9 +23,13 @@ import { locales, menuItems } from './header-items';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('dropdown', [
-      state('closed', style({ height: '0' })),
-      state('open', style({ height: '*' })),
-      transition('open <=> closed', animate('200ms ease')),
+      transition(':enter', [
+        style({ height: 0 }),
+        animate('200ms ease', style({ height: '*' })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease', style({ height: 0, padding: 0 })),
+      ]),
     ]),
   ],
 })
