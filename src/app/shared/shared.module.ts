@@ -34,6 +34,7 @@ import { TimezoneSearchDirective } from './directives/timezone-search/timezone-s
 import { UserSearchDirective } from './directives/user-search/user-search.directive';
 import { MomentDatePipe } from './pipes/moment-date.pipe';
 import { ShortStringPipe } from './pipes/short-string.pipe';
+import { InitialsPipe } from './pipes/initials.pipe';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ShortStringPipe } from './pipes/short-string.pipe';
     RoomStateHelpComponent,
     ReservationRequestStateHelpComponent,
     StateHelpComponent,
+    InitialsPipe,
   ],
   imports: [
     CommonModule,

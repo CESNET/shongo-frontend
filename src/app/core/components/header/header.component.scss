@@ -1,91 +1,44 @@
-$item-margin: 10px;
-
 /* Layout */
 .spacer {
   flex: 1;
 }
 
 /* Navigation bar */
-header {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-}
-nav {
-  margin-left: $item-margin;
-}
-nav ul,
-header ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-a {
-  cursor: pointer;
-}
+.shongo-header {
+  $header-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: $header-shadow;
 
-/* Small screen dropdown menu */
-#dropdown-menu {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-
-  li {
-    background: rgb(226, 226, 226);
-
-    a,
-    button {
-      width: 100%;
-      display: block;
-      text-align: left;
-      padding: 10px 20px;
-      font-weight: 500;
-      color: black;
-      user-select: none;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button {
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      background: none;
-    }
-
-    &.subItem {
-      background: rgb(211, 211, 211);
-      overflow: hidden;
-    }
-    :hover {
-      background: rgb(195, 195, 195);
-    }
-  }
-}
-.subItem {
-  a,
-  button {
-    padding-left: 40px !important;
-    color: rgb(50, 50, 50) !important;
-  }
-}
-
-/* Locale picker */
-.locale-menu-icon {
-  margin-right: 15px;
-}
-
-.navigation-list {
-  > li:not(last-of-type) {
-    margin-left: 0.5rem;
+  &__navigation {
+    margin-left: var(--spacer-4);
   }
 
-  &__item {
-    font-size: 0.9rem !important;
-    font-weight: 400 !important;
+  &__navigation-list {
+    display: flex;
+    gap: var(--spacer-2);
+  }
 
-    &--primary {
-      font-weight: 600 !important;
-    }
+  &__dropdown-wrapper {
+    position: relative;
+  }
+
+  &__dropdown {
+    // Sets the list item height to that of item with icon for all items
+    --mdc-list-list-item-one-line-container-height: 56px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--navigation-zx);
+    background: var(--white);
+    box-shadow: $header-shadow;
+  }
+
+  &__subdropdown {
+    overflow: hidden;
+  }
+
+  &__language-changer {
+    margin-right: var(--spacer-2);
   }
 }

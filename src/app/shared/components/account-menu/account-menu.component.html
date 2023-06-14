@@ -28,11 +28,11 @@
     </button>
 
     <button
-      mat-icon-button
+      mat-mini-fab
       [matMenuTriggerFor]="accountSubMenu"
       [hidden]="!breakpoints.ltSm"
     >
-      <mat-icon>account_circle</mat-icon>
+      {{ getUsername() | initials }}
     </button>
 
     <mat-menu #accountSubMenu="matMenu">
