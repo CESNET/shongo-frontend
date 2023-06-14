@@ -148,7 +148,7 @@ mat-drawer {
   .reservation {
     &__back {
       &--sidebar {
-        display: block;
+        display: flex;
       }
       &--navbar {
         display: none;
