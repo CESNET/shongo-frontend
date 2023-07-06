@@ -1,5 +1,7 @@
 .custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
+  $scrollbar-size: 5px;
+  width: $scrollbar-size;
+  height: $scrollbar-size;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   border-radius: 20px;
