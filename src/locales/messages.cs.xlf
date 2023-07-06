@@ -983,7 +983,7 @@
 			</trans-unit>
 			<trans-unit id="6252070156626006029" datatype="html">
 				<source>None</source>
-				<target>Žádná</target>
+				<target>Žádný</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/modules/reservation-forms/components/periodicity-selection-form/periodicity-selection-form.component.html</context>
 					<context context-type="linenumber">14</context>
@@ -4779,6 +4779,15 @@
 					<context context-type="linenumber">59</context>
 				</context-group>
 				<note priority="1" from="description">table description</note>
+			</trans-unit>
+			<trans-unit id="6153797048311741939" datatype="html">
+				<source>User settings</source>
+				<target>Nastavení účtu</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/user/pages/user-settings-page/user-settings-page.component.html</context>
+					<context context-type="linenumber">3</context>
+				</context-group>
+				<note priority="1" from="description">heading</note>
 			</trans-unit>
 		</body>
 	</file>

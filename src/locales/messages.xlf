@@ -168,7 +168,7 @@
         <source>Unknown user</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/components/header/header.component.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">68</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/runtime-management.datasource.ts</context>
@@ -192,7 +192,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="linenumber">360</context>
         </context-group>
         <note priority="1" from="description">Text shown while loading resources</note>
       </trans-unit>
@@ -648,7 +648,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">227</context>
         </context-group>
         <note priority="1" from="description">checkbox name</note>
       </trans-unit>
@@ -809,11 +809,15 @@
         </context-group>
         <note priority="1" from="description">paragraph</note>
       </trans-unit>
-      <trans-unit id="2336550011721758066" datatype="html">
-        <source>Log in</source>
+      <trans-unit id="2715185765061607307" datatype="html">
+        <source> Log in </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/session-ended-dialog/session-ended-dialog.component.html</context>
+          <context context-type="linenumber">18,20</context>
         </context-group>
         <note priority="1" from="description">button text</note>
       </trans-unit>
@@ -821,7 +825,7 @@
         <source>Your rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="description">Label for your rooms table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -830,7 +834,7 @@
         <source>List of rooms which you own or which have been made accessible to you by other users.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -838,7 +842,7 @@
         <source>Your participation in rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <note priority="1" from="description">Label for your participation table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -847,7 +851,7 @@
         <source>List of rooms which you can join.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -855,7 +859,7 @@
         <source>Your phys. resources reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="description">Label for your resource reservations table component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -864,7 +868,7 @@
         <source>All reservations of physical resources.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
@@ -872,7 +876,7 @@
         <source>Reservations calendar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <note priority="1" from="description">Label for reservation calendar component</note>
         <note priority="1" from="meaning">tab label</note>
@@ -2768,11 +2772,11 @@
         <source>Back to app</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
@@ -2780,7 +2784,7 @@
         <source>Jump to date</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
@@ -2788,7 +2792,7 @@
         <source>Resource selection</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">117</context>
         </context-group>
         <note priority="1" from="description">heading</note>
       </trans-unit>
@@ -2796,7 +2800,7 @@
         <source>Reserving capacity for</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <note priority="1" from="description">heading</note>
       </trans-unit>
@@ -2804,7 +2808,7 @@
         <source>Loading parent request</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">165</context>
         </context-group>
         <note priority="1" from="description">loading text</note>
       </trans-unit>
@@ -2812,7 +2816,7 @@
         <source>Failed to load parent request</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">190</context>
+          <context context-type="linenumber">185</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -2820,7 +2824,7 @@
         <source> Try again </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">203,204</context>
+          <context context-type="linenumber">198,199</context>
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
@@ -2828,7 +2832,7 @@
         <source>Calendar settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">220</context>
         </context-group>
         <note priority="1" from="description">heading</note>
       </trans-unit>
@@ -2836,7 +2840,7 @@
         <source>Reservation slot</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">240</context>
+          <context context-type="linenumber">235</context>
         </context-group>
         <note priority="1" from="description">heading</note>
       </trans-unit>
@@ -2844,7 +2848,7 @@
         <source>Slot start:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">250</context>
+          <context context-type="linenumber">245</context>
         </context-group>
         <note priority="1" from="description">item name</note>
       </trans-unit>
@@ -2852,7 +2856,7 @@
         <source>decrement slot start by one minute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">262</context>
+          <context context-type="linenumber">257</context>
         </context-group>
         <note priority="1" from="description">button label</note>
       </trans-unit>
@@ -2860,7 +2864,7 @@
         <source>increment slot start by one minute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">273</context>
+          <context context-type="linenumber">268</context>
         </context-group>
         <note priority="1" from="description">button label</note>
       </trans-unit>
@@ -2868,7 +2872,7 @@
         <source>Slot end:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">288</context>
+          <context context-type="linenumber">283</context>
         </context-group>
         <note priority="1" from="description">item name</note>
       </trans-unit>
@@ -2876,7 +2880,7 @@
         <source>decrement slot end by one minute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">300</context>
+          <context context-type="linenumber">295</context>
         </context-group>
         <note priority="1" from="description">button label</note>
       </trans-unit>
@@ -2884,7 +2888,7 @@
         <source>increment slot end by one minute</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">310</context>
+          <context context-type="linenumber">305</context>
         </context-group>
         <note priority="1" from="description">button label</note>
       </trans-unit>
@@ -2892,7 +2896,7 @@
         <source> Create reservation </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">330,331</context>
+          <context context-type="linenumber">325,326</context>
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
@@ -2900,7 +2904,7 @@
         <source> Cancel selection </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">341,342</context>
+          <context context-type="linenumber">336,337</context>
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
@@ -3296,7 +3300,7 @@
         <source>none</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/components/desktop-table/desktop-table.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">80</context>
         </context-group>
         <note priority="1" from="description">fallback text</note>
       </trans-unit>
@@ -3304,7 +3308,7 @@
         <source>No entries found</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/components/desktop-table/desktop-table.component.html</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">231</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/components/mobile-table/mobile-table.component.html</context>
@@ -3316,7 +3320,7 @@
         <source>An error occured</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/components/desktop-table/desktop-table.component.html</context>
-          <context context-type="linenumber">218</context>
+          <context context-type="linenumber">233</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/components/mobile-table/mobile-table.component.html</context>
@@ -3660,6 +3664,14 @@
         </context-group>
         <note priority="1" from="description">state</note>
       </trans-unit>
+      <trans-unit id="6153797048311741939" datatype="html">
+        <source>User settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/user/pages/user-settings-page/user-settings-page.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">heading</note>
+      </trans-unit>
       <trans-unit id="712909229315222468" datatype="html">
         <source>Preferred language</source>
         <context-group purpose="location">
@@ -3915,14 +3927,6 @@
           <context context-type="sourcefile">src/app/shared/components/session-ended-dialog/session-ended-dialog.component.html</context>
           <context context-type="linenumber">6,9</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="2715185765061607307" datatype="html">
-        <source> Log in </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/session-ended-dialog/session-ended-dialog.component.html</context>
-          <context context-type="linenumber">18,20</context>
-        </context-group>
-        <note priority="1" from="description">button name</note>
       </trans-unit>
       <trans-unit id="7571274027332186561" datatype="html">
         <source>State descriptions</source>
