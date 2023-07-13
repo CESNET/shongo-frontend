@@ -14,7 +14,7 @@ $shongo-typography: mat.define-typography-config(
   $body-1: mat.define-typography-level(1rem, 1rem, 400),
   $body-2: mat.define-typography-level(1rem, 1rem, 400),
   $caption: mat.define-typography-level(0.8rem, 0.8rem, 400),
-  $button: mat.define-typography-level(0.9rem, 0.9rem, 500),
+  $button: mat.define-typography-level(0.85rem, 0.85rem, 500),
 );
 
 $shongo-frontend-theme: mat.define-light-theme(
