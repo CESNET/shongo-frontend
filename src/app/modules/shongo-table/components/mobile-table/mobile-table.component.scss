@@ -38,6 +38,9 @@
     }
 
     &-name {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
       min-width: 12ch;
       font-weight: 500;
     }
