@@ -17,7 +17,15 @@
         >
 
         <ng-template #cannotReserve>
-          <mat-icon class="account__icon icon-s" color="warn">warning</mat-icon>
+          <mat-icon
+            class="account__icon icon-s"
+            color="warn"
+            matTooltip="You don't have privileges to make reservations"
+            i18n-matTooltip="
+              Tooltip message|User doesn't have privileges to make reservations
+            "
+            >warning</mat-icon
+          >
         </ng-template>
 
         <span class="account__username">{{
