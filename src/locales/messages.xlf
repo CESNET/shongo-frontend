@@ -220,25 +220,33 @@
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
+      <trans-unit id="3092899742307468661" datatype="html">
+        <source>Failed to load resources.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/http/resource/resource.service.ts</context>
+          <context context-type="linenumber">280</context>
+        </context-group>
+        <note priority="1" from="meaning">Error message</note>
+      </trans-unit>
       <trans-unit id="1036002404170575782" datatype="html">
         <source>Failed to update settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/settings/settings.service.ts</context>
-          <context context-type="linenumber">178</context>
+          <context context-type="linenumber">177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2264352383042646653" datatype="html">
         <source>Settings updated</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/settings/settings.service.ts</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="linenumber">184</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3143818121450015272" datatype="html">
         <source>Failed to fetch user settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/settings/settings.service.ts</context>
-          <context context-type="linenumber">212</context>
+          <context context-type="linenumber">211</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>

@@ -11,6 +11,7 @@
 @import './styles/calendar.scss';
 @import './styles/scrollbar.scss';
 @import './styles/reset.scss';
+@import './styles/preloader';
 
 :root {
   @include mat-theme-colors.publish($shongo-frontend-theme);
