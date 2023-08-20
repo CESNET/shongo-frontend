@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
+import { AlertService } from '@app/core/services/alert.service';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { first, retry } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
@@ -55,7 +56,7 @@ export class ResourceService extends ApiService {
   readonly loading$: Observable<boolean>;
   private _loading$ = new BehaviorSubject<boolean>(false);
 
-  constructor(protected _http: HttpClient) {
+  constructor(protected _http: HttpClient, private _alertS: AlertService) {
     super(_http, Endpoint.RESOURCE, 'v1');
 
     this.loading$ = this._loading$.asObservable();
@@ -275,6 +276,9 @@ export class ResourceService extends ApiService {
       if (resourcesInLocalStorage) {
         this.resources = resourcesInLocalStorage;
       } else {
+        this._alertS.showError(
+          $localize`:Error message|:Failed to load resources.`
+        );
         this.error = true;
       }
     }
