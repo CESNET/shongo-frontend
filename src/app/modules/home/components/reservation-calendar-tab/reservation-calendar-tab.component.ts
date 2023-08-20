@@ -7,13 +7,21 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormControl } from '@angular/forms';
+import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
+import { ERequestState } from '@app/shared/models/enums/request-state.enum';
+import { IRequest } from '@app/shared/models/interfaces/request.interface';
+import {
+  ICalendarItem,
+  IEventOwner,
+  IInterval,
+  ShongoCalendarComponent,
+} from '@cesnet/shongo-calendar';
 import { CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ReservationCalendarComponent } from 'src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import {
   PhysicalResource,
@@ -29,29 +37,41 @@ import {
 export class ReservationCalendarTabComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
-  @ViewChild(ReservationCalendarComponent)
-  calendar!: ReservationCalendarComponent;
+  @ViewChild(ShongoCalendarComponent)
+  calendar!: ShongoCalendarComponent;
 
   filteredResources: PhysicalResource[];
 
+  readonly calendarRequest$: Observable<IRequest<ICalendarItem[]>>;
   readonly tabletSizeHit$: Observable<BreakpointState>;
-  readonly filterGroup = new UntypedFormGroup({
-    resources: new UntypedFormControl([]),
-    highlightMine: new UntypedFormControl(false),
-    resourceFilter: new UntypedFormControl(''),
+  readonly filterGroup = new FormGroup({
+    resources: new FormControl<Resource[]>([]),
+    highlightMine: new FormControl<boolean>(false),
+    resourceFilter: new FormControl<string>(''),
   });
-
   readonly CalendarView = CalendarView;
+  readonly ERequestState = ERequestState;
+  readonly currentUser: IEventOwner;
+
+  private _currentInterval?: IInterval;
+
   private readonly _destroy$ = new Subject<void>();
   private readonly _physicalResources: PhysicalResource[];
+  private readonly _calendarRequest$ = new BehaviorSubject<
+    IRequest<ICalendarItem[]>
+  >({ data: [], state: ERequestState.SUCCESS });
 
   constructor(
     private _resourceService: ResourceService,
-    private _br: BreakpointObserver
+    private _br: BreakpointObserver,
+    private _calendarResS: CalendarReservationsService
   ) {
     this.tabletSizeHit$ = this._createTabletSizeObservable();
+    this.calendarRequest$ = this._calendarRequest$.asObservable();
+
     this._physicalResources = this._getPhysicalResources();
     this.filteredResources = this._physicalResources;
+    this.currentUser = this._calendarResS.currentUser;
   }
 
   get displayedResources(): Resource[] {
@@ -87,6 +107,28 @@ export class ReservationCalendarTabComponent
 
   onDateSelection(moment: moment.Moment): void {
     this.calendar.viewDate = moment.toDate();
+  }
+
+  onIntervalChange(interval: IInterval): void {
+    this._currentInterval = interval;
+    this._fetchInterval(interval);
+  }
+
+  refetchInterval(): void {
+    if (this._currentInterval) {
+      this._fetchInterval(this._currentInterval);
+    }
+  }
+
+  /**
+   * Fetches reservations for a given interval.
+   *
+   * @param interval Interval to fetch reservations for.
+   */
+  private _fetchInterval(interval: IInterval): void {
+    this._calendarResS
+      .fetchInterval$(this.displayedResources!, interval)
+      .subscribe((req) => this._calendarRequest$.next(req));
   }
 
   private _createTabletSizeObservable(): Observable<BreakpointState> {

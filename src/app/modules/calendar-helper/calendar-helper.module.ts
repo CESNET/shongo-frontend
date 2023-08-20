@@ -16,18 +16,13 @@ import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import * as moment from 'moment';
 import { CalendarPaginatorComponent } from './components/calendar-paginator/calendar-paginator.component';
 import { CalendarViewSelectionComponent } from './components/calendar-view-selection/calendar-view-selection.component';
-import { ReservationCalendarComponent } from './components/reservation-calendar/reservation-calendar.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
 }
 
 @NgModule({
-  declarations: [
-    CalendarViewSelectionComponent,
-    ReservationCalendarComponent,
-    CalendarPaginatorComponent,
-  ],
+  declarations: [CalendarViewSelectionComponent, CalendarPaginatorComponent],
   imports: [
     CommonModule,
     MatMenuModule,
@@ -56,9 +51,8 @@ export function momentAdapterFactory() {
   ],
   exports: [
     CalendarViewSelectionComponent,
-    ReservationCalendarComponent,
     CalendarPaginatorComponent,
     CalendarModule,
   ],
 })
-export class ShongoCalendarModule {}
+export class CalendarHelperModule {}

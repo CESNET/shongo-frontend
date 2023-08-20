@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, first } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { environment } from 'src/environments/environment';
 
 /**
  * Abstract service for API interaction. Implements basic API interaction methods and URL building.
@@ -31,9 +30,7 @@ export abstract class ApiService {
    * @returns Endpoint URL.
    */
   static buildEndpointURL(endpoint: string, version: string) {
-    return `http${environment.useHttps ? 's' : ''}://${
-      environment.shongoRESTApiHost
-    }:${environment.shongoRESTApiPort}/api/${version}/${endpoint}`;
+    return `/api/${version}/${endpoint}`;
   }
 
   /**
@@ -51,7 +48,7 @@ export abstract class ApiService {
       first(),
       catchError((err) => {
         console.error(err);
-        return throwError(err);
+        throw err;
       })
     );
   }

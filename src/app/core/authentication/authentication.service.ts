@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { SessionEndedDialogComponent } from 'src/app/shared/components/session-ended-dialog/session-ended-dialog.component';
 import { IdentityClaims } from '../../shared/models/interfaces/identity-claims.interface';
 import { AlertService } from '../services/alert.service';
+import { IAuthenticationService } from './authentication-service.interface';
 
 const ERRORS_REQUIRING_USER_INTERACTION = [
   'interaction_required',
@@ -17,7 +18,7 @@ const ERRORS_REQUIRING_USER_INTERACTION = [
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationService {
+export class AuthenticationService implements IAuthenticationService {
   public isAuthenticated$: Observable<boolean>;
   private _isAuthenticated$ = new BehaviorSubject<boolean>(false);
 

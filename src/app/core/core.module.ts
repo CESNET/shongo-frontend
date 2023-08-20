@@ -1,11 +1,12 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   APP_INITIALIZER,
   ModuleWithProviders,
   NgModule,
   Optional,
+  Provider,
   SkipSelf,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +32,7 @@ import { appInitializerFactory } from './app-initializer.factory';
 import { authConfig as devAuthConfig } from './authentication/auth-dev.config';
 import { authModuleConfig } from './authentication/auth-module.config';
 import { authConfig as prodAuthConfig } from './authentication/auth-prod.config';
+import { AuthenticationDevService } from './authentication/authentication.dev.service';
 import { AuthenticationService } from './authentication/authentication.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -38,10 +40,30 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { UnauthorizedPageComponent } from './components/unauthorized-page/unauthorized-page.component';
 import { EnsureModuleLoadedOnceGuard } from './ensure-module-loaded-once.guard';
 import { ResourceService } from './http/resource/resource.service';
+import { BearerTokenInterceptor } from './interceptors/bearer-token.interceptor';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
+
+const createDevProviders = (): Provider[] => {
+  const providers: Provider[] = [];
+
+  if (!environment.production) {
+    providers.push({
+      provide: HTTP_INTERCEPTORS,
+      useClass: BearerTokenInterceptor,
+      multi: true,
+    });
+
+    providers.push({
+      provide: AuthenticationService,
+      useClass: AuthenticationDevService,
+    });
+  }
+
+  return providers;
+};
 
 /**
  * Core module takes on the role of root module, but is not the module
@@ -91,6 +113,7 @@ export class CoreModule extends EnsureModuleLoadedOnceGuard {
           useValue: environment.production ? prodAuthConfig : devAuthConfig,
         },
         { provide: OAuthModuleConfig, useValue: authModuleConfig },
+        ...createDevProviders(),
       ],
     };
   }

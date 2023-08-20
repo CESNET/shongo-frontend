@@ -6,9 +6,9 @@
 <mat-dialog-content>
   <img
     *ngIf="snapshotUrl"
+    [src]="snapshotUrl"
     width="100%"
     height="100%"
-    [src]="snapshotUrl"
     alt="Participant snapshot"
     i18n-alt="image alt|Alt text of participant snapshot image"
   />

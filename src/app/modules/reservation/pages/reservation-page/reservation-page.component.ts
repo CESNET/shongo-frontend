@@ -10,13 +10,21 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
+import { ERequestState } from '@app/shared/models/enums/request-state.enum';
+import { IRequest } from '@app/shared/models/interfaces/request.interface';
+import {
+  ICalendarItem,
+  IEventOwner,
+  IInterval,
+  ShongoCalendarComponent,
+} from '@cesnet/shongo-calendar';
 import { CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, first, takeUntil, tap } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ReservationCalendarComponent } from 'src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -43,33 +51,45 @@ export class ReservationPageComponent
   /**
    * Calendar component.
    */
-  @ViewChild(ReservationCalendarComponent)
-  calendar!: ReservationCalendarComponent;
+  @ViewChild(ShongoCalendarComponent)
+  calendar!: ShongoCalendarComponent;
 
+  readonly calendarRequest$: Observable<IRequest<ICalendarItem[]>>;
   readonly tabletSizeHit$: Observable<BreakpointState>;
   readonly CalendarView = CalendarView;
   readonly AlertType = AlertType;
+  readonly ERequestState = ERequestState;
+  readonly currentUser: IEventOwner;
+
+  displayedResources: Resource[] = [];
+  capacityBookingMode = false;
 
   selectedResource?: Resource | null;
-  displayedResources?: Resource[];
   selectedSlot?: CalendarSlot | null;
   parentReservationRequest?: ReservationRequestDetail;
   parentRequestError?: Error;
-  capacityBookingMode = false;
 
   readonly loadingParentRequest$ = new BehaviorSubject<boolean>(false);
+
+  private _currentInterval?: IInterval;
+
+  private readonly _calendarRequest$ = new BehaviorSubject<
+    IRequest<ICalendarItem[]>
+  >({ data: [], state: ERequestState.SUCCESS });
   private readonly _destroy$ = new Subject<void>();
 
   constructor(
     private _dialog: MatDialog,
     private _route: ActivatedRoute,
     private _resReqService: ReservationRequestService,
-    private _resourceService: ResourceService,
     private _br: BreakpointObserver,
     private _cd: ChangeDetectorRef,
+    private _calendarResS: CalendarReservationsService,
     public resourceService: ResourceService
   ) {
     this.tabletSizeHit$ = this._createTabletSizeObservable();
+    this.calendarRequest$ = this._calendarRequest$.asObservable();
+    this.currentUser = this._calendarResS.currentUser;
   }
 
   ngOnInit(): void {
@@ -109,7 +129,7 @@ export class ReservationPageComponent
       .subscribe((result) => {
         if (result) {
           this.calendar.clearSelectedSlot();
-          this.calendar.fetchReservations();
+          this.refetchInterval();
         }
       });
   }
@@ -168,6 +188,37 @@ export class ReservationPageComponent
 
     this.selectedSlot = incrementedSlot;
     this.calendar.selectedSlot = incrementedSlot;
+  }
+
+  onIntervalChange(interval: IInterval): void {
+    this._currentInterval = interval;
+    this._fetchInterval(interval);
+  }
+
+  onSelectedResourceChange(resource: Resource | null): void {
+    this.selectedResource = resource;
+  }
+
+  onDisplayedResourcesChange(resources: Resource[]): void {
+    this.displayedResources = resources;
+    this.refetchInterval();
+  }
+
+  refetchInterval(): void {
+    if (this._currentInterval) {
+      this._fetchInterval(this._currentInterval);
+    }
+  }
+
+  /**
+   * Fetches reservations for a given interval.
+   *
+   * @param interval Interval to fetch reservations for.
+   */
+  private _fetchInterval(interval: IInterval): void {
+    this._calendarResS
+      .fetchInterval$(this.displayedResources!, interval)
+      .subscribe((req) => this._calendarRequest$.next(req));
   }
 
   /**
@@ -237,7 +288,7 @@ export class ReservationPageComponent
             );
           }
           const virtualRoomResource =
-            this._resourceService.findResourceByTechnology(
+            this.resourceService.findResourceByTechnology(
               resReq.virtualRoomData!.technology
             );
 

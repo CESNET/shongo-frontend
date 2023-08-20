@@ -7,7 +7,6 @@ import {
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RuntimeParticipantTableData } from 'src/app/modules/shongo-table/data-sources/runtime-management.datasource';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-snapshot-dialog',
@@ -24,10 +23,6 @@ export class UserSnapshotDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.snapshotUrl = `http${environment.useHttps ? 's' : ''}://${
-      environment.shongoRESTApiHost
-    }:${environment.shongoRESTApiPort}/api/v1/${Endpoint.RES_REQUEST}/${
-      this.data.requestId
-    }/runtime_management/participants/${this.data.participant.id}/snapshot`;
+    this.snapshotUrl = `/api/v1/${Endpoint.RES_REQUEST}/${this.data.requestId}/runtime_management/participants/${this.data.participant.id}/snapshot`;
   }
 }

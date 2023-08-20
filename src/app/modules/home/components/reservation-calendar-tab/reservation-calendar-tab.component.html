@@ -5,8 +5,8 @@
         <form class="calendar__options" [formGroup]="filterGroup">
           <div class="calendar__options-left">
             <button
+              (click)="refetchInterval()"
               mat-button
-              (click)="calendar.refresh()"
               type="button"
               aria-labelledby="refresh-button-name"
               class="calendar__refresh"
@@ -25,7 +25,6 @@
             <ng-template #iconOnlyRefresh>
               <button
                 mat-icon-button
-                (click)="calendar.refresh()"
                 type="button"
                 aria-label="Refresh"
                 i18n-aria-label="button name"
@@ -49,7 +48,11 @@
               class="unpadded calendar__resource-selection"
             >
               <mat-label i18n="field label">Physical resource</mat-label>
-              <mat-select formControlName="resources" multiple>
+              <mat-select
+                (valueChange)="refetchInterval()"
+                formControlName="resources"
+                multiple
+              >
                 <mat-option>
                   <ngx-mat-select-search
                     formControlName="resourceFilter"
@@ -110,10 +113,14 @@
         </section>
       </header>
 
-      <app-reservation-calendar
+      <shongo-calendar
         #calendar
-        [displayedResources]="displayedResources"
-      ></app-reservation-calendar>
+        (loadData)="onIntervalChange($event)"
+        [items]="(calendarRequest$ | async)!.data"
+        [loading]="(calendarRequest$ | async)!.state === ERequestState.LOADING"
+        [currentUser]="currentUser"
+        [highlightUsersReservations]="!!filterGroup.value.highlightMine"
+      ></shongo-calendar>
     </div>
   </mat-card-content>
 </mat-card>
