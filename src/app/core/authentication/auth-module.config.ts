@@ -1,3 +1,4 @@
+import { environment } from '@env/environment';
 import { OAuthModuleConfig } from 'angular-oauth2-oidc';
 
 /**
@@ -5,10 +6,7 @@ import { OAuthModuleConfig } from 'angular-oauth2-oidc';
  */
 export const authModuleConfig: OAuthModuleConfig = {
   resourceServer: {
-    allowedUrls: [
-      'https://shongo-dev.cesnet.cz/',
-      'https://meethings.cesnet.cz/',
-    ],
+    allowedUrls: [environment.host],
     sendAccessToken: true,
   },
 };

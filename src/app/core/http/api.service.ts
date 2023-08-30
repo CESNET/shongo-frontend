@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
+import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 import { catchError, first } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
@@ -30,6 +31,9 @@ export abstract class ApiService {
    * @returns Endpoint URL.
    */
   static buildEndpointURL(endpoint: string, version: string) {
+    if (environment.production) {
+      return `${environment.host}/api/${version}/${endpoint}`;
+    }
     return `/api/${version}/${endpoint}`;
   }
 
