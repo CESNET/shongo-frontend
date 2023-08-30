@@ -101,16 +101,18 @@ export class ReservationRequestDetailPageComponent
     if (
       this.reservationRequest?.allocationState !== AllocationState.ALLOCATED
     ) {
-      return false;
+      return true;
     }
+
     if (this.reservationRequest?.type === ReservationType.ROOM_CAPACITY) {
-      return (
-        !this.reservationRequest.roomCapacityData
-          ?.capacityHasRecordingService ||
-        (this.reservationRequest.state ===
-          ReservationRequestState.ALLOCATED_FINISHED &&
-          !this.reservationRequest.roomCapacityData.capacityHasRecordings)
-      );
+      if (
+        this.reservationRequest.state ==
+        ReservationRequestState.ALLOCATED_FINISHED
+      ) {
+        return !this.reservationRequest.roomCapacityData?.capacityHasRecordings;
+      }
+      return !this.reservationRequest.roomCapacityData
+        ?.capacityHasRecordingService;
     } else {
       return !this.reservationRequest?.virtualRoomData?.roomHasRecordings;
     }

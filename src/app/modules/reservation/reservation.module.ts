@@ -18,10 +18,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ShongoCalendarModule } from '@cesnet/shongo-calendar';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CalendarHelperModule } from '../calendar-helper/calendar-helper.module';
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
-import { ShongoCalendarModule } from '../shongo-calendar/shongo-calendar.module';
 import { ReservationDialogComponent } from './components/reservation-dialog/reservation-dialog.component';
 import { ResourceSelectionFormComponent } from './components/resource-selection-form/resource-selection-form.component';
 import { HoldClickDirective } from './directives/hold-click.directive';
@@ -51,9 +52,10 @@ import { ReservationRoutingModule } from './reservation-routing.module';
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     ReservationFormsModule,
-    ShongoCalendarModule,
     MatDatepickerModule,
     MatRippleModule,
+    ShongoCalendarModule.forRoot(),
+    CalendarHelperModule,
   ],
   declarations: [
     ReservationPageComponent,

@@ -116,8 +116,8 @@
         >
           <b class="sidebar__heading" i18n="heading">Resource selection</b>
           <app-resource-selection-form
-            (resourceChange)="selectedResource = $event"
-            (displayedResourcesChange)="displayedResources = $event"
+            (resourceChange)="onSelectedResourceChange($event)"
+            (displayedResourcesChange)="onDisplayedResourcesChange($event)"
           ></app-resource-selection-form>
         </section>
 
@@ -343,13 +343,16 @@
     <!-- Main content -->
     <mat-drawer-content class="reservation__content">
       <!-- Reservation alendar -->
-      <app-reservation-calendar
+      <shongo-calendar
         #calendar
-        class="reservation__calendar fullscreen-calendar"
-        [allowSlotSelection]="true"
-        [displayedResources]="displayedResources"
+        (loadData)="onIntervalChange($event)"
         (slotSelected)="selectedSlot = $event"
-      ></app-reservation-calendar>
+        [allowSlotSelection]="true"
+        [items]="(calendarRequest$ | async)!.data"
+        [loading]="(calendarRequest$ | async)!.state === ERequestState.LOADING"
+        [currentUser]="currentUser"
+        class="fullscreen-calendar"
+      ></shongo-calendar>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
