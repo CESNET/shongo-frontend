@@ -129,14 +129,14 @@ export class VideoconferenceReservationFormComponent
       }
     }
     if (roomCapacityData) {
-      const { capacityParticipantCount, capacityHasRecordingService } =
+      const { capacityParticipantCount, hasRoomRecordingService } =
         roomCapacityData;
 
       if (capacityParticipantCount) {
         this.form.get('participantCount')!.setValue(capacityParticipantCount);
       }
-      if (capacityHasRecordingService) {
-        this.form.get('record')!.setValue(capacityHasRecordingService);
+      if (hasRoomRecordingService) {
+        this.form.get('record')!.setValue(hasRoomRecordingService);
       }
       if (roomCapacityData.periodicity) {
         this.periodicityForm.fill(roomCapacityData.periodicity);

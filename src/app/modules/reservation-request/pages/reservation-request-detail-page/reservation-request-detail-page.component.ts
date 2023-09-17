@@ -106,15 +106,14 @@ export class ReservationRequestDetailPageComponent
 
     if (this.reservationRequest?.type === ReservationType.ROOM_CAPACITY) {
       if (
-        this.reservationRequest.state ==
+        this.reservationRequest.state ===
         ReservationRequestState.ALLOCATED_FINISHED
       ) {
-        return !this.reservationRequest.roomCapacityData?.capacityHasRecordings;
+        return !this.reservationRequest.roomCapacityData?.hasRoomRecordings;
       }
-      return !this.reservationRequest.roomCapacityData
-        ?.capacityHasRecordingService;
+      return !this.reservationRequest.roomCapacityData?.hasRoomRecordingService;
     } else {
-      return !this.reservationRequest?.virtualRoomData?.roomHasRecordings;
+      return !this.reservationRequest?.virtualRoomData?.hasRoomRecordings;
     }
   }
 

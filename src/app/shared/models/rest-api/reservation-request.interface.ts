@@ -45,7 +45,7 @@ export interface VirtualRoomData {
   state: RoomState;
   technology: Technology;
   roomName: string;
-  roomHasRecordings: boolean;
+  hasRoomRecordings: boolean;
 }
 
 export interface PhysicalResourceData {
@@ -58,8 +58,8 @@ export interface PhysicalResourceData {
 export interface RoomCapacityData {
   roomReservationRequestId: string;
   capacityParticipantCount: number;
-  capacityHasRecordingService: boolean;
-  capacityHasRecordings: boolean;
+  hasRoomRecordingService: boolean;
+  hasRoomRecordings: boolean;
   isRecordingActive: boolean;
   periodicity: Periodicity;
 }
