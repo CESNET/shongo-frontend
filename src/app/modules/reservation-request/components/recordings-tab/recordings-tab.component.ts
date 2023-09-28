@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -36,8 +35,7 @@ export class RecordingsTabComponent implements OnInit {
     private _resReqService: ReservationRequestService,
     private _dialog: MatDialog,
     private _datePipe: MomentDatePipe,
-    private _alert: AlertService,
-    private _cd: ChangeDetectorRef
+    private _alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -64,15 +62,13 @@ export class RecordingsTabComponent implements OnInit {
             this._alert.showSuccess(
               $localize`:success message:Recording started`
             );
-            this.reservationRequest.roomCapacityData!.isRecordingActive = true;
           } else {
             this._alert.showSuccess(
               $localize`:success message:Recording stopped`
             );
-            this.reservationRequest.roomCapacityData!.isRecordingActive = false;
           }
 
-          this._cd.markForCheck();
+          this.roomRecordingDataSource.refreshData();
         },
         error: (err) => {
           console.error(err);

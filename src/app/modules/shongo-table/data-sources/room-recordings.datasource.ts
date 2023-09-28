@@ -71,7 +71,7 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
   }
 
   downloadRecording = (row: Recording): Observable<string> => {
-    window.location.assign(row.downloadUrl);
+    window.location.href = row.downloadUrl;
     return of('');
   };
 
