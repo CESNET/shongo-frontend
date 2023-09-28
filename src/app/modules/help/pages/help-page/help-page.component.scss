@@ -32,6 +32,10 @@ nav {
   margin-right: 1em;
   width: fit-content;
 }
+section:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .navigation-fragment {
   &__text {
     margin-left: 0.5rem;
