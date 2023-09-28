@@ -1,3 +1,11 @@
-<a [href]="columnData.row.viewUrl" target="_blank" class="mat-primary-color">{{
-  columnData.row.filename
-}}</a>
+<a
+  *ngIf="columnData.row.viewUrl; else noView"
+  [href]="columnData.row.viewUrl"
+  target="_blank"
+  class="mat-primary-color"
+  >{{ columnData.row.filename }}</a
+>
+
+<ng-template #noView>
+  <span i18n class="grayed-text">Not available</span>
+</ng-template>

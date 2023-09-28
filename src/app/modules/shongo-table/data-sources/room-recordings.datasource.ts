@@ -43,7 +43,8 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
       new CustomActionButton(
         $localize`:button name:Download`,
         'download',
-        this.downloadRecording
+        this.downloadRecording,
+        this.isDownloadDisabled
       ),
       new DeleteButton(
         this._resReqService,
@@ -73,6 +74,10 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
   downloadRecording = (row: Recording): Observable<string> => {
     window.location.href = row.downloadUrl;
     return of('');
+  };
+
+  isDownloadDisabled = (row: Recording): boolean => {
+    return !row.downloadUrl;
   };
 
   /**

@@ -4808,6 +4808,14 @@
 				</context-group>
 				<note priority="1" from="meaning">Error message</note>
 			</trans-unit>
+			<trans-unit id="3841989706323728259" datatype="html">
+				<source>Not available</source>
+				<target>Není k dispozici</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-request/components/recording-view-url-column/recording-view-url-column.component.html</context>
+					<context context-type="linenumber">10</context>
+				</context-group>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

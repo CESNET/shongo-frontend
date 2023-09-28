@@ -6,7 +6,7 @@
         <source>Authentication process failed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/authentication/authentication.service.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">136</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -192,7 +192,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">360</context>
+          <context context-type="linenumber">363</context>
         </context-group>
         <note priority="1" from="description">Text shown while loading resources</note>
       </trans-unit>
@@ -293,6 +293,66 @@
         </context-group>
         <note priority="1" from="description">Previous page label in paginator</note>
         <note priority="1" from="meaning">previous page</note>
+      </trans-unit>
+      <trans-unit id="4452427314943113135" datatype="html">
+        <source>Previous</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/components/calendar-paginator/calendar-paginator.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/components/calendar-paginator/calendar-paginator.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="description">button name</note>
+      </trans-unit>
+      <trans-unit id="1852232195968635711" datatype="html">
+        <source> Today </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/components/calendar-paginator/calendar-paginator.component.html</context>
+          <context context-type="linenumber">19,21</context>
+        </context-group>
+        <note priority="1" from="description">button name</note>
+      </trans-unit>
+      <trans-unit id="5883427872836966753" datatype="html">
+        <source>Select calendar view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/components/calendar-view-selection/calendar-view-selection.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">button name</note>
+      </trans-unit>
+      <trans-unit id="1286983255645370171" datatype="html">
+        <source>Day</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/components/calendar-view-selection/calendar-view-selection.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">time unit</note>
+      </trans-unit>
+      <trans-unit id="5141352019990967744" datatype="html">
+        <source>Week</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/components/calendar-view-selection/calendar-view-selection.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">time unit</note>
+      </trans-unit>
+      <trans-unit id="5403684285319082289" datatype="html">
+        <source>Month</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/components/calendar-view-selection/calendar-view-selection.component.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="description">time unit</note>
+      </trans-unit>
+      <trans-unit id="2148645582431255145" datatype="html">
+        <source>Failed to fetch reservations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/calendar-helper/services/calendar-reservations.service.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <note priority="1" from="description">error message</note>
       </trans-unit>
       <trans-unit id="1348774649041038169" datatype="html">
         <source>Navigation</source>
@@ -628,7 +688,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/components/reservation-calendar-tab/reservation-calendar-tab.component.html</context>
-          <context context-type="linenumber">31,30</context>
+          <context context-type="linenumber">30,29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/components/desktop-table/desktop-table.component.html</context>
@@ -652,7 +712,7 @@
         <source>Highlight mine</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/components/reservation-calendar-tab/reservation-calendar-tab.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
@@ -664,7 +724,7 @@
         <source>Physical resource</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/components/reservation-calendar-tab/reservation-calendar-tab.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.ts</context>
@@ -676,7 +736,7 @@
         <source>Search...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/components/reservation-calendar-tab/reservation-calendar-tab.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.html</context>
@@ -692,7 +752,7 @@
         <source>No resources found</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/components/reservation-calendar-tab/reservation-calendar-tab.component.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.html</context>
@@ -1624,6 +1684,13 @@
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
+      <trans-unit id="3841989706323728259" datatype="html">
+        <source>Not available</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-request/components/recording-view-url-column/recording-view-url-column.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5128259166472762455" datatype="html">
         <source>Room recordings</source>
         <context-group purpose="location">
@@ -1684,7 +1751,7 @@
         <source>Failed to start recording</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/components/recordings-tab/recordings-tab.component.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">78</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -1692,7 +1759,7 @@
         <source>Failed to stop recording</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/components/recordings-tab/recordings-tab.component.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -1984,18 +2051,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/components/reservation-detail/reservation-detail.component.ts</context>
           <context context-type="linenumber">123</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.html</context>
-          <context context-type="linenumber">91</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.ts</context>
-          <context context-type="linenumber">550</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.ts</context>
-          <context context-type="linenumber">551</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component.ts</context>
@@ -2664,7 +2719,7 @@
         <source>Item deleted</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
-          <context context-type="linenumber">189</context>
+          <context context-type="linenumber">190</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
@@ -2680,7 +2735,7 @@
         <source>Can&apos;t delete a virtual room with reserved capacity</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">202</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -2688,7 +2743,7 @@
         <source>Failed to delete item</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
-          <context context-type="linenumber">205</context>
+          <context context-type="linenumber">206</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -2920,7 +2975,7 @@
         <source>Parent reservation request must be of type virtual room.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.ts</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">287</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -2928,7 +2983,7 @@
         <source>No resource found using room&apos;s technology (<x id="PH" equiv-text="resReq.virtualRoomData.technology"/>).</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.ts</context>
-          <context context-type="linenumber">248</context>
+          <context context-type="linenumber">299</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -3059,99 +3114,6 @@
           <context context-type="linenumber">61</context>
         </context-group>
         <note priority="1" from="description">error message</note>
-      </trans-unit>
-      <trans-unit id="4452427314943113135" datatype="html">
-        <source>Previous</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-paginator/calendar-paginator.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-paginator/calendar-paginator.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <note priority="1" from="description">button name</note>
-      </trans-unit>
-      <trans-unit id="1852232195968635711" datatype="html">
-        <source> Today </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-paginator/calendar-paginator.component.html</context>
-          <context context-type="linenumber">19,21</context>
-        </context-group>
-        <note priority="1" from="description">button name</note>
-      </trans-unit>
-      <trans-unit id="5883427872836966753" datatype="html">
-        <source>Select calendar view</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-view-selection/calendar-view-selection.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="description">button name</note>
-      </trans-unit>
-      <trans-unit id="1286983255645370171" datatype="html">
-        <source>Day</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-view-selection/calendar-view-selection.component.ts</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <note priority="1" from="description">time unit</note>
-      </trans-unit>
-      <trans-unit id="5141352019990967744" datatype="html">
-        <source>Week</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-view-selection/calendar-view-selection.component.ts</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-        <note priority="1" from="description">time unit</note>
-      </trans-unit>
-      <trans-unit id="5403684285319082289" datatype="html">
-        <source>Month</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/calendar-view-selection/calendar-view-selection.component.ts</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <note priority="1" from="description">time unit</note>
-      </trans-unit>
-      <trans-unit id="1480747702137417941" datatype="html">
-        <source>Description: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.html</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-        <note priority="1" from="description">definition tag</note>
-      </trans-unit>
-      <trans-unit id="2910063190182526102" datatype="html">
-        <source>Time slot: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.html</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-        <note priority="1" from="description">definition tag</note>
-      </trans-unit>
-      <trans-unit id="7249752765536951090" datatype="html">
-        <source>Reserved by: </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <note priority="1" from="description">definition tag</note>
-      </trans-unit>
-      <trans-unit id="2148645582431255145" datatype="html">
-        <source>Failed to fetch reservations</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.ts</context>
-          <context context-type="linenumber">272</context>
-        </context-group>
-        <note priority="1" from="description">error message</note>
-      </trans-unit>
-      <trans-unit id="6814686948582329601" datatype="html">
-        <source>Selected time slot</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-calendar/components/reservation-calendar/reservation-calendar.component.ts</context>
-          <context context-type="linenumber">544</context>
-        </context-group>
-        <note priority="1" from="description">Name of calendar event that user just selected</note>
-        <note priority="1" from="meaning">event name</note>
       </trans-unit>
       <trans-unit id="8927837337329146438" datatype="html">
         <source>Are you sure you want to delete this item?</source>
@@ -3573,7 +3535,7 @@
         <source>&gt; day</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/room-recordings.datasource.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <note priority="1" from="description">more than a day</note>
       </trans-unit>
