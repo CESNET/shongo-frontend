@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Recording } from 'src/app/shared/models/rest-api/recording';
@@ -256,6 +256,16 @@ export class ReservationRequestService extends ApiService {
       sortDirection,
       filter,
       url
+    ).pipe(
+      map((response) => {
+        response.items.forEach((recording) => {
+          recording.downloadUrl = recording.downloadUrl
+            ? recording.downloadUrl
+            : '';
+          recording.viewUrl = recording.viewUrl ? recording.viewUrl : '';
+        });
+        return response;
+      })
     );
   }
 

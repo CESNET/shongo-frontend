@@ -1,7 +1,7 @@
 export default [
   {
     context: ['/api'],
-    target: 'http://localhost:8001/',
+    target: 'https://shongo-dev.cesnet.cz:8001/',
     secure: false,
     logLevel: 'debug',
     changeOrigin: true,
