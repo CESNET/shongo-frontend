@@ -58,6 +58,7 @@ export class AlertService {
       data: { message, type },
       announcementMessage: message,
       panelClass: ['snackbar', 'snackbar--' + type],
+      duration: SNACKBAR_DURATION,
     });
   }
 
