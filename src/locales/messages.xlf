@@ -374,8 +374,8 @@
         </context-group>
         <note priority="1" from="description">Navigation link in help page</note>
       </trans-unit>
-      <trans-unit id="6832669484592247069" datatype="html">
-        <source>Level of authenticity</source>
+      <trans-unit id="4591319121394721989" datatype="html">
+        <source>Level of authorization</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
           <context context-type="linenumber">33</context>
@@ -418,8 +418,8 @@
         </context-group>
         <note priority="1" from="description">Header in help page</note>
       </trans-unit>
-      <trans-unit id="3042109042432599574" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Reservation system<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> allows you to create your own virtual rooms for H.323/SIP videoconferences or Adobe Connect web conferences. You can share the rooms with your colleagues and use them for your conference calls. The creation of new rooms is allowed only for logged in users with certain level of authenticity. You can log in with you user account from your organization that is involved in <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+      <trans-unit id="4158585024804997661" datatype="html">
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Reservation system<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> allows you to create your own virtual rooms for H.323/SIP videoconferences or Adobe Connect web conferences. You can share the rooms with your colleagues and use them for your conference calls. The creation of new rooms is allowed only for logged in users with certain level of authorization. You can log in with you user account from your organization that is involved in <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
           href=&quot;https://www.eduid.cz/&quot;
           target=&quot;_blank&quot;
           class=&quot;mat-primary-color&quot;

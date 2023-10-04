@@ -449,7 +449,7 @@
             class=&quot;mat-primary-color&quot;
             &gt;"/>procedure<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
           &gt;"/>). </source>
-				<target> Požádejte svého poskytovatele identity o ověření vaší identity (např. pokud používáte<x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+				<target> Požádejte svého poskytovatele identity o ověření vaší identity (např. pokud používáte <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
             href=&quot;https://www.eduid.cz/cs/hostel&quot;
             target=&quot;_blank&quot;
             class=&quot;mat-primary-color&quot;
@@ -4815,6 +4815,48 @@
 					<context context-type="sourcefile">src/app/modules/reservation-request/components/recording-view-url-column/recording-view-url-column.component.html</context>
 					<context context-type="linenumber">10</context>
 				</context-group>
+			</trans-unit>
+			<trans-unit id="4591319121394721989" datatype="html">
+				<source>Level of authorization</source>
+				<target>Úroveň autorizace</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+					<context context-type="linenumber">33</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+					<context context-type="linenumber">123</context>
+				</context-group>
+				<note priority="1" from="description">Navigation link in help page</note>
+			</trans-unit>
+			<trans-unit id="4158585024804997661" datatype="html">
+				<source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Reservation system<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> allows you to create your own virtual rooms for H.323/SIP videoconferences or Adobe Connect web conferences. You can share the rooms with your colleagues and use them for your conference calls. The creation of new rooms is allowed only for logged in users with certain level of authorization. You can log in with you user account from your organization that is involved in <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+          href=&quot;https://www.eduid.cz/&quot;
+          target=&quot;_blank&quot;
+          class=&quot;mat-primary-color&quot;
+          &gt;"/>eduID.cz<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/> federation or you can create a new user account at <x id="START_LINK_1" equiv-text="&lt;a
+          href=&quot;https://www.eduid.cz/cs/hostel&quot;
+          target=&quot;_blank&quot;
+          class=&quot;mat-primary-color&quot;
+          &gt;"/>hostel<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/>. </source>
+				<target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Rezervační systém<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> vám umožňuje vytvářet vlastní virtuální místnosti pro H.323/SIP video konference nebo webové konference Adobe Connect. Můžete sdílet místnosti se svými kolegy a používat je pro své konferenční hovory. Vytváření nových místností je povoleno pouze pro přihlášené uživatele s určitou úrovní oprávnění. Můžete se přihlásit pomocí svého uživatelského účtu z vaší organizace, která je zapojena do federace <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+          href=&quot;https://www.eduid.cz/&quot;
+          target=&quot;_blank&quot;
+          class=&quot;mat-primary-color&quot;
+          &gt;"/>eduID.cz<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/>, nebo můžete vytvořit nový uživatelský účet na <x id="START_LINK_1" equiv-text="&lt;a
+          href=&quot;https://www.eduid.cz/cs/hostel&quot;
+          target=&quot;_blank&quot;
+          class=&quot;mat-primary-color&quot;
+          &gt;"/>hostelu<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+        &gt;"/>. </target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/help/pages/help-page/help-page.component.html</context>
+					<context context-type="linenumber">84,103</context>
+				</context-group>
+				<note priority="1" from="description">Help page text</note>
 			</trans-unit>
 		</body>
 	</file>
