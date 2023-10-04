@@ -1,7 +1,14 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
-import { map, Observable } from 'rxjs';
+import { CertainityCheckComponent } from '@app/shared/components/certainity-check/certainity-check.component';
+import { ReservationRequest } from '@app/shared/models/rest-api/reservation-request.interface';
+import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { Recording } from 'src/app/shared/models/rest-api/recording';
@@ -22,8 +29,14 @@ import { ApiService } from '../api.service';
   providedIn: 'root',
 })
 export class ReservationRequestService extends ApiService {
-  constructor(protected _http: HttpClient) {
+  constructor(protected _http: HttpClient, private _dialog: MatDialog) {
     super(_http, Endpoint.RES_REQUEST, 'v1');
+  }
+
+  override deleteItem(id: string, url = this.endpointURL): Observable<void> {
+    return super
+      .deleteItem(id, url)
+      .pipe(catchError((err) => this.deleteErrorHandler(id, err)));
   }
 
   /**
@@ -308,6 +321,43 @@ export class ReservationRequestService extends ApiService {
     return this._http.post<Record<string, never>>(
       `${this.endpointURL}/${requestId}/reject`,
       {}
+    );
+  }
+
+  deleteErrorHandler = (id: string, err: Error): Observable<void> => {
+    if (err instanceof HttpErrorResponse && err.status === 403) {
+      return this._hasCapacitiesHandler(id);
+    }
+    throw new Error($localize`:error message:Item deletion failed`);
+  };
+
+  private _hasCapacitiesHandler(id: string): Observable<void> {
+    return this._dialog
+      .open(CertainityCheckComponent, {
+        data: {
+          message: $localize`This room has reserved capacities, do you wish to proceed?`,
+        },
+      })
+      .afterClosed()
+      .pipe(
+        switchMap((res) =>
+          res ? this._deleteRequestWithCapacities(id) : of(undefined)
+        )
+      );
+  }
+
+  private _deleteRequestWithCapacities(id: string): Observable<void> {
+    return this.fetchItems<ReservationRequest>(
+      new HttpParams().set('parentRequestId', id)
+    ).pipe(
+      switchMap((capacities) => {
+        const deleteRequests = capacities.items.map((capacity) =>
+          this.deleteItem(capacity.id)
+        );
+        return forkJoin(deleteRequests);
+      }),
+      switchMap(() => this.deleteItem(id)),
+      map(() => undefined)
     );
   }
 }

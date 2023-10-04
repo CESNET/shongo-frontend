@@ -15,7 +15,7 @@ export class DeleteButton<T>
   implements WithPathTemplate
 {
   icon = 'delete';
-  name = 'Delete';
+  name = $localize`:button name:Delete`;
 
   constructor(
     public apiService: ApiService,
@@ -44,8 +44,6 @@ export class DeleteButton<T>
 
     // Constructs path to delete endpoint.
     const path = this.constructPath(row, this.pathTemplate);
-
-    // Constructs whole endpoint URL.
     const url = `${this.apiService.endpointURL}${path}`;
 
     return dialogRef.afterClosed().pipe(

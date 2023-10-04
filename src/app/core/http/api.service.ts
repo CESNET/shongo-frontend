@@ -102,11 +102,8 @@ export abstract class ApiService {
    * @param url Endpoint URL.
    * @returns Observable of API response.
    */
-  deleteItems(
-    ids?: string[],
-    url = this.endpointURL
-  ): Observable<Record<string, never>> {
-    return this._http.delete<Record<string, never>>(url, {
+  deleteItems(ids?: string[], url = this.endpointURL): Observable<void> {
+    return this._http.delete<void>(url, {
       body: ids ?? undefined,
     });
   }
@@ -129,10 +126,7 @@ export abstract class ApiService {
    * @param url Endpoint URL.
    * @returns Observable of API response.
    */
-  deleteItem(
-    id: string,
-    url = this.endpointURL
-  ): Observable<Record<string, never>> {
+  deleteItem(id: string, url = this.endpointURL): Observable<void> {
     return this.deleteByUrl(`${url}/${id}`);
   }
 
@@ -142,8 +136,8 @@ export abstract class ApiService {
    * @param url URL of item to delete.
    * @returns Observable of API response.
    */
-  deleteByUrl(url: string): Observable<Record<string, never>> {
-    return this._http.delete<Record<string, never>>(url);
+  deleteByUrl(url: string): Observable<void> {
+    return this._http.delete<void>(url);
   }
 
   /**

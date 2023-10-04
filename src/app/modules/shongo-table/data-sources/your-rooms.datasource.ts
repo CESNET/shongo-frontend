@@ -1,10 +1,9 @@
-import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
-import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
-import { CertainityCheckComponent } from 'src/app/shared/components/certainity-check/certainity-check.component';
 import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
@@ -166,48 +165,9 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
     row: YourRoomsTableData,
     err: Error
   ): Observable<string> => {
-    if (err instanceof HttpErrorResponse && err.status === 403) {
-      return this._hasCapacitiesHandler(row);
-    }
-    throw new Error($localize`:error message:Item deletion failed`);
+    return this.apiService.deleteErrorHandler(row.id, err).pipe(
+      map(() => $localize`:success message:Item deleted`),
+      catchError(() => of($localize`:error message:Item deletion failed`))
+    );
   };
-
-  private _hasCapacitiesHandler(row: YourRoomsTableData): Observable<string> {
-    return this._dialog
-      .open(CertainityCheckComponent, {
-        data: {
-          message: $localize`This room has reserved capacities, do you wish to proceed?`,
-        },
-      })
-      .afterClosed()
-      .pipe(
-        switchMap((res) => {
-          if (res) {
-            return this._deleteRequestWithCapacities(row);
-          }
-          return of('');
-        })
-      );
-  }
-
-  private _deleteRequestWithCapacities(
-    row: YourRoomsTableData
-  ): Observable<string> {
-    return this.apiService
-      .fetchItems<ReservationRequest>(
-        new HttpParams().set('parentRequestId', row.id)
-      )
-      .pipe(
-        switchMap((capacities) =>
-          forkJoin(
-            capacities.items.map((capacity) =>
-              this.apiService.deleteItem(capacity.id)
-            )
-          )
-        ),
-        switchMap(() => this.apiService.deleteItem(row.id)),
-        map(() => $localize`:success message:Item deleted`),
-        catchError(() => of($localize`:error message:Item deletion failed`))
-      );
-  }
 }
