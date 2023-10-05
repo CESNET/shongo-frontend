@@ -22,7 +22,14 @@ import {
 import { CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { finalize, first, takeUntil, tap } from 'rxjs/operators';
+import {
+  filter,
+  finalize,
+  first,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
@@ -219,9 +226,15 @@ export class ReservationPageComponent
     let request$: Observable<IRequest<ICalendarItem[]>>;
 
     if (this.capacityBookingMode) {
-      request$ = this._calendarResS.fetchCapacitiesInterval$(
-        this.parentReservationRequest!.id,
-        interval
+      request$ = this.loadingParentRequest$.pipe(
+        filter((loading) => !loading),
+        first(),
+        switchMap(() =>
+          this._calendarResS.fetchCapacitiesInterval$(
+            this.parentReservationRequest!.id,
+            interval
+          )
+        )
       );
     } else {
       request$ = this._calendarResS.fetchInterval$(
