@@ -348,6 +348,7 @@
         (loadData)="onIntervalChange($event)"
         (slotSelected)="selectedSlot = $event"
         [allowSlotSelection]="true"
+        (itemClicked)="onItemClick($event)"
         [items]="(calendarRequest$ | async)!.data"
         [loading]="(calendarRequest$ | async)!.state === ERequestState.LOADING"
         [currentUser]="currentUser"

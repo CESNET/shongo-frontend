@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
 import { ERequestState } from '@app/shared/models/enums/request-state.enum';
 import { IRequest } from '@app/shared/models/interfaces/request.interface';
@@ -92,6 +92,7 @@ export class ReservationPageComponent
     private _br: BreakpointObserver,
     private _cd: ChangeDetectorRef,
     private _calendarResS: CalendarReservationsService,
+    private _router: Router,
     public resourceService: ResourceService
   ) {
     this.tabletSizeHit$ = this._createTabletSizeObservable();
@@ -209,6 +210,12 @@ export class ReservationPageComponent
   onDisplayedResourcesChange(resources: Resource[]): void {
     this.displayedResources = resources;
     this.refetchInterval();
+  }
+
+  onItemClick(item: ICalendarItem): void {
+    if (item.data?.id) {
+      void this._router.navigate(['reservation-request', item.data?.id]);
+    }
   }
 
   refetchInterval(): void {
