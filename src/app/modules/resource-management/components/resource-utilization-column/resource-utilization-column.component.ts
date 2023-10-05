@@ -41,8 +41,10 @@ export class ResourceUtilizationColumnComponent
   extends ColumnComponent<ResourceCapacityUtilizationTableData>
   implements OnInit, OnDestroy
 {
-  percentage: number;
   useAbsoluteValue = false;
+
+  cellData!: ResourceUtilization;
+  percentage!: number;
 
   private readonly _destroy$ = new Subject<void>();
 
@@ -52,19 +54,15 @@ export class ResourceUtilizationColumnComponent
     @Inject(SETTINGS_PROVIDER) settings: Observable<TableSettings>
   ) {
     super(columnData, settings);
-    this.percentage = this._getPercentage();
-  }
-
-  get cellData(): ResourceUtilization {
-    return JSON.parse(
-      this.columnData.row[this.columnData.columnName]
-    ) as ResourceUtilization;
   }
 
   ngOnInit(): void {
     this.settings.pipe(takeUntil(this._destroy$)).subscribe((settings) => {
       this.useAbsoluteValue = settings.useAbsoluteValues as boolean;
     });
+
+    this.cellData = JSON.parse(this.columnData.row[this.columnData.columnName]);
+    this.percentage = this._getPercentage();
   }
 
   ngOnDestroy(): void {
@@ -110,8 +108,12 @@ export class ResourceUtilizationColumnComponent
    * @returns Percentage.
    */
   private _getPercentage(): number {
-    return (
-      Number(this.cellData.usedCapacity) / Number(this.cellData.totalCapacity)
-    );
+    const usedCapacity = Number(this.cellData.usedCapacity);
+    const totalCapacity = Number(this.cellData.totalCapacity);
+
+    if (totalCapacity === 0) {
+      return 0;
+    }
+    return usedCapacity / totalCapacity;
   }
 }
