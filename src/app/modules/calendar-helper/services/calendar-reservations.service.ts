@@ -72,6 +72,9 @@ export class CalendarReservationsService {
         email: reservation.ownerEmail,
       },
       title: reservation.description,
+      data: {
+        id: reservation.id,
+      },
     };
   }
 
