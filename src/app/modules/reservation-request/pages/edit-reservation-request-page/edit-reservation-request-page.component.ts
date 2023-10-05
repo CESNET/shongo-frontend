@@ -89,11 +89,11 @@ export class EditReservationRequestPageComponent implements OnInit {
         finalize(() => this.editing$.next(false))
       )
       .subscribe({
-        next: () => {
+        next: ({ id }) => {
           this._alert.showSuccess(
             $localize`:success message:Reservation request edited`
           );
-          this._router.navigate(['../'], { relativeTo: this._route });
+          this._router.navigate(['reservation-request', id]);
         },
         error: (err) => {
           console.error(err);
