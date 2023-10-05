@@ -14,15 +14,8 @@
 .footer {
   &__buttons {
     display: flex;
-    gap: 1em;
-  }
-  &__editing {
-    display: flex;
     align-items: center;
-
-    mat-progress-spinner {
-      margin-right: 1em;
-    }
+    gap: 1em;
   }
 }
 
