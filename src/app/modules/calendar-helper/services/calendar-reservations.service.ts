@@ -38,11 +38,6 @@ export class CalendarReservationsService {
       return of({ data: [], state: ERequestState.SUCCESS });
     }
 
-    const response$ = new BehaviorSubject<IRequest<ICalendarItem[]>>({
-      data: [],
-      state: ERequestState.LOADING,
-    });
-
     const type =
       resources[0].type === ResourceType.VIRTUAL_ROOM
         ? ReservationType.ROOM_CAPACITY
@@ -53,6 +48,40 @@ export class CalendarReservationsService {
       .set('interval_to', moment(interval.end).toISOString())
       .set('type', type)
       .set('resource', resources?.map((res) => res.id).join(',') ?? '');
+
+    return this._fetchInterval$(filter);
+  }
+
+  fetchCapacitiesInterval$(parentId: string, interval: IInterval) {
+    const filter = new HttpParams()
+      .set('interval_from', moment(interval.start).toISOString())
+      .set('interval_to', moment(interval.end).toISOString())
+      .set('parentRequestId', parentId);
+
+    return this._fetchInterval$(filter);
+  }
+
+  private _createCalendarItem(reservation: ReservationRequest): ICalendarItem {
+    return {
+      slot: {
+        start: moment(reservation.slot.start).toDate(),
+        end: moment(reservation.slot.end).toDate(),
+      },
+      owner: {
+        name: reservation.ownerName,
+        email: reservation.ownerEmail,
+      },
+      title: reservation.description,
+    };
+  }
+
+  private _fetchInterval$(
+    filter: HttpParams
+  ): Observable<IRequest<ICalendarItem[]>> {
+    const response$ = new BehaviorSubject<IRequest<ICalendarItem[]>>({
+      data: [],
+      state: ERequestState.LOADING,
+    });
 
     this._resReqS
       .fetchItems<ReservationRequest>(filter)
@@ -77,19 +106,5 @@ export class CalendarReservationsService {
       });
 
     return response$.asObservable();
-  }
-
-  private _createCalendarItem(reservation: ReservationRequest): ICalendarItem {
-    return {
-      slot: {
-        start: moment(reservation.slot.start).toDate(),
-        end: moment(reservation.slot.end).toDate(),
-      },
-      owner: {
-        name: reservation.ownerName,
-        email: reservation.ownerEmail,
-      },
-      title: reservation.description,
-    };
   }
 }
