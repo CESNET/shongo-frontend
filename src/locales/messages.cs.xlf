@@ -4858,6 +4858,33 @@
 				</context-group>
 				<note priority="1" from="description">Help page text</note>
 			</trans-unit>
+			<trans-unit id="6396861841748550867" datatype="html">
+				<source>Resource:</source>
+				<target>Zdroj:</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+					<context context-type="linenumber">5</context>
+				</context-group>
+				<note priority="1" from="description">definition tag</note>
+			</trans-unit>
+			<trans-unit id="5559589581422419874" datatype="html">
+				<source>Interval:</source>
+				<target>Interval:</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+					<context context-type="linenumber">7</context>
+				</context-group>
+				<note priority="1" from="description">definition tag</note>
+			</trans-unit>
+			<trans-unit id="8735708743012858604" datatype="html">
+				<source>Usage:</source>
+				<target>Využití:</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+					<context context-type="linenumber">11</context>
+				</context-group>
+				<note priority="1" from="description">definition tag</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

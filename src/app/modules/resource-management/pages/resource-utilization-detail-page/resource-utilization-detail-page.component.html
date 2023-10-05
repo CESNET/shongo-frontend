@@ -2,13 +2,13 @@
   <header>
     <h1 i18n="heading">Resource capacity utilization</h1>
     <dl class="definition-list--flex">
-      <dt i18b="definition tag">Resource:</dt>
+      <dt i18n="definition tag">Resource:</dt>
       <dd>{{ data.name + ' (' + data.id + ')' }}</dd>
-      <dt i18b="definition tag">Interval:</dt>
+      <dt i18n="definition tag">Interval:</dt>
       <dd>
         {{ this.getInterval() }}
       </dd>
-      <dt i18b="definition tag">Usage:</dt>
+      <dt i18n="definition tag">Usage:</dt>
       <dd>{{ getUsage(data.totalCapacity, data.usedCapacity) }}</dd>
     </dl>
   </header>

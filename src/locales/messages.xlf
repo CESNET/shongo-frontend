@@ -216,9 +216,36 @@
         <source>Microphone level must be a number between 0 and 100</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/reservation-request/reservation-request.service.ts</context>
-          <context context-type="linenumber">212</context>
+          <context context-type="linenumber">225</context>
         </context-group>
         <note priority="1" from="description">error message</note>
+      </trans-unit>
+      <trans-unit id="2826824732938063918" datatype="html">
+        <source>Item deletion failed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/http/reservation-request/reservation-request.service.ts</context>
+          <context context-type="linenumber">331</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/user-roles.datasource.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+        <note priority="1" from="description">error message</note>
+      </trans-unit>
+      <trans-unit id="3080871390882721532" datatype="html">
+        <source>This room has reserved capacities, do you wish to proceed?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/http/reservation-request/reservation-request.service.ts</context>
+          <context context-type="linenumber">338</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3092899742307468661" datatype="html">
         <source>Failed to load resources.</source>
@@ -784,7 +811,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <note priority="1" from="description">field label</note>
       </trans-unit>
@@ -2066,15 +2093,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">151</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">154</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component.html</context>
@@ -2323,7 +2350,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <note priority="1" from="description">field label</note>
       </trans-unit>
@@ -2427,7 +2454,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="description">role type</note>
       </trans-unit>
@@ -2463,7 +2490,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <note priority="1" from="description">heading</note>
       </trans-unit>
@@ -2507,7 +2534,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="description">label</note>
       </trans-unit>
@@ -2551,7 +2578,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="description">label</note>
       </trans-unit>
@@ -2649,6 +2676,10 @@
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
           <context context-type="linenumber">50</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
       <trans-unit id="8687947392811862262" datatype="html">
@@ -2723,11 +2754,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">209</context>
+          <context context-type="linenumber">169</context>
         </context-group>
         <note priority="1" from="description">success message</note>
       </trans-unit>
@@ -3087,6 +3118,30 @@
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
+      <trans-unit id="6396861841748550867" datatype="html">
+        <source>Resource:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="description">definition tag</note>
+      </trans-unit>
+      <trans-unit id="5559589581422419874" datatype="html">
+        <source>Interval:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">definition tag</note>
+      </trans-unit>
+      <trans-unit id="8735708743012858604" datatype="html">
+        <source>Usage:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/resource-management/pages/resource-utilization-detail-page/resource-utilization-detail-page.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">definition tag</note>
+      </trans-unit>
       <trans-unit id="6009275794209052356" datatype="html">
         <source>Reservations</source>
         <context-group purpose="location">
@@ -3121,26 +3176,6 @@
           <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
           <context context-type="linenumber">41</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="2826824732938063918" datatype="html">
-        <source>Item deletion failed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/user-roles.datasource.ts</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">172</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">210</context>
-        </context-group>
-        <note priority="1" from="description">error message</note>
       </trans-unit>
       <trans-unit id="1519954996184640001" datatype="html">
         <source>Error</source>
@@ -3403,7 +3438,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="description">table column</note>
       </trans-unit>
@@ -3419,7 +3454,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
@@ -3431,7 +3466,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="description">table column</note>
       </trans-unit>
@@ -3591,16 +3626,9 @@
         <source>Book capacity</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="description">button name</note>
-      </trans-unit>
-      <trans-unit id="3080871390882721532" datatype="html">
-        <source>This room has reserved capacities, do you wish to proceed?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/your-rooms.datasource.ts</context>
-          <context context-type="linenumber">179</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="4207916966377787111" datatype="html">
         <source>Created</source>
