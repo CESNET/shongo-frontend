@@ -216,9 +216,21 @@ export class ReservationPageComponent
    * @param interval Interval to fetch reservations for.
    */
   private _fetchInterval(interval: IInterval): void {
-    this._calendarResS
-      .fetchInterval$(this.displayedResources!, interval)
-      .subscribe((req) => this._calendarRequest$.next(req));
+    let request$: Observable<IRequest<ICalendarItem[]>>;
+
+    if (this.capacityBookingMode) {
+      request$ = this._calendarResS.fetchCapacitiesInterval$(
+        this.parentReservationRequest!.id,
+        interval
+      );
+    } else {
+      request$ = this._calendarResS.fetchInterval$(
+        this.displayedResources!,
+        interval
+      );
+    }
+
+    request$.subscribe((req) => this._calendarRequest$.next(req));
   }
 
   /**
