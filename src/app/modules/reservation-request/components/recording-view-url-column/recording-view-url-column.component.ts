@@ -22,4 +22,8 @@ export class RecordingViewUrlColumnComponent extends ColumnComponent<Recording> 
   ) {
     super(columnData, settings);
   }
+
+  get viewUrl(): string {
+    return this.columnData.row.viewUrl || this.columnData.row.downloadUrl;
+  }
 }

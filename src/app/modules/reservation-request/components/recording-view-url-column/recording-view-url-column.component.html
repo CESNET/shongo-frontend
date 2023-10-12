@@ -1,6 +1,6 @@
 <a
-  *ngIf="columnData.row.viewUrl; else noView"
-  [href]="columnData.row.viewUrl"
+  *ngIf="viewUrl; else noView"
+  [href]="viewUrl"
   target="_blank"
   class="mat-primary-color"
   >{{ columnData.row.filename }}</a

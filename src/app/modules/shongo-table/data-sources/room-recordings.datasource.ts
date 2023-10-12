@@ -71,8 +71,11 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
     );
   }
 
-  downloadRecording = (row: Recording): Observable<string> => {
-    window.location.href = row.downloadUrl;
+  downloadRecording = ({
+    downloadUrl,
+    filename,
+  }: Recording): Observable<string> => {
+    this._downloadURI(downloadUrl, filename);
     return of('');
   };
 
@@ -119,5 +122,14 @@ export class RoomRecordingsDataSource extends DataTableDataSource<Recording> {
    */
   private _toTwoIntegerPlaces(value: string): string {
     return ('0' + value).slice(value.length - 1);
+  }
+
+  private _downloadURI(uri: string, name: string): void {
+    const link = document.createElement('a');
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
