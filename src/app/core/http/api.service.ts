@@ -147,8 +147,8 @@ export abstract class ApiService {
    * @param url Endpoint URL.
    * @returns Observable of API response.
    */
-  postItem<T>(body: T, url = this.endpointURL): Observable<unknown> {
-    return this._http.post(url, body);
+  postItem<B, T>(body: B, url = this.endpointURL): Observable<T> {
+    return this._http.post<T>(url, body);
   }
 
   /**

@@ -134,10 +134,9 @@ export class ReservationPageComponent
     dialogRef
       .afterClosed()
       .pipe(first())
-      .subscribe((result) => {
-        if (result) {
-          this.calendar.clearSelectedSlot();
-          this.refetchInterval();
+      .subscribe((id) => {
+        if (id) {
+          this._router.navigate(['reservation-request', id]);
         }
       });
   }
