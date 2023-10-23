@@ -75,12 +75,12 @@ export class ReservationDialogComponent implements OnInit {
     this._createReservationRequest()
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: ({ id }) => {
           this.creating$.next(false);
           this._alert.showSuccess(
             $localize`:success message:Reservation request created`
           );
-          this._dialogRef.close(true);
+          this._dialogRef.close(id);
         },
         error: () => {
           this.creating$.next(false);
@@ -137,7 +137,7 @@ export class ReservationDialogComponent implements OnInit {
    *
    * @returns Observable of API response.
    */
-  private _createReservationRequest(): Observable<unknown> {
+  private _createReservationRequest(): Observable<{ id: string }> {
     const { timezone, ...rest } = this.formComponent.getFormValue();
     let reservationRequestBase;
 
@@ -168,7 +168,9 @@ export class ReservationDialogComponent implements OnInit {
       ...reservationRequestBase,
       ...rest,
     };
-    return this._resReqService.postItem(reservationRequest);
+    return this._resReqService.postItem<unknown, { id: string }>(
+      reservationRequest
+    );
   }
 
   /**

@@ -108,10 +108,7 @@ export class ReservationRequestService extends ApiService {
     requestId: string
   ): Observable<ParticipantPostBody> {
     const url = `${this.endpointURL}/${requestId}/participants`;
-    return this.postItem<ParticipantPostBody>(
-      body,
-      url
-    ) as Observable<ParticipantPostBody>;
+    return this.postItem<ParticipantPostBody, ParticipantPostBody>(body, url);
   }
 
   /**
@@ -123,7 +120,7 @@ export class ReservationRequestService extends ApiService {
    */
   postRole(body: RoleBody, requestId: string): Observable<RoleBody> {
     const url = `${this.endpointURL}/${requestId}/roles`;
-    return this.postItem<RoleBody>(body, url) as Observable<RoleBody>;
+    return this.postItem<RoleBody, RoleBody>(body, url);
   }
 
   /**
