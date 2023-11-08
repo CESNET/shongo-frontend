@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { TagType } from '@app/shared/models/enums/tag-type.enum';
 import { Subject, takeUntil } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
@@ -177,7 +178,10 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
       );
     } else {
       return this._resourceService.resources.filter((res) =>
-        res.tags?.includes(typeOrTag)
+        res.tags
+          ?.filter((tag) => tag.type === TagType.DEFAULT)
+          .map((tag) => tag.name)
+          ?.includes(typeOrTag)
       );
     }
   }

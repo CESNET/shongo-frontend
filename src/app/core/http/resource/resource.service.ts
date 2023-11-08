@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { AlertService } from '@app/core/services/alert.service';
+import { TagType } from '@app/shared/models/enums/tag-type.enum';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { first, retry } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
@@ -129,9 +130,14 @@ export class ResourceService extends ApiService {
       this.resources
         .filter((resource) => resource.type === ResourceType.PHYSICAL_RESOURCE)
         .reduce((acc: string[], curr: Resource) => {
-          const supportedTags = (curr as PhysicalResource).tags.filter((tag) =>
-            physicalResourceConfig.supportedTags.includes(tag)
-          );
+          const supportedTags = (curr as PhysicalResource).tags
+            .filter(
+              ({ type, name }) =>
+                type === TagType.DEFAULT &&
+                physicalResourceConfig.supportedTags.includes(name)
+            )
+            .map(({ name }) => name);
+
           acc.push(...supportedTags);
           return acc;
         }, [])
@@ -334,8 +340,10 @@ export class ResourceService extends ApiService {
   private _filterSupportedResources(resources: Resource[] = []): Resource[] {
     return resources.filter((res) => {
       if (res.type === ResourceType.PHYSICAL_RESOURCE) {
-        return (res as PhysicalResource).tags.some((tag) =>
-          physicalResourceConfig.supportedTags.includes(tag)
+        return (res as PhysicalResource).tags.some(
+          (tag) =>
+            tag.type === TagType.DEFAULT &&
+            physicalResourceConfig.supportedTags.includes(tag.name)
         );
       } else {
         return virtualRoomResourceConfig.supportedTechnologies.includes(
