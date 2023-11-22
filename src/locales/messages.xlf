@@ -192,7 +192,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
-          <context context-type="linenumber">363</context>
+          <context context-type="linenumber">364</context>
         </context-group>
         <note priority="1" from="description">Text shown while loading resources</note>
       </trans-unit>
@@ -216,7 +216,7 @@
         <source>Microphone level must be a number between 0 and 100</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/reservation-request/reservation-request.service.ts</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">222</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -224,7 +224,7 @@
         <source>Item deletion failed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/reservation-request/reservation-request.service.ts</context>
-          <context context-type="linenumber">331</context>
+          <context context-type="linenumber">328</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
@@ -244,7 +244,7 @@
         <source>This room has reserved capacities, do you wish to proceed?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/reservation-request/reservation-request.service.ts</context>
-          <context context-type="linenumber">338</context>
+          <context context-type="linenumber">335</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3092899742307468661" datatype="html">
@@ -377,7 +377,7 @@
         <source>Failed to fetch reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/calendar-helper/services/calendar-reservations.service.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -916,8 +916,8 @@
         </context-group>
         <note priority="1" from="description">button text</note>
       </trans-unit>
-      <trans-unit id="1974268957021483804" datatype="html">
-        <source>Your rooms</source>
+      <trans-unit id="4941466797672813639" datatype="html">
+        <source>Your videoconference rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
           <context context-type="linenumber">47</context>
@@ -933,8 +933,8 @@
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
-      <trans-unit id="8148407758094665490" datatype="html">
-        <source>Your participation in rooms</source>
+      <trans-unit id="1011731604093026876" datatype="html">
+        <source>Your participation in videoconference rooms</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
           <context context-type="linenumber">62</context>
@@ -950,8 +950,8 @@
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
-      <trans-unit id="625080000032112205" datatype="html">
-        <source>Your phys. resources reservations</source>
+      <trans-unit id="7884573779492761340" datatype="html">
+        <source>Your physical resource reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
           <context context-type="linenumber">78</context>
@@ -967,8 +967,8 @@
         </context-group>
         <note priority="1" from="description">table description</note>
       </trans-unit>
-      <trans-unit id="3497309622562737438" datatype="html">
-        <source>Reservations calendar</source>
+      <trans-unit id="454481286982180701" datatype="html">
+        <source>Calendar of reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
           <context context-type="linenumber">94</context>
@@ -3006,7 +3006,7 @@
         <source>Parent reservation request must be of type virtual room.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.ts</context>
-          <context context-type="linenumber">287</context>
+          <context context-type="linenumber">318</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -3014,7 +3014,7 @@
         <source>No resource found using room&apos;s technology (<x id="PH" equiv-text="resReq.virtualRoomData.technology"/>).</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.ts</context>
-          <context context-type="linenumber">299</context>
+          <context context-type="linenumber">330</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -3570,7 +3570,7 @@
         <source>&gt; day</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/data-sources/room-recordings.datasource.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">99</context>
         </context-group>
         <note priority="1" from="description">more than a day</note>
       </trans-unit>

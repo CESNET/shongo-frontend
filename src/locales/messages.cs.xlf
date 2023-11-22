@@ -4885,6 +4885,46 @@
 				</context-group>
 				<note priority="1" from="description">definition tag</note>
 			</trans-unit>
+			<trans-unit id="4941466797672813639" datatype="html">
+				<source>Your videoconference rooms</source>
+				<target>Vaše videokonferenční místnosti</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">47</context>
+				</context-group>
+				<note priority="1" from="description">Label for your rooms table component</note>
+				<note priority="1" from="meaning">tab label</note>
+			</trans-unit>
+			<trans-unit id="1011731604093026876" datatype="html">
+				<source>Your participation in videoconference rooms</source>
+				<target>Vaše účast ve videokonferenčních místnostech</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">62</context>
+				</context-group>
+				<note priority="1" from="description">Label for your participation table component</note>
+				<note priority="1" from="meaning">tab label</note>
+			</trans-unit>
+			<trans-unit id="7884573779492761340" datatype="html">
+				<source>Your physical resource reservations</source>
+				<target>Vaše rezervace fyzických zdrojů</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">78</context>
+				</context-group>
+				<note priority="1" from="description">Label for your resource reservations table component</note>
+				<note priority="1" from="meaning">tab label</note>
+			</trans-unit>
+			<trans-unit id="454481286982180701" datatype="html">
+				<source>Calendar of reservations</source>
+				<target>Kalendář rezervací</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">94</context>
+				</context-group>
+				<note priority="1" from="description">Label for reservation calendar component</note>
+				<note priority="1" from="meaning">tab label</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
