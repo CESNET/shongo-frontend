@@ -36,7 +36,7 @@ export class ReservationRequestFilterComponent
     user: new UntypedFormControl(null),
     participant: new UntypedFormControl(null),
     search: new UntypedFormControl(null),
-    showFailedRooms: new UntypedFormControl(true),
+    showFailedRooms: new UntypedFormControl(false),
   });
 
   readonly technologyOptions: Option[];
