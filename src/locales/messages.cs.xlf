@@ -4925,6 +4925,15 @@
 				<note priority="1" from="description">Label for reservation calendar component</note>
 				<note priority="1" from="meaning">tab label</note>
 			</trans-unit>
+			<trans-unit id="1179504188606458301" datatype="html">
+				<source>Join meeting</source>
+				<target>Připojit se k setkání</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
+					<context context-type="linenumber">73</context>
+				</context-group>
+				<note priority="1" from="description">button name</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
