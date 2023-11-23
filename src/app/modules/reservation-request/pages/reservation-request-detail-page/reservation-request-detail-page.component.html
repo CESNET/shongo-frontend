@@ -2,44 +2,10 @@
   <h1 i18n="heading">Reservation request detail</h1>
 
   <div class="buttons" *ngIf="!(loading$ | async) && reservationRequest">
-    <!-- Book room capacity button -->
-    <a
-      mat-flat-button
-      color="primary"
-      class="buttons__button"
-      aria-labelledby="book-room-capacity-btn-name"
-      [routerLink]="'/reserve/' + reservationRequest.id"
-      *ngIf="
-        reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
-        reservationRequest.isProvidable &&
-        reservationRequest.state !== ReservationRequestState.ALLOCATED_FINISHED
-      "
-    >
-      <mat-icon>group_add</mat-icon
-      ><span i18n="button name" id="book-room-capacity-btn-name"
-        >Book room capacity</span
-      >
-    </a>
-
     <ng-container *ngIf="reservationRequest.isWritable">
-      <!-- Edit button -->
-      <a
-        mat-flat-button
-        color="primary"
-        class="buttons__button"
-        aria-labelledby="edit-btn-name"
-        [routerLink]="'edit'"
-        *ngIf="
-          reservationRequest.state !==
-          ReservationRequestState.ALLOCATED_FINISHED
-        "
-      >
-        <mat-icon>settings</mat-icon
-        ><span i18n="button name" id="edit-btn-name">Edit</span>
-      </a>
       <!-- Delete button -->
       <button
-        mat-flat-button
+        mat-button
         color="warn"
         class="buttons__button"
         aria-labelledby="delete-btn-name"
@@ -56,7 +22,57 @@
           i18n-message="loading text"
         ></app-loading-text>
       </ng-template>
+
+      <!-- Edit button -->
+      <a
+        mat-button
+        color="primary"
+        class="buttons__button"
+        aria-labelledby="edit-btn-name"
+        [routerLink]="'edit'"
+        *ngIf="
+          reservationRequest.state !==
+          ReservationRequestState.ALLOCATED_FINISHED
+        "
+      >
+        <mat-icon>settings</mat-icon
+        ><span i18n="button name" id="edit-btn-name">Edit</span>
+      </a>
     </ng-container>
+
+    <!-- Book room capacity button -->
+    <a
+      mat-button
+      color="primary"
+      class="buttons__button"
+      aria-labelledby="book-room-capacity-btn-name"
+      [routerLink]="'/reserve/' + reservationRequest.id"
+      *ngIf="
+        reservationRequest.type === ReservationType.VIRTUAL_ROOM &&
+        reservationRequest.isProvidable &&
+        reservationRequest.state !== ReservationRequestState.ALLOCATED_FINISHED
+      "
+    >
+      <mat-icon>group_add</mat-icon
+      ><span i18n="button name" id="book-room-capacity-btn-name"
+        >Book room capacity</span
+      >
+    </a>
+
+    <!-- Open videoconference button -->
+    <a
+      *ngIf="!!urlAlias"
+      mat-flat-button
+      color="primary"
+      class="buttons__button"
+      aria-labelledby="open-videoconference-btn-name"
+      [href]="urlAlias.value"
+    >
+      <mat-icon>open_in_new</mat-icon
+      ><span i18n="button name" id="open-videoconference-btn-name"
+        >Join meeting</span
+      >
+    </a>
   </div>
 </header>
 

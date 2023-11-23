@@ -8,6 +8,8 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { URL_ALIASES } from '@app/shared/models/constants/url-aliases.const';
+import { Alias } from '@app/shared/models/rest-api/alias.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { finalize, first, takeUntil } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
@@ -33,6 +35,7 @@ export class ReservationRequestDetailPageComponent
 
   readonly loading$ = new BehaviorSubject(true);
   readonly deleting$ = new BehaviorSubject(false);
+
   readonly ReservationType = ReservationType;
   readonly AllocationState = AllocationState;
   readonly RoomState = RoomState;
@@ -40,6 +43,7 @@ export class ReservationRequestDetailPageComponent
   readonly ReservationRequestState = ReservationRequestState;
 
   tabIndex = 0;
+  urlAlias?: Alias;
 
   private readonly _destroy$ = new Subject<void>();
 
@@ -170,6 +174,7 @@ export class ReservationRequestDetailPageComponent
       .subscribe((req) => {
         this.tabIndex = 0;
         this.reservationRequest = req;
+        this.urlAlias = this._getUrlAlias();
       });
   }
 
@@ -208,5 +213,11 @@ export class ReservationRequestDetailPageComponent
           }
         },
       });
+  }
+
+  private _getUrlAlias(): Alias | undefined {
+    return this.reservationRequest?.authorizedData?.aliases.find((alias) =>
+      URL_ALIASES.includes(alias.type)
+    );
   }
 }

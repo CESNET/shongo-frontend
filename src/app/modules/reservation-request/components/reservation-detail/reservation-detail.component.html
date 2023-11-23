@@ -308,7 +308,14 @@
                 <dt>
                   {{ getAliasDisplayType(alias.type) }}
                 </dt>
-                <dd>{{ alias.value }}</dd>
+                <dd>
+                  <a
+                    *ngIf="urlAliases.includes(alias.type); else nonUrlAlias"
+                    [href]="alias.value"
+                    >{{ alias.value }}</a
+                  >
+                  <ng-template #nonUrlAlias>{{ alias.value }}</ng-template>
+                </dd>
               </ng-container>
             </dl>
           </dd>

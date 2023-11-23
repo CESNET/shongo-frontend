@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { URL_ALIASES } from '@app/shared/models/constants/url-aliases.const';
 import { BehaviorSubject } from 'rxjs';
 import { StateProps } from 'src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component';
 import { ModificationHistoryDataSource } from 'src/app/modules/shongo-table/data-sources/modification-history.datasource';
@@ -54,6 +55,7 @@ export class ReservationDetailComponent implements OnInit {
     [ReservationType.VIRTUAL_ROOM, $localize`:resource type:Virtual room`],
     [ReservationType.ROOM_CAPACITY, $localize`:resource type:Room capacity`],
   ]);
+  readonly urlAliases = URL_ALIASES;
 
   constructor(private _datePipe: MomentDatePipe, private _dialog: MatDialog) {}
 
