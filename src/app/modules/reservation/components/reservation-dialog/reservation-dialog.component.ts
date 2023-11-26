@@ -7,6 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TagType } from '@app/shared/models/enums/tag-type.enum';
+import { Tag } from '@app/shared/models/rest-api/tag.interface';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -48,6 +50,17 @@ export class ReservationDialogComponent implements OnInit {
    */
   formComponent!: ReservationForm;
 
+  /**
+   * Whether advanced settings are being edited.
+   * Used to show/hide advanced settings form.
+   */
+  editingAdvancedSettings = false;
+
+  /**
+   * Tags that can be configured in "Advanced settings" like NOTIFY_EMAIL.
+   */
+  readonly configurableTags: Tag[];
+
   readonly creating$ = new BehaviorSubject<boolean>(false);
 
   constructor(
@@ -60,7 +73,9 @@ export class ReservationDialogComponent implements OnInit {
     private _dialogRef: MatDialogRef<ReservationDialogComponent>,
     private _resReqService: ReservationRequestService,
     private _alert: AlertService
-  ) {}
+  ) {
+    this.configurableTags = this._getConfigurableTags(this._data.resource);
+  }
 
   ngOnInit(): void {
     this.renderFormComponent();
@@ -132,6 +147,10 @@ export class ReservationDialogComponent implements OnInit {
     }
   }
 
+  toggleAdvancedSettings(): void {
+    this.editingAdvancedSettings = !this.editingAdvancedSettings;
+  }
+
   /**
    * Creates reservation request body and posts it to the backend.
    *
@@ -185,5 +204,9 @@ export class ReservationDialogComponent implements OnInit {
     timezone: string
   ): moment.Moment {
     return moment.tz(date.format('YYYY-MM-DDTHH:mm:ss'), timezone);
+  }
+
+  private _getConfigurableTags(resource: Resource): Tag[] {
+    return resource.tags?.filter((tag) => tag.type !== TagType.DEFAULT) ?? [];
   }
 }

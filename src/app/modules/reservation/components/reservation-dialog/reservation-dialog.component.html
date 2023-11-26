@@ -1,11 +1,30 @@
 <header mat-dialog-title>
-  <h1 i18n="page header">Create reservation</h1>
+  <div class="header">
+    <h1 i18n="page header">Create reservation</h1>
+
+    <button
+      *ngIf="configurableTags.length"
+      (mwlClick)="toggleAdvancedSettings()"
+      mat-button
+      color="primary"
+    >
+      <mat-icon>settings</mat-icon>
+      <span>Advanced settings</span>
+    </button>
+  </div>
 </header>
 
 <mat-dialog-content class="custom-scrollbar">
   <div [hidden]="creating$ | async">
     <!-- Reservation form component host -->
-    <div appComponentHost></div>
+    <div [hidden]="editingAdvancedSettings">
+      <div appComponentHost></div>
+    </div>
+
+    <app-advanced-settings-form
+      [hidden]="!editingAdvancedSettings"
+      [tags]="configurableTags"
+    ></app-advanced-settings-form>
   </div>
 
   <!-- Creating display -->

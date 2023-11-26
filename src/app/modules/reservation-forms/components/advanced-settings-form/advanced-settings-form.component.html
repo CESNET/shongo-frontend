@@ -1,0 +1,36 @@
+<form [formGroup]="settingsForm" class="advanced-settings">
+  <div class="advanced-settings__tag-type">
+    <h2 i18n>Notify e-mails:</h2>
+
+    <mat-form-field
+      *ngFor="let tag of notifyEmailTags"
+      appearance="outline"
+      class="advanced-settings__tag"
+    >
+      <mat-label>{{ tag.name }}</mat-label>
+
+      <mat-chip-grid #tagInput>
+        <mat-chip-row
+          *ngFor="let email of tag.data"
+          (removed)="removeEmail(tag.id, email)"
+          [editable]="true"
+          (edited)="editEmail(tag.id, email, $event)"
+        >
+          {{ email }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+
+        <input
+          placeholder="New email..."
+          i18n-placeholder
+          [matChipInputFor]="tagInput"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="false"
+          (matChipInputTokenEnd)="addEmail(tag.id, $event)"
+        />
+      </mat-chip-grid>
+    </mat-form-field>
+  </div>
+</form>

@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AdvancedSettingsFormComponent } from './components/advanced-settings-form/advanced-settings-form.component';
 import { PeriodicitySelectionFormComponent } from './components/periodicity-selection-form/periodicity-selection-form.component';
 import { PhysicalResourceReservationFormComponent } from './components/physical-resource-reservation-form/physical-resource-reservation-form.component';
 import { TeleconferenceReservationFormComponent } from './components/teleconference-reservation-form/teleconference-reservation-form.component';
@@ -28,6 +29,7 @@ import { WebconferenceReservationFormComponent } from './components/webconferenc
     VideoconferenceReservationFormComponent,
     WebconferenceReservationFormComponent,
     VirtualRoomReservationFormComponent,
+    AdvancedSettingsFormComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { WebconferenceReservationFormComponent } from './components/webconferenc
     VideoconferenceReservationFormComponent,
     WebconferenceReservationFormComponent,
     VirtualRoomReservationFormComponent,
+    AdvancedSettingsFormComponent,
   ],
 })
 export class ReservationFormsModule {}
