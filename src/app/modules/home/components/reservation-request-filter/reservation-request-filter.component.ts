@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { AllocationState } from '@app/shared/models/enums/allocation-state.enum';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -97,7 +98,10 @@ export class ReservationRequestFilterComponent
       httpParams = httpParams.append('search', search);
     }
     if (!showFailedRooms) {
-      httpParams = httpParams.append('no_failed', true);
+      httpParams = httpParams.append(
+        'allocation_state',
+        AllocationState.ALLOCATED
+      );
     }
 
     return httpParams;
