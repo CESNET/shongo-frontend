@@ -117,6 +117,10 @@ export class AdvancedSettingsFormComponent implements OnInit {
       );
   }
 
+  isDefaultEmail(email: string, tag: NotifyEmailTag): boolean {
+    return tag.data.includes(email);
+  }
+
   private _getNotifyEmailTags(): NotifyEmailTag[] {
     return this.tags.filter(
       (tag) => tag.type === TagType.NOTIFY_EMAIL
@@ -127,7 +131,7 @@ export class AdvancedSettingsFormComponent implements OnInit {
     this.notifyEmailTags.forEach((tag) =>
       this.settingsForm.controls.notifyEmails.addControl(
         tag.id,
-        new FormControl<string[]>(tag.data)
+        new FormControl<string[]>([])
       )
     );
   }

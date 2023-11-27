@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -10,7 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { URL_ALIASES } from '@app/shared/models/constants/url-aliases.const';
 import { Alias } from '@app/shared/models/rest-api/alias.interface';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Tag } from '@app/shared/models/rest-api/tag.interface';
+import { BehaviorSubject, forkJoin, Subject } from 'rxjs';
 import { finalize, first, takeUntil } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { AlertService } from 'src/app/core/services/alert.service';
@@ -31,7 +31,8 @@ import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reserva
 export class ReservationRequestDetailPageComponent
   implements OnInit, OnDestroy
 {
-  @Input() reservationRequest?: ReservationRequestDetail;
+  reservationRequest?: ReservationRequestDetail;
+  tags?: Tag[];
 
   readonly loading$ = new BehaviorSubject(true);
   readonly deleting$ = new BehaviorSubject(false);
@@ -165,14 +166,18 @@ export class ReservationRequestDetailPageComponent
   private _fetchReservationRequest(id: string): void {
     this.loading$.next(true);
 
-    this._resReqService
-      .fetchItem<ReservationRequestDetail>(id)
+    forkJoin({
+      reservationRequest:
+        this._resReqService.fetchItem<ReservationRequestDetail>(id),
+      tags: this._resReqService.fetchTags(id),
+    })
       .pipe(
         first(),
         finalize(() => this.loading$.next(false))
       )
-      .subscribe((req) => {
-        this.reservationRequest = req;
+      .subscribe(({ reservationRequest, tags }) => {
+        this.reservationRequest = reservationRequest;
+        this.tags = tags;
         this.urlAlias = this._getUrlAlias();
       });
   }

@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SortDirection } from '@angular/material/sort';
 import { CertainityCheckComponent } from '@app/shared/components/certainity-check/certainity-check.component';
 import { ReservationRequest } from '@app/shared/models/rest-api/reservation-request.interface';
+import { Tag } from '@app/shared/models/rest-api/tag.interface';
 import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
@@ -319,6 +320,16 @@ export class ReservationRequestService extends ApiService {
       `${this.endpointURL}/${requestId}/reject`,
       {}
     );
+  }
+
+  /**
+   * Fetches tags for a given reservation request.
+   *
+   * @param requestId Reservation request ID.
+   * @returns Observable of API response.
+   */
+  fetchTags(requestId: string): Observable<Tag[]> {
+    return this._http.get<Tag[]>(`${this.endpointURL}/${requestId}/tag_data`);
   }
 
   deleteErrorHandler = (id: string, err: Error): Observable<void> => {

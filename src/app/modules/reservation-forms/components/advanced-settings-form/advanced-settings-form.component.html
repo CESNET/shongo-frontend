@@ -10,14 +10,18 @@
       <mat-label>{{ tag.name }}</mat-label>
 
       <mat-chip-grid #chipGrid>
+        <mat-chip-row *ngFor="let email of tag.data">
+          {{ email }}
+        </mat-chip-row>
+
         <mat-chip-row
-          *ngFor="let email of tag.data"
+          *ngFor="let email of settingsForm.value.notifyEmails![tag.id]"
           (removed)="removeEmail(tag.id, email)"
           [editable]="true"
           (edited)="editEmail(tag.id, email, $event, chipGrid)"
         >
           {{ email }}
-          <button matChipRemove>
+          <button *ngIf="!isDefaultEmail(email, tag)" matChipRemove>
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-chip-row>
