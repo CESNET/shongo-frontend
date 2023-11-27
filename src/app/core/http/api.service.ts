@@ -86,10 +86,10 @@ export abstract class ApiService {
       }
     }
     if (sortedColumn) {
-      httpParams = httpParams.set('sort_by', sortedColumn);
+      httpParams = httpParams.set('sort', sortedColumn);
     }
     if (sortDirection) {
-      httpParams = httpParams.set('sort_dir', sortDirection);
+      httpParams = httpParams.set('sort_desc', sortDirection === 'desc');
     }
 
     return this.fetchItems<T>(httpParams, url);
