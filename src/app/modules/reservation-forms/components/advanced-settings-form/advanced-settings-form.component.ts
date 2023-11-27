@@ -1,7 +1,12 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormRecord } from '@angular/forms';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
+import {
+  MatChipEditedEvent,
+  MatChipGrid,
+  MatChipInputEvent,
+} from '@angular/material/chips';
+import { EMAIL_REGEX } from '@app/shared/models/constants/regex.const';
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
 import { NotifyEmailTag, Tag } from '@app/shared/models/rest-api/tag.interface';
 
@@ -17,6 +22,7 @@ interface SettingsForm {
   styleUrls: ['./advanced-settings-form.component.scss'],
 })
 export class AdvancedSettingsFormComponent implements OnInit {
+  @ViewChild('tagInput', { static: true }) chipGrid!: MatChipGrid;
   @Input() tags: Tag[] = [];
 
   readonly settingsForm = new FormGroup<SettingsForm>({
@@ -43,12 +49,20 @@ export class AdvancedSettingsFormComponent implements OnInit {
     tagControl.setValue(emails);
   }
 
-  addEmail(tagId: string, event: MatChipInputEvent): void {
+  addEmail(
+    tagId: string,
+    event: MatChipInputEvent,
+    chipGrid: MatChipGrid
+  ): void {
     const value = (event.value || '').trim();
 
     if (!value) {
       return;
+    } else if (!EMAIL_REGEX.test(value)) {
+      chipGrid.errorState = true;
+      return;
     }
+    chipGrid.errorState = false;
 
     const tagControl = this.settingsForm.controls.notifyEmails.get(tagId)!;
     const emails = tagControl.value;
@@ -61,13 +75,22 @@ export class AdvancedSettingsFormComponent implements OnInit {
     event.chipInput!.clear();
   }
 
-  editEmail(tagId: string, oldValue: string, event: MatChipEditedEvent): void {
+  editEmail(
+    tagId: string,
+    oldValue: string,
+    event: MatChipEditedEvent,
+    chipGrid: MatChipGrid
+  ): void {
     const newValue = event.value.trim();
 
     if (!newValue) {
       this.removeEmail(tagId, event.value);
       return;
+    } else if (!EMAIL_REGEX.test(newValue)) {
+      chipGrid.errorState = true;
+      return;
     }
+    chipGrid.errorState = false;
 
     const tagControl = this.settingsForm.controls.notifyEmails.get(tagId)!;
     const emails = tagControl.value;
@@ -78,6 +101,20 @@ export class AdvancedSettingsFormComponent implements OnInit {
     }
 
     tagControl.setValue(emails);
+  }
+
+  getValue(): Tag[] {
+    const notifyEmails = this.settingsForm.controls.notifyEmails.value;
+
+    return this.tags
+      .filter((tag) => tag.type === TagType.NOTIFY_EMAIL)
+      .map(
+        (tag) =>
+          ({
+            ...tag,
+            data: notifyEmails[tag.id],
+          } as NotifyEmailTag)
+      );
   }
 
   private _getNotifyEmailTags(): NotifyEmailTag[] {

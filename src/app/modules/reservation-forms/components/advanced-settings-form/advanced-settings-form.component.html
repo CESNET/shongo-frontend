@@ -1,6 +1,6 @@
 <form [formGroup]="settingsForm" class="advanced-settings">
   <div class="advanced-settings__tag-type">
-    <h2 i18n>Notify e-mails:</h2>
+    <h2 i18n="tag name">Notify e-mails:</h2>
 
     <mat-form-field
       *ngFor="let tag of notifyEmailTags"
@@ -9,12 +9,12 @@
     >
       <mat-label>{{ tag.name }}</mat-label>
 
-      <mat-chip-grid #tagInput>
+      <mat-chip-grid #chipGrid>
         <mat-chip-row
           *ngFor="let email of tag.data"
           (removed)="removeEmail(tag.id, email)"
           [editable]="true"
-          (edited)="editEmail(tag.id, email, $event)"
+          (edited)="editEmail(tag.id, email, $event, chipGrid)"
         >
           {{ email }}
           <button matChipRemove>
@@ -24,13 +24,21 @@
 
         <input
           placeholder="New email..."
-          i18n-placeholder
-          [matChipInputFor]="tagInput"
+          i18n-placeholder="placeholder|Placeholder for email tag input"
+          type="email"
+          [matChipInputFor]="chipGrid"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="false"
-          (matChipInputTokenEnd)="addEmail(tag.id, $event)"
+          (matChipInputTokenEnd)="addEmail(tag.id, $event, chipGrid)"
         />
       </mat-chip-grid>
+
+      <mat-error i18n="error message|Error message for email tag input"
+        >Value must be an e-mail</mat-error
+      >
+      <mat-hint i18n="hint message|Hint message for email tag input"
+        >Enter e-mail and press enter</mat-hint
+      >
     </mat-form-field>
   </div>
 </form>

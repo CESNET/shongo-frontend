@@ -8,8 +8,19 @@
       mat-button
       color="primary"
     >
-      <mat-icon>settings</mat-icon>
-      <span>Advanced settings</span>
+      <mat-icon>{{
+        editingAdvancedSettings ? 'arrow_back' : 'settings'
+      }}</mat-icon>
+
+      <ng-container *ngIf="!editingAdvancedSettings; else advancedSettings">
+        <span i18n="button|Reservation dialog advanced settings button"
+          >Advanced settings</span
+        >
+      </ng-container>
+
+      <ng-template #advancedSettings>
+        <span i18n="button|Reservation dialog back button">Back</span>
+      </ng-template>
     </button>
   </div>
 </header>

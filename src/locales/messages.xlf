@@ -251,7 +251,7 @@
         <source>Failed to load resources.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/resource/resource.service.ts</context>
-          <context context-type="linenumber">280</context>
+          <context context-type="linenumber">286</context>
         </context-group>
         <note priority="1" from="meaning">Error message</note>
       </trans-unit>
@@ -548,7 +548,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.ts</context>
-          <context context-type="linenumber">206</context>
+          <context context-type="linenumber">210</context>
         </context-group>
         <note priority="1" from="description">Help page image label</note>
       </trans-unit>
@@ -976,6 +976,41 @@
         </context-group>
         <note priority="1" from="description">Label for reservation calendar component</note>
         <note priority="1" from="meaning">tab label</note>
+      </trans-unit>
+      <trans-unit id="893608497354762231" datatype="html">
+        <source>Notify e-mails:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">tag name</note>
+      </trans-unit>
+      <trans-unit id="6396993742285577890" datatype="html">
+        <source>New email...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">Placeholder for email tag input</note>
+        <note priority="1" from="meaning">placeholder</note>
+      </trans-unit>
+      <trans-unit id="5724979823784062008" datatype="html">
+        <source>Value must be an e-mail</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <note priority="1" from="description">Error message for email tag input</note>
+        <note priority="1" from="meaning">error message</note>
+      </trans-unit>
+      <trans-unit id="3034074709876498156" datatype="html">
+        <source>Enter e-mail and press enter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <note priority="1" from="description">Hint message for email tag input</note>
+        <note priority="1" from="meaning">hint message</note>
       </trans-unit>
       <trans-unit id="7933434302739286153" datatype="html">
         <source>Select periodicity option</source>
@@ -2255,7 +2290,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/session-ended-dialog/session-ended-dialog.component.html</context>
@@ -2799,15 +2834,33 @@
         <source>Create reservation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="description">page header</note>
+      </trans-unit>
+      <trans-unit id="5229878764623860150" datatype="html">
+        <source>Advanced settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="description">Reservation dialog advanced settings button</note>
+        <note priority="1" from="meaning">button</note>
+      </trans-unit>
+      <trans-unit id="5368543069634869110" datatype="html">
+        <source>Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="description">Reservation dialog back button</note>
+        <note priority="1" from="meaning">button</note>
       </trans-unit>
       <trans-unit id="479476536455995658" datatype="html">
         <source>Creating reservation request</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="description">loading text</note>
       </trans-unit>
@@ -2815,7 +2868,7 @@
         <source> Create </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
-          <context context-type="linenumber">30,31</context>
+          <context context-type="linenumber">60,61</context>
         </context-group>
         <note priority="1" from="description">button name</note>
       </trans-unit>
@@ -2823,7 +2876,7 @@
         <source>Reservation request created</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <note priority="1" from="description">success message</note>
       </trans-unit>
@@ -2831,7 +2884,7 @@
         <source>Failed to create reservation request</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.ts</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">107</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>

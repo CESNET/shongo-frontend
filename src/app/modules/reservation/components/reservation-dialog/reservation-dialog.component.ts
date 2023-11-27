@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AdvancedSettingsFormComponent } from '@app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component';
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
 import { Tag } from '@app/shared/models/rest-api/tag.interface';
 import * as moment from 'moment';
@@ -44,6 +45,9 @@ export class ReservationDialogComponent implements OnInit {
    */
   @ViewChild(ComponentHostDirective, { static: true })
   formHost!: ComponentHostDirective;
+
+  @ViewChild(AdvancedSettingsFormComponent, { static: true })
+  advancedSettingsForm!: AdvancedSettingsFormComponent;
 
   /**
    * Reservation form component.
@@ -158,6 +162,7 @@ export class ReservationDialogComponent implements OnInit {
    */
   private _createReservationRequest(): Observable<{ id: string }> {
     const { timezone, ...rest } = this.formComponent.getFormValue();
+    const tags = this.advancedSettingsForm.getValue();
     let reservationRequestBase;
 
     if (this._data.parentRequest) {
