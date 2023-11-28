@@ -52,6 +52,10 @@ export class MobileTableComponent<T>
     return this.dataSource.displayedColumns;
   }
 
+  get sortableColumns(): TableColumn<T>[] {
+    return this.dataSource.displayedColumns.filter((column) => !!column.sortBy);
+  }
+
   get loadingData$(): Observable<boolean> {
     return this.dataSource.loading$;
   }

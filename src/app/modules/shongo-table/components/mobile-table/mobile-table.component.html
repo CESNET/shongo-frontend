@@ -40,7 +40,7 @@
         <ng-template appComponentHost></ng-template>
         <mat-divider *ngIf="filter"></mat-divider>
 
-        <div class="sort-header">
+        <div *ngIf="sortableColumns.length" class="sort-header">
           <span class="sort-header__heading" i18n="heading"
             >Table sort options</span
           >
@@ -52,7 +52,7 @@
               >
               <mat-select formControlName="active">
                 <mat-option
-                  *ngFor="let column of columns"
+                  *ngFor="let column of sortableColumns"
                   [value]="column.name"
                 >
                   {{ column.displayName }}

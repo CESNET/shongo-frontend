@@ -31,7 +31,10 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
     super();
 
     this.displayedColumns = [
-      { name: 'name', displayName: $localize`:table column:Name` },
+      {
+        name: 'name',
+        displayName: $localize`:table column:Name`,
+      },
       {
         name: 'technology',
         displayName: $localize`:table column:Technology`,
@@ -55,6 +58,7 @@ export class ParticipationInRoomsDataSource extends DataTableDataSource<Particip
         displayName: $localize`:table column:State`,
         component: RoomStateColumnComponent,
         helpComponent: RoomStateHelpComponent,
+        sortBy: 'STATE',
       },
       {
         name: 'description',

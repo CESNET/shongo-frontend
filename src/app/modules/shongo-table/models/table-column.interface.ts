@@ -28,4 +28,10 @@ export interface TableColumn<T> {
    * Transformation function for column data.
    */
   pipeFunc?: PipeFunction;
+
+  /**
+   * Name of column in API request for sorting.
+   * If not specified, column will not be sortable.
+   */
+  sortBy?: string;
 }

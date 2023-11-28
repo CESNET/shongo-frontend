@@ -60,7 +60,16 @@
               >
                 <mat-icon>help</mat-icon>
               </button>
-              <span mat-sort-header>{{ column.displayName }}</span>
+
+              <span
+                *ngIf="!!column.sortBy; else sortDisabled"
+                mat-sort-header
+                >{{ column.displayName }}</span
+              >
+
+              <ng-template #sortDisabled>
+                <span>{{ column.displayName }}</span>
+              </ng-template>
             </div>
           </th>
 
