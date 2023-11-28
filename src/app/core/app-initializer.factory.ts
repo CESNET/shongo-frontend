@@ -13,7 +13,10 @@ export function appInitializerFactory(
   resourceService: ResourceService
 ): () => Promise<void> {
   return () =>
-    authService
-      .initializeOauthService()
-      .then(() => resourceService.loadResources());
+    authService.initializeOauthService().then(() => {
+      if (authService.hasValidAccessToken()) {
+        return resourceService.loadResources();
+      }
+      return Promise.resolve();
+    });
 }

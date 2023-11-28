@@ -36,22 +36,26 @@ export class PhysicalReservationsDataSource extends DataTableDataSource<Physical
       {
         name: 'resourceName',
         displayName: $localize`:table column:Meeting room`,
+        sortBy: 'RESOURCE_ROOM_NAME',
       },
       {
         name: 'slotStart',
         displayName: $localize`:table column:Slot start`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+        sortBy: 'SLOT_START',
       },
       {
         name: 'slotEnd',
         displayName: $localize`:table column:Slot end`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+        sortBy: 'SLOT_END',
       },
       {
         name: 'state',
         displayName: $localize`:table column:Reservation state`,
         component: ReservationRequestStateColumnComponent,
         helpComponent: ReservationRequestStateHelpComponent,
+        sortBy: 'STATE',
       },
       {
         name: 'resourceDescription',

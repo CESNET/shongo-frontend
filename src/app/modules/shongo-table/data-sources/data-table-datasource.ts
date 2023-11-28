@@ -246,7 +246,7 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
         this.getData(
           this.paginator!.pageSize,
           this.paginator!.pageIndex,
-          sort.active,
+          this._getSortBy(sort.active),
           sort.direction,
           filter
         ).pipe(
@@ -305,6 +305,19 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
       return httpParams.set('refresh', true);
     }
     return httpParams;
+  }
+
+  /**
+   * Maps column name to API sort key.
+   *
+   * @param columnName Column name.
+   * @returns Sort by value.
+   */
+  private _getSortBy(columnName: string): string {
+    return (
+      this.displayedColumns.find((column) => column.name === columnName)
+        ?.sortBy ?? ''
+    );
   }
 
   /**

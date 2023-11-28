@@ -44,13 +44,22 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
     super();
 
     this.displayedColumns = [
-      { name: 'ownerName', displayName: $localize`:table column:Owner` },
+      {
+        name: 'ownerName',
+        displayName: $localize`:table column:Owner`,
+        sortBy: 'USER',
+      },
       {
         name: 'createdAt',
         displayName: $localize`:table column:Created at`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+        sortBy: 'DATETIME',
       },
-      { name: 'roomName', displayName: $localize`:table column:Name` },
+      {
+        name: 'roomName',
+        displayName: $localize`:table column:Name`,
+        sortBy: 'ALIAS_ROOM_NAME',
+      },
       {
         name: 'technology',
         displayName: $localize`:table column:Technology`,
@@ -58,22 +67,26 @@ export class YourRoomsDataSource extends DataTableDataSource<YourRoomsTableData>
           virtualRoomResourceConfig.technologyNameMap.get(
             value as Technology
           ) ?? $localize`:fallback text:Unknown`,
+        sortBy: 'TECHNOLOGY',
       },
       {
         name: 'slotStart',
         displayName: $localize`:table column:Slot start`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+        sortBy: 'SLOT_START',
       },
       {
         name: 'slotEnd',
         displayName: $localize`:table column:Slot end`,
         pipeFunc: datePipeFunc.bind({ datePipe: this._datePipe }),
+        sortBy: 'SLOT_END',
       },
       {
         name: 'state',
         displayName: $localize`:table column:State`,
         component: ReservationRequestStateColumnComponent,
         helpComponent: ReservationRequestStateHelpComponent,
+        sortBy: 'STATE',
       },
     ];
 
