@@ -10,6 +10,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ResourceService } from '@app/core/http/resource/resource.service';
+import { AdvancedSettingsFormComponent } from '@app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component';
+import { Tag } from '@app/shared/models/rest-api/tag.interface';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, finalize, first, tap } from 'rxjs/operators';
@@ -20,7 +23,10 @@ import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ReservationRequestState } from 'src/app/shared/models/enums/reservation-request-state.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
-import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import {
+  ReservationRequest,
+  ReservationRequestDetail,
+} from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Slot } from 'src/app/shared/models/rest-api/slot.interface';
 import { EditReservationRequestBody } from 'src/app/shared/models/types/edit-reservation-request-body.type';
 import { getFormError } from 'src/app/utils/get-form-error';
@@ -34,6 +40,14 @@ import { RequestNotEditableError } from './errors/request-not-editable.error';
 })
 export class EditReservationRequestPageComponent implements OnInit {
   @ViewChild('reservationForm') reservationForm?: ReservationForm;
+  @ViewChild(AdvancedSettingsFormComponent)
+  advancedSettingsForm?: AdvancedSettingsFormComponent;
+
+  /**
+   * Whether advanced settings are being edited.
+   * Used to show/hide advanced settings form.
+   */
+  editingAdvancedSettings = false;
 
   readonly slotForm = new UntypedFormGroup({
     startDate: new UntypedFormControl(moment().toDate(), [Validators.required]),
@@ -49,6 +63,7 @@ export class EditReservationRequestPageComponent implements OnInit {
 
   readonly getFormError = getFormError;
 
+  tags: Tag[] = [];
   reservationRequest?: ReservationRequestDetail;
   error?: Error;
 
@@ -56,7 +71,8 @@ export class EditReservationRequestPageComponent implements OnInit {
     private _resReqService: ReservationRequestService,
     private _route: ActivatedRoute,
     private _alert: AlertService,
-    private _router: Router
+    private _router: Router,
+    private _resourceService: ResourceService
   ) {}
 
   ngOnInit(): void {
@@ -104,6 +120,10 @@ export class EditReservationRequestPageComponent implements OnInit {
       });
   }
 
+  toggleAdvancedSettings(): void {
+    this.editingAdvancedSettings = !this.editingAdvancedSettings;
+  }
+
   /**
    * Creates reservation request edit body.
    *
@@ -113,12 +133,13 @@ export class EditReservationRequestPageComponent implements OnInit {
     const { startDate, startTime, endDate, endTime } = this.slotForm.value;
     const { timezone, ...reservationFormValue } =
       this.reservationForm!.getFormValue();
+    const auxData = this.advancedSettingsForm!.getFormValue();
 
     const start = this._getSlotPart(startDate, startTime, timezone);
     const end = this._getSlotPart(endDate, endTime, timezone);
     const slot = { start, end } as Slot;
 
-    return { slot, ...reservationFormValue };
+    return { slot, auxData, ...reservationFormValue };
   }
 
   /**
@@ -174,7 +195,10 @@ export class EditReservationRequestPageComponent implements OnInit {
         }),
         finalize(() => this.loading$.next(false))
       )
-      .subscribe((resReq) => (this.reservationRequest = resReq));
+      .subscribe((resReq) => {
+        this.reservationRequest = resReq;
+        this.tags = this._getResourceTags(resReq);
+      });
   }
 
   /**
@@ -189,5 +213,19 @@ export class EditReservationRequestPageComponent implements OnInit {
       endDate: moment(slot.end).toDate(),
       endTime: moment(slot.end).format('HH:mm'),
     });
+  }
+
+  private _getResourceTags(reservationRequest: ReservationRequest): Tag[] {
+    const resourceId =
+      reservationRequest.type === ReservationType.PHYSICAL_RESOURCE
+        ? reservationRequest.physicalResourceData?.resourceId
+        : reservationRequest.virtualRoomData?.roomResourceId;
+
+    if (!resourceId) {
+      return [];
+    }
+
+    const resource = this._resourceService.findResourceById(resourceId);
+    return resource?.tags ?? [];
   }
 }

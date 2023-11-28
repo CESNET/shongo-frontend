@@ -162,12 +162,7 @@ export class ReservationDialogComponent implements OnInit {
    */
   private _createReservationRequest(): Observable<{ id: string }> {
     const { timezone, ...rest } = this.formComponent.getFormValue();
-    const tags = this.advancedSettingsForm.getValue();
-    const auxData = tags.map((tag) => ({
-      tagName: tag.name,
-      enabled: true,
-      data: tag.data,
-    }));
+    const auxData = this.advancedSettingsForm.getFormValue();
     let reservationRequestBase;
 
     if (this._data.parentRequest) {

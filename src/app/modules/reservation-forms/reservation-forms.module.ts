@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdvancedSettingsFormComponent } from './components/advanced-settings-form/advanced-settings-form.component';
@@ -47,6 +48,7 @@ import { WebconferenceReservationFormComponent } from './components/webconferenc
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    MatSlideToggleModule,
   ],
   exports: [
     PeriodicitySelectionFormComponent,

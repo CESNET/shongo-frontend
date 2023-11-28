@@ -15,4 +15,8 @@
     flex-direction: column;
     gap: var(--spacer-2);
   }
+
+  &__enabled-toggle {
+    margin-bottom: var(--spacer-2);
+  }
 }

@@ -8,12 +8,16 @@ import {
 } from '@angular/material/chips';
 import { EMAIL_REGEX } from '@app/shared/models/constants/regex.const';
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
+import { AuxData } from '@app/shared/models/rest-api/aux-data.interface';
 import { NotifyEmailTag, Tag } from '@app/shared/models/rest-api/tag.interface';
 
-type NotifyEmailControl = FormControl<string[] | null>;
+type NotifyEmailGroup = FormGroup<{
+  data: FormControl<string[] | null>;
+  enabled: FormControl<boolean | null>;
+}>;
 
 interface SettingsForm {
-  notifyEmails: FormRecord<NotifyEmailControl>;
+  notifyEmails: FormRecord<NotifyEmailGroup>;
 }
 
 @Component({
@@ -24,22 +28,23 @@ interface SettingsForm {
 export class AdvancedSettingsFormComponent implements OnInit {
   @ViewChild('tagInput', { static: true }) chipGrid!: MatChipGrid;
   @Input() tags: Tag[] = [];
+  @Input() auxData: AuxData[] = [];
 
   readonly settingsForm = new FormGroup<SettingsForm>({
-    notifyEmails: new FormRecord<NotifyEmailControl>({}),
+    notifyEmails: new FormRecord<NotifyEmailGroup>({}),
   });
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   notifyEmailTags: NotifyEmailTag[] = [];
+  valid = true;
 
   ngOnInit(): void {
-    this.notifyEmailTags = this._getNotifyEmailTags();
     this._createFormControls();
   }
 
   removeEmail(tagId: string, email: string): void {
-    const tagControl = this.settingsForm.controls.notifyEmails.get(tagId)!;
-    const emails = tagControl.value;
+    const tagControl = this.getNotifyEmailsControl(tagId)!.controls.data;
+    const emails = tagControl.value ?? [];
     const index = emails.indexOf(email);
 
     if (index > -1) {
@@ -64,8 +69,8 @@ export class AdvancedSettingsFormComponent implements OnInit {
     }
     chipGrid.errorState = false;
 
-    const tagControl = this.settingsForm.controls.notifyEmails.get(tagId)!;
-    const emails = tagControl.value;
+    const tagControl = this.getNotifyEmailsControl(tagId)!.controls.data;
+    const emails = tagControl.value ?? [];
 
     if (emails.indexOf(value) === -1) {
       emails.push(value);
@@ -103,36 +108,65 @@ export class AdvancedSettingsFormComponent implements OnInit {
     tagControl.setValue(emails);
   }
 
-  getValue(): Tag[] {
+  getFormValue(): AuxData[] {
     const notifyEmails = this.settingsForm.controls.notifyEmails.value;
 
     return this.tags
       .filter((tag) => tag.type === TagType.NOTIFY_EMAIL)
-      .map(
-        (tag) =>
-          ({
-            ...tag,
-            data: notifyEmails[tag.id],
-          } as NotifyEmailTag)
-      );
+      .map(({ name, id }) => {
+        const notifyEmail = notifyEmails[id];
+
+        return {
+          tagName: name,
+          enabled: !!notifyEmail?.enabled,
+          data: notifyEmail?.data ?? [],
+        };
+      });
   }
 
   isDefaultEmail(email: string, tag: NotifyEmailTag): boolean {
     return tag.data.includes(email);
   }
 
-  private _getNotifyEmailTags(): NotifyEmailTag[] {
-    return this.tags.filter(
+  getNotifyEmailsControl(tagId: string): NotifyEmailGroup {
+    return this.settingsForm.controls.notifyEmails.get(
+      tagId
+    )! as NotifyEmailGroup;
+  }
+
+  private _getNotifyEmailTags(tags: Tag[]): NotifyEmailTag[] {
+    return tags.filter(
       (tag) => tag.type === TagType.NOTIFY_EMAIL
     ) as NotifyEmailTag[];
   }
 
   private _createFormControls(): void {
-    this.notifyEmailTags.forEach((tag) =>
-      this.settingsForm.controls.notifyEmails.addControl(
-        tag.id,
-        new FormControl<string[]>([])
+    this.notifyEmailTags = this._getNotifyEmailTags(this.tags);
+    const auxData = this.auxData.filter((tag) =>
+      this.notifyEmailTags.find(
+        (notifyEmailTag) => notifyEmailTag.name === tag.tagName
       )
     );
+
+    this._createNotifyEmailControls(this.notifyEmailTags, auxData);
+  }
+
+  private _createNotifyEmailControls(
+    tags: NotifyEmailTag[],
+    auxData: AuxData[]
+  ): void {
+    tags.forEach((tag) => {
+      const value =
+        (auxData.find((auxTag) => auxTag.tagName === tag.name)
+          ?.data as string[]) ?? [];
+
+      this.settingsForm.controls.notifyEmails.addControl(
+        tag.id,
+        new FormGroup({
+          data: new FormControl<string[] | null>(value),
+          enabled: new FormControl<boolean>(true),
+        })
+      );
+    });
   }
 }
