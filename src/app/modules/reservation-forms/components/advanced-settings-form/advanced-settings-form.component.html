@@ -2,7 +2,7 @@
   <div class="advanced-settings__tag-type">
     <h2 i18n="tag name">Notify e-mails:</h2>
 
-    <ng-container *ngFor="let tag of notifyEmailTags">
+    <div *ngFor="let tag of notifyEmailTags" class="advanced-settings__tag">
       <mat-slide-toggle
         *ngIf="getNotifyEmailsControl(tag.id) as control"
         i18n="toggle label"
@@ -11,7 +11,7 @@
         >Enabled</mat-slide-toggle
       >
 
-      <mat-form-field appearance="outline" class="advanced-settings__tag">
+      <mat-form-field appearance="outline" class="advanced-settings__tag-field">
         <mat-label>{{ tag.name }}</mat-label>
 
         <mat-chip-grid #chipGrid>
@@ -45,6 +45,6 @@
           >Enter e-mail and press enter</mat-hint
         >
       </mat-form-field>
-    </ng-container>
+    </div>
   </div>
 </form>
