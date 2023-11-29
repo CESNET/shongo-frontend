@@ -66,9 +66,16 @@ export class WebconferenceReservationFormComponent
     ]),
     participantCount: new UntypedFormControl(null, [Validators.required]),
     timezone: new UntypedFormControl(null, [Validators.required]),
+    accessMode: new UntypedFormControl(WebconferenceAccessMode.PRIVATE, [
+      Validators.required,
+    ]),
   });
 
   readonly accessModeOpts: Option[] = [
+    {
+      value: WebconferenceAccessMode.PRIVATE,
+      displayName: $localize`:option name|Adobe connect access mode:Private`,
+    },
     {
       value: WebconferenceAccessMode.CONTROLLED,
       displayName: $localize`:option name|Adobe connect access mode:Controlled`,
@@ -76,10 +83,6 @@ export class WebconferenceReservationFormComponent
     {
       value: WebconferenceAccessMode.PUBLIC,
       displayName: $localize`:option name|Adobe connect access mode:Public`,
-    },
-    {
-      value: WebconferenceAccessMode.PRIVATE,
-      displayName: $localize`:option name|Adobe connect access mode:Private`,
     },
   ];
 
