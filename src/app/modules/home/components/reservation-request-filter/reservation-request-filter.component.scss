@@ -15,7 +15,7 @@
   }
 
   &__field {
-    width: 10em;
+    width: 13em;
   }
 
   &__checkbox {
@@ -28,6 +28,10 @@
   display: flex;
   align-items: center;
   margin-bottom: var(--form-field-padding-bottom);
+
+  &__button {
+    min-width: 10em;
+  }
 }
 
 // Media queries
