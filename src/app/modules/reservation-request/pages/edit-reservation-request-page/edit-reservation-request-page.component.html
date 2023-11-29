@@ -2,7 +2,7 @@
   <h1 i18n="heading">Edit reservation request</h1>
 
   <button
-    *ngIf="reservationRequest?.auxData?.length"
+    *ngIf="!!configurableTags.length"
     (click)="toggleAdvancedSettings()"
     mat-button
     color="primary"
@@ -185,7 +185,7 @@
 
     <!-- Advanced settings -->
     <app-advanced-settings-form
-      [tags]="tags"
+      [tags]="configurableTags"
       [auxData]="reservationRequest.auxData || []"
       [hidden]="!editingAdvancedSettings"
     ></app-advanced-settings-form>

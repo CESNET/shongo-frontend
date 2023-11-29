@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ResourceService } from '@app/core/http/resource/resource.service';
 import { AdvancedSettingsFormComponent } from '@app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component';
-import { TagType } from '@app/shared/models/enums/tag-type.enum';
 import { Tag } from '@app/shared/models/rest-api/tag.interface';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -76,9 +76,12 @@ export class ReservationDialogComponent implements OnInit {
     },
     private _dialogRef: MatDialogRef<ReservationDialogComponent>,
     private _resReqService: ReservationRequestService,
+    private _resourceService: ResourceService,
     private _alert: AlertService
   ) {
-    this.configurableTags = this._getConfigurableTags(this._data.resource);
+    this.configurableTags = this._resourceService.getConfigurableTags(
+      this._data.resource
+    );
   }
 
   ngOnInit(): void {
@@ -210,9 +213,5 @@ export class ReservationDialogComponent implements OnInit {
     timezone: string
   ): moment.Moment {
     return moment.tz(date.format('YYYY-MM-DDTHH:mm:ss'), timezone);
-  }
-
-  private _getConfigurableTags(resource: Resource): Tag[] {
-    return resource.tags?.filter((tag) => tag.type !== TagType.DEFAULT) ?? [];
   }
 }

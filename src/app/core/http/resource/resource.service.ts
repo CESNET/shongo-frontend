@@ -2,7 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { AlertService } from '@app/core/services/alert.service';
+import { ReservationType } from '@app/shared/models/enums/reservation-type.enum';
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
+import { ReservationRequest } from '@app/shared/models/rest-api/reservation-request.interface';
+import { Tag } from '@app/shared/models/rest-api/tag.interface';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { first, retry } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
@@ -204,6 +207,10 @@ export class ResourceService extends ApiService {
     return this.resources?.filter((res) => res.hasCapacity) ?? [];
   }
 
+  getConfigurableTags(resource: Resource): Tag[] {
+    return resource.tags?.filter((tag) => tag.type !== TagType.DEFAULT) ?? [];
+  }
+
   /**
    * Finds virtual room resource by technology.
    *
@@ -234,6 +241,26 @@ export class ResourceService extends ApiService {
     }
 
     return this.resources.find((resource) => resource.id === id) ?? null;
+  }
+
+  findResourceByReservation(
+    reservationRequest: ReservationRequest
+  ): Resource | null {
+    if (!this.resources) {
+      return null;
+    }
+
+    if (reservationRequest.type === ReservationType.PHYSICAL_RESOURCE) {
+      const resourceId = reservationRequest.physicalResourceData?.resourceId;
+      return resourceId !== undefined
+        ? this.findResourceById(resourceId)
+        : null;
+    }
+
+    const technology = reservationRequest.virtualRoomData?.technology;
+    return technology !== undefined
+      ? this.findResourceByTechnology(technology)
+      : null;
   }
 
   /**

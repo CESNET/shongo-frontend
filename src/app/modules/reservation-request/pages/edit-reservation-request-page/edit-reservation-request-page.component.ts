@@ -63,7 +63,7 @@ export class EditReservationRequestPageComponent implements OnInit {
 
   readonly getFormError = getFormError;
 
-  tags: Tag[] = [];
+  configurableTags: Tag[] = [];
   reservationRequest?: ReservationRequestDetail;
   error?: Error;
 
@@ -197,7 +197,7 @@ export class EditReservationRequestPageComponent implements OnInit {
       )
       .subscribe((resReq) => {
         this.reservationRequest = resReq;
-        this.tags = this._getResourceTags(resReq);
+        this.configurableTags = this._getResourceTags(resReq);
       });
   }
 
@@ -216,16 +216,9 @@ export class EditReservationRequestPageComponent implements OnInit {
   }
 
   private _getResourceTags(reservationRequest: ReservationRequest): Tag[] {
-    const resourceId =
-      reservationRequest.type === ReservationType.PHYSICAL_RESOURCE
-        ? reservationRequest.physicalResourceData?.resourceId
-        : reservationRequest.virtualRoomData?.roomResourceId;
+    const resource =
+      this._resourceService.findResourceByReservation(reservationRequest);
 
-    if (!resourceId) {
-      return [];
-    }
-
-    const resource = this._resourceService.findResourceById(resourceId);
-    return resource?.tags ?? [];
+    return resource ? this._resourceService.getConfigurableTags(resource) : [];
   }
 }
