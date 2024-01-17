@@ -1,10 +1,6 @@
 <!-- Header -->
 <header *ngIf="!(auth.isAuthenticated$ | async)">
-  <h1 i18n="page header">Main page</h1>
-
-  <p i18n="paragraph">
-    Welcome to reservation system for H.323/SIP and Adobe Connect virtual rooms.
-  </p>
+  <h1 i18n="page header">Welcome to CESNET Meetings reservation system</h1>
 
   <p>
     <span i18n="paragraph">You can send your suggestions to</span>&nbsp;<a
@@ -14,8 +10,8 @@
     >.
   </p>
   <p i18n="paragraph">
-    Terms and conditions under which personal data collated in providing the
-    CESNET e-infrastructure services are processed you can find
+    Personal Data Protection in CESNET e‑infrastructure and other CESNET
+    services terms can be found
     <a
       href="https://www.cesnet.cz/cesnet/documents/privacy/?lang=en"
       target="_blank"
@@ -28,6 +24,7 @@
     mat-flat-button
     color="primary"
     i18n="button text"
+    class="login-button"
     (click)="auth.login()"
   >
     Log in

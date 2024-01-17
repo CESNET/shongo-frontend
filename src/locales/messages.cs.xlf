@@ -4934,6 +4934,102 @@
 				</context-group>
 				<note priority="1" from="description">button name</note>
 			</trans-unit>
+			<trans-unit id="893608497354762231" datatype="html">
+				<source>Notify e-mails:</source>
+				<target>Zaslat upozornění na e-maily:</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+					<context context-type="linenumber">3</context>
+				</context-group>
+				<note priority="1" from="description">tag name</note>
+			</trans-unit>
+			<trans-unit id="6396993742285577890" datatype="html">
+				<source>New email...</source>
+				<target>Nový email...</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+					<context context-type="linenumber">26</context>
+				</context-group>
+				<note priority="1" from="description">Placeholder for email tag input</note>
+				<note priority="1" from="meaning">placeholder</note>
+			</trans-unit>
+			<trans-unit id="5724979823784062008" datatype="html">
+				<source>Value must be an e-mail</source>
+				<target>Hodnota musí být e-mail</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+					<context context-type="linenumber">37</context>
+				</context-group>
+				<note priority="1" from="description">Error message for email tag input</note>
+				<note priority="1" from="meaning">error message</note>
+			</trans-unit>
+			<trans-unit id="3034074709876498156" datatype="html">
+				<source>Enter e-mail and press enter</source>
+				<target>Zadejte e-mail a stiskněte enter</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+					<context context-type="linenumber">40</context>
+				</context-group>
+				<note priority="1" from="description">Hint message for email tag input</note>
+				<note priority="1" from="meaning">hint message</note>
+			</trans-unit>
+			<trans-unit id="5229878764623860150" datatype="html">
+				<source>Advanced settings</source>
+				<target>Pokročilá nastavení</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
+					<context context-type="linenumber">17</context>
+				</context-group>
+				<note priority="1" from="description">Reservation dialog advanced settings button</note>
+				<note priority="1" from="meaning">button</note>
+			</trans-unit>
+			<trans-unit id="5368543069634869110" datatype="html">
+				<source>Back</source>
+				<target>Zpět</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.html</context>
+					<context context-type="linenumber">22</context>
+				</context-group>
+				<note priority="1" from="description">Reservation dialog back button</note>
+				<note priority="1" from="meaning">button</note>
+			</trans-unit>
+			<trans-unit id="4816216590591222133" datatype="html">
+				<source>Enabled</source>
+				<target>Aktivní</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component.html</context>
+					<context context-type="linenumber">11</context>
+				</context-group>
+				<note priority="1" from="description">toggle label</note>
+			</trans-unit>
+			<trans-unit id="1995183384398652494" datatype="html">
+				<source>Welcome to CESNET Meetings reservation system</source>
+				<target>Vítejte v rezervačním systému CESNET Meetings</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">3</context>
+				</context-group>
+				<note priority="1" from="description">page header</note>
+			</trans-unit>
+			<trans-unit id="2065392319903271721" datatype="html">
+				<source> Personal Data Protection in CESNET e‑infrastructure and other CESNET services terms can be found <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+      href=&quot;https://www.cesnet.cz/cesnet/documents/privacy/?lang=en&quot;
+      target=&quot;_blank&quot;
+      class=&quot;mat-primary-color&quot;
+      &gt;"/>here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+    &gt;"/>. </source>
+				<target> Podmínky, za kterých jsou zpracovávány osobní údaje shromážděné při poskytování služeb e-infrastruktury CESNET, najdete <x id="START_LINK" ctype="x-a" equiv-text="&lt;a
+      href=&quot;https://www.cesnet.cz/cesnet/documents/privacy/?lang=en&quot;
+      target=&quot;_blank&quot;
+      class=&quot;mat-primary-color&quot;
+      &gt;"/>zde<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a
+    &gt;"/>. </target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/home/pages/home-page/home-page.component.html</context>
+					<context context-type="linenumber">13,21</context>
+				</context-group>
+				<note priority="1" from="description">paragraph</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
