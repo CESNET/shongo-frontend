@@ -11,7 +11,6 @@ import {
 } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { SettingsService } from 'src/app/core/http/settings/settings.service';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.interface';
@@ -47,10 +46,7 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
 
   private readonly _destroy$ = new Subject<void>();
 
-  constructor(
-    public settings: SettingsService,
-    private _resourceService: ResourceService
-  ) {}
+  constructor(public settings: SettingsService) {}
 
   ngOnInit(): void {
     this._observeUsePerunSettings();
@@ -68,9 +64,6 @@ export class UserSettingsPageComponent implements OnInit, OnDestroy {
    */
   submitSettings(): void {
     this.settings.updateSettings(this._getUserSettings());
-
-    // Available resources may change when user turns on/off admin mode.
-    this._resourceService.fetchResources();
   }
 
   /**
