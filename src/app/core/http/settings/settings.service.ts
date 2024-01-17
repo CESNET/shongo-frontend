@@ -17,6 +17,7 @@ import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.inter
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { AlertService } from '../../services/alert.service';
 import { ApiService } from '../api.service';
+import { ResourceService } from '../resource/resource.service';
 
 const SETTINGS_LOCALSTORAGE_KEY = 'userSettings';
 
@@ -43,7 +44,8 @@ export class SettingsService {
   constructor(
     private _http: HttpClient,
     private _auth: AuthenticationService,
-    private _alert: AlertService
+    private _alert: AlertService,
+    private _resourceService: ResourceService
   ) {
     this._loadSettingsFromStorage();
 
@@ -177,12 +179,16 @@ export class SettingsService {
           this._alert.showError($localize`Failed to update settings`);
           throw err;
         }),
+        tap((userSettings) => {
+          this._userSettings$.next(userSettings);
+          this._alert.showSuccess($localize`Settings updated`);
+
+          // Available resources may change when user turns on/off admin mode.
+          this._resourceService.fetchResources();
+        }),
         finalize(() => this._userSettingsLoading$.next(false))
       )
-      .subscribe((userSettings) => {
-        this._userSettings$.next(userSettings);
-        this._alert.showSuccess($localize`Settings updated`);
-      });
+      .subscribe();
   }
 
   /**
