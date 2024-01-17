@@ -40,7 +40,7 @@ export const menuItems: MenuItem[] = [
   {
     label: $localize`:navbar link|Link to report page:Report a problem`,
     route: '/help/report',
-    itemAuth: ItemAuthorization.NONE,
+    itemAuth: ItemAuthorization.LOGGED_IN,
     hideOnTablet: true,
   },
 ];
