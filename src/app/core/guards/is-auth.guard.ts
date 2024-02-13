@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication/authentication.service';
@@ -10,7 +10,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 @Injectable({
   providedIn: 'root',
 })
-export class IsAuthGuard implements CanLoad {
+export class IsAuthGuard {
   constructor(private _auth: AuthenticationService, private _router: Router) {}
 
   canLoad(): Observable<boolean> {

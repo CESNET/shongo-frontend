@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SettingsService } from '../http/settings/settings.service';
 
 /**
@@ -8,7 +8,7 @@ import { SettingsService } from '../http/settings/settings.service';
 @Injectable({
   providedIn: 'root',
 })
-export class IsAdminGuard implements CanLoad {
+export class IsAdminGuard {
   constructor(private _settings: SettingsService, private _router: Router) {}
 
   canLoad(): boolean {

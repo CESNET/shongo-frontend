@@ -172,7 +172,6 @@ export class ReservationRequestDetailPageComponent
         finalize(() => this.loading$.next(false))
       )
       .subscribe((req) => {
-        this.tabIndex = 0;
         this.reservationRequest = req;
         this.urlAlias = this._getUrlAlias();
       });

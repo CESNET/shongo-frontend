@@ -66,6 +66,7 @@
       color="primary"
       class="buttons__button"
       aria-labelledby="open-videoconference-btn-name"
+      target="_blank"
       [href]="urlAlias.value"
     >
       <mat-icon>open_in_new</mat-icon
@@ -81,16 +82,16 @@
     <ngx-skeleton-loader
       count="5"
       [theme]="{
-        'border-radius': '5px',
-        height: '50px',
-        width: '150px',
-        'margin-right': '15px',
+        'border-radius': '6px',
+        height: '3rem',
+        width: '9.5rem',
+        'margin-right': '1rem',
         border: '1px solid white'
       }"
     ></ngx-skeleton-loader>
     <ngx-skeleton-loader
       count="4"
-      [theme]="{ height: '50px' }"
+      [theme]="{ height: '3rem' }"
     ></ngx-skeleton-loader>
   </div>
 
@@ -107,7 +108,7 @@
       <mat-divider></mat-divider>
       <mat-tab-group
         [animationDuration]="0"
-        [(selectedIndex)]="tabIndex"
+        [selectedIndex]="tabIndex"
         (selectedIndexChange)="onTabIndexChange($event)"
       >
         <!-- Reservation -->
