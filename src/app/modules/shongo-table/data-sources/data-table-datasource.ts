@@ -3,8 +3,16 @@ import { HttpParams } from '@angular/common/http';
 import { Type } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort, SortDirection } from '@angular/material/sort';
-import { merge, Observable, of, Subject } from 'rxjs';
-import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable, of, Subject } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  first,
+  map,
+  skip,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { ApiService } from 'src/app/core/http/api.service';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { TableButton } from '../buttons/table-button';
@@ -74,7 +82,7 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
   loading$: Observable<boolean>;
 
   private _manualDataUpdate$ = new Subject<ApiResponse<T>>();
-  private _loading$ = new Subject<boolean>();
+  private _loading$ = new BehaviorSubject(true);
   private _refresh$ = new Subject<{ refresh: boolean }>();
 
   constructor() {
@@ -136,15 +144,15 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
       let updateStream$: Observable<unknown> = merge(
-        sortChangeObservable,
+        sortChangeObservable.pipe(skip(1)),
         this.paginator.initialized,
-        this.paginator.page,
+        this.paginator.page.pipe(skip(1)),
         this._refresh$
       );
 
       // Add filter to update stream if it exists.
       if (this.filter$) {
-        updateStream$ = merge(updateStream$, this.filter$);
+        updateStream$ = merge(updateStream$, this.filter$.pipe(skip(1)));
       }
 
       // Merge emissions from data fetch observable with emission from manual updates.
@@ -155,7 +163,6 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
       ).pipe(
         tap((res: ApiResponse<T>) => {
           this.data = res;
-          this._loading$.next(false);
         }),
         map((res) => res.items)
       );
@@ -181,8 +188,6 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
    * Refreshes table data. Adds a tiny arbitrary refresh delay for better UX.
    */
   refreshData(): void {
-    this._loading$.next(true);
-
     // Add a tiny timeout to simulate loading.
     setTimeout(
       () => this._refresh$.next({ refresh: this.useHttpRefreshParam }),
@@ -251,7 +256,8 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
           filter
         ).pipe(
           first(),
-          catchError(() => of({ count: 0, items: [], error: true }))
+          catchError(() => of({ count: 0, items: [], error: true })),
+          finalize(() => this._loading$.next(false))
         )
       ),
       map((res) => {
@@ -281,6 +287,7 @@ export abstract class DataTableDataSource<T> extends DataSource<T> {
       return of(this._setRefreshIfActive(new HttpParams(), update));
     }
     return this.filter$.pipe(
+      first(),
       map((httpParams) => this._setRefreshIfActive(httpParams, update))
     );
   }
