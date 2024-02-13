@@ -20,12 +20,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { MOMENT } from 'angular-calendar';
 import {
   AuthConfig,
   OAuthModule,
   OAuthModuleConfig,
   OAuthStorage,
 } from 'angular-oauth2-oidc';
+import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { appInitializerFactory } from './app-initializer.factory';
@@ -113,6 +115,10 @@ export class CoreModule extends EnsureModuleLoadedOnceGuard {
           useValue: environment.production ? prodAuthConfig : devAuthConfig,
         },
         { provide: OAuthModuleConfig, useValue: authModuleConfig },
+        {
+          provide: MOMENT,
+          useValue: moment,
+        },
         ...createDevProviders(),
       ],
     };
