@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SettingsService } from '../http/settings/settings.service';
 
 /**
@@ -8,7 +8,7 @@ import { SettingsService } from '../http/settings/settings.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CanReserveGuard implements CanLoad, CanActivate {
+export class CanReserveGuard {
   constructor(private _settings: SettingsService, private _router: Router) {}
 
   canLoad(): boolean {
