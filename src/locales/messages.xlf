@@ -251,7 +251,7 @@
         <source>Failed to load resources.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/http/resource/resource.service.ts</context>
-          <context context-type="linenumber">286</context>
+          <context context-type="linenumber">313</context>
         </context-group>
         <note priority="1" from="meaning">Error message</note>
       </trans-unit>
@@ -1476,11 +1476,20 @@
         </context-group>
         <note priority="1" from="description">label</note>
       </trans-unit>
+      <trans-unit id="8657458091567980860" datatype="html">
+        <source>Private</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+        <note priority="1" from="description">Adobe connect access mode</note>
+        <note priority="1" from="meaning">option name</note>
+      </trans-unit>
       <trans-unit id="2231404347802047928" datatype="html">
         <source>Controlled</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <note priority="1" from="description">Adobe connect access mode</note>
         <note priority="1" from="meaning">option name</note>
@@ -1489,16 +1498,7 @@
         <source>Public</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component.ts</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-        <note priority="1" from="description">Adobe connect access mode</note>
-        <note priority="1" from="meaning">option name</note>
-      </trans-unit>
-      <trans-unit id="8657458091567980860" datatype="html">
-        <source>Private</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/modules/reservation-forms/components/webconference-reservation-form/webconference-reservation-form.component.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">85</context>
         </context-group>
         <note priority="1" from="description">Adobe connect access mode</note>
         <note priority="1" from="meaning">option name</note>
@@ -2788,7 +2788,7 @@
         <source>Capacity reservations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">126</context>
         </context-group>
         <note priority="1" from="description">tab label</note>
       </trans-unit>
@@ -2796,7 +2796,7 @@
         <source>User roles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">141</context>
         </context-group>
         <note priority="1" from="description">tab label</note>
       </trans-unit>
@@ -2804,7 +2804,7 @@
         <source>Runtime management</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <note priority="1" from="description">tab label</note>
       </trans-unit>
@@ -2812,7 +2812,7 @@
         <source>Participants</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
-          <context context-type="linenumber">166</context>
+          <context context-type="linenumber">167</context>
         </context-group>
         <note priority="1" from="description">tab label</note>
       </trans-unit>
@@ -2820,7 +2820,7 @@
         <source>Recordings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">178</context>
         </context-group>
         <note priority="1" from="description">tab label</note>
       </trans-unit>
@@ -2828,7 +2828,7 @@
         <source>Failed to load reservation request, try refreshing the page.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.html</context>
-          <context context-type="linenumber">199</context>
+          <context context-type="linenumber">200</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -2836,7 +2836,7 @@
         <source>Item deleted</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
-          <context context-type="linenumber">200</context>
+          <context context-type="linenumber">199</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/shongo-table/buttons/delete-button.ts</context>
@@ -2852,7 +2852,7 @@
         <source>Can&apos;t delete a virtual room with reserved capacity</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
-          <context context-type="linenumber">212</context>
+          <context context-type="linenumber">211</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -2860,7 +2860,7 @@
         <source>Failed to delete item</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation-request/pages/reservation-request-detail-page/reservation-request-detail-page.component.ts</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">215</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
@@ -2892,7 +2892,7 @@
         <source>Reservation request created</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">103</context>
         </context-group>
         <note priority="1" from="description">success message</note>
       </trans-unit>
@@ -2900,7 +2900,7 @@
         <source>Failed to create reservation request</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/reservation-dialog/reservation-dialog.component.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <note priority="1" from="description">error message</note>
       </trans-unit>
