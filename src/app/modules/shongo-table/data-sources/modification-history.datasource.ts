@@ -1,5 +1,5 @@
 import { SortDirection } from '@angular/material/sort';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { ReservationRequestStateHelpComponent } from 'src/app/shared/components/state-help/wrapper-components/reservation-request-state-help.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { RequestModification } from 'src/app/shared/models/rest-api/reservation-request.interface';
@@ -7,6 +7,7 @@ import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { CustomActionButton } from '../buttons/custom-action-button';
 import { ReservationRequestStateColumnComponent } from '../column-components/state-chip-column/components/reservation-request-state-column.component';
+import { REFRESH_TIMEOUT } from './data-table-datasource';
 import { StaticDataSource } from './static-datasource';
 
 export class ModificationHistoryDataSource extends StaticDataSource<
@@ -57,6 +58,6 @@ export class ModificationHistoryDataSource extends StaticDataSource<
   ): Observable<ApiResponse<RequestModification>> {
     return of(
       this.getFakeApiResponse(pageSize, pageIndex, sortedColumn, sortDirection)
-    );
+    ).pipe(delay(REFRESH_TIMEOUT));
   }
 }

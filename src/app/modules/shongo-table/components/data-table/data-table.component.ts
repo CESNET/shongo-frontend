@@ -16,7 +16,7 @@ import { DataTableDataSource } from '../../data-sources/data-table-datasource';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent<T> implements OnDestroy {
-  @Input() dataSource!: DataTableDataSource<T>;
+  @Input({ required: true }) dataSource!: DataTableDataSource<T>;
   @Input() showCheckboxes = true;
   @Input() description = '';
   @Input() showDeleteButtons = true;

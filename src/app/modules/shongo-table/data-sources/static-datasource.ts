@@ -1,5 +1,4 @@
 import { SortDirection } from '@angular/material/sort';
-import { of } from 'rxjs';
 import { HasID } from 'src/app/shared/models/interfaces/has-id.interface';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { DataTableDataSource } from './data-table-datasource';
@@ -16,9 +15,6 @@ export abstract class StaticDataSource<
 > extends DataTableDataSource<T> {
   constructor(private _data: K[]) {
     super();
-
-    // No loading happens in static data source.
-    this.loading$ = of(false);
   }
 
   /**
