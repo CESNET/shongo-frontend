@@ -324,17 +324,12 @@
 
       <!-- Tags -->
       <ng-container *ngIf="!!notifyEmailsTags.length">
-        <dt>Notify emails:</dt>
-        <dd>
-          <dl>
-            <ng-container *ngFor="let tag of notifyEmailsTags">
-              <dt>{{ tag.name }}:</dt>
-              <dd *ngFor="let email of tag.data">
-                <a href="mailto:{{ email }}">{{ email }}</a>
-              </dd>
-            </ng-container>
-          </dl>
-        </dd>
+        <dt i18n="definition tag">Notify emails:</dt>
+        <ng-container *ngFor="let tag of notifyEmailsTags">
+          <dd *ngFor="let email of tag.data">
+            <a href="mailto:{{ email }}">{{ email }}</a>
+          </dd>
+        </ng-container>
       </ng-container>
     </dl>
   </main>
