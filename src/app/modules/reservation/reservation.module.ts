@@ -25,6 +25,7 @@ import { CalendarHelperModule } from '../calendar-helper/calendar-helper.module'
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
 import { ReservationDialogComponent } from './components/reservation-dialog/reservation-dialog.component';
 import { ResourceSelectionFormComponent } from './components/resource-selection-form/resource-selection-form.component';
+import { CALENDAR_TRANSLATIONS } from './constants';
 import { HoldClickDirective } from './directives/hold-click.directive';
 import { ReservationPageComponent } from './pages/reservation-page/reservation-page.component';
 import { ReservationRoutingModule } from './reservation-routing.module';
@@ -54,7 +55,7 @@ import { ReservationRoutingModule } from './reservation-routing.module';
     ReservationFormsModule,
     MatDatepickerModule,
     MatRippleModule,
-    ShongoCalendarModule.forRoot(),
+    ShongoCalendarModule.forRoot(CALENDAR_TRANSLATIONS),
     CalendarHelperModule,
   ],
   declarations: [
