@@ -156,15 +156,15 @@ export class AdvancedSettingsFormComponent implements OnInit {
     auxData: AuxData[]
   ): void {
     tags.forEach((tag) => {
-      const value =
-        (auxData.find((auxTag) => auxTag.tagName === tag.name)
-          ?.data as string[]) ?? [];
+      const resourceTag = auxData.find((auxTag) => auxTag.tagName === tag.name);
+      const data = (resourceTag?.data ?? []) as string[];
+      const enabled = resourceTag?.enabled ?? false;
 
       this.settingsForm.controls.notifyEmails.addControl(
         tag.id,
         new FormGroup({
-          data: new FormControl<string[] | null>(value),
-          enabled: new FormControl<boolean>(true),
+          data: new FormControl<string[] | null>(data),
+          enabled: new FormControl<boolean>(enabled),
         })
       );
     });
