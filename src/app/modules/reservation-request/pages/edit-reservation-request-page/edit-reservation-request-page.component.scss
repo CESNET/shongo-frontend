@@ -11,16 +11,21 @@
   }
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
 .footer {
+  margin-top: var(--spacer-4);
+
   &__buttons {
     display: flex;
     align-items: center;
     gap: 1em;
   }
-}
-
-.reservation-form-container {
-  margin-bottom: 1em;
 }
 
 @media only screen and (max-width: 550px) {

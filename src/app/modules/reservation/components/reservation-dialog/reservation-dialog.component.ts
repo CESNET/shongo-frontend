@@ -7,6 +7,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ResourceService } from '@app/core/http/resource/resource.service';
+import { AdvancedSettingsFormComponent } from '@app/modules/reservation-forms/components/advanced-settings-form/advanced-settings-form.component';
+import { Tag } from '@app/shared/models/rest-api/tag.interface';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -43,10 +46,24 @@ export class ReservationDialogComponent implements OnInit {
   @ViewChild(ComponentHostDirective, { static: true })
   formHost!: ComponentHostDirective;
 
+  @ViewChild(AdvancedSettingsFormComponent, { static: true })
+  advancedSettingsForm!: AdvancedSettingsFormComponent;
+
   /**
    * Reservation form component.
    */
   formComponent!: ReservationForm;
+
+  /**
+   * Whether advanced settings are being edited.
+   * Used to show/hide advanced settings form.
+   */
+  editingAdvancedSettings = false;
+
+  /**
+   * Tags that can be configured in "Advanced settings" like NOTIFY_EMAIL.
+   */
+  readonly configurableTags: Tag[];
 
   readonly creating$ = new BehaviorSubject<boolean>(false);
 
@@ -59,8 +76,13 @@ export class ReservationDialogComponent implements OnInit {
     },
     private _dialogRef: MatDialogRef<ReservationDialogComponent>,
     private _resReqService: ReservationRequestService,
+    private _resourceService: ResourceService,
     private _alert: AlertService
-  ) {}
+  ) {
+    this.configurableTags = this._resourceService.getConfigurableTags(
+      this._data.resource
+    );
+  }
 
   ngOnInit(): void {
     this.renderFormComponent();
@@ -132,6 +154,10 @@ export class ReservationDialogComponent implements OnInit {
     }
   }
 
+  toggleAdvancedSettings(): void {
+    this.editingAdvancedSettings = !this.editingAdvancedSettings;
+  }
+
   /**
    * Creates reservation request body and posts it to the backend.
    *
@@ -139,6 +165,7 @@ export class ReservationDialogComponent implements OnInit {
    */
   private _createReservationRequest(): Observable<{ id: string }> {
     const { timezone, ...rest } = this.formComponent.getFormValue();
+    const auxData = this.advancedSettingsForm.getFormValue();
     let reservationRequestBase;
 
     if (this._data.parentRequest) {
@@ -165,6 +192,7 @@ export class ReservationDialogComponent implements OnInit {
           timezone
         ).toISOString(),
       },
+      auxData,
       ...reservationRequestBase,
       ...rest,
     };

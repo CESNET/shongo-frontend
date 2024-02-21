@@ -6,6 +6,8 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { URL_ALIASES } from '@app/shared/models/constants/url-aliases.const';
+import { TagType } from '@app/shared/models/enums/tag-type.enum';
+import { NotifyEmailTag, Tag } from '@app/shared/models/rest-api/tag.interface';
 import { BehaviorSubject } from 'rxjs';
 import { StateProps } from 'src/app/modules/shongo-table/column-components/state-chip-column/state-chip-column.component';
 import { ModificationHistoryDataSource } from 'src/app/modules/shongo-table/data-sources/modification-history.datasource';
@@ -37,9 +39,12 @@ import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.conf
 })
 export class ReservationDetailComponent implements OnInit {
   @Input() reservationRequest!: ReservationRequestDetail;
+  @Input() tags?: Tag[];
 
   modificationHistoryDataSource?: ModificationHistoryDataSource;
   currentRequest$!: BehaviorSubject<ReservationRequestDetail>;
+
+  notifyEmailsTags: NotifyEmailTag[] = [];
 
   readonly ReservationType = ReservationType;
   readonly PeriodicityType = PeriodicityType;
@@ -66,9 +71,14 @@ export class ReservationDetailComponent implements OnInit {
       this.openModification,
       this.isRowSelected
     );
+
     this.currentRequest$ = new BehaviorSubject<ReservationRequestDetail>(
       this.reservationRequest
     );
+
+    this.notifyEmailsTags = this.tags?.filter(
+      ({ type }) => type === TagType.NOTIFY_EMAIL
+    ) as NotifyEmailTag[];
   }
 
   /**

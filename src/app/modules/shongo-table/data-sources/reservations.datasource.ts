@@ -1,11 +1,12 @@
 import { SortDirection } from '@angular/material/sort';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
 import { ResourceReservation } from 'src/app/shared/models/rest-api/resource-utilization-detail.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { datePipeFunc } from 'src/app/utils/date-pipe-func';
 import { RequestIdColumnComponent } from '../../resource-management/components/request-id-column/request-id-column.component';
 import { ReservationOwnerColumnComponent } from '../../resource-management/components/reservation-owner-column/reservation-owner-column.component';
+import { REFRESH_TIMEOUT } from './data-table-datasource';
 import { StaticDataSource } from './static-datasource';
 
 export interface ResourceReservationTableData {
@@ -80,6 +81,6 @@ export class ReservationsDataSource extends StaticDataSource<
         } as ResourceReservationTableData)
     );
 
-    return of({ count: data.count, items });
+    return of({ count: data.count, items }).pipe(delay(REFRESH_TIMEOUT));
   }
 }

@@ -1,0 +1,28 @@
+.advanced-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-4);
+
+  &__tag {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacer-2);
+  }
+
+  &__tag-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacer-4);
+  }
+
+  &__tag-type {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacer-4);
+  }
+
+  &__enabled-toggle {
+    margin-bottom: var(--spacer-2);
+  }
+}

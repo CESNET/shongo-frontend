@@ -10,6 +10,7 @@ import { ReservationRequestState } from '../enums/reservation-request-state.enum
 import { ReservationType } from '../enums/reservation-type.enum';
 import { Technology } from '../enums/technology.enum';
 import { Alias } from './alias.interface';
+import { AuxData } from './aux-data.interface';
 import { Slot } from './slot.interface';
 
 export interface ReservationRequest {
@@ -27,6 +28,7 @@ export interface ReservationRequest {
   futureSlotCount?: number;
   isDeprecated: boolean;
   type: ReservationType;
+  auxData?: AuxData[];
   virtualRoomData?: VirtualRoomData;
   physicalResourceData?: PhysicalResourceData;
   roomCapacityData?: RoomCapacityData;

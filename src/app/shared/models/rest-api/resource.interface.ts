@@ -1,5 +1,6 @@
 import { ResourceType } from '../enums/resource-type.enum';
 import { Technology } from '../enums/technology.enum';
+import { Tag } from './tag.interface';
 
 export interface Resource {
   id: string;
@@ -7,12 +8,12 @@ export interface Resource {
   name: string;
   description: string;
   hasCapacity: boolean;
-  tags?: string[];
+  tags?: Tag[];
   technology?: Technology;
 }
 
 export interface PhysicalResource extends Resource {
-  tags: string[];
+  tags: Tag[];
 }
 
 export interface VirtualRoomResource extends Resource {

@@ -70,10 +70,10 @@
       >
         <mat-icon>{{ showMetadata ? 'expand_less' : 'expand_more' }}</mat-icon>
 
-        <span *ngIf="showMetadata" i18n="button name" id="metadata-btn-name"
+        <span *ngIf="!showMetadata" i18n="button name" id="metadata-btn-name"
           >Show metadata</span
         >
-        <span *ngIf="!showMetadata" i18n="button name" id="metadata-btn-name"
+        <span *ngIf="showMetadata" i18n="button name" id="metadata-btn-name"
           >Hide metadata</span
         >
       </button>
