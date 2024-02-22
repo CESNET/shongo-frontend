@@ -169,7 +169,7 @@ export class ReservationRequestDetailPageComponent
     forkJoin({
       reservationRequest:
         this._resReqService.fetchItem<ReservationRequestDetail>(id),
-      tags: this._resReqService.fetchTags(id),
+      tags: this._resReqService.fetchTags(id, true),
     })
       .pipe(
         first(),

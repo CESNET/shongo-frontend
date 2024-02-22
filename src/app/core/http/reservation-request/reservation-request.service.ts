@@ -326,10 +326,19 @@ export class ReservationRequestService extends ApiService {
    * Fetches tags for a given reservation request.
    *
    * @param requestId Reservation request ID.
+   * @param enabled True to fetch only enabled tags, false to fetch only disabled tags.
    * @returns Observable of API response.
    */
-  fetchTags(requestId: string): Observable<Tag[]> {
-    return this._http.get<Tag[]>(`${this.endpointURL}/${requestId}/tag_data`);
+  fetchTags(requestId: string, enabled?: boolean): Observable<Tag[]> {
+    let params = new HttpParams();
+
+    if (enabled !== undefined) {
+      params = params.set('enabled', enabled);
+    }
+
+    return this._http.get<Tag[]>(`${this.endpointURL}/${requestId}/tag_data`, {
+      params,
+    });
   }
 
   deleteErrorHandler = (id: string, err: Error): Observable<void> => {
