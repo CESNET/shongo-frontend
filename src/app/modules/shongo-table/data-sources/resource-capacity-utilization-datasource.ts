@@ -5,7 +5,10 @@ import { map } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceUtilizationColumnComponent } from 'src/app/modules/resource-management/components/resource-utilization-column/resource-utilization-column.component';
 import { ApiResponse } from 'src/app/shared/models/rest-api/api-response.interface';
-import { ResourceCapacityUtilization } from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
+import {
+  Resource,
+  ResourceCapacityUtilization,
+} from 'src/app/shared/models/rest-api/resource-capacity-utilization.interface';
 import { MomentDatePipe } from 'src/app/shared/pipes/moment-date.pipe';
 import { ResourceCapacityUtilizationFilterComponent } from '../../resource-management/components/resource-capacity-utilization-filter/resource-capacity-utilization-filter.component';
 import { TableColumn } from '../models/table-column.interface';
@@ -62,14 +65,30 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
       );
   }
 
-  getUtilization(item: ResourceCapacityUtilization): Record<string, string> {
-    const utilization: Record<string, string> = {};
+  getUtilization(item: ResourceCapacityUtilization): Record<string, Resource> {
+    const utilization: Record<string, Resource> = {};
 
     item.resources.forEach((resource) => {
-      utilization[resource.name] = JSON.stringify(resource);
+      const existing = utilization[resource.name];
+
+      // If resource already exists, add the capacity to the existing one
+      // This is mostly because of two records for recording service and the room itself
+      if (existing) {
+        existing.totalCapacity += resource.totalCapacity;
+        existing.usedCapacity += resource.usedCapacity;
+      } else {
+        utilization[resource.name] = resource;
+      }
     });
 
-    return utilization;
+    const stringified = Object.entries(utilization).reduce(
+      (acc, [name, resource]) => {
+        return { ...acc, [name]: JSON.stringify(resource) };
+      },
+      {}
+    );
+
+    return stringified;
   }
 
   getInterval(item: ResourceCapacityUtilization): string {
