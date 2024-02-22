@@ -1,4 +1,5 @@
 export enum ResourceType {
   VIRTUAL_ROOM = 'ROOM_PROVIDER',
   PHYSICAL_RESOURCE = 'RESOURCE',
+  OTHER = 'OTHER',
 }

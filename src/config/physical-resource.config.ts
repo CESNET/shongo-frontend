@@ -5,6 +5,4 @@ export const physicalResourceConfig = {
     ['meeting-room', $localize`Meeting room`],
     ['parking-place', $localize`Parking place`],
   ]),
-  // Only resources with supported tags will be available in app.
-  supportedTags: ['meeting-room', 'parking-place'],
 };

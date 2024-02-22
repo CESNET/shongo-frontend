@@ -243,12 +243,23 @@ export class ResourceSelectionFormComponent implements OnInit {
         ({ type }) => type === typeOrTag
       );
     } else {
-      return this._resourceService.resources.filter(({ tags }) =>
-        tags
+      return this._resourceService.resources.filter(({ tags, type }) => {
+        if (type !== ResourceType.PHYSICAL_RESOURCE) {
+          return false;
+        }
+
+        const tagNames = tags
           ?.filter(({ type }) => type === TagType.DEFAULT)
-          .map(({ name }) => name)
-          ?.includes(typeOrTag)
-      );
+          .map(({ name }) => name);
+
+        if (typeOrTag === ResourceType.OTHER) {
+          return !tagNames?.some((name) =>
+            physicalResourceConfig.tagNameMap.has(name)
+          );
+        }
+
+        return tagNames?.includes(typeOrTag);
+      });
     }
   }
 
@@ -271,10 +282,18 @@ export class ResourceSelectionFormComponent implements OnInit {
       )
       .filter((opt) => opt.displayName);
 
-    tags.push({
-      value: ResourceType.VIRTUAL_ROOM,
-      displayName: $localize`Virtual room`,
-    });
+    tags.push(
+      ...[
+        {
+          value: ResourceType.VIRTUAL_ROOM,
+          displayName: $localize`Virtual room`,
+        },
+        {
+          value: ResourceType.OTHER,
+          displayName: $localize`Other`,
+        },
+      ]
+    );
 
     return tags;
   }

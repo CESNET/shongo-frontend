@@ -9,11 +9,4 @@ export const virtualRoomResourceConfig = {
     [Technology.FREEPBX, $localize`Teleconference`],
     [Technology.H323_SIP, $localize`Videoconference (MCU)`],
   ]),
-  // Only resources with supported tags will be available in app.
-  supportedTechnologies: [
-    Technology.PEXIP,
-    Technology.ADOBE_CONNECT,
-    Technology.FREEPBX,
-    Technology.H323_SIP,
-  ],
 };
