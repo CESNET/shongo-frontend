@@ -47,12 +47,6 @@ $section-margin: 1.34375em + 0.25em;
   border: 0;
   padding: 1rem;
 
-  &__heading {
-    font-size: var(--font-size-regular);
-    display: block;
-    margin-bottom: 1em;
-  }
-
   &__section {
     margin-bottom: $section-margin;
 

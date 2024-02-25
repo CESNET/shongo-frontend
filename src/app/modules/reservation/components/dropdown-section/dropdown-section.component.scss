@@ -6,10 +6,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: var(--spacer-4);
     background: none;
     border: none;
-    padding: 0.5rem 0;
+    padding: var(--spacer-2) var(--spacer-1);
     cursor: pointer;
+
+    &:hover {
+      background: var(--gray-900);
+      transition: 0.1s;
+    }
   }
 }

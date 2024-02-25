@@ -38,21 +38,25 @@
     </mat-select>
   </mat-form-field>
 
-  <app-dropdown-section
-    *ngFor="let type of resourceTypes"
-    [label]="type.displayName"
-  >
-    <div class="resource-selection__checkboxes">
-      <mat-checkbox
-        *ngFor="let resource of createResourceOpts(type.value)"
-        color="primary"
-        [formControl]="
-          form.controls.displayedResources.controls[type.value].controls[
-            resource.value.id
-          ]
-        "
-        >{{ resource.displayName }}</mat-checkbox
-      >
-    </div>
-  </app-dropdown-section>
+  <section class="resource-selection__show-section">
+    <h3 i18n="heading">Show reservations of</h3>
+
+    <app-dropdown-section
+      *ngFor="let type of resourceTypes"
+      [label]="type.displayName"
+    >
+      <div class="resource-selection__checkboxes">
+        <mat-checkbox
+          *ngFor="let resource of createResourceOpts(type.value)"
+          color="primary"
+          [formControl]="
+            form.controls.displayedResources.controls[type.value].controls[
+              resource.value.id
+            ]
+          "
+          >{{ resource.displayName }}</mat-checkbox
+        >
+      </div>
+    </app-dropdown-section>
+  </section>
 </form>
