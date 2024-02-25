@@ -38,38 +38,14 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-slide-toggle
-    color="primary"
-    formControlName="showMore"
-    class="resource-selection__show-more"
-    (change)="onMoreResourcesChange($event)"
-    i18n="input label"
-    >More resources</mat-slide-toggle
+  <app-dropdown-section
+    *ngFor="let type of resourceTypes"
+    [label]="type.displayName"
   >
-
-  <!-- Show reservations of field -->
-  <mat-form-field appearance="outline" *ngIf="showMore">
-    <mat-label i18n="field label">Show reservations of</mat-label>
-    <mat-select
-      multiple
-      formControlName="displayedResources"
-      (valueChange)="emitDisplayedResources($event)"
-    >
-      <mat-option>
-        <ngx-mat-select-search
-          [formControl]="resourceFilterCtrl"
-          placeholderLabel="Search..."
-          noEntriesFoundLabel="No resources found"
-          i18n-placeholderLabel="placeholder"
-          i18n-noEntriesFoundLabel="no results text"
-        ></ngx-mat-select-search>
-      </mat-option>
-      <mat-option
-        *ngFor="let resource of filteredResourceOpts"
-        [value]="resource.value"
-        [disabled]="resource.value === selectedResource"
-        >{{ resource.displayName }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
+    <div class="resource-selection__checkboxes">
+      <mat-checkbox *ngFor="let resource of createResourceOpts(type.value)">{{
+        resource.displayName
+      }}</mat-checkbox>
+    </div>
+  </app-dropdown-section>
 </form>

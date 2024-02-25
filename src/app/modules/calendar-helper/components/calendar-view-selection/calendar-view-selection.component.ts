@@ -10,7 +10,7 @@ import { CalendarView } from 'angular-calendar';
 import { Observable } from 'rxjs';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 
-type CalendarViewOption = Option & { value: CalendarView };
+type CalendarViewOption = Option<string> & { value: CalendarView };
 
 @Component({
   selector: 'app-calendar-view-selection',

@@ -1,0 +1,15 @@
+.dropdown-section {
+  overflow: hidden;
+
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    cursor: pointer;
+  }
+}

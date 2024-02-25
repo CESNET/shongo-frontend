@@ -1,0 +1,10 @@
+<section class="dropdown-section">
+  <button (click)="toggle()" class="dropdown-section__header" mat-ripple>
+    <b>{{ label }}</b>
+    <mat-icon [@rotate]="expanded">keyboard_arrow_down</mat-icon>
+  </button>
+
+  <div [@expand]="expanded">
+    <ng-content></ng-content>
+  </div>
+</section>

@@ -71,7 +71,7 @@ export class WebconferenceReservationFormComponent
     ]),
   });
 
-  readonly accessModeOpts: Option[] = [
+  readonly accessModeOpts: Option<WebconferenceAccessMode>[] = [
     {
       value: WebconferenceAccessMode.PRIVATE,
       displayName: $localize`:option name|Adobe connect access mode:Private`,

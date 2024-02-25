@@ -6,8 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
 import { Subject, takeUntil } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
@@ -17,6 +16,9 @@ import { Option } from 'src/app/shared/models/interfaces/option.interface';
 import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { physicalResourceConfig } from 'src/config/physical-resource.config';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
+
+type ResourceOption = Option<Resource>;
+type TypeOption = Option<string>;
 
 @Component({
   selector: 'app-resource-selection-form',
@@ -35,16 +37,15 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    */
   @Output() displayedResourcesChange = new EventEmitter<Resource[]>();
 
-  resourceOpts: Option[] = [];
+  resourceOpts: ResourceOption[] = [];
 
   readonly form = new UntypedFormGroup({
-    type: new UntypedFormControl(),
-    resource: new UntypedFormControl(),
-    displayedResources: new UntypedFormControl([]),
-    showMore: new UntypedFormControl(false),
+    type: new FormControl<string | null>(null),
+    resource: new FormControl<Resource | null>(null),
+    displayedResources: new FormControl<Resource[]>([]),
   });
-  readonly resourceFilterCtrl = new UntypedFormControl();
-  readonly resourceTypes: Option[];
+  readonly resourceFilterCtrl = new FormControl<string | null>(null);
+  readonly resourceTypes: TypeOption[];
 
   private readonly _destroy$ = new Subject<void>();
 
@@ -55,7 +56,7 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
   /**
    * Returns resources filtered based on selection filter.
    */
-  get filteredResourceOpts(): Option[] {
+  get filteredResourceOpts(): ResourceOption[] {
     const filter = this.resourceFilterCtrl.value;
 
     if (!filter) {
@@ -69,10 +70,6 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    */
   get selectedResource(): Resource | null {
     return this.form.get('resource')!.value;
-  }
-
-  get showMore(): boolean {
-    return this.form.get('showMore')!.value;
   }
 
   ngOnInit(): void {
@@ -95,24 +92,24 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
   handleResourceTypeChange(typeOrTag: string): void {
     this.form.get('resource')!.reset();
     this.form.get('displayedResources')!.setValue([]);
-    this.createResourceOpts(typeOrTag);
+    this.resourceOpts = this.createResourceOpts(typeOrTag);
   }
 
   /**
-   * Creates resource selection options based on
+   * Creates resource selection ResourceOptions based on
    * resource type or tag.
    *
    * @param typeOrTag Resource type or tag.
    */
-  createResourceOpts(typeOrTag: string): void {
+  createResourceOpts(typeOrTag: string): Option<Resource>[] {
     const resources = this._getResources(typeOrTag);
 
-    this.resourceOpts = resources
+    return resources
       .map((res) => ({
         value: res,
         displayName: this.getResourceDisplayName(res),
       }))
-      .filter((opt) => opt.displayName) as Option[];
+      .filter((opt) => opt.displayName) as ResourceOption[];
   }
 
   /**
@@ -155,14 +152,6 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
     return resource.name;
   }
 
-  onMoreResourcesChange({ checked }: MatSlideToggleChange): void {
-    if (!checked) {
-      this.form
-        .get('displayedResources')!
-        .setValue(this.selectedResource ? [this.selectedResource] : []);
-    }
-  }
-
   /**
    * Gets resources from resource service filtered by type or tag.
    *
@@ -189,9 +178,9 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
   /**
    * Gets resource type options.
    *
-   * @returns Array of options.
+   * @returns Array of TypeOption.
    */
-  private _getResourceTypeOpts(): Option[] {
+  private _getResourceTypeOpts(): TypeOption[] {
     const physicalResourceTags =
       this._resourceService.getPhysicalResourceTags();
 
@@ -201,7 +190,7 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
           ({
             value: tag,
             displayName: physicalResourceConfig.tagNameMap.get(tag),
-          } as Option)
+          } as TypeOption)
       )
       .filter((opt) => opt.displayName);
 

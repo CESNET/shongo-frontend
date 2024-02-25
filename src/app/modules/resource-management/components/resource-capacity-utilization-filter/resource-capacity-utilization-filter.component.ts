@@ -35,7 +35,7 @@ export class ResourceCapacityUtilizationFilterComponent
   });
   readonly useAbsoluteValues = new UntypedFormControl(false);
 
-  readonly units: Option[] = [
+  readonly units: Option<TimeUnit>[] = [
     { value: TimeUnit.DAY, displayName: $localize`:unit option:Days` },
     { value: TimeUnit.WEEK, displayName: $localize`:unit option:Weeks` },
     { value: TimeUnit.MONTH, displayName: $localize`:unit option:Months` },
