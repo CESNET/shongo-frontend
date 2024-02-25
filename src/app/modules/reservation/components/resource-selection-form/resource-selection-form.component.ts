@@ -1,14 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-import { FormControl, UntypedFormGroup } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
-import { Subject, takeUntil } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -20,13 +20,19 @@ import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.conf
 type ResourceOption = Option<Resource>;
 type TypeOption = Option<string>;
 
+interface ResourceSelectionForm {
+  type: FormControl<string | null>;
+  resource: FormControl<Resource | null>;
+  displayedResources: FormControl<Resource[]>;
+}
+
 @Component({
   selector: 'app-resource-selection-form',
   templateUrl: './resource-selection-form.component.html',
   styleUrls: ['./resource-selection-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
+export class ResourceSelectionFormComponent implements OnInit {
   /**
    * Emits selected resource.
    */
@@ -39,17 +45,18 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
 
   resourceOpts: ResourceOption[] = [];
 
-  readonly form = new UntypedFormGroup({
+  readonly form = new FormGroup<ResourceSelectionForm>({
     type: new FormControl<string | null>(null),
     resource: new FormControl<Resource | null>(null),
-    displayedResources: new FormControl<Resource[]>([]),
+    displayedResources: new FormControl<Resource[]>([], { nonNullable: true }),
   });
   readonly resourceFilterCtrl = new FormControl<string | null>(null);
   readonly resourceTypes: TypeOption[];
 
-  private readonly _destroy$ = new Subject<void>();
-
-  constructor(private _resourceService: ResourceService) {
+  constructor(
+    private _resourceService: ResourceService,
+    private _destroyRef: DestroyRef
+  ) {
     this.resourceTypes = this._getResourceTypeOpts();
   }
 
@@ -69,19 +76,13 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    * Returns resource that is selected for reservation.
    */
   get selectedResource(): Resource | null {
-    return this.form.get('resource')!.value;
+    return this.form.controls.resource.value;
   }
 
   ngOnInit(): void {
-    this.form
-      .get('displayedResources')!
-      .valueChanges.pipe(takeUntil(this._destroy$))
+    this.form.controls.displayedResources.valueChanges
+      .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((resources) => this.displayedResourcesChange.emit(resources));
-  }
-
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
   }
 
   /**
@@ -90,8 +91,8 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    * @param typeOrTag Resource type or tag.
    */
   handleResourceTypeChange(typeOrTag: string): void {
-    this.form.get('resource')!.reset();
-    this.form.get('displayedResources')!.setValue([]);
+    this.form.controls.resource.reset();
+    this.form.controls.displayedResources.setValue([]);
     this.resourceOpts = this.createResourceOpts(typeOrTag);
   }
 
@@ -118,14 +119,8 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    * @param resource Selected resource for reservation.
    */
   onResourceSelect(resource: Resource | null): void {
-    const displayedResourcesCtrl = this.form.get('displayedResources')!;
-
-    if (resource) {
-      displayedResourcesCtrl.setValue([resource]);
-    } else {
-      displayedResourcesCtrl.setValue([]);
-    }
-
+    const displayedResourcesCtrl = this.form.controls.displayedResources;
+    displayedResourcesCtrl.setValue(resource ? [resource] : []);
     this.resourceChange.emit(resource);
   }
 
@@ -143,11 +138,11 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    */
   getResourceDisplayName(resource: Resource): string {
     if (resource.type === ResourceType.VIRTUAL_ROOM) {
-      return (
-        virtualRoomResourceConfig.technologyNameMap.get(
-          resource.technology as Technology
-        ) ?? resource.name
+      const technologyName = virtualRoomResourceConfig.technologyNameMap.get(
+        resource.technology as Technology
       );
+
+      return technologyName ?? resource.name;
     }
     return resource.name;
   }
@@ -163,13 +158,13 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
       return [];
     } else if (typeOrTag === ResourceType.VIRTUAL_ROOM) {
       return this._resourceService.resources.filter(
-        (res) => res.type === typeOrTag
+        ({ type }) => type === typeOrTag
       );
     } else {
-      return this._resourceService.resources.filter((res) =>
-        res.tags
-          ?.filter((tag) => tag.type === TagType.DEFAULT)
-          .map((tag) => tag.name)
+      return this._resourceService.resources.filter(({ tags }) =>
+        tags
+          ?.filter(({ type }) => type === TagType.DEFAULT)
+          .map(({ name }) => name)
           ?.includes(typeOrTag)
       );
     }
