@@ -43,9 +43,16 @@
     [label]="type.displayName"
   >
     <div class="resource-selection__checkboxes">
-      <mat-checkbox *ngFor="let resource of createResourceOpts(type.value)">{{
-        resource.displayName
-      }}</mat-checkbox>
+      <mat-checkbox
+        *ngFor="let resource of createResourceOpts(type.value)"
+        color="primary"
+        [formControl]="
+          form.controls.displayedResources.controls[type.value].controls[
+            resource.value.id
+          ]
+        "
+        >{{ resource.displayName }}</mat-checkbox
+      >
     </div>
   </app-dropdown-section>
 </form>

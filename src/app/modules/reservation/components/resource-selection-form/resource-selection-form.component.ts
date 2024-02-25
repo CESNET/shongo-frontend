@@ -20,10 +20,18 @@ import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.conf
 type ResourceOption = Option<Resource>;
 type TypeOption = Option<string>;
 
+interface DisplayedResourceTypeForm {
+  [key: string]: FormControl<boolean>;
+}
+
+interface DisplayedResourcesForm {
+  [key: string]: FormGroup<DisplayedResourceTypeForm>;
+}
+
 interface ResourceSelectionForm {
   type: FormControl<string | null>;
   resource: FormControl<Resource | null>;
-  displayedResources: FormControl<Resource[]>;
+  displayedResources: FormGroup<DisplayedResourcesForm>;
 }
 
 @Component({
@@ -45,11 +53,7 @@ export class ResourceSelectionFormComponent implements OnInit {
 
   resourceOpts: ResourceOption[] = [];
 
-  readonly form = new FormGroup<ResourceSelectionForm>({
-    type: new FormControl<string | null>(null),
-    resource: new FormControl<Resource | null>(null),
-    displayedResources: new FormControl<Resource[]>([], { nonNullable: true }),
-  });
+  readonly form: FormGroup<ResourceSelectionForm>;
   readonly resourceFilterCtrl = new FormControl<string | null>(null);
   readonly resourceTypes: TypeOption[];
 
@@ -58,6 +62,14 @@ export class ResourceSelectionFormComponent implements OnInit {
     private _destroyRef: DestroyRef
   ) {
     this.resourceTypes = this._getResourceTypeOpts();
+
+    this.form = new FormGroup<ResourceSelectionForm>({
+      type: new FormControl<string | null>(null),
+      resource: new FormControl<Resource | null>(null),
+      displayedResources: this.createDisplayedResourcesFormGroup(
+        this.resourceTypes.map((opt) => opt.value)
+      ),
+    });
   }
 
   /**
@@ -82,7 +94,9 @@ export class ResourceSelectionFormComponent implements OnInit {
   ngOnInit(): void {
     this.form.controls.displayedResources.valueChanges
       .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe((resources) => this.displayedResourcesChange.emit(resources));
+      .subscribe(() =>
+        this.displayedResourcesChange.emit(this.getDisplayedResources())
+      );
   }
 
   /**
@@ -92,7 +106,8 @@ export class ResourceSelectionFormComponent implements OnInit {
    */
   handleResourceTypeChange(typeOrTag: string): void {
     this.form.controls.resource.reset();
-    this.form.controls.displayedResources.setValue([]);
+    this.form.controls.displayedResources.reset();
+    this.form.controls.displayedResources.enable();
     this.resourceOpts = this.createResourceOpts(typeOrTag);
   }
 
@@ -120,7 +135,23 @@ export class ResourceSelectionFormComponent implements OnInit {
    */
   onResourceSelect(resource: Resource | null): void {
     const displayedResourcesCtrl = this.form.controls.displayedResources;
-    displayedResourcesCtrl.setValue(resource ? [resource] : []);
+    displayedResourcesCtrl.reset();
+    displayedResourcesCtrl.enable({ emitEvent: false });
+
+    if (resource) {
+      const type = this.form.value.type!;
+      const resourceGroup = displayedResourcesCtrl.get(
+        type
+      ) as FormGroup<DisplayedResourceTypeForm>;
+
+      if (resourceGroup) {
+        const resourceCtrl = resourceGroup.controls[resource.id];
+
+        resourceCtrl?.disable({ emitEvent: false });
+        resourceCtrl?.setValue(true);
+      }
+    }
+
     this.resourceChange.emit(resource);
   }
 
@@ -145,6 +176,47 @@ export class ResourceSelectionFormComponent implements OnInit {
       return technologyName ?? resource.name;
     }
     return resource.name;
+  }
+
+  createDisplayedResourcesFormGroup(
+    types: string[]
+  ): FormGroup<DisplayedResourcesForm> {
+    const formGroup = new FormGroup<DisplayedResourcesForm>({});
+
+    types.forEach((type) => {
+      const typeFormGroup = new FormGroup({});
+      const resourceOpts = this.createResourceOpts(type);
+
+      resourceOpts.forEach((opt) => {
+        typeFormGroup.addControl(
+          opt.value.id,
+          new FormControl<boolean>(false, { nonNullable: true })
+        );
+      });
+
+      formGroup.addControl(type, typeFormGroup);
+    });
+
+    return formGroup;
+  }
+
+  getDisplayedResources(): Resource[] {
+    const formValue = this.form.controls.displayedResources.getRawValue();
+    const displayedResources: Resource[] = [];
+
+    Object.entries(formValue).forEach(([type, resourceGroup]) => {
+      const resourcesByType = this._getResources(type);
+
+      Object.entries(resourceGroup!).forEach(([id, displayed]) => {
+        const resource = resourcesByType.find((res) => res.id === id);
+
+        if (displayed && resource) {
+          displayedResources.push(resource);
+        }
+      });
+    });
+
+    return displayedResources;
   }
 
   /**
