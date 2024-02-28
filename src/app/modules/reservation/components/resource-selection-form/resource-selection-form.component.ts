@@ -57,6 +57,8 @@ export class ResourceSelectionFormComponent implements OnInit {
   readonly resourceFilterCtrl = new FormControl<string | null>(null);
   readonly resourceTypes: TypeOption[];
 
+  private _prevSelectedResourceCtrl?: FormControl<boolean>;
+
   constructor(
     private _resourceService: ResourceService,
     private _destroyRef: DestroyRef
@@ -106,9 +108,9 @@ export class ResourceSelectionFormComponent implements OnInit {
    */
   handleResourceTypeChange(typeOrTag: string): void {
     this.form.controls.resource.reset();
-    this.form.controls.displayedResources.reset();
     this.form.controls.displayedResources.enable();
     this.resourceOpts = this.createResourceOpts(typeOrTag);
+    this._clearPrevControl();
   }
 
   /**
@@ -135,8 +137,8 @@ export class ResourceSelectionFormComponent implements OnInit {
    */
   onResourceSelect(resource: Resource | null): void {
     const displayedResourcesCtrl = this.form.controls.displayedResources;
-    displayedResourcesCtrl.reset();
     displayedResourcesCtrl.enable({ emitEvent: false });
+    this._clearPrevControl();
 
     if (resource) {
       const type = this.form.value.type!;
@@ -146,10 +148,13 @@ export class ResourceSelectionFormComponent implements OnInit {
 
       if (resourceGroup) {
         const resourceCtrl = resourceGroup.controls[resource.id];
+        this._prevSelectedResourceCtrl = resourceCtrl;
 
         resourceCtrl?.disable({ emitEvent: false });
         resourceCtrl?.setValue(true);
       }
+    } else {
+      displayedResourcesCtrl.reset();
     }
 
     this.resourceChange.emit(resource);
@@ -217,6 +222,11 @@ export class ResourceSelectionFormComponent implements OnInit {
     });
 
     return displayedResources;
+  }
+
+  private _clearPrevControl(): void {
+    this._prevSelectedResourceCtrl?.setValue(false, { emitEvent: false });
+    this._prevSelectedResourceCtrl = undefined;
   }
 
   /**
