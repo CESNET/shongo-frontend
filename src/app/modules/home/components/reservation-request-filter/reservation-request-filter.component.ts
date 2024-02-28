@@ -40,7 +40,7 @@ export class ReservationRequestFilterComponent
     showFailedRooms: new UntypedFormControl(false),
   });
 
-  readonly technologyOptions: Option[];
+  readonly technologyOptions: Option<string | null>[];
 
   private _destroy$ = new Subject<void>();
 
@@ -111,7 +111,7 @@ export class ReservationRequestFilterComponent
     return {};
   }
 
-  private _getTechnologyOpts(): Option[] {
+  private _getTechnologyOpts(): Option<string | null>[] {
     const technologies = this._resourceService.getVirtualRoomTechnologies();
 
     const technologyOpts = technologies
@@ -120,7 +120,7 @@ export class ReservationRequestFilterComponent
         displayName:
           virtualRoomResourceConfig.technologyNameMap.get(technology),
       }))
-      .filter((opt) => opt.displayName) as Option[];
+      .filter((opt) => opt.displayName) as Option<string | null>[];
     technologyOpts.unshift({
       value: null,
       displayName: $localize`:selection option|All available options:All`,

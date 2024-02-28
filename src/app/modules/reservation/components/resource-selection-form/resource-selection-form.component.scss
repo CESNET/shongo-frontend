@@ -2,7 +2,12 @@
   display: flex;
   flex-direction: column;
 
-  &__show-more {
-    margin-bottom: 1rem;
+  &__checkboxes {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__show-section {
+    margin-top: 0.5rem;
   }
 }

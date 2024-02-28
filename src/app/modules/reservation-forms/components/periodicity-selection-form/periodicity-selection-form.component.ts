@@ -79,7 +79,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     }),
   });
 
-  readonly monthlyDayOrderOpts: Option[] = [
+  readonly monthlyDayOrderOpts: Option<number>[] = [
     { value: 1, displayName: '1.' },
     { value: 2, displayName: '2.' },
     { value: 3, displayName: '3.' },
@@ -87,7 +87,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     { value: -1, displayName: $localize`:text|last {day}:last` },
   ];
 
-  readonly orderOpts: Option[] = [
+  readonly orderOpts: Option<number>[] = [
     { value: 1, displayName: '1.' },
     { value: 2, displayName: '2.' },
     { value: 3, displayName: '3.' },
@@ -95,7 +95,7 @@ export class PeriodicitySelectionFormComponent implements OnInit {
     { value: 5, displayName: '5.' },
   ];
 
-  readonly monthlyDayOpts: Option[] = [
+  readonly monthlyDayOpts: Option<Days>[] = [
     { value: Days.MONDAY, displayName: $localize`:day:Monday` },
     { value: Days.TUESDAY, displayName: $localize`:day:Tuesday` },
     { value: Days.WEDNESDAY, displayName: $localize`:day:Wednesday` },

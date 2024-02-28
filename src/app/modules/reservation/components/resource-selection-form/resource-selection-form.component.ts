@@ -1,15 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, FormGroup } from '@angular/forms';
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
-import { Subject, takeUntil } from 'rxjs';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
 import { Technology } from 'src/app/shared/models/enums/technology.enum';
@@ -18,13 +17,30 @@ import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { physicalResourceConfig } from 'src/config/physical-resource.config';
 import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 
+type ResourceOption = Option<Resource>;
+type TypeOption = Option<string>;
+
+interface DisplayedResourceTypeForm {
+  [key: string]: FormControl<boolean>;
+}
+
+interface DisplayedResourcesForm {
+  [key: string]: FormGroup<DisplayedResourceTypeForm>;
+}
+
+interface ResourceSelectionForm {
+  type: FormControl<string | null>;
+  resource: FormControl<Resource | null>;
+  displayedResources: FormGroup<DisplayedResourcesForm>;
+}
+
 @Component({
   selector: 'app-resource-selection-form',
   templateUrl: './resource-selection-form.component.html',
   styleUrls: ['./resource-selection-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
+export class ResourceSelectionFormComponent implements OnInit {
   /**
    * Emits selected resource.
    */
@@ -35,27 +51,33 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    */
   @Output() displayedResourcesChange = new EventEmitter<Resource[]>();
 
-  resourceOpts: Option[] = [];
+  resourceOpts: ResourceOption[] = [];
 
-  readonly form = new UntypedFormGroup({
-    type: new UntypedFormControl(),
-    resource: new UntypedFormControl(),
-    displayedResources: new UntypedFormControl([]),
-    showMore: new UntypedFormControl(false),
-  });
-  readonly resourceFilterCtrl = new UntypedFormControl();
-  readonly resourceTypes: Option[];
+  readonly form: FormGroup<ResourceSelectionForm>;
+  readonly resourceFilterCtrl = new FormControl<string | null>(null);
+  readonly resourceTypes: TypeOption[];
 
-  private readonly _destroy$ = new Subject<void>();
+  private _prevSelectedResourceCtrl?: FormControl<boolean>;
 
-  constructor(private _resourceService: ResourceService) {
+  constructor(
+    private _resourceService: ResourceService,
+    private _destroyRef: DestroyRef
+  ) {
     this.resourceTypes = this._getResourceTypeOpts();
+
+    this.form = new FormGroup<ResourceSelectionForm>({
+      type: new FormControl<string | null>(null),
+      resource: new FormControl<Resource | null>(null),
+      displayedResources: this.createDisplayedResourcesFormGroup(
+        this.resourceTypes.map((opt) => opt.value)
+      ),
+    });
   }
 
   /**
    * Returns resources filtered based on selection filter.
    */
-  get filteredResourceOpts(): Option[] {
+  get filteredResourceOpts(): ResourceOption[] {
     const filter = this.resourceFilterCtrl.value;
 
     if (!filter) {
@@ -68,23 +90,15 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    * Returns resource that is selected for reservation.
    */
   get selectedResource(): Resource | null {
-    return this.form.get('resource')!.value;
-  }
-
-  get showMore(): boolean {
-    return this.form.get('showMore')!.value;
+    return this.form.controls.resource.value;
   }
 
   ngOnInit(): void {
-    this.form
-      .get('displayedResources')!
-      .valueChanges.pipe(takeUntil(this._destroy$))
-      .subscribe((resources) => this.displayedResourcesChange.emit(resources));
-  }
-
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
+    this.form.controls.displayedResources.valueChanges
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe(() =>
+        this.displayedResourcesChange.emit(this.getDisplayedResources())
+      );
   }
 
   /**
@@ -93,26 +107,27 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    * @param typeOrTag Resource type or tag.
    */
   handleResourceTypeChange(typeOrTag: string): void {
-    this.form.get('resource')!.reset();
-    this.form.get('displayedResources')!.setValue([]);
-    this.createResourceOpts(typeOrTag);
+    this.form.controls.resource.reset();
+    this.form.controls.displayedResources.enable();
+    this.resourceOpts = this.createResourceOpts(typeOrTag);
+    this._clearPrevControl();
   }
 
   /**
-   * Creates resource selection options based on
+   * Creates resource selection ResourceOptions based on
    * resource type or tag.
    *
    * @param typeOrTag Resource type or tag.
    */
-  createResourceOpts(typeOrTag: string): void {
+  createResourceOpts(typeOrTag: string): Option<Resource>[] {
     const resources = this._getResources(typeOrTag);
 
-    this.resourceOpts = resources
+    return resources
       .map((res) => ({
         value: res,
         displayName: this.getResourceDisplayName(res),
       }))
-      .filter((opt) => opt.displayName) as Option[];
+      .filter((opt) => opt.displayName) as ResourceOption[];
   }
 
   /**
@@ -121,12 +136,25 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    * @param resource Selected resource for reservation.
    */
   onResourceSelect(resource: Resource | null): void {
-    const displayedResourcesCtrl = this.form.get('displayedResources')!;
+    const displayedResourcesCtrl = this.form.controls.displayedResources;
+    displayedResourcesCtrl.enable({ emitEvent: false });
+    this._clearPrevControl();
 
     if (resource) {
-      displayedResourcesCtrl.setValue([resource]);
+      const type = this.form.value.type!;
+      const resourceGroup = displayedResourcesCtrl.get(
+        type
+      ) as FormGroup<DisplayedResourceTypeForm>;
+
+      if (resourceGroup) {
+        const resourceCtrl = resourceGroup.controls[resource.id];
+        this._prevSelectedResourceCtrl = resourceCtrl;
+
+        resourceCtrl?.disable({ emitEvent: false });
+        resourceCtrl?.setValue(true);
+      }
     } else {
-      displayedResourcesCtrl.setValue([]);
+      displayedResourcesCtrl.reset();
     }
 
     this.resourceChange.emit(resource);
@@ -146,21 +174,59 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
    */
   getResourceDisplayName(resource: Resource): string {
     if (resource.type === ResourceType.VIRTUAL_ROOM) {
-      return (
-        virtualRoomResourceConfig.technologyNameMap.get(
-          resource.technology as Technology
-        ) ?? resource.name
+      const technologyName = virtualRoomResourceConfig.technologyNameMap.get(
+        resource.technology as Technology
       );
+
+      return technologyName ?? resource.name;
     }
     return resource.name;
   }
 
-  onMoreResourcesChange({ checked }: MatSlideToggleChange): void {
-    if (!checked) {
-      this.form
-        .get('displayedResources')!
-        .setValue(this.selectedResource ? [this.selectedResource] : []);
-    }
+  createDisplayedResourcesFormGroup(
+    types: string[]
+  ): FormGroup<DisplayedResourcesForm> {
+    const formGroup = new FormGroup<DisplayedResourcesForm>({});
+
+    types.forEach((type) => {
+      const typeFormGroup = new FormGroup({});
+      const resourceOpts = this.createResourceOpts(type);
+
+      resourceOpts.forEach((opt) => {
+        typeFormGroup.addControl(
+          opt.value.id,
+          new FormControl<boolean>(false, { nonNullable: true })
+        );
+      });
+
+      formGroup.addControl(type, typeFormGroup);
+    });
+
+    return formGroup;
+  }
+
+  getDisplayedResources(): Resource[] {
+    const formValue = this.form.controls.displayedResources.getRawValue();
+    const displayedResources: Resource[] = [];
+
+    Object.entries(formValue).forEach(([type, resourceGroup]) => {
+      const resourcesByType = this._getResources(type);
+
+      Object.entries(resourceGroup!).forEach(([id, displayed]) => {
+        const resource = resourcesByType.find((res) => res.id === id);
+
+        if (displayed && resource) {
+          displayedResources.push(resource);
+        }
+      });
+    });
+
+    return displayedResources;
+  }
+
+  private _clearPrevControl(): void {
+    this._prevSelectedResourceCtrl?.setValue(false, { emitEvent: false });
+    this._prevSelectedResourceCtrl = undefined;
   }
 
   /**
@@ -174,13 +240,13 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
       return [];
     } else if (typeOrTag === ResourceType.VIRTUAL_ROOM) {
       return this._resourceService.resources.filter(
-        (res) => res.type === typeOrTag
+        ({ type }) => type === typeOrTag
       );
     } else {
-      return this._resourceService.resources.filter((res) =>
-        res.tags
-          ?.filter((tag) => tag.type === TagType.DEFAULT)
-          .map((tag) => tag.name)
+      return this._resourceService.resources.filter(({ tags }) =>
+        tags
+          ?.filter(({ type }) => type === TagType.DEFAULT)
+          .map(({ name }) => name)
           ?.includes(typeOrTag)
       );
     }
@@ -189,9 +255,9 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
   /**
    * Gets resource type options.
    *
-   * @returns Array of options.
+   * @returns Array of TypeOption.
    */
-  private _getResourceTypeOpts(): Option[] {
+  private _getResourceTypeOpts(): TypeOption[] {
     const physicalResourceTags =
       this._resourceService.getPhysicalResourceTags();
 
@@ -201,7 +267,7 @@ export class ResourceSelectionFormComponent implements OnInit, OnDestroy {
           ({
             value: tag,
             displayName: physicalResourceConfig.tagNameMap.get(tag),
-          } as Option)
+          } as TypeOption)
       )
       .filter((opt) => opt.displayName);
 

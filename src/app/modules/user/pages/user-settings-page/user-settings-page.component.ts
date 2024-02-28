@@ -22,7 +22,7 @@ import { UserSettings } from 'src/app/shared/models/rest-api/user-settings.inter
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserSettingsPageComponent implements OnInit, OnDestroy {
-  readonly languageOptions: Option[] = [
+  readonly languageOptions: Option<string>[] = [
     {
       displayName: $localize`:option name:Use your operating system's configuration`,
       value: 'os',

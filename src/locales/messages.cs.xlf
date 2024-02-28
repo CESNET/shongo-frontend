@@ -5063,6 +5063,23 @@
 				</context-group>
 				<note priority="1" from="description">definition tag</note>
 			</trans-unit>
+			<trans-unit id="8693603235657020323" datatype="html">
+				<source>Other</source>
+				<target>Ostatní</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.ts</context>
+					<context context-type="linenumber">227</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="8517976624613485662" datatype="html">
+				<source>Reserve resource</source>
+				<target>Rezervovat zdroj</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation/pages/reservation-page/reservation-page.component.html</context>
+					<context context-type="linenumber">117</context>
+				</context-group>
+				<note priority="1" from="description">heading</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

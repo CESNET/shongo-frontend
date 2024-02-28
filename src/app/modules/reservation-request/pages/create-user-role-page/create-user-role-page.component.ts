@@ -27,7 +27,7 @@ export class CreateUserRolePageComponent implements OnInit {
   IdentityType = IdentityType;
   posting$ = new BehaviorSubject(false);
 
-  roleTypes: Option[] = [
+  roleTypes: Option<RoleType>[] = [
     { value: RoleType.OWNER, displayName: $localize`:role type:Owner` },
     { value: RoleType.USER, displayName: $localize`:role type:User` },
     { value: RoleType.READER, displayName: $localize`:role type:Reader` },

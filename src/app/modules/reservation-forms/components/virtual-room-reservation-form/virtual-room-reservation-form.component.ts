@@ -79,7 +79,7 @@ export class VirtualRoomReservationFormComponent
   readonly getFormError = getFormError;
   readonly Technology = Technology;
 
-  readonly technologyOpts: Option[];
+  readonly technologyOpts: Option<string>[];
 
   constructor(
     private _resourceService: ResourceService,
@@ -268,7 +268,7 @@ export class VirtualRoomReservationFormComponent
    *
    * @returns Array of technology options.
    */
-  private _createTechnologyOpts(): Option[] {
+  private _createTechnologyOpts(): Option<string>[] {
     const resources = this._resourceService.getVirtualRoomResources();
 
     return resources
@@ -278,6 +278,6 @@ export class VirtualRoomReservationFormComponent
           res.technology
         ),
       }))
-      .filter((opt) => opt.displayName) as Option[];
+      .filter((opt) => opt.displayName) as Option<string>[];
   }
 }
