@@ -239,15 +239,9 @@ export class ResourceSelectionFormComponent implements OnInit {
     if (!this._resourceService.resources) {
       return [];
     } else if (typeOrTag === ResourceType.VIRTUAL_ROOM) {
-      return this._resourceService.resources.filter(
-        ({ type }) => type === typeOrTag
-      );
+      return this._resourceService.getVirtualRoomResources();
     } else {
-      return this._resourceService.resources.filter(({ tags, type }) => {
-        if (type !== ResourceType.PHYSICAL_RESOURCE) {
-          return false;
-        }
-
+      return this._resourceService.getPhysicalResources().filter(({ tags }) => {
         const tagNames = tags
           ?.filter(({ type }) => type === TagType.DEFAULT)
           .map(({ name }) => name);
@@ -282,18 +276,22 @@ export class ResourceSelectionFormComponent implements OnInit {
       )
       .filter((opt) => opt.displayName);
 
-    tags.push(
-      ...[
-        {
-          value: ResourceType.VIRTUAL_ROOM,
-          displayName: $localize`Virtual room`,
-        },
-        {
-          value: ResourceType.OTHER,
-          displayName: $localize`Other`,
-        },
-      ]
-    );
+    const hasVirtualRooms = !!this._getResources(ResourceType.VIRTUAL_ROOM)
+      .length;
+    if (hasVirtualRooms) {
+      tags.push({
+        value: ResourceType.VIRTUAL_ROOM,
+        displayName: $localize`Virtual room`,
+      });
+    }
+
+    const hasOtherResources = !!this._getResources(ResourceType.OTHER).length;
+    if (hasOtherResources) {
+      tags.push({
+        value: ResourceType.OTHER,
+        displayName: $localize`Other`,
+      });
+    }
 
     return tags;
   }

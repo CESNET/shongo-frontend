@@ -3,6 +3,8 @@ export const physicalResourceConfig = {
   // Don't forget to add a proper translation after changing name map.
   tagNameMap: new Map<string, string>([
     ['meeting-room', $localize`Meeting room`],
-    ['parking-place', $localize`Parking place`],
+    ['park-place', $localize`Parking place`],
+    ['vehicle', $localize`Vehicle`],
+    ['device', $localize`Device`],
   ]),
 };

@@ -548,7 +548,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.ts</context>
-          <context context-type="linenumber">266</context>
+          <context context-type="linenumber">289</context>
         </context-group>
         <note priority="1" from="description">Help page image label</note>
       </trans-unit>
@@ -2936,7 +2936,7 @@
         <source>Other</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/modules/reservation/components/resource-selection-form/resource-selection-form.component.ts</context>
-          <context context-type="linenumber">227</context>
+          <context context-type="linenumber">293</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6979654020265953946" datatype="html">
@@ -4354,6 +4354,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/config/physical-resource.config.ts</context>
           <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7132893068309658147" datatype="html">
+        <source>Vehicle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/physical-resource.config.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7292902857194439444" datatype="html">
+        <source>Device</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/config/physical-resource.config.ts</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1891377425734264138" datatype="html">

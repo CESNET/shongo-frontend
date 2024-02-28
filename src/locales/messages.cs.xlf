@@ -5080,6 +5080,22 @@
 				</context-group>
 				<note priority="1" from="description">heading</note>
 			</trans-unit>
+			<trans-unit id="7132893068309658147" datatype="html">
+				<source>Vehicle</source>
+				<target>Vozidlo</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/config/physical-resource.config.ts</context>
+					<context context-type="linenumber">7</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="7292902857194439444" datatype="html">
+				<source>Device</source>
+				<target>Zařízení</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/config/physical-resource.config.ts</context>
+					<context context-type="linenumber">8</context>
+				</context-group>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
