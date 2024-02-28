@@ -19,8 +19,6 @@ import {
   Resource,
   VirtualRoomResource,
 } from 'src/app/shared/models/rest-api/resource.interface';
-import { physicalResourceConfig } from 'src/config/physical-resource.config';
-import { virtualRoomResourceConfig } from 'src/config/virtual-room-resource.config';
 import { ApiService } from '../api.service';
 
 /**
@@ -133,15 +131,11 @@ export class ResourceService extends ApiService {
       this.resources
         .filter((resource) => resource.type === ResourceType.PHYSICAL_RESOURCE)
         .reduce((acc: string[], curr: Resource) => {
-          const supportedTags = (curr as PhysicalResource).tags
-            .filter(
-              ({ type, name }) =>
-                type === TagType.DEFAULT &&
-                physicalResourceConfig.supportedTags.includes(name)
-            )
+          const tagNames = (curr as PhysicalResource).tags
+            .filter(({ type }) => type === TagType.DEFAULT)
             .map(({ name }) => name);
 
-          acc.push(...supportedTags);
+          acc.push(...tagNames);
           return acc;
         }, [])
     );
@@ -163,13 +157,7 @@ export class ResourceService extends ApiService {
 
     const tags = new Set(
       this.resources
-        .filter(
-          (resource) =>
-            resource.type === ResourceType.VIRTUAL_ROOM &&
-            virtualRoomResourceConfig.supportedTechnologies.includes(
-              (resource as VirtualRoomResource).technology
-            )
-        )
+        .filter((resource) => resource.type === ResourceType.VIRTUAL_ROOM)
         .map((resource) => resource.technology as Technology)
     );
 
@@ -295,7 +283,7 @@ export class ResourceService extends ApiService {
           .pipe(first(), retry(RESOURCE_FETCH_RETRY_COUNT))
       );
       this._loading$.next(false);
-      this.resources = this._filterSupportedResources(resources);
+      this.resources = resources;
 
       if (this.resources.length > 0) {
         this._saveToLocalStorage(this.resources);
@@ -356,28 +344,6 @@ export class ResourceService extends ApiService {
       RESOURCES_LOCALSTORAGE_KEY,
       JSON.stringify(resourcesStore)
     );
-  }
-
-  /**
-   * Filters out resources which are unsupported in configuration.
-   *
-   * @param resources Available resources.
-   * @returns Supported resources.
-   */
-  private _filterSupportedResources(resources: Resource[] = []): Resource[] {
-    return resources.filter((res) => {
-      if (res.type === ResourceType.PHYSICAL_RESOURCE) {
-        return (res as PhysicalResource).tags.some(
-          (tag) =>
-            tag.type === TagType.DEFAULT &&
-            physicalResourceConfig.supportedTags.includes(tag.name)
-        );
-      } else {
-        return virtualRoomResourceConfig.supportedTechnologies.includes(
-          (res as VirtualRoomResource).technology
-        );
-      }
-    });
   }
 
   /**
