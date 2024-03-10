@@ -5096,6 +5096,14 @@
 					<context context-type="linenumber">8</context>
 				</context-group>
 			</trans-unit>
+			<trans-unit id="1664620352147673062" datatype="html">
+				<source>Resource</source>
+				<target>Zdroj</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/modules/reservation/constants/calendar-translations.const.ts</context>
+					<context context-type="linenumber">7</context>
+				</context-group>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

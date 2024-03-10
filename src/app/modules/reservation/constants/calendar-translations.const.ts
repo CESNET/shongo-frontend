@@ -4,4 +4,5 @@ export const CALENDAR_TRANSLATIONS = {
   tooltipReservedBy: $localize`Reserved by`,
   unknown: $localize`Unknown`,
   reservationFor: $localize`Reservation for`,
+  tooltipResource: $localize`Resource`,
 };
