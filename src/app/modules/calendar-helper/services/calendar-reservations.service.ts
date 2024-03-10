@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { ReservationRequestService } from '@app/core/http/reservation-request/reservation-request.service';
+import { ResourceService } from '@app/core/http/resource/resource.service';
 import { AlertService } from '@app/core/services/alert.service';
 import { ERequestState } from '@app/shared/models/enums/request-state.enum';
 import { ReservationType } from '@app/shared/models/enums/reservation-type.enum';
@@ -20,7 +21,8 @@ export class CalendarReservationsService {
   constructor(
     private _resReqS: ReservationRequestService,
     private _alertS: AlertService,
-    private _authS: AuthenticationService
+    private _authS: AuthenticationService,
+    private _resourceS: ResourceService
   ) {}
 
   get currentUser(): IEventOwner {
@@ -62,7 +64,9 @@ export class CalendarReservationsService {
   }
 
   private _createCalendarItem(reservation: ReservationRequest): ICalendarItem {
-    return {
+    const resource = this._resourceS.findResourceByReservation(reservation);
+
+    const item: ICalendarItem = {
       slot: {
         start: moment(reservation.slot.start).toDate(),
         end: moment(reservation.slot.end).toDate(),
@@ -76,6 +80,15 @@ export class CalendarReservationsService {
         id: reservation.id,
       },
     };
+
+    if (resource) {
+      item.resource = {
+        id: resource.id,
+        name: resource.name,
+      };
+    }
+
+    return item;
   }
 
   private _fetchInterval$(
