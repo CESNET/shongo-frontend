@@ -240,15 +240,11 @@ export class ResourceService extends ApiService {
 
     if (reservationRequest.type === ReservationType.PHYSICAL_RESOURCE) {
       const resourceId = reservationRequest.physicalResourceData?.resourceId;
-      return resourceId !== undefined
-        ? this.findResourceById(resourceId)
-        : null;
+      return !!resourceId ? this.findResourceById(resourceId) : null;
     }
 
     const technology = reservationRequest.virtualRoomData?.technology;
-    return technology !== undefined
-      ? this.findResourceByTechnology(technology)
-      : null;
+    return !!technology ? this.findResourceByTechnology(technology) : null;
   }
 
   /**
