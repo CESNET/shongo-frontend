@@ -28,13 +28,11 @@ You can configure app's environment in `src/environments`. Modify **environment.
 #### Virtual resource
 
 1. Add the new technology to Technology enumerable in `src/app/shared/models/enums/technology.enum.ts`. Use the same value as will be returned from REST api.
-2. Add technology to **supportedTechnologies** array in virtual room configuration file `src/config/virtual-room-resource.config.ts`.
-3. Add a human readable name to **technologyNameMap** also in virtual room configuration file. Optionally tag the name with `$localize` to support i18n, it will be available for translation after generating translation file. Make sure to use back ticks on a string when using `$localize` otherwise it won't work.
+2. Add a human readable name to **technologyNameMap** in virtual room configuration file. Optionally tag the name with `$localize` to support i18n, it will be available for translation after generating translation file. Make sure to use back ticks on a string when using `$localize` otherwise it won't work.
 
 #### Physical resource
 
-1. Add tag to **supportedTags** array in physical resource configuration file `src/config/physical-resource.config.ts`.
-2. Add a human readable name to **tagNameMap** also in physical resource configuration file. You can use `$localize` as described in virtual resource configuration.
+1. Add a human readable name to **tagNameMap** also in physical resource configuration file. You can use `$localize` as described in virtual resource configuration.
 
 ## Development
 
