@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AlertType } from '@app/shared/models/enums/alert-type.enum';
+import { ResourceType } from '@app/shared/models/enums/resource-type.enum';
 import { ReservationRequestDetail } from '@app/shared/models/rest-api/reservation-request.interface';
 import { Resource } from '@app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from '@app/shared/models/rest-api/slot.interface';
@@ -19,6 +20,10 @@ import { ReservationDialogComponent } from '../reservation-dialog/reservation-di
 export class CalendarSidebarComponent {
   @Input({ required: true }) calendar!: ShongoCalendarComponent;
 
+  /**
+   * Restricts resources to be displayed based on type.
+   */
+  @Input() restrictToType?: ResourceType;
   @Input() selectedResource?: Resource | null;
   @Input() selectedSlot?: CalendarSlot | null;
   @Input() parentReservationRequest?: ReservationRequestDetail;

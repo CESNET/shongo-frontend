@@ -5,6 +5,7 @@
   >
     <h3 i18n="heading">Reserve resource</h3>
     <app-resource-selection-form
+      [restrictToType]="restrictToType"
       (resourceChange)="onSelectedResourceChange($event)"
       (displayedResourcesChange)="onDisplayedResourcesChange($event)"
     ></app-resource-selection-form>

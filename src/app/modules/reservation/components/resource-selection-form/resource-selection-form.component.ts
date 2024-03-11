@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -51,28 +52,23 @@ export class ResourceSelectionFormComponent implements OnInit {
    */
   @Output() displayedResourcesChange = new EventEmitter<Resource[]>();
 
-  resourceOpts: ResourceOption[] = [];
+  /**
+   * Restricts resources to be displayed based on type.
+   */
+  @Input() restrictToType?: ResourceType;
 
-  readonly form: FormGroup<ResourceSelectionForm>;
+  resourceOpts: ResourceOption[] = [];
+  resourceTypes: TypeOption[] = [];
+  form!: FormGroup<ResourceSelectionForm>;
+
   readonly resourceFilterCtrl = new FormControl<string | null>(null);
-  readonly resourceTypes: TypeOption[];
 
   private _prevSelectedResourceCtrl?: FormControl<boolean>;
 
   constructor(
     private _resourceService: ResourceService,
     private _destroyRef: DestroyRef
-  ) {
-    this.resourceTypes = this._getResourceTypeOpts();
-
-    this.form = new FormGroup<ResourceSelectionForm>({
-      type: new FormControl<string | null>(null),
-      resource: new FormControl<Resource | null>(null),
-      displayedResources: this.createDisplayedResourcesFormGroup(
-        this.resourceTypes.map((opt) => opt.value)
-      ),
-    });
-  }
+  ) {}
 
   /**
    * Returns resources filtered based on selection filter.
@@ -94,6 +90,16 @@ export class ResourceSelectionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.resourceTypes = this._getResourceTypeOpts();
+
+    this.form = new FormGroup<ResourceSelectionForm>({
+      type: new FormControl<string | null>(null),
+      resource: new FormControl<Resource | null>(null),
+      displayedResources: this.createDisplayedResourcesFormGroup(
+        this.resourceTypes.map((opt) => opt.value)
+      ),
+    });
+
     this.form.controls.displayedResources.valueChanges
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe(() =>
@@ -263,10 +269,33 @@ export class ResourceSelectionFormComponent implements OnInit {
    * @returns Array of TypeOption.
    */
   private _getResourceTypeOpts(): TypeOption[] {
+    const tags = this._getPhysicalResourceOpts();
+
+    if (this._shouldShowResourceType(ResourceType.VIRTUAL_ROOM)) {
+      tags.push({
+        value: ResourceType.VIRTUAL_ROOM,
+        displayName: $localize`Virtual room`,
+      });
+    }
+    if (this._shouldShowResourceType(ResourceType.OTHER)) {
+      tags.push({
+        value: ResourceType.OTHER,
+        displayName: $localize`Other`,
+      });
+    }
+
+    return tags;
+  }
+
+  private _getPhysicalResourceOpts(): TypeOption[] {
+    if (this._isTypeRestricted(ResourceType.PHYSICAL_RESOURCE)) {
+      return [];
+    }
+
     const physicalResourceTags =
       this._resourceService.getPhysicalResourceTags();
 
-    const tags = physicalResourceTags
+    return physicalResourceTags
       .map(
         (tag) =>
           ({
@@ -275,24 +304,16 @@ export class ResourceSelectionFormComponent implements OnInit {
           } as TypeOption)
       )
       .filter((opt) => opt.displayName);
+  }
 
-    const hasVirtualRooms = !!this._getResources(ResourceType.VIRTUAL_ROOM)
-      .length;
-    if (hasVirtualRooms) {
-      tags.push({
-        value: ResourceType.VIRTUAL_ROOM,
-        displayName: $localize`Virtual room`,
-      });
-    }
+  private _shouldShowResourceType(type: ResourceType): boolean {
+    const hasResources = !!this._getResources(type).length;
+    const isRestricted = this._isTypeRestricted(type);
 
-    const hasOtherResources = !!this._getResources(ResourceType.OTHER).length;
-    if (hasOtherResources) {
-      tags.push({
-        value: ResourceType.OTHER,
-        displayName: $localize`Other`,
-      });
-    }
+    return hasResources && !isRestricted;
+  }
 
-    return tags;
+  private _isTypeRestricted(type: ResourceType): boolean {
+    return this.restrictToType !== undefined && type !== this.restrictToType;
   }
 }

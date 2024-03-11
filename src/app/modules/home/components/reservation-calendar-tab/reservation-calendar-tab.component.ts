@@ -9,6 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LayoutService } from '@app/core/services/layout.service';
 import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
 import { ERequestState } from '@app/shared/models/enums/request-state.enum';
+import { ResourceType } from '@app/shared/models/enums/resource-type.enum';
 import { IRequest } from '@app/shared/models/interfaces/request.interface';
 import { Resource } from '@app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from '@app/shared/models/rest-api/slot.interface';
@@ -36,6 +37,7 @@ export class ReservationCalendarTabComponent implements AfterViewInit {
   selectedResource?: Resource | null;
   selectedSlot?: CalendarSlot | null;
 
+  readonly restrictToType = ResourceType.PHYSICAL_RESOURCE;
   readonly calendarRequest$: Observable<IRequest<ICalendarItem[]>>;
   readonly CalendarView = CalendarView;
   readonly ERequestState = ERequestState;
