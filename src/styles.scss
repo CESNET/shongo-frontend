@@ -1,17 +1,17 @@
-@use './styles/mat-theme-colors' as mat-theme-colors;
+@use 'src/app/styles/mat-theme-colors' as mat-theme-colors;
 @use '@angular/material' as mat;
 
 @include mat.all-component-typographies();
 @include mat.core();
 
-@import './styles/res-container.scss';
-@import './styles/themes/shongo-light.theme.scss';
-@import './styles/utils.scss';
-@import './styles/definition-list.scss';
-@import './styles/calendar.scss';
-@import './styles/scrollbar.scss';
-@import './styles/reset.scss';
-@import './styles/preloader';
+@import 'src/app/styles/res-container';
+@import 'src/app/styles/themes/shongo-light.theme';
+@import 'src/app/styles/utils';
+@import 'src/app/styles/definition-list';
+@import 'src/app/styles/calendar';
+@import 'src/app/styles/scrollbar';
+@import 'src/app/styles/reset';
+@import 'src/app/styles/preloader';
 
 :root {
   @include mat-theme-colors.publish($shongo-frontend-theme);

@@ -1,3 +1,5 @@
+@import '/src/app/styles/static-variables';
+
 .reservation {
   height: 100vh;
 
@@ -68,7 +70,7 @@ mat-drawer {
   border: 0;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: $breakpoint-m) {
   .reservation {
     &__back {
       display: none;
@@ -76,7 +78,7 @@ mat-drawer {
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $breakpoint-s) {
   .reservation {
     &__date-header--main {
       display: none;

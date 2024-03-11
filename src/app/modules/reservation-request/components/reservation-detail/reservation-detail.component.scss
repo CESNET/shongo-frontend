@@ -1,3 +1,5 @@
+@import '/src/app/styles/static-variables';
+
 /* Layout */
 .reservation-detail {
   display: flex;
@@ -20,7 +22,7 @@
   margin-bottom: 3px;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: $breakpoint-m) {
   .reservation-detail {
     flex-direction: column;
   }

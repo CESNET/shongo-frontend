@@ -1,3 +1,5 @@
+@import '/src/app/styles/static-variables';
+
 // Based on form field padding + margin.
 $section-margin: 1.34375em + 0.25em;
 
@@ -66,7 +68,7 @@ $section-margin: 1.34375em + 0.25em;
   }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: $breakpoint-m) {
   .sidebar {
     &__section {
       &--mobile {

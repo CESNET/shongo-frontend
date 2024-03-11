@@ -1,3 +1,5 @@
+@import '/src/app/styles/static-variables';
+
 /* Layout */
 main {
   display: flex;
@@ -48,7 +50,7 @@ main {
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $breakpoint-s) {
   .calendar {
     &__view-date {
       font-size: var(--font-size-large);

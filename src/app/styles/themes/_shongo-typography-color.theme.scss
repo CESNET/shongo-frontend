@@ -1,4 +1,4 @@
-@import "@angular/material/theming";
+@import '@angular/material/theming';
 
 @mixin color($config) {
   $config: mat-get-color-config($config);
