@@ -120,7 +120,7 @@ export class CalendarSidebarComponent {
     this.displayedResourcesChange.emit(resources);
   }
 
-  onDateSelection(moment: moment.Moment): void {
-    this.calendar.viewDate = moment.toDate();
+  onDateSelection(date: Date): void {
+    this.calendar.viewDate = date;
   }
 }

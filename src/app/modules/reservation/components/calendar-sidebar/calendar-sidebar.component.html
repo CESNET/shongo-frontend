@@ -2,25 +2,10 @@
   <!-- Mobile only section -->
   <section class="sidebar__section sidebar__section--mobile">
     <app-back-button class="sidebar__back"></app-back-button>
-
-    <div class="jump-to-date">
-      <button
-        mat-stroked-button
-        class="jump-to-date__button"
-        aria-labelledby="jump-to-date-btn-name"
-        (click)="picker.open()"
-      >
-        <mat-icon>event</mat-icon
-        ><span i18n="button name" id="jump-to-date-btn-name">Jump to date</span>
-      </button>
-      <input
-        type="date"
-        class="jump-to-date__input"
-        [matDatepicker]="picker"
-        (dateInput)="onDateSelection($event.value)"
-      />
-      <mat-datepicker #picker></mat-datepicker>
-    </div>
+    <app-jump-to-date
+      class="sidebar__jump-to-date"
+      (dateSelected)="onDateSelection($event)"
+    ></app-jump-to-date>
   </section>
 
   <section

@@ -56,15 +56,9 @@ $section-margin: 1.34375em + 0.25em;
   &__back {
     display: none;
   }
-}
 
-.jump-to-date {
-  display: none;
-
-  &__input {
-    visibility: hidden;
-    width: 0;
-    height: 0;
+  &__jump-to-date {
+    display: none;
   }
 }
 
@@ -81,13 +75,9 @@ $section-margin: 1.34375em + 0.25em;
     &__back {
       display: flex;
     }
-  }
 
-  .jump-to-date {
-    display: block;
-
-    &__button {
-      width: 100%;
+    &__jump-to-date {
+      display: block;
     }
   }
 }

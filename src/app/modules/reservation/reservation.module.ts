@@ -26,6 +26,7 @@ import { ReservationFormsModule } from '../reservation-forms/reservation-forms.m
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { CalendarSidebarComponent } from './components/calendar-sidebar/calendar-sidebar.component';
 import { DropdownSectionComponent } from './components/dropdown-section/dropdown-section.component';
+import { JumpToDateComponent } from './components/jump-to-date/jump-to-date.component';
 import { ReservationDialogComponent } from './components/reservation-dialog/reservation-dialog.component';
 import { ResourceSelectionFormComponent } from './components/resource-selection-form/resource-selection-form.component';
 import { CALENDAR_TRANSLATIONS } from './constants';
@@ -70,6 +71,7 @@ import { ReservationRoutingModule } from './reservation-routing.module';
     DropdownSectionComponent,
     CalendarSidebarComponent,
     BackButtonComponent,
+    JumpToDateComponent,
   ],
 })
 export class ReservationModule {}
