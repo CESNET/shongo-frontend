@@ -119,8 +119,4 @@ export class CalendarSidebarComponent {
   onDisplayedResourcesChange(resources: Resource[]): void {
     this.displayedResourcesChange.emit(resources);
   }
-
-  onDateSelection(date: Date): void {
-    this.calendar.viewDate = date;
-  }
 }

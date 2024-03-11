@@ -1,13 +1,4 @@
 <div class="sidebar">
-  <!-- Mobile only section -->
-  <section class="sidebar__section sidebar__section--mobile">
-    <app-back-button class="sidebar__back"></app-back-button>
-    <app-jump-to-date
-      class="sidebar__jump-to-date"
-      (dateSelected)="onDateSelection($event)"
-    ></app-jump-to-date>
-  </section>
-
   <section
     class="sidebar__section"
     *ngIf="!capacityBookingMode; else capacityBookingSection"

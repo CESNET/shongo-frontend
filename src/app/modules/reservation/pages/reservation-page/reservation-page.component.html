@@ -61,7 +61,16 @@
       #drawer
       [mode]="(tabletSizeHit$ | async)?.matches ? 'over' : 'side'"
       opened
+      class="reservation__sidebar"
     >
+      <!-- Mobile only section -->
+      <section class="reservation__mobile-sidebar">
+        <app-back-button></app-back-button>
+        <app-jump-to-date
+          (dateSelected)="onDateSelection($event)"
+        ></app-jump-to-date>
+      </section>
+
       <app-calendar-sidebar
         [calendar]="calendar"
         [selectedResource]="selectedResource"

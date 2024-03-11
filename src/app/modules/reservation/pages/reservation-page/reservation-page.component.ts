@@ -129,6 +129,10 @@ export class ReservationPageComponent
     }
   }
 
+  onDateSelection(date: Date): void {
+    this.calendar.viewDate = date;
+  }
+
   refetchInterval(): void {
     if (this._currentInterval) {
       this._fetchInterval(this._currentInterval);

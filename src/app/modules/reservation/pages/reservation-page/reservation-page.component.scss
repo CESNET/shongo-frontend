@@ -34,6 +34,14 @@
   &__date-header {
     font-size: var(--font-size-medium);
   }
+
+  &__sidebar {
+    padding: 1rem;
+  }
+
+  &__mobile-sidebar {
+    display: none;
+  }
 }
 
 .loading {
@@ -57,6 +65,12 @@ mat-drawer {
   .reservation {
     &__back {
       display: none;
+    }
+
+    &__mobile-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
   }
 }
