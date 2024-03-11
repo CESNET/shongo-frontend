@@ -1,4 +1,6 @@
 .jump-to-date {
+  display: flex;
+
   &__input {
     visibility: hidden;
     width: 0;

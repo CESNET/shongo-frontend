@@ -62,7 +62,7 @@ import { ReservationRoutingModule } from './reservation-routing.module';
     ShongoCalendarModule.forRoot(CALENDAR_TRANSLATIONS),
     CalendarHelperModule,
   ],
-  exports: [ResourceSelectionFormComponent],
+  exports: [CalendarSidebarComponent, JumpToDateComponent],
   declarations: [
     ReservationPageComponent,
     ResourceSelectionFormComponent,

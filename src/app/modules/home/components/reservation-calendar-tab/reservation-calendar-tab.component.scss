@@ -1,16 +1,11 @@
 @import '/src/app/styles/static-variables';
 
 /* Layout */
-main {
-  display: flex;
-  gap: 1rem;
-}
-
 .calendar {
   font-size: 1rem;
 
   &__header {
-    padding-bottom: 1.5em;
+    padding: 1em;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -27,12 +22,12 @@ main {
     justify-content: flex-end;
     align-items: center;
     gap: 1em;
+  }
 
-    &-left {
-      display: flex;
-      align-items: center;
-      gap: 1em;
-    }
+  &__options-left {
+    display: flex;
+    align-items: center;
+    gap: 1em;
   }
 
   &__navigation {
@@ -48,6 +43,15 @@ main {
   &__view-date {
     margin: 0;
   }
+
+  &__sidebar {
+    display: block;
+    padding-right: 1em;
+  }
+
+  &__drawer {
+    border: none;
+  }
 }
 
 @media only screen and (max-width: $breakpoint-s) {
@@ -57,7 +61,7 @@ main {
       order: 3;
       width: 100%;
       text-align: center;
-      margin-top: 1.5em;
+      margin-top: 0.5em;
     }
 
     &__options {

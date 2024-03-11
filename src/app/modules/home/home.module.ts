@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ShongoCalendarModule } from '@cesnet/shongo-calendar';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -49,6 +50,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     ShongoTableModule,
     CalendarHelperModule,
     ReservationModule,
+    MatSidenavModule,
   ],
 })
 export class HomeModule {}

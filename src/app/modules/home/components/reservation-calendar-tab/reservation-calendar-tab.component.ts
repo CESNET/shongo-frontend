@@ -105,8 +105,8 @@ export class ReservationCalendarTabComponent
     return moment(viewDate).add(increment, 'days').toDate();
   }
 
-  onDateSelection(moment: moment.Moment): void {
-    this.calendar.viewDate = moment.toDate();
+  onDateSelection(date: Date): void {
+    this.calendar.viewDate = date;
   }
 
   onIntervalChange(interval: IInterval): void {
