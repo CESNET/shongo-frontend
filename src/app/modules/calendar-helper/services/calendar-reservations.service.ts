@@ -74,7 +74,7 @@ export class CalendarReservationsService {
       },
       title: reservation.description,
       data: {
-        id: reservation.id,
+        reservation,
       },
     };
 

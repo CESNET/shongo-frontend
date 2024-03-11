@@ -31,7 +31,10 @@ import {
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
-import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
+import {
+  ReservationRequest,
+  ReservationRequestDetail,
+} from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
 import { ParentRequestPropertyError } from '../../models/errors/parent-request-property.error';
@@ -126,8 +129,10 @@ export class ReservationPageComponent
   }
 
   onItemClick(item: ICalendarItem): void {
-    if (item.data?.id) {
-      void this._router.navigate(['reservation-request', item.data?.id]);
+    const id = (item.data?.reservation as ReservationRequest)?.id;
+
+    if (id) {
+      void this._router.navigate(['reservation-request', id]);
     }
   }
 

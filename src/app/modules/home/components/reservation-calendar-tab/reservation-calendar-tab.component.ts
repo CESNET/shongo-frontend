@@ -6,11 +6,17 @@ import {
   ViewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { SettingsService } from '@app/core/http/settings/settings.service';
 import { LayoutService } from '@app/core/services/layout.service';
 import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
+import { RequestConfirmationDialogComponent } from '@app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { ERequestState } from '@app/shared/models/enums/request-state.enum';
+import { ReservationRequestState } from '@app/shared/models/enums/reservation-request-state.enum';
 import { ResourceType } from '@app/shared/models/enums/resource-type.enum';
 import { IRequest } from '@app/shared/models/interfaces/request.interface';
+import { ReservationRequest } from '@app/shared/models/rest-api/reservation-request.interface';
 import { Resource } from '@app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from '@app/shared/models/rest-api/slot.interface';
 import {
@@ -52,7 +58,10 @@ export class ReservationCalendarTabComponent implements AfterViewInit {
   constructor(
     private _calendarResS: CalendarReservationsService,
     private _layoutS: LayoutService,
-    private _destroyRef: DestroyRef
+    private _destroyRef: DestroyRef,
+    private _dialogS: MatDialog,
+    private _settingsS: SettingsService,
+    private _router: Router
   ) {
     this.calendarRequest$ = this._calendarRequest$.asObservable();
     this.currentUser = this._calendarResS.currentUser;
@@ -91,7 +100,19 @@ export class ReservationCalendarTabComponent implements AfterViewInit {
     this._fetchInterval(interval);
   }
 
-  onItemClick(item: ICalendarItem): void {}
+  onItemClick(item: ICalendarItem): void {
+    const needsConfirmation = this._requestNeedsConfirmation(
+      item.data!.reservation as ReservationRequest
+    );
+
+    if (this._settingsS.isInAdminMode && needsConfirmation) {
+      this._dialogS.open(RequestConfirmationDialogComponent, {
+        data: { reservationRequest: item.data!.reservation },
+      });
+    } else {
+      this._navigateToItem(item);
+    }
+  }
 
   refetchInterval(): void {
     if (this._currentInterval) {
@@ -118,5 +139,17 @@ export class ReservationCalendarTabComponent implements AfterViewInit {
           this.calendar.view = CalendarView.Day;
         }
       });
+  }
+
+  private _navigateToItem(item: ICalendarItem): void {
+    const id = (item.data?.reservation as ReservationRequest)?.id;
+
+    if (id) {
+      void this._router.navigate(['reservation-request', id]);
+    }
+  }
+
+  private _requestNeedsConfirmation(reservation: ReservationRequest): boolean {
+    return reservation.state === ReservationRequestState.CONFIRM_AWAITING;
   }
 }

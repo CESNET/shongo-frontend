@@ -74,6 +74,13 @@ export class SettingsService {
   }
 
   /**
+   * Checks if user is in admin mode.
+   */
+  get isInAdminMode(): boolean {
+    return this.userSettings?.administrationMode ?? false;
+  }
+
+  /**
    * Checks if current user has reservation permission.
    * If
    */
