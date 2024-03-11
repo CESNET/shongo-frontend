@@ -40,15 +40,12 @@ export class CalendarReservationsService {
       return of({ data: [], state: ERequestState.SUCCESS });
     }
 
-    const type =
-      resources[0].type === ResourceType.VIRTUAL_ROOM
-        ? ReservationType.ROOM_CAPACITY
-        : ReservationType.PHYSICAL_RESOURCE;
+    const types = this._getReservationTypes(resources);
 
     const filter = new HttpParams()
       .set('interval_from', moment(interval.start).toISOString())
       .set('interval_to', moment(interval.end).toISOString())
-      .set('type', type)
+      .set('type', types.join(','))
       .set('resource', resources?.map((res) => res.id).join(',') ?? '');
 
     return this._fetchInterval$(filter);
@@ -122,5 +119,14 @@ export class CalendarReservationsService {
       });
 
     return response$.asObservable();
+  }
+
+  private _getReservationTypes(resources: Resource[]): ReservationType[] {
+    const types = resources.map((res) =>
+      res.type === ResourceType.VIRTUAL_ROOM
+        ? ReservationType.ROOM_CAPACITY
+        : ReservationType.PHYSICAL_RESOURCE
+    );
+    return Array.from(new Set(types));
   }
 }
