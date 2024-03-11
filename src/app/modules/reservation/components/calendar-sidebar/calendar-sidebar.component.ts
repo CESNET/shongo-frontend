@@ -18,6 +18,7 @@ import { ReservationDialogComponent } from '../reservation-dialog/reservation-di
 })
 export class CalendarSidebarComponent {
   @Input({ required: true }) calendar!: ShongoCalendarComponent;
+
   @Input() selectedResource?: Resource | null;
   @Input() selectedSlot?: CalendarSlot | null;
   @Input() parentReservationRequest?: ReservationRequestDetail;

@@ -16,15 +16,7 @@
         </button>
 
         <!-- Link to home page  -->
-        <a
-          mat-stroked-button
-          aria-labelledby="go-back-btn-name"
-          routerLink="/"
-          class="reservation__back"
-        >
-          <mat-icon>arrow_back</mat-icon
-          ><span i18n="button name" id="go-back-btn-name">Back to app</span>
-        </a>
+        <app-back-button class="reservation__back"></app-back-button>
 
         <!-- Calendar view selection -->
         <app-calendar-view-selection

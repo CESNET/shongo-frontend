@@ -23,6 +23,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CalendarHelperModule } from '../calendar-helper/calendar-helper.module';
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
+import { BackButtonComponent } from './components/back-button/back-button.component';
 import { CalendarSidebarComponent } from './components/calendar-sidebar/calendar-sidebar.component';
 import { DropdownSectionComponent } from './components/dropdown-section/dropdown-section.component';
 import { ReservationDialogComponent } from './components/reservation-dialog/reservation-dialog.component';
@@ -68,6 +69,7 @@ import { ReservationRoutingModule } from './reservation-routing.module';
     HoldClickDirective,
     DropdownSectionComponent,
     CalendarSidebarComponent,
+    BackButtonComponent,
   ],
 })
 export class ReservationModule {}
