@@ -102,7 +102,7 @@ export class ReservationPageComponent
   }
 
   /**
-   * Treis loading parent request again after error.
+   * Tries loading parent request again after error.
    */
   retryLoadingParentRequest(): void {
     this.parentRequestError = undefined;

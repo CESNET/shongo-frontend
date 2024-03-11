@@ -5,6 +5,7 @@ import { AlertType } from '@app/shared/models/enums/alert-type.enum';
 import { ReservationRequestDetail } from '@app/shared/models/rest-api/reservation-request.interface';
 import { Resource } from '@app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from '@app/shared/models/rest-api/slot.interface';
+import { ShongoCalendarComponent } from '@cesnet/shongo-calendar';
 import * as moment from 'moment';
 import { first } from 'rxjs';
 import { ParentRequestPropertyError } from '../../models/errors/parent-request-property.error';
@@ -16,6 +17,7 @@ import { ReservationDialogComponent } from '../reservation-dialog/reservation-di
   styleUrls: ['./calendar-sidebar.component.scss'],
 })
 export class CalendarSidebarComponent {
+  @Input({ required: true }) calendar!: ShongoCalendarComponent;
   @Input() selectedResource?: Resource | null;
   @Input() selectedSlot?: CalendarSlot | null;
   @Input() parentReservationRequest?: ReservationRequestDetail;
@@ -23,14 +25,10 @@ export class CalendarSidebarComponent {
   @Input() capacityBookingMode = false;
   @Input() loadingParentRequest = false;
 
-  @Output() readonly clearSlot = new EventEmitter<void>();
-  @Output() readonly slotChanged = new EventEmitter<CalendarSlot>();
-  @Output() readonly highlightMineChanged = new EventEmitter<boolean>();
   @Output() readonly reloadParentRequest = new EventEmitter<void>();
   @Output() readonly selectedResourceChange =
     new EventEmitter<Resource | null>();
   @Output() readonly displayedResourcesChange = new EventEmitter<Resource[]>();
-  @Output() readonly dateChange = new EventEmitter<Date>();
 
   readonly AlertType = AlertType;
 
@@ -77,7 +75,7 @@ export class CalendarSidebarComponent {
   }
 
   onClearSelectedSlot(): void {
-    this.clearSlot.emit();
+    this.calendar.clearSelectedSlot();
   }
 
   /**
@@ -102,11 +100,11 @@ export class CalendarSidebarComponent {
     }
 
     this.selectedSlot = incrementedSlot;
-    this.slotChanged.emit(incrementedSlot);
+    this.calendar.selectedSlot = incrementedSlot;
   }
 
   onHighlightMineChange(checked: boolean): void {
-    this.highlightMineChanged.emit(checked);
+    this.calendar.highlightUsersReservations = checked;
   }
 
   onReloadParentRequest(): void {
@@ -122,6 +120,6 @@ export class CalendarSidebarComponent {
   }
 
   onDateSelection(moment: moment.Moment): void {
-    this.dateChange.emit(moment.toDate());
+    this.calendar.viewDate = moment.toDate();
   }
 }

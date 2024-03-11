@@ -71,19 +71,16 @@
       opened
     >
       <app-calendar-sidebar
+        [calendar]="calendar"
         [selectedResource]="selectedResource"
         [selectedSlot]="selectedSlot"
         [parentReservationRequest]="parentReservationRequest"
         [parentRequestError]="parentRequestError"
         [capacityBookingMode]="capacityBookingMode"
         [loadingParentRequest]="(loadingParentRequest$ | async) ?? false"
-        (clearSlot)="calendar.clearSelectedSlot()"
-        (slotChanged)="calendar.selectedSlot = $event"
-        (highlightMineChanged)="calendar.highlightUsersReservations = $event"
         (reloadParentRequest)="retryLoadingParentRequest()"
         (selectedResourceChange)="onSelectedResourceChange($event)"
         (displayedResourcesChange)="onDisplayedResourcesChange($event)"
-        (dateChange)="calendar.viewDate = $event"
       ></app-calendar-sidebar>
     </mat-drawer>
 
