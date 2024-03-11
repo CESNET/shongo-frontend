@@ -47,6 +47,8 @@
   &__sidebar {
     display: block;
     padding-right: 1em;
+    height: 100%;
+    overflow-y: scroll;
   }
 
   &__drawer {

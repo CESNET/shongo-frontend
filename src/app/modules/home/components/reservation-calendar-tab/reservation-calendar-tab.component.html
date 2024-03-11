@@ -13,9 +13,8 @@
         </button>
 
         <app-calendar-view-selection
-          *ngIf="(tabletSizeHit$ | async)?.matches === false; else jumpToDate"
+          *ngIf="(isTabletSize$ | async) === false; else jumpToDate"
           [selectedView]="calendar.view"
-          [tabletSizeHit$]="tabletSizeHit$"
           (viewSelected)="calendar.view = $event"
         ></app-calendar-view-selection>
       </div>
@@ -43,26 +42,33 @@
     <mat-drawer-container>
       <mat-drawer
         #drawer
-        [mode]="(tabletSizeHit$ | async)?.matches ? 'over' : 'side'"
+        [mode]="(isTabletSize$ | async) ? 'over' : 'side'"
         opened
         class="calendar__drawer"
       >
-        <app-calendar-sidebar
-          [calendar]="calendar"
-          class="calendar__sidebar"
-        ></app-calendar-sidebar>
+        <div class="calendar__sidebar custom-scrollbar">
+          <app-calendar-sidebar
+            [calendar]="calendar"
+            [selectedResource]="selectedResource"
+            [selectedSlot]="selectedSlot"
+            (displayedResourcesChange)="onDisplayedResourcesChange($event)"
+            (selectedResourceChange)="onSelectedResourceChange($event)"
+          ></app-calendar-sidebar>
+        </div>
       </mat-drawer>
 
       <mat-drawer-content>
         <shongo-calendar
           #calendar
           (loadData)="onIntervalChange($event)"
+          (itemClicked)="onItemClick($event)"
+          (slotSelected)="selectedSlot = $event"
+          [allowSlotSelection]="true"
           [items]="(calendarRequest$ | async)!.data"
           [loading]="
             (calendarRequest$ | async)!.state === ERequestState.LOADING
           "
           [currentUser]="currentUser"
-          [highlightUsersReservations]="!!filterGroup.value.highlightMine"
           [fill]="false"
         ></shongo-calendar>
       </mat-drawer-content>

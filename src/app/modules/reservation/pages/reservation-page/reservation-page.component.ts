@@ -1,4 +1,3 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -9,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LayoutService } from '@app/core/services/layout.service';
 import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
 import { ERequestState } from '@app/shared/models/enums/request-state.enum';
 import { IRequest } from '@app/shared/models/interfaces/request.interface';
@@ -52,7 +52,6 @@ export class ReservationPageComponent
   calendar!: ShongoCalendarComponent;
 
   readonly calendarRequest$: Observable<IRequest<ICalendarItem[]>>;
-  readonly tabletSizeHit$: Observable<BreakpointState>;
   readonly CalendarView = CalendarView;
   readonly ERequestState = ERequestState;
   readonly currentUser: IEventOwner;
@@ -77,15 +76,18 @@ export class ReservationPageComponent
   constructor(
     private _route: ActivatedRoute,
     private _resReqService: ReservationRequestService,
-    private _br: BreakpointObserver,
     private _cd: ChangeDetectorRef,
     private _calendarResS: CalendarReservationsService,
     private _router: Router,
+    private _layoutS: LayoutService,
     public resourceService: ResourceService
   ) {
-    this.tabletSizeHit$ = this._createTabletSizeObservable();
     this.calendarRequest$ = this._calendarRequest$.asObservable();
     this.currentUser = this._calendarResS.currentUser;
+  }
+
+  get isTabletSize$(): Observable<boolean> {
+    return this._layoutS.isTabletSize$;
   }
 
   ngOnInit(): void {
@@ -93,7 +95,7 @@ export class ReservationPageComponent
   }
 
   ngAfterViewInit(): void {
-    this._observeTabletSize(this.tabletSizeHit$);
+    this._observeTabletSize();
   }
 
   ngOnDestroy(): void {
@@ -171,25 +173,16 @@ export class ReservationPageComponent
   /**
    * Observes tablet size hit (768px).
    * Switches calendar view to day view for sizes < 768px.
-   *
-   * @param state$ Breakpoint state observable.
    */
-  private _observeTabletSize(state$: Observable<BreakpointState>): void {
-    state$.pipe(takeUntil(this._destroy$)).subscribe((state) => {
-      if (state.matches) {
-        this.calendar.view = CalendarView.Day;
-        this._cd.detectChanges();
-      }
-    });
-  }
-
-  /**
-   * Creates an observable for tablet size (768px) hit.
-   *
-   * @returns Observable for tablet size hit.
-   */
-  private _createTabletSizeObservable(): Observable<BreakpointState> {
-    return this._br.observe('(max-width: 768px)');
+  private _observeTabletSize(): void {
+    this.isTabletSize$
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((isTableSize) => {
+        if (isTableSize) {
+          this.calendar.view = CalendarView.Day;
+          this._cd.detectChanges();
+        }
+      });
   }
 
   /**

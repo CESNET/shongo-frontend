@@ -20,7 +20,7 @@
 
         <!-- Calendar view selection -->
         <app-calendar-view-selection
-          *ngIf="(tabletSizeHit$ | async)?.matches === false"
+          *ngIf="(isTabletSize$ | async) === false"
           [selectedView]="calendar.view"
           (viewSelected)="calendar.view = $event"
         ></app-calendar-view-selection>
@@ -59,7 +59,7 @@
   <mat-drawer-container class="reservation__main" [autosize]="true">
     <mat-drawer
       #drawer
-      [mode]="(tabletSizeHit$ | async)?.matches ? 'over' : 'side'"
+      [mode]="(isTabletSize$ | async) ? 'over' : 'side'"
       opened
       class="reservation__sidebar"
     >
