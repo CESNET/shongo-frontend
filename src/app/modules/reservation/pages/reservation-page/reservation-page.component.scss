@@ -36,23 +36,6 @@
   }
 }
 
-.time-setting {
-  display: flex;
-  gap: 0.2em;
-
-  &__button {
-    background: var(--gray-800);
-    border: none;
-    border-radius: 10px;
-    padding: 0;
-
-    &:hover {
-      background: var(--gray-700);
-      cursor: pointer;
-    }
-  }
-}
-
 .loading {
   display: flex;
   flex-direction: column;
