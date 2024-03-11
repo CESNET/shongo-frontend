@@ -1,0 +1,243 @@
+<div class="sidebar">
+  <!-- Mobile only section -->
+  <section class="sidebar__section sidebar__section--mobile">
+    <a
+      mat-stroked-button
+      aria-labelledby="sidebar-go-back-btn-name"
+      routerLink="/"
+      class="sidebar__back"
+    >
+      <mat-icon>arrow_back</mat-icon
+      ><span i18n="button name" id="sidebar-go-back-btn-name">Back to app</span>
+    </a>
+
+    <div class="jump-to-date">
+      <button
+        mat-stroked-button
+        class="jump-to-date__button"
+        aria-labelledby="jump-to-date-btn-name"
+        (click)="picker.open()"
+      >
+        <mat-icon>event</mat-icon
+        ><span i18n="button name" id="jump-to-date-btn-name">Jump to date</span>
+      </button>
+      <input
+        type="date"
+        class="jump-to-date__input"
+        [matDatepicker]="picker"
+        (dateInput)="onDateSelection($event.value)"
+      />
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+  </section>
+
+  <section
+    class="sidebar__section"
+    *ngIf="!capacityBookingMode; else capacityBookingSection"
+  >
+    <h3 i18n="heading">Reserve resource</h3>
+    <app-resource-selection-form
+      (resourceChange)="onSelectedResourceChange($event)"
+      (displayedResourcesChange)="onDisplayedResourcesChange($event)"
+    ></app-resource-selection-form>
+  </section>
+
+  <ng-template #capacityBookingSection>
+    <!-- Parent capacity section (for capacity booking) -->
+    <section class="sidebar__section">
+      <ng-container *ngIf="parentReservationRequest; else loadingParentOrError">
+        <h3 i18n="heading">Reserving capacity for</h3>
+        <div>
+          <a
+            class="mat-primary-color"
+            [routerLink]="'/reservation-request/' + parentReservationRequest.id"
+            >{{
+              parentReservationRequest.virtualRoomData?.roomName ??
+                parentReservationRequest.id
+            }}</a
+          >
+        </div>
+      </ng-container>
+    </section>
+
+    <!-- Loading or error -->
+    <ng-template #loadingParentOrError>
+      <ng-container
+        *ngTemplateOutlet="loadingParentRequest ? loadingParent : parentError"
+      ></ng-container>
+    </ng-template>
+
+    <!-- Loading display -->
+    <ng-template #loadingParent>
+      <div class="loading">
+        <mat-progress-spinner
+          diameter="70"
+          mode="indeterminate"
+          color="primary"
+        ></mat-progress-spinner>
+        <span i18n="loading text">Loading parent request</span>
+      </div>
+    </ng-template>
+
+    <ng-template #parentError>
+      <ng-container
+        *ngTemplateOutlet="
+          parentPropertyErrorOccured ? parentPropertyError : loadingParentError
+        "
+      >
+      </ng-container>
+    </ng-template>
+
+    <!-- Error when loading parent request -->
+    <ng-template #loadingParentError>
+      <div class="sidebar__loading-error">
+        <div class="sidebar__error-container">
+          <app-alert
+            message="Failed to load parent request"
+            i18n-message="error message"
+            [type]="AlertType.ERROR"
+            [showCloseButton]="false"
+            [isActive]="true"
+          ></app-alert>
+        </div>
+        <button
+          mat-flat-button
+          color="primary"
+          i18n="button name"
+          (click)="onReloadParentRequest()"
+        >
+          Try again
+        </button>
+      </div>
+    </ng-template>
+
+    <!-- Error with parent property -->
+    <ng-template #parentPropertyError>
+      <div class="sidebar__loading-error">
+        <div class="sidebar__error-container">
+          <app-alert
+            [type]="AlertType.ERROR"
+            [isActive]="true"
+            [showCloseButton]="false"
+            [message]="parentRequestError!.message"
+          ></app-alert>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <!-- Calendar settings -->
+  <section class="sidebar__section">
+    <h3 i18n="heading">Calendar settings</h3>
+
+    <!-- Highlight mine checkbox -->
+    <mat-checkbox
+      color="primary"
+      i18n="checkbox label"
+      (change)="onHighlightMineChange($event.checked)"
+      >Highlight mine</mat-checkbox
+    >
+  </section>
+
+  <section class="sidebar__section" *ngIf="selectedResource && selectedSlot">
+    <h3 i18n="heading">Reservation slot</h3>
+
+    <div class="sidebar__slot">
+      <!-- Selected slot start -->
+      <div
+        class="sidebar__slot-part"
+        *ngIf="selectedSlot && selectedSlot.start"
+      >
+        <!-- Slot start heading -->
+        <b class="sidebar__slot-part-name" i18n="item name">Slot start:</b>
+        <!-- Slot start value -->
+        <div class="sidebar__slot-part-value">
+          <span>{{ selectedSlot.start | momentDate : 'LLL' }}</span>
+
+          <!-- Fine tuning buttons -->
+          <div class="time-setting">
+            <button
+              class="time-setting__button"
+              matRipple
+              (click)="onIncrementSlot('start', -1)"
+              aria-label="decrement slot start by one minute"
+              i18n-aria-label="button label"
+              appHoldClick
+            >
+              <mat-icon class="icon-xs">arrow_left</mat-icon>
+            </button>
+            <button
+              class="time-setting__button"
+              matRipple
+              appHoldClick
+              (click)="onIncrementSlot('start', 1)"
+              aria-label="increment slot start by one minute"
+              i18n-aria-label="button label"
+            >
+              <mat-icon class="icon-xs">arrow_right</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selected slot end-->
+      <div class="sidebar__slot-part" *ngIf="selectedSlot && selectedSlot.end">
+        <!-- Slot end heading -->
+        <b class="sidebar__slot-part-name" i18n="item name">Slot end:</b>
+
+        <!-- Slot end value -->
+        <div class="sidebar__slot-part-value">
+          <span>{{ selectedSlot.end | momentDate : 'LLL' }}</span>
+
+          <!-- Fine tuning buttons -->
+          <div class="time-setting">
+            <button
+              class="time-setting__button"
+              matRipple
+              (click)="onIncrementSlot('end', -1)"
+              aria-label="decrement slot end by one minute"
+              i18n-aria-label="button label"
+              appHoldClick
+            >
+              <mat-icon class="icon-xs">arrow_left</mat-icon>
+            </button>
+            <button
+              class="time-setting__button"
+              matRipple
+              (click)="onIncrementSlot('end', 1)"
+              aria-label="increment slot end by one minute"
+              i18n-aria-label="button label"
+              appHoldClick
+            >
+              <mat-icon class="icon-xs">arrow_right</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar__buttons">
+      <!-- Create reservation button -->
+      <button
+        mat-flat-button
+        color="primary"
+        class="sidebar__button"
+        i18n="button name"
+        (click)="openReservationDialog()"
+      >
+        Create reservation
+      </button>
+
+      <!-- Cancel reservation button -->
+      <button
+        mat-flat-button
+        class="sidebar__button"
+        color="warn"
+        i18n="button name"
+        (click)="onClearSelectedSlot()"
+      >
+        Cancel selection
+      </button>
+    </div>
+  </section>
+</div>

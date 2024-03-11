@@ -23,6 +23,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CalendarHelperModule } from '../calendar-helper/calendar-helper.module';
 import { ReservationFormsModule } from '../reservation-forms/reservation-forms.module';
+import { CalendarSidebarComponent } from './components/calendar-sidebar/calendar-sidebar.component';
 import { DropdownSectionComponent } from './components/dropdown-section/dropdown-section.component';
 import { ReservationDialogComponent } from './components/reservation-dialog/reservation-dialog.component';
 import { ResourceSelectionFormComponent } from './components/resource-selection-form/resource-selection-form.component';
@@ -59,12 +60,14 @@ import { ReservationRoutingModule } from './reservation-routing.module';
     ShongoCalendarModule.forRoot(CALENDAR_TRANSLATIONS),
     CalendarHelperModule,
   ],
+  exports: [ResourceSelectionFormComponent],
   declarations: [
     ReservationPageComponent,
     ResourceSelectionFormComponent,
     ReservationDialogComponent,
     HoldClickDirective,
     DropdownSectionComponent,
+    CalendarSidebarComponent,
   ],
 })
 export class ReservationModule {}

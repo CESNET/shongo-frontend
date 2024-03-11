@@ -8,7 +8,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
 import { ERequestState } from '@app/shared/models/enums/request-state.enum';
@@ -20,7 +19,6 @@ import {
   ShongoCalendarComponent,
 } from '@cesnet/shongo-calendar';
 import { CalendarView } from 'angular-calendar';
-import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {
   filter,
@@ -32,19 +30,11 @@ import {
 } from 'rxjs/operators';
 import { ReservationRequestService } from 'src/app/core/http/reservation-request/reservation-request.service';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { AlertType } from 'src/app/shared/models/enums/alert-type.enum';
 import { ReservationType } from 'src/app/shared/models/enums/reservation-type.enum';
 import { ReservationRequestDetail } from 'src/app/shared/models/rest-api/reservation-request.interface';
 import { Resource } from 'src/app/shared/models/rest-api/resource.interface';
 import { CalendarSlot } from 'src/app/shared/models/rest-api/slot.interface';
-import { ReservationDialogComponent } from '../../components/reservation-dialog/reservation-dialog.component';
-
-class ParentRequestPropertyError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'InvalidRequestTypeError';
-  }
-}
+import { ParentRequestPropertyError } from '../../models/errors/parent-request-property.error';
 
 @Component({
   selector: 'app-reservation-page',
@@ -64,7 +54,6 @@ export class ReservationPageComponent
   readonly calendarRequest$: Observable<IRequest<ICalendarItem[]>>;
   readonly tabletSizeHit$: Observable<BreakpointState>;
   readonly CalendarView = CalendarView;
-  readonly AlertType = AlertType;
   readonly ERequestState = ERequestState;
   readonly currentUser: IEventOwner;
 
@@ -86,7 +75,6 @@ export class ReservationPageComponent
   private readonly _destroy$ = new Subject<void>();
 
   constructor(
-    private _dialog: MatDialog,
     private _route: ActivatedRoute,
     private _resReqService: ReservationRequestService,
     private _br: BreakpointObserver,
@@ -114,87 +102,11 @@ export class ReservationPageComponent
   }
 
   /**
-   * Opens reservation dialog with reservation data.
-   */
-  openReservationDialog(): void {
-    if (!this.selectedResource) {
-      return;
-    }
-
-    const dialogRef = this._dialog.open(ReservationDialogComponent, {
-      data: {
-        resource: this.selectedResource,
-        slot: this.selectedSlot,
-        parentRequest: this.parentReservationRequest,
-      },
-      width: '95%',
-      maxWidth: '90rem',
-    });
-
-    dialogRef
-      .afterClosed()
-      .pipe(first())
-      .subscribe((id) => {
-        if (id) {
-          this._router.navigate(['reservation-request', id]);
-        }
-      });
-  }
-
-  /**
-   * Checks if an error with property of parent request for capacity booking occured.
-   *
-   * @returns True if parent propert error occured, else false.
-   */
-  parentPropertyErrorOccured(): boolean {
-    return (
-      this.parentRequestError !== undefined &&
-      this.parentRequestError instanceof ParentRequestPropertyError
-    );
-  }
-
-  /**
    * Treis loading parent request again after error.
    */
   retryLoadingParentRequest(): void {
     this.parentRequestError = undefined;
     this._loadParentRequest(this.parentReservationRequest!.id);
-  }
-
-  /**
-   * Sets calendar view date.
-   *
-   * @param moment Selected date as moment.
-   */
-  onDateSelection(moment: moment.Moment): void {
-    this.calendar.viewDate = moment.toDate();
-  }
-
-  /**
-   * Increments selected slot part by a given increment in minutes.
-   * Prevents setting slot start and end to an equal date.
-   *
-   * @param part Start or end of slot.
-   * @param increment Value of minute increment.
-   */
-  incrementSlot(part: 'start' | 'end', increment: 1 | -1): void {
-    const slot = this.calendar.selectedSlot;
-
-    if (!slot) {
-      throw new Error('No slot has been selected yet.');
-    }
-
-    const incrementedSlot = Object.assign({}, slot);
-    incrementedSlot[part] = moment(incrementedSlot[part])
-      .add(increment, 'minutes')
-      .toDate();
-
-    if (moment(incrementedSlot.start).isSame(moment(incrementedSlot.end))) {
-      return;
-    }
-
-    this.selectedSlot = incrementedSlot;
-    this.calendar.selectedSlot = incrementedSlot;
   }
 
   onIntervalChange(interval: IInterval): void {

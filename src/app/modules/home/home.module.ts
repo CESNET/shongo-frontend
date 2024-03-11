@@ -16,6 +16,7 @@ import { ShongoCalendarModule } from '@cesnet/shongo-calendar';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CalendarHelperModule } from '../calendar-helper/calendar-helper.module';
+import { ReservationModule } from '../reservation/reservation.module';
 import { ShongoTableModule } from '../shongo-table/shongo-table.module';
 import { ReservationCalendarTabComponent } from './components/reservation-calendar-tab/reservation-calendar-tab.component';
 import { ReservationRequestFilterComponent } from './components/reservation-request-filter/reservation-request-filter.component';
@@ -47,6 +48,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     ShongoCalendarModule.forRoot(),
     ShongoTableModule,
     CalendarHelperModule,
+    ReservationModule,
   ],
 })
 export class HomeModule {}

@@ -1,4 +1,9 @@
 /* Layout */
+main {
+  display: flex;
+  gap: 1rem;
+}
+
 .calendar {
   font-size: 1rem;
 
