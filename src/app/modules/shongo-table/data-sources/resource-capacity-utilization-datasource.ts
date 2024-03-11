@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { SortDirection } from '@angular/material/sort';
+import { EResourceUtilizationType } from '@app/shared/models/enums/resource-utilization-type.enum';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResourceService } from 'src/app/core/http/resource/resource.service';
@@ -66,7 +67,11 @@ export class ResourceCapacityUtilizationDataSource extends DataTableDataSource<R
     const utilization: Record<string, string> = {};
 
     item.resources.forEach((resource) => {
-      utilization[resource.name] = JSON.stringify(resource);
+      const resourceExists = !!utilization[resource.name];
+
+      if (!resourceExists || resource.type === EResourceUtilizationType.ROOM) {
+        utilization[resource.name] = JSON.stringify(resource);
+      }
     });
 
     return utilization;

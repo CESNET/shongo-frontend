@@ -1,3 +1,4 @@
+import { EResourceUtilizationType } from '../enums/resource-utilization-type.enum';
 import { Slot } from './slot.interface';
 
 export interface ResourceCapacityUtilization {
@@ -10,4 +11,5 @@ export interface Resource {
   name: string;
   totalCapacity: number;
   usedCapacity: number;
+  type: EResourceUtilizationType;
 }
