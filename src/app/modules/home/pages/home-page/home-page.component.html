@@ -91,9 +91,11 @@
         label="Physical resource reservation calendar"
         i18n-label="tab label|Label for reservation calendar component"
       >
-        <div class="tab-content">
-          <app-reservation-calendar-tab></app-reservation-calendar-tab>
-        </div>
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <app-reservation-calendar-tab></app-reservation-calendar-tab>
+          </div>
+        </ng-template>
       </mat-tab>
     </mat-tab-group>
   </div>

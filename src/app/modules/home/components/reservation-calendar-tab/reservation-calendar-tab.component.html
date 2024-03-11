@@ -39,7 +39,7 @@
   </header>
 
   <mat-card-content>
-    <mat-drawer-container>
+    <mat-drawer-container autosize>
       <mat-drawer
         #drawer
         [mode]="(isTabletSize$ | async) ? 'over' : 'side'"

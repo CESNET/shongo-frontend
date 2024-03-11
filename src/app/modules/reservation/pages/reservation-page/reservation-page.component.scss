@@ -27,10 +27,6 @@
     height: calc(100vh - var(--toolbar-row-height));
   }
 
-  &__calendar {
-    height: 100%;
-  }
-
   &__date-header {
     font-size: var(--font-size-medium);
   }

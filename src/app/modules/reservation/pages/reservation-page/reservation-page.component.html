@@ -86,7 +86,7 @@
     </mat-drawer>
 
     <!-- Main content -->
-    <mat-drawer-content class="reservation__content">
+    <mat-drawer-content>
       <!-- Reservation alendar -->
       <shongo-calendar
         #calendar
@@ -97,7 +97,6 @@
         [items]="(calendarRequest$ | async)!.data"
         [loading]="(calendarRequest$ | async)!.state === ERequestState.LOADING"
         [currentUser]="currentUser"
-        class="fullscreen-calendar"
       ></shongo-calendar>
     </mat-drawer-content>
   </mat-drawer-container>
