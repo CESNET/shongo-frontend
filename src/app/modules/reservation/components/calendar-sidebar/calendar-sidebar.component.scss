@@ -1,0 +1,83 @@
+@import '/src/app/styles/static-variables';
+
+// Based on form field padding + margin.
+$section-margin: 1.34375em + 0.25em;
+
+.sidebar {
+  border: 0;
+
+  &__section {
+    margin-bottom: $section-margin;
+
+    &--form-field-padded {
+      margin-bottom: 0;
+    }
+
+    &--mobile {
+      display: none;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-top: 1em;
+  }
+
+  &__slot {
+    &-part {
+      margin-bottom: 0.5em;
+      line-height: 1.5em;
+
+      &-name {
+        font-weight: 500;
+      }
+
+      &-value {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+      }
+    }
+  }
+
+  &__loading-error {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  &__error-container {
+    width: clamp(15ch, 20vw, 30ch);
+  }
+}
+
+.time-setting {
+  display: flex;
+  gap: 0.2em;
+
+  &__button {
+    background: var(--gray-800);
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+
+    &:hover {
+      background: var(--gray-700);
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (max-width: $breakpoint-m) {
+  .sidebar {
+    &__section {
+      &--mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+    }
+  }
+}

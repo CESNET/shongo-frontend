@@ -1,126 +1,78 @@
-<mat-card>
+<mat-card class="calendar">
+  <header class="calendar__header">
+    <section class="calendar__navigation">
+      <div class="calendar__options-left">
+        <!-- Burger menu icon -->
+        <button
+          mat-icon-button
+          (click)="drawer.toggle()"
+          aria-label="Toggle side drawer"
+          i18n-aria-label="button name"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <app-calendar-view-selection
+          *ngIf="(isTabletSize$ | async) === false; else jumpToDate"
+          [selectedView]="calendar.view"
+          (viewSelected)="calendar.view = $event"
+        ></app-calendar-view-selection>
+      </div>
+
+      <ng-template #jumpToDate>
+        <app-jump-to-date
+          (dateSelected)="onDateSelection($event)"
+        ></app-jump-to-date>
+      </ng-template>
+
+      <h1 class="calendar__view-date">
+        {{ calendar.viewDate | calendarDate : calendar.view + 'ViewTitle' }}
+      </h1>
+
+      <app-calendar-paginator
+        class="calendar__paginator"
+        [view]="calendar.view"
+        [viewDate]="calendar.viewDate"
+        (viewDateChange)="calendar.viewDate = $event"
+      ></app-calendar-paginator>
+    </section>
+  </header>
+
   <mat-card-content>
-    <div class="calendar">
-      <header class="calendar__header">
-        <form class="calendar__options" [formGroup]="filterGroup">
-          <div class="calendar__options-left">
-            <button
-              (click)="refetchInterval()"
-              mat-button
-              type="button"
-              aria-labelledby="refresh-button-name"
-              class="calendar__refresh"
-              *ngIf="
-                (tabletSizeHit$ | async)?.matches === false;
-                else iconOnlyRefresh
-              "
-            >
-              <mat-icon>refresh</mat-icon>&nbsp;<span
-                i18n="button name"
-                id="refresh-button-name"
-                >Refresh</span
-              >
-            </button>
+    <mat-drawer-container>
+      <mat-drawer
+        #drawer
+        [mode]="(isTabletSize$ | async) ? 'over' : 'side'"
+        opened
+        class="calendar__drawer"
+      >
+        <div class="calendar__sidebar custom-scrollbar">
+          <app-calendar-sidebar
+            [restrictToType]="restrictToType"
+            [calendar]="calendar"
+            [selectedResource]="selectedResource"
+            [selectedSlot]="selectedSlot"
+            (displayedResourcesChange)="onDisplayedResourcesChange($event)"
+            (selectedResourceChange)="onSelectedResourceChange($event)"
+          ></app-calendar-sidebar>
+        </div>
+      </mat-drawer>
 
-            <ng-template #iconOnlyRefresh>
-              <button
-                mat-icon-button
-                type="button"
-                aria-label="Refresh"
-                i18n-aria-label="button name"
-                class="calendar__refresh"
-              >
-                <mat-icon>refresh</mat-icon>
-              </button>
-            </ng-template>
-
-            <mat-checkbox
-              color="primary"
-              formControlName="highlightMine"
-              class="calendar__highlight-mine"
-              i18n="checkbox name"
-              >Highlight mine</mat-checkbox
-            >
-          </div>
-          <div class="calendar__options-right">
-            <mat-form-field
-              appearance="outline"
-              class="unpadded calendar__resource-selection"
-            >
-              <mat-label i18n="field label">Physical resource</mat-label>
-              <mat-select
-                (valueChange)="refetchInterval()"
-                formControlName="resources"
-                multiple
-              >
-                <mat-option>
-                  <ngx-mat-select-search
-                    formControlName="resourceFilter"
-                    placeholderLabel="Search..."
-                    noEntriesFoundLabel="No resources found"
-                    i18n-placeholderLabel="placeholder text"
-                    i18n-noEntriesFoundLabel="fallback text"
-                  ></ngx-mat-select-search>
-                </mat-option>
-                <mat-option
-                  *ngFor="let resource of filteredResources"
-                  [value]="resource"
-                >
-                  {{ resource.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </form>
-
-        <section class="calendar__navigation">
-          <app-calendar-view-selection
-            *ngIf="(tabletSizeHit$ | async)?.matches === false; else jumpToDate"
-            [selectedView]="calendar.view"
-            [tabletSizeHit$]="tabletSizeHit$"
-            (viewSelected)="calendar.view = $event"
-          ></app-calendar-view-selection>
-
-          <ng-template #jumpToDate>
-            <div>
-              <button
-                mat-button
-                (click)="picker.open()"
-                class="calendar__datepicker"
-              >
-                <mat-icon>event</mat-icon>&nbsp;Jump to date
-              </button>
-              <input
-                type="date"
-                class="calendar__datepicker-input"
-                [matDatepicker]="picker"
-                (dateInput)="onDateSelection($event.value)"
-              />
-              <mat-datepicker #picker></mat-datepicker>
-            </div>
-          </ng-template>
-
-          <h1 class="calendar__view-date">
-            {{ calendar.viewDate | calendarDate : calendar.view + 'ViewTitle' }}
-          </h1>
-
-          <app-calendar-paginator
-            class="calendar__paginator"
-            [view]="calendar.view"
-            [viewDate]="calendar.viewDate"
-            (viewDateChange)="calendar.viewDate = $event"
-          ></app-calendar-paginator>
-        </section>
-      </header>
-
-      <shongo-calendar
-        #calendar
-        (loadData)="onIntervalChange($event)"
-        [items]="(calendarRequest$ | async)!.data"
-        [loading]="(calendarRequest$ | async)!.state === ERequestState.LOADING"
-        [currentUser]="currentUser"
-        [highlightUsersReservations]="!!filterGroup.value.highlightMine"
-      ></shongo-calendar>
-    </div>
+      <mat-drawer-content>
+        <shongo-calendar
+          #calendar
+          (loadData)="onIntervalChange($event)"
+          (itemClicked)="onItemClick($event)"
+          (slotSelected)="selectedSlot = $event"
+          [allowSlotSelection]="true"
+          [items]="(calendarRequest$ | async)!.data"
+          [loading]="
+            (calendarRequest$ | async)!.state === ERequestState.LOADING
+          "
+          [currentUser]="currentUser"
+          [fill]="false"
+        ></shongo-calendar>
+      </mat-drawer-content>
+    </mat-drawer-container>
   </mat-card-content>
 </mat-card>

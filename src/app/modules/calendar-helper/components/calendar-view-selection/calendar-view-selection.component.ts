@@ -1,4 +1,3 @@
-import { BreakpointState } from '@angular/cdk/layout';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,7 +6,6 @@ import {
   Output,
 } from '@angular/core';
 import { CalendarView } from 'angular-calendar';
-import { Observable } from 'rxjs';
 import { Option } from 'src/app/shared/models/interfaces/option.interface';
 
 type CalendarViewOption = Option<string> & { value: CalendarView };
@@ -20,7 +18,6 @@ type CalendarViewOption = Option<string> & { value: CalendarView };
 })
 export class CalendarViewSelectionComponent {
   @Input() selectedView: CalendarView = CalendarView.Month;
-  @Input() tabletSizeHit$?: Observable<BreakpointState>;
   @Output() viewSelected = new EventEmitter<CalendarView>();
 
   readonly calendarViewOpts: CalendarViewOption[] = [

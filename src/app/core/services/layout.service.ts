@@ -6,6 +6,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LayoutService {
+  readonly isTabletSize$: Observable<boolean>;
   readonly isLessThanSmall$: Observable<boolean>;
   readonly isLessThanLarge$: Observable<boolean>;
   readonly isLessThanMedium$: Observable<boolean>;
@@ -21,6 +22,10 @@ export class LayoutService {
 
     this.isLessThanLarge$ = this._brObserver
       .observe('screen and (max-width: 1279px)')
+      .pipe(map((result) => result.matches));
+
+    this.isTabletSize$ = this._brObserver
+      .observe('screen and (max-width: 768px)')
       .pipe(map((result) => result.matches));
   }
 }

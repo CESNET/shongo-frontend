@@ -1,16 +1,24 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
-  OnInit,
+  DestroyRef,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { SettingsService } from '@app/core/http/settings/settings.service';
+import { LayoutService } from '@app/core/services/layout.service';
 import { CalendarReservationsService } from '@app/modules/calendar-helper/services/calendar-reservations.service';
+import { RequestConfirmationDialogComponent } from '@app/shared/components/request-confirmation-dialog/request-confirmation-dialog.component';
 import { ERequestState } from '@app/shared/models/enums/request-state.enum';
+import { ReservationRequestState } from '@app/shared/models/enums/reservation-request-state.enum';
+import { ResourceType } from '@app/shared/models/enums/resource-type.enum';
 import { IRequest } from '@app/shared/models/interfaces/request.interface';
+import { ReservationRequest } from '@app/shared/models/rest-api/reservation-request.interface';
+import { Resource } from '@app/shared/models/rest-api/resource.interface';
+import { CalendarSlot } from '@app/shared/models/rest-api/slot.interface';
 import {
   ICalendarItem,
   IEventOwner,
@@ -19,14 +27,7 @@ import {
 } from '@cesnet/shongo-calendar';
 import { CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ResourceService } from 'src/app/core/http/resource/resource.service';
-import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
-import {
-  PhysicalResource,
-  Resource,
-} from 'src/app/shared/models/rest-api/resource.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-reservation-calendar-tab',
@@ -34,68 +35,44 @@ import {
   styleUrls: ['./reservation-calendar-tab.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReservationCalendarTabComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class ReservationCalendarTabComponent implements AfterViewInit {
   @ViewChild(ShongoCalendarComponent)
   calendar!: ShongoCalendarComponent;
 
-  filteredResources: PhysicalResource[];
+  displayedResources: Resource[] = [];
+  selectedResource?: Resource | null;
+  selectedSlot?: CalendarSlot | null;
 
+  readonly restrictToType = ResourceType.PHYSICAL_RESOURCE;
   readonly calendarRequest$: Observable<IRequest<ICalendarItem[]>>;
-  readonly tabletSizeHit$: Observable<BreakpointState>;
-  readonly filterGroup = new FormGroup({
-    resources: new FormControl<Resource[]>([]),
-    highlightMine: new FormControl<boolean>(false),
-    resourceFilter: new FormControl<string>(''),
-  });
   readonly CalendarView = CalendarView;
   readonly ERequestState = ERequestState;
   readonly currentUser: IEventOwner;
 
   private _currentInterval?: IInterval;
 
-  private readonly _destroy$ = new Subject<void>();
-  private readonly _physicalResources: PhysicalResource[];
   private readonly _calendarRequest$ = new BehaviorSubject<
     IRequest<ICalendarItem[]>
   >({ data: [], state: ERequestState.SUCCESS });
 
   constructor(
-    private _resourceService: ResourceService,
-    private _br: BreakpointObserver,
-    private _calendarResS: CalendarReservationsService
+    private _calendarResS: CalendarReservationsService,
+    private _layoutS: LayoutService,
+    private _destroyRef: DestroyRef,
+    private _dialogS: MatDialog,
+    private _settingsS: SettingsService,
+    private _router: Router
   ) {
-    this.tabletSizeHit$ = this._createTabletSizeObservable();
     this.calendarRequest$ = this._calendarRequest$.asObservable();
-
-    this._physicalResources = this._getPhysicalResources();
-    this.filteredResources = this._physicalResources;
     this.currentUser = this._calendarResS.currentUser;
   }
 
-  get displayedResources(): Resource[] {
-    return this.filterGroup.get('resources')!.value ?? [];
-  }
-
-  ngOnInit(): void {
-    const resourceFilter = this.filterGroup.get(
-      'resourceFilter'
-    ) as UntypedFormControl;
-    resourceFilter.valueChanges
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((filter) => {
-        this._filterResources(filter);
-      });
+  get isTabletSize$(): Observable<boolean> {
+    return this._layoutS.isTabletSize$;
   }
 
   ngAfterViewInit(): void {
-    this._observeTabletSize(this.tabletSizeHit$);
-  }
-
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
+    this._observeTabletSize();
   }
 
   getNextDate(viewDate: Date, increment: 0 | 1 | -1): Date {
@@ -105,13 +82,36 @@ export class ReservationCalendarTabComponent
     return moment(viewDate).add(increment, 'days').toDate();
   }
 
-  onDateSelection(moment: moment.Moment): void {
-    this.calendar.viewDate = moment.toDate();
+  onSelectedResourceChange(resource: Resource | null): void {
+    this.selectedResource = resource;
+  }
+
+  onDisplayedResourcesChange(resources: Resource[]): void {
+    this.displayedResources = resources;
+    this.refetchInterval();
+  }
+
+  onDateSelection(date: Date): void {
+    this.calendar.viewDate = date;
   }
 
   onIntervalChange(interval: IInterval): void {
     this._currentInterval = interval;
     this._fetchInterval(interval);
+  }
+
+  onItemClick(item: ICalendarItem): void {
+    const needsConfirmation = this._requestNeedsConfirmation(
+      item.data!.reservation as ReservationRequest
+    );
+
+    if (this._settingsS.isInAdminMode && needsConfirmation) {
+      this._dialogS.open(RequestConfirmationDialogComponent, {
+        data: { reservationRequest: item.data!.reservation },
+      });
+    } else {
+      this._navigateToItem(item);
+    }
   }
 
   refetchInterval(): void {
@@ -131,30 +131,25 @@ export class ReservationCalendarTabComponent
       .subscribe((req) => this._calendarRequest$.next(req));
   }
 
-  private _createTabletSizeObservable(): Observable<BreakpointState> {
-    return this._br.observe('(max-width: 768px)');
+  private _observeTabletSize(): void {
+    this.isTabletSize$
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((isTableSize) => {
+        if (isTableSize) {
+          this.calendar.view = CalendarView.Day;
+        }
+      });
   }
 
-  private _observeTabletSize(state$: Observable<BreakpointState>): void {
-    state$.pipe(takeUntil(this._destroy$)).subscribe((state) => {
-      if (state.matches) {
-        this.calendar.view = CalendarView.Day;
-      }
-    });
-  }
+  private _navigateToItem(item: ICalendarItem): void {
+    const id = (item.data?.reservation as ReservationRequest)?.id;
 
-  private _filterResources(filter: string): void {
-    this.filteredResources = this._physicalResources.filter((resource) =>
-      resource.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  }
-
-  private _getPhysicalResources(): PhysicalResource[] {
-    if (!this._resourceService.resources) {
-      return [];
+    if (id) {
+      void this._router.navigate(['reservation-request', id]);
     }
-    return this._resourceService.resources.filter(
-      (resource) => resource.type === ResourceType.PHYSICAL_RESOURCE
-    ) as PhysicalResource[];
+  }
+
+  private _requestNeedsConfirmation(reservation: ReservationRequest): boolean {
+    return reservation.state === ReservationRequestState.CONFIRM_AWAITING;
   }
 }
