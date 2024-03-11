@@ -1,7 +1,4 @@
-<div
-  class="reservation"
-  *ngIf="(resourceService.loading$ | async) === false; else loadingResources"
->
+<div class="reservation">
   <mat-toolbar class="reservation__toolbar">
     <mat-toolbar-row
       class="reservation__toolbar-row reservation__toolbar-row--main"
@@ -355,14 +352,3 @@
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
-
-<!-- Loading display-->
-<ng-template #loadingResources>
-  <div class="loading loading--fullscreen">
-    <h1 i18n="loading text">Loading resources</h1>
-    <mat-progress-spinner
-      color="primary"
-      mode="indeterminate"
-    ></mat-progress-spinner>
-  </div>
-</ng-template>

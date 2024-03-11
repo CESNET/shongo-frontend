@@ -6,7 +6,7 @@ import { ReservationType } from '@app/shared/models/enums/reservation-type.enum'
 import { TagType } from '@app/shared/models/enums/tag-type.enum';
 import { ReservationRequest } from '@app/shared/models/rest-api/reservation-request.interface';
 import { Tag } from '@app/shared/models/rest-api/tag.interface';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { first, retry } from 'rxjs/operators';
 import { Endpoint } from 'src/app/shared/models/enums/endpoint.enum';
 import { ResourceType } from 'src/app/shared/models/enums/resource-type.enum';
@@ -55,13 +55,8 @@ export class ResourceService extends ApiService {
   resources?: Resource[];
   error = false;
 
-  readonly loading$: Observable<boolean>;
-  private _loading$ = new BehaviorSubject<boolean>(false);
-
   constructor(protected _http: HttpClient, private _alertS: AlertService) {
     super(_http, Endpoint.RESOURCE, 'v1');
-
-    this.loading$ = this._loading$.asObservable();
   }
 
   /**
@@ -270,15 +265,12 @@ export class ResourceService extends ApiService {
    * @returns Empty promise.
    */
   async fetchResources(): Promise<void> {
-    this._loading$.next(true);
-
     try {
       const resources = await lastValueFrom(
         this._http
           .get<Resource[]>(this.endpointURL)
           .pipe(first(), retry(RESOURCE_FETCH_RETRY_COUNT))
       );
-      this._loading$.next(false);
       this.resources = resources;
 
       if (this.resources.length > 0) {
@@ -286,7 +278,6 @@ export class ResourceService extends ApiService {
       }
     } catch (err) {
       console.error(err);
-      this._loading$.next(false);
 
       const resourcesInLocalStorage = this._getFromLocalStorage(true);
 

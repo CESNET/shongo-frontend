@@ -28,9 +28,11 @@ export class ResourceCapacityUtilizationPageComponent implements OnInit {
     private _cd: ChangeDetectorRef
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await this._initializeTable();
-    this._cd.detectChanges();
+  ngOnInit(): void {
+    void this._resourceService
+      .fetchResources()
+      .then(() => this._initializeTable())
+      .then(() => this._cd.detectChanges());
   }
 
   /**
@@ -39,7 +41,7 @@ export class ResourceCapacityUtilizationPageComponent implements OnInit {
   private async _initializeTable(): Promise<void> {
     const resourceNames = this._getResourceNames();
 
-    if (!resourceNames || resourceNames.length === 0) {
+    if (!resourceNames || !resourceNames.length) {
       this.noResources = true;
     } else {
       this.dataSource = new ResourceCapacityUtilizationDataSource(
